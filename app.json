@@ -32,6 +32,12 @@
       "expo-router",
       "expo-font",
       [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "VoyagesHalal utilise votre position pour afficher les lieux halal près de vous."
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "image": "./assets/images/splash.png",
