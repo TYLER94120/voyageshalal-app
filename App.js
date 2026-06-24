@@ -310,16 +310,13 @@ const dS = StyleSheet.create({
 function MosqueesScreen({ goBack }) {
   const mapRef = useRef(null);
 
-  // Mode : 'france' = toutes les mosquées | 'nearby' = résultats API autour de moi
-  const [mode, setMode]           = useState('france');
-  const [mosques, setMosques]     = useState(TOUTES_MOSQUEES);
-  const [userPos, setUserPos]     = useState(null);
-  const [loading, setLoading]     = useState(false);
-  const [statusMsg, setStatusMsg] = useState('');
+  const [mode, setMode]             = useState('nearby');
+  const [mosques, setMosques]       = useState([]);
+  const [userPos, setUserPos]       = useState(null);
+  const [loading, setLoading]       = useState(true);
+  const [statusMsg, setStatusMsg]   = useState('Géolocalisation en cours…');
   const [selectedId, setSelectedId] = useState(null);
-  const [search, setSearch]       = useState('');
-
-  const log = (msg) => { setStatusMsg(msg); };
+  const [search, setSearch]         = useState('');
 
   // ── Recherche Google Places (mode À proximité) ───────────────────────────
   const fetchNearby = async (lat, lon) => {
@@ -356,14 +353,14 @@ function MosqueesScreen({ goBack }) {
     }
   };
 
-  // ── Obtenir la position et passer en mode À proximité ────────────────────
-  const switchToNearby = async () => {
+  // ── Géolocalisation + fetch (appelé automatiquement au montage) ──────────
+  const doGeolocate = async () => {
     setMode('nearby');
     setLoading(true);
-    log('Demande de permission GPS…');
+    setStatusMsg('Géolocalisation en cours…');
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
-      log('Permission GPS refusée → Paris par défaut');
+      setStatusMsg('Permission GPS refusée → Paris par défaut');
       await fetchNearby(48.8566, 2.3522);
       return;
     }
@@ -374,10 +371,15 @@ function MosqueesScreen({ goBack }) {
       mapRef.current?.animateToRegion({ ...pos, latitudeDelta: 0.12, longitudeDelta: 0.12 }, 800);
       await fetchNearby(pos.latitude, pos.longitude);
     } catch {
-      log('Erreur GPS → Paris par défaut');
+      setStatusMsg('Erreur GPS → Paris par défaut');
       await fetchNearby(48.8566, 2.3522);
     }
   };
+
+  // Géolocalisation automatique à l'ouverture
+  useEffect(() => { doGeolocate(); }, []);
+
+  const switchToNearby = () => doGeolocate();
 
   // ── Revenir en mode France entière ───────────────────────────────────────
   const switchToFrance = () => {
@@ -392,7 +394,9 @@ function MosqueesScreen({ goBack }) {
   };
 
   // ── Filtrer par recherche ─────────────────────────────────────────────────
-  const displayed = (mosques || []).filter(m =>
+  // Si l'utilisateur tape, on cherche dans TOUTE la base France
+  const baseList = search.length >= 2 ? TOUTES_MOSQUEES : (mosques || []);
+  const displayed = baseList.filter(m =>
     search.length < 2 ||
     m.name.toLowerCase().includes(search.toLowerCase()) ||
     (m.ville || '').toLowerCase().includes(search.toLowerCase())
