@@ -321,33 +321,63 @@ function MosqueesScreen({ goBack }) {
   // ── Recherche Google Places (mode À proximité) ───────────────────────────
   const fetchNearby = async (lat, lon) => {
     setLoading(true);
-    log('Recherche des mosquées à proximité…');
-    try {
-      const url =
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json` +
-        `?location=${lat},${lon}&radius=10000&type=mosque&key=${GOOGLE_API_KEY}`;
-      const res  = await fetch(url);
-      const json = await res.json();
+    setStatusMsg('Recherche des mosquées à proximité…');
 
-      if (json.status === 'OK' && Array.isArray(json.results) && json.results.length > 0) {
-        setMosques(json.results.map(formatPlaceResult));
-        log(`✅ ${json.results.length} mosquées trouvées à proximité`);
+    const BASE  = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
+    const FIRST = `${BASE}?location=${lat},${lon}&radius=5000&type=mosque&keyword=${encodeURIComponent('mosquée')}&key=${GOOGLE_API_KEY}`;
+
+    try {
+      let allResults = [];
+      let nextUrl    = FIRST;
+
+      // Pagination : l'API Places retourne max 20 résultats par page, 3 pages max (60 total)
+      for (let page = 0; page < 3; page++) {
+        const res  = await fetch(nextUrl);
+        const json = await res.json();
+
+        if ((json.status === 'OK' || json.status === 'ZERO_RESULTS') && Array.isArray(json.results)) {
+          allResults = [...allResults, ...json.results];
+        }
+
+        // next_page_token disponible → attendre 2 s (délai imposé par Google) puis continuer
+        if (json.next_page_token) {
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          nextUrl = `${BASE}?pagetoken=${json.next_page_token}&key=${GOOGLE_API_KEY}`;
+        } else {
+          break;
+        }
+      }
+
+      if (allResults.length > 0) {
+        // Déduplique par place_id et trie par distance
+        const seen = new Set();
+        const unique = allResults.filter(p => {
+          if (seen.has(p.place_id)) return false;
+          seen.add(p.place_id);
+          return true;
+        });
+        const formatted = unique
+          .map(formatPlaceResult)
+          .map(m => ({ ...m, km: haversineKm(lat, lon, m.latitude, m.longitude) }))
+          .sort((a, b) => a.km - b.km);
+        setMosques(formatted);
+        setStatusMsg(`✅ ${formatted.length} mosquées trouvées dans un rayon de 5 km`);
       } else {
-        // Fallback : filtrer la liste France par distance
+        // Fallback : liste France triée par distance
         const sorted = [...TOUTES_MOSQUEES]
           .map(m => ({ ...m, km: haversineKm(lat, lon, m.latitude, m.longitude) }))
           .sort((a, b) => a.km - b.km)
-          .slice(0, 20);
+          .slice(0, 25);
         setMosques(sorted);
-        log(`📍 ${sorted.length} mosquées les plus proches`);
+        setStatusMsg(`📍 ${sorted.length} mosquées les plus proches (base locale)`);
       }
-    } catch (err) {
+    } catch {
       const sorted = [...TOUTES_MOSQUEES]
         .map(m => ({ ...m, km: haversineKm(lat, lon, m.latitude, m.longitude) }))
         .sort((a, b) => a.km - b.km)
-        .slice(0, 20);
+        .slice(0, 25);
       setMosques(sorted);
-      log('Mode hors-ligne — mosquées les plus proches');
+      setStatusMsg('Mode hors-ligne — mosquées les plus proches');
     } finally {
       setLoading(false);
     }
