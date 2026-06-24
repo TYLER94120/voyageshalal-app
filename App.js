@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   Animated, BackHandler, Dimensions, Easing, Linking, Platform,
   Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet,
-  Text, View, ActivityIndicator, TextInput,
+  Text, View, ActivityIndicator,
 } from 'react-native';
 import MapView, { Callout, Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -36,22 +36,60 @@ const { width, height } = Dimensions.get('window');
 
 // ─── Liste complète de mosquées en France ─────────────────────────────────────
 const TOUTES_MOSQUEES = [
-  // ── Paris & Île-de-France ──
-  { id: 'm001', name: 'Grande Mosquée de Paris',          ville: 'Paris 5e',        latitude: 48.8427,  longitude: 2.3536,  rating: 4.8 },
-  { id: 'm002', name: 'Mosquée Al-Fath',                  ville: 'Paris 18e',       latitude: 48.8984,  longitude: 2.3487,  rating: 4.6 },
-  { id: 'm003', name: 'Mosquée Omar',                     ville: 'Paris 11e',       latitude: 48.8647,  longitude: 2.3732,  rating: 4.5 },
-  { id: 'm004', name: 'Mosquée Adda\'wa',                 ville: 'Paris 19e',       latitude: 48.8820,  longitude: 2.3760,  rating: 4.4 },
-  { id: 'm005', name: 'Mosquée Bilal',                    ville: 'Paris 20e',       latitude: 48.8620,  longitude: 2.3980,  rating: 4.2 },
-  { id: 'm006', name: 'Mosquée de Clichy',                ville: 'Clichy',          latitude: 48.9048,  longitude: 2.3042,  rating: 4.3 },
-  { id: 'm007', name: 'Mosquée de Saint-Denis',           ville: 'Saint-Denis',     latitude: 48.9356,  longitude: 2.3534,  rating: 4.5 },
-  { id: 'm008', name: 'Mosquée de Bobigny',               ville: 'Bobigny',         latitude: 48.9100,  longitude: 2.4400,  rating: 4.3 },
-  { id: 'm009', name: 'Mosquée Al-Rahma',                 ville: 'Créteil',         latitude: 48.7901,  longitude: 2.4572,  rating: 4.4 },
-  { id: 'm010', name: 'Mosquée de Mantes-la-Jolie',       ville: 'Mantes-la-Jolie', latitude: 48.9900,  longitude: 1.7170,  rating: 4.5 },
-  { id: 'm011', name: 'Mosquée Al-Badr',                  ville: 'Argenteuil',      latitude: 48.9470,  longitude: 2.2460,  rating: 4.2 },
-  { id: 'm012', name: 'Mosquée de Sarcelles',             ville: 'Sarcelles',       latitude: 49.0000,  longitude: 2.3800,  rating: 4.3 },
-  { id: 'm013', name: 'Mosquée Al-Ihsan',                 ville: 'Vitry-sur-Seine', latitude: 48.7870,  longitude: 2.3930,  rating: 4.1 },
-  { id: 'm014', name: 'Mosquée de Versailles',            ville: 'Versailles',      latitude: 48.8060,  longitude: 2.1280,  rating: 4.4 },
-  { id: 'm015', name: 'Mosquée de Nanterre',              ville: 'Nanterre',        latitude: 48.8960,  longitude: 2.1960,  rating: 4.2 },
+  // ── Paris intra-muros ──
+  { id: 'm001', name: 'Grande Mosquée de Paris',          ville: 'Paris 5e',           latitude: 48.8427,  longitude: 2.3536,  rating: 4.8 },
+  { id: 'm002', name: 'Mosquée Al-Fath',                  ville: 'Paris 18e',          latitude: 48.8984,  longitude: 2.3487,  rating: 4.6 },
+  { id: 'm003', name: 'Mosquée Omar',                     ville: 'Paris 11e',          latitude: 48.8647,  longitude: 2.3732,  rating: 4.5 },
+  { id: 'm004', name: 'Mosquée Adda\'wa',                 ville: 'Paris 19e',          latitude: 48.8820,  longitude: 2.3760,  rating: 4.4 },
+  { id: 'm005', name: 'Mosquée Bilal',                    ville: 'Paris 20e',          latitude: 48.8620,  longitude: 2.3980,  rating: 4.2 },
+  { id: 'm016', name: 'Mosquée Al-Rawda',                 ville: 'Paris 13e',          latitude: 48.8280,  longitude: 2.3610,  rating: 4.3 },
+  { id: 'm017', name: 'Mosquée de la rue de la Folie-Méricourt', ville: 'Paris 11e',  latitude: 48.8640,  longitude: 2.3680,  rating: 4.1 },
+  { id: 'm018', name: 'Mosquée Al-Taqwa',                 ville: 'Paris 10e',          latitude: 48.8750,  longitude: 2.3600,  rating: 4.2 },
+  // ── Petite Couronne (92 / 93 / 94) ──
+  { id: 'm006', name: 'Mosquée de Clichy',                ville: 'Clichy',             latitude: 48.9048,  longitude: 2.3042,  rating: 4.3 },
+  { id: 'm015', name: 'Mosquée de Nanterre',              ville: 'Nanterre',           latitude: 48.8960,  longitude: 2.1960,  rating: 4.2 },
+  { id: 'm019', name: 'Mosquée Bilal',                    ville: 'Asnières-sur-Seine', latitude: 48.9160,  longitude: 2.2860,  rating: 4.2 },
+  { id: 'm01a', name: 'Mosquée Al-Forqane',               ville: 'Colombes',           latitude: 48.9230,  longitude: 2.2530,  rating: 4.3 },
+  { id: 'm01b', name: 'Mosquée de Gennevilliers',         ville: 'Gennevilliers',      latitude: 48.9330,  longitude: 2.2950,  rating: 4.2 },
+  { id: 'm01c', name: 'Mosquée Al-Hidaya',                ville: 'Boulogne-Billancourt',latitude: 48.8340, longitude: 2.2440,  rating: 4.3 },
+  { id: 'm007', name: 'Mosquée de Saint-Denis',           ville: 'Saint-Denis',        latitude: 48.9356,  longitude: 2.3534,  rating: 4.5 },
+  { id: 'm01d', name: 'Mosquée Attawbah',                 ville: 'Aubervilliers',      latitude: 48.9140,  longitude: 2.3820,  rating: 4.4 },
+  { id: 'm01e', name: 'Mosquée Al-Fath',                  ville: 'La Courneuve',       latitude: 48.9300,  longitude: 2.3960,  rating: 4.3 },
+  { id: 'm01f', name: 'Mosquée Al-Mouhajirines',          ville: 'Stains',             latitude: 48.9500,  longitude: 2.3740,  rating: 4.1 },
+  { id: 'm01g', name: 'Mosquée Bilal',                    ville: 'Épinay-sur-Seine',   latitude: 48.9540,  longitude: 2.3140,  rating: 4.2 },
+  { id: 'm01h', name: 'Mosquée Al-Nour',                  ville: 'Sartrouville',       latitude: 48.9380,  longitude: 2.1860,  rating: 4.1 },
+  { id: 'm008', name: 'Mosquée de Bobigny',               ville: 'Bobigny',            latitude: 48.9100,  longitude: 2.4400,  rating: 4.3 },
+  { id: 'm01i', name: 'Mosquée As-Salam',                 ville: 'Drancy',             latitude: 48.9220,  longitude: 2.4470,  rating: 4.2 },
+  { id: 'm01j', name: 'Mosquée Al-Rahman',                ville: 'Pantin',             latitude: 48.8980,  longitude: 2.4090,  rating: 4.3 },
+  { id: 'm009', name: 'Mosquée Al-Rahma',                 ville: 'Créteil',            latitude: 48.7901,  longitude: 2.4572,  rating: 4.4 },
+  { id: 'm013', name: 'Mosquée Al-Ihsan',                 ville: 'Vitry-sur-Seine',    latitude: 48.7870,  longitude: 2.3930,  rating: 4.1 },
+  { id: 'm01k', name: 'Mosquée Al-Barakah',               ville: 'Ivry-sur-Seine',     latitude: 48.8090,  longitude: 2.3830,  rating: 4.2 },
+  { id: 'm01l', name: 'Mosquée de Choisy-le-Roi',         ville: 'Choisy-le-Roi',      latitude: 48.7640,  longitude: 2.4050,  rating: 4.1 },
+  // ── Grande Couronne (77 / 78 / 91 / 95) ──
+  { id: 'm010', name: 'Mosquée de Mantes-la-Jolie',       ville: 'Mantes-la-Jolie',    latitude: 48.9900,  longitude: 1.7170,  rating: 4.5 },
+  { id: 'm011', name: 'Mosquée Al-Badr',                  ville: 'Argenteuil',         latitude: 48.9470,  longitude: 2.2460,  rating: 4.2 },
+  { id: 'm012', name: 'Mosquée de Sarcelles',             ville: 'Sarcelles',          latitude: 49.0000,  longitude: 2.3800,  rating: 4.3 },
+  { id: 'm014', name: 'Mosquée de Versailles',            ville: 'Versailles',         latitude: 48.8060,  longitude: 2.1280,  rating: 4.4 },
+  { id: 'm01m', name: 'Mosquée de Poissy',                ville: 'Poissy',             latitude: 48.9290,  longitude: 2.0460,  rating: 4.1 },
+  { id: 'm01n', name: 'Mosquée Al-Ihsan',                 ville: 'Trappes',            latitude: 48.7740,  longitude: 1.9990,  rating: 4.3 },
+  { id: 'm01o', name: 'Mosquée de Massy',                 ville: 'Massy',              latitude: 48.7270,  longitude: 2.2730,  rating: 4.2 },
+  { id: 'm01p', name: 'Grande Mosquée d\'Évry',           ville: 'Évry-Courcouronnes', latitude: 48.6290,  longitude: 2.4400,  rating: 4.6 },
+  { id: 'm01q', name: 'Mosquée de Corbeil-Essonnes',      ville: 'Corbeil-Essonnes',   latitude: 48.6100,  longitude: 2.4770,  rating: 4.2 },
+  { id: 'm01r', name: 'Mosquée Al-Nour',                  ville: 'Aulnay-sous-Bois',   latitude: 48.9390,  longitude: 2.4970,  rating: 4.3 },
+  { id: 'm01s', name: 'Mosquée Bilal',                    ville: 'Bondy',              latitude: 48.9030,  longitude: 2.4830,  rating: 4.2 },
+  { id: 'm01t', name: 'Mosquée Al-Rahma',                 ville: 'Sevran',             latitude: 48.9360,  longitude: 2.5270,  rating: 4.1 },
+  { id: 'm01u', name: 'Mosquée de Villepinte',            ville: 'Villepinte',         latitude: 48.9630,  longitude: 2.5480,  rating: 4.1 },
+  { id: 'm01v', name: 'Mosquée de Tremblay-en-France',    ville: 'Tremblay-en-France', latitude: 48.9670,  longitude: 2.5670,  rating: 4.0 },
+  { id: 'm01w', name: 'Mosquée Al-Ihsan',                 ville: 'Clichy-sous-Bois',   latitude: 48.9100,  longitude: 2.5540,  rating: 4.2 },
+  { id: 'm01x', name: 'Mosquée As-Salam',                 ville: 'Montfermeil',        latitude: 48.8990,  longitude: 2.5760,  rating: 4.1 },
+  { id: 'm01y', name: 'Mosquée Al-Forqane',               ville: 'Gagny',              latitude: 48.8830,  longitude: 2.5400,  rating: 4.0 },
+  { id: 'm01z', name: 'Mosquée Al-Badr',                  ville: 'Rosny-sous-Bois',    latitude: 48.8720,  longitude: 2.4870,  rating: 4.1 },
+  { id: 'm01aa', name: 'Mosquée Al-Kauthar',              ville: 'Noisy-le-Grand',     latitude: 48.8470,  longitude: 2.5570,  rating: 4.2 },
+  { id: 'm01ab', name: 'Mosquée de Montreuil',            ville: 'Montreuil',          latitude: 48.8640,  longitude: 2.4430,  rating: 4.4 },
+  { id: 'm01ac', name: 'Mosquée Al-Rahma',                ville: 'Meaux',              latitude: 48.9600,  longitude: 2.8890,  rating: 4.2 },
+  { id: 'm01ad', name: 'Mosquée de Melun',                ville: 'Melun',              latitude: 48.5400,  longitude: 2.6550,  rating: 4.1 },
+  { id: 'm01ae', name: 'Mosquée Al-Nour',                 ville: 'Pontoise',           latitude: 49.0490,  longitude: 2.1000,  rating: 4.0 },
+  { id: 'm01af', name: 'Mosquée Bilal',                   ville: 'Cergy',              latitude: 49.0360,  longitude: 2.0630,  rating: 4.2 },
 
   // ── Lyon & Rhône-Alpes ──
   { id: 'm020', name: 'Grande Mosquée de Lyon',           ville: 'Lyon 8e',         latitude: 45.7330,  longitude: 4.8690,  rating: 4.7 },
@@ -310,13 +348,11 @@ const dS = StyleSheet.create({
 function MosqueesScreen({ goBack }) {
   const mapRef = useRef(null);
 
-  const [mode, setMode]             = useState('nearby');
   const [mosques, setMosques]       = useState([]);
   const [userPos, setUserPos]       = useState(null);
   const [loading, setLoading]       = useState(true);
   const [statusMsg, setStatusMsg]   = useState('Géolocalisation en cours…');
   const [selectedId, setSelectedId] = useState(null);
-  const [search, setSearch]         = useState('');
 
   // ── Recherche Google Places (mode À proximité) ───────────────────────────
   const fetchNearby = async (lat, lon) => {
@@ -385,7 +421,6 @@ function MosqueesScreen({ goBack }) {
 
   // ── Géolocalisation + fetch (appelé automatiquement au montage) ──────────
   const doGeolocate = async () => {
-    setMode('nearby');
     setLoading(true);
     setStatusMsg('Géolocalisation en cours…');
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -409,28 +444,7 @@ function MosqueesScreen({ goBack }) {
   // Géolocalisation automatique à l'ouverture
   useEffect(() => { doGeolocate(); }, []);
 
-  const switchToNearby = () => doGeolocate();
-
-  // ── Revenir en mode France entière ───────────────────────────────────────
-  const switchToFrance = () => {
-    setMode('france');
-    setMosques(TOUTES_MOSQUEES);
-    setSearch('');
-    setStatusMsg('');
-    mapRef.current?.animateToRegion(
-      { latitude: 46.6034, longitude: 2.3488, latitudeDelta: 12, longitudeDelta: 12 },
-      800
-    );
-  };
-
-  // ── Filtrer par recherche ─────────────────────────────────────────────────
-  // Si l'utilisateur tape, on cherche dans TOUTE la base France
-  const baseList = search.length >= 2 ? TOUTES_MOSQUEES : (mosques || []);
-  const displayed = baseList.filter(m =>
-    search.length < 2 ||
-    m.name.toLowerCase().includes(search.toLowerCase()) ||
-    (m.ville || '').toLowerCase().includes(search.toLowerCase())
-  );
+  const displayed = mosques || [];
 
   const openMaps = (lat, lon, name) => {
     const label = encodeURIComponent(name);
@@ -529,36 +543,10 @@ function MosqueesScreen({ goBack }) {
         </View>
       </View>
 
-      {/* Barre de recherche */}
-      <View style={mS.searchBar}>
-        <Text style={mS.searchIcon}>🔍</Text>
-        <TextInput
-          style={mS.searchInput}
-          placeholder="Rechercher une ville ou mosquée…"
-          placeholderTextColor={DS.textMd}
-          value={search}
-          onChangeText={setSearch}
-        />
-        {search.length > 0 && (
-          <Pressable onPress={() => setSearch('')}>
-            <Text style={mS.searchClear}>✕</Text>
-          </Pressable>
-        )}
-      </View>
-
-      {/* Switcher mode */}
+      {/* Bouton À proximité */}
       <View style={mS.modeSwitch}>
-        <Pressable
-          style={[mS.modeBtn, mode === 'france' && mS.modeBtnActive]}
-          onPress={switchToFrance}
-        >
-          <Text style={[mS.modeBtnText, mode === 'france' && mS.modeBtnTextActive]}>🇫🇷 Toute la France</Text>
-        </Pressable>
-        <Pressable
-          style={[mS.modeBtn, mode === 'nearby' && mS.modeBtnActive]}
-          onPress={switchToNearby}
-        >
-          <Text style={[mS.modeBtnText, mode === 'nearby' && mS.modeBtnTextActive]}>📍 À proximité</Text>
+        <Pressable style={[mS.modeBtn, mS.modeBtnActive]} onPress={doGeolocate}>
+          <Text style={[mS.modeBtnText, mS.modeBtnTextActive]}>📍 À proximité</Text>
         </Pressable>
       </View>
 
@@ -627,16 +615,12 @@ const mS = StyleSheet.create({
   backBtnText:        { fontSize: 18, color: DS.green, fontWeight: '700' },
   headerPill:         { flex: 1, backgroundColor: 'rgba(255,255,255,0.96)', borderRadius: 22, paddingHorizontal: 16, paddingVertical: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.10, shadowRadius: 8, elevation: 4 },
   headerPillText:     { fontSize: 13, fontWeight: '700', color: DS.green },
-  searchBar:          { position: 'absolute', top: Platform.OS === 'ios' ? 110 : 90, left: 16, right: 16, flexDirection: 'row', alignItems: 'center', backgroundColor: DS.white, borderRadius: 18, paddingHorizontal: 14, paddingVertical: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.10, shadowRadius: 8, elevation: 5 },
-  searchIcon:         { fontSize: 16, marginRight: 8 },
-  searchInput:        { flex: 1, fontSize: 14, color: DS.text },
-  searchClear:        { fontSize: 14, color: DS.textMd, paddingLeft: 8 },
-  modeSwitch:         { position: 'absolute', top: Platform.OS === 'ios' ? 162 : 142, left: 16, right: 16, flexDirection: 'row', gap: 8 },
+  modeSwitch:         { position: 'absolute', top: Platform.OS === 'ios' ? 110 : 90, left: 16, right: 80, flexDirection: 'row', gap: 8 },
   modeBtn:            { flex: 1, backgroundColor: 'rgba(255,255,255,0.90)', borderRadius: 16, paddingVertical: 9, alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.08, shadowRadius: 4, elevation: 3 },
   modeBtnActive:      { backgroundColor: DS.green },
   modeBtnText:        { fontSize: 12, fontWeight: '700', color: DS.textMd },
   modeBtnTextActive:  { color: DS.white },
-  statusBar:          { position: 'absolute', top: Platform.OS === 'ios' ? 210 : 190, left: 16, right: 16, backgroundColor: 'rgba(255,255,255,0.92)', borderRadius: 12, paddingHorizontal: 14, paddingVertical: 7 },
+  statusBar:          { position: 'absolute', top: Platform.OS === 'ios' ? 156 : 136, left: 16, right: 16, backgroundColor: 'rgba(255,255,255,0.92)', borderRadius: 12, paddingHorizontal: 14, paddingVertical: 7 },
   statusText:         { fontSize: 11, color: DS.textMd, textAlign: 'center' },
   bottomSheet:        { position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: DS.cream, borderTopLeftRadius: 28, borderTopRightRadius: 28, paddingTop: 12, paddingBottom: Platform.OS === 'ios' ? 40 : 20, shadowColor: '#000', shadowOffset: { width: 0, height: -4 }, shadowOpacity: 0.08, shadowRadius: 12, elevation: 16 },
   handle:             { width: 40, height: 4, backgroundColor: '#D0D0D0', borderRadius: 99, alignSelf: 'center', marginBottom: 16 },
