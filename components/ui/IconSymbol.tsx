@@ -7,6 +7,7 @@ const MAPPING = {
   'house.fill': 'home',
   'map.fill': 'map',
   'calendar': 'calendar-today',
+  'clock.fill': 'schedule',
   'person.fill': 'person',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',

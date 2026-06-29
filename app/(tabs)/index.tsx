@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
   // Header
   header: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 60 : 40,
+    top: 14,
     left: 16,
     right: 16,
     flexDirection: 'row',
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
   // Count badge
   countBadge: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 120 : 100,
+    top: 66,
     alignSelf: 'center',
     borderRadius: 20,
     paddingHorizontal: 16,
