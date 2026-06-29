@@ -30,7 +30,8 @@ export function configureNotificationHandler(): void {
   handlerConfigured = true;
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
-      shouldShowAlert: true,
+      shouldShowBanner: true,
+      shouldShowList: true,
       shouldPlaySound: true,
       shouldSetBadge: false,
     }),
@@ -102,7 +103,11 @@ export async function rescheduleAdhan(params: RescheduleParams): Promise<Resched
         body: `C'est l'heure de la prière (${item.label}).`,
         sound: ADHAN_SOUND,
       },
-      trigger: { channelId: ADHAN_CHANNEL, date: item.date },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DATE,
+        channelId: ADHAN_CHANNEL,
+        date: item.date,
+      },
     });
   }
   return { status: 'scheduled', count: items.length };
