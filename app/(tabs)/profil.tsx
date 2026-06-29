@@ -1,9 +1,22 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
+import { useRouter, type Href } from 'expo-router';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
+type MenuItem = { icon: string; label: string; route?: Href };
+
+const MENU: MenuItem[] = [
+  { icon: '🧭', label: 'Qibla', route: '/qibla' },
+  { icon: '🔔', label: 'Adhan & notifications', route: '/adhan' },
+  { icon: '⚙️', label: 'Paramètres' },
+  { icon: '❓', label: 'Aide & Support' },
+  { icon: '📜', label: "Conditions d'utilisation" },
+  { icon: '🚪', label: 'Se déconnecter' },
+];
+
 export default function ProfilScreen() {
+  const router = useRouter();
   return (
     <ThemedView style={styles.container}>
       <ThemedView style={styles.avatar}>
@@ -12,14 +25,13 @@ export default function ProfilScreen() {
       <ThemedText type="title" style={styles.name}>Mon Profil</ThemedText>
 
       <ThemedView style={styles.menu}>
-        {[
-          { icon: '⚙️', label: 'Paramètres' },
-          { icon: '🔔', label: 'Notifications' },
-          { icon: '❓', label: 'Aide & Support' },
-          { icon: '📜', label: 'Conditions d\'utilisation' },
-          { icon: '🚪', label: 'Se déconnecter' },
-        ].map((item) => (
-          <TouchableOpacity key={item.label} style={styles.menuItem}>
+        {MENU.map((item) => (
+          <TouchableOpacity
+            key={item.label}
+            style={styles.menuItem}
+            disabled={!item.route}
+            onPress={() => item.route && router.push(item.route)}
+          >
             <ThemedText style={styles.menuIcon}>{item.icon}</ThemedText>
             <ThemedText style={styles.menuLabel}>{item.label}</ThemedText>
           </TouchableOpacity>

@@ -1,4 +1,5 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
 
 import { usePrayerClock, usePrayerContext } from '@/context/PrayerContext';
 import {
@@ -12,6 +13,7 @@ import {
 import { Brand, Radius, Spacing } from '@/constants/theme';
 
 export default function HorairesScreen() {
+  const router = useRouter();
   const { settings, updateSettings } = usePrayerContext();
   const { ready, slots, next, current, countdown, now, location } = usePrayerClock();
 
@@ -24,6 +26,28 @@ export default function HorairesScreen() {
         {location.usingDefault ? ' · par défaut' : ''}
       </Text>
       <Text style={styles.date}>{formatFrenchDate(now)}</Text>
+
+      {/* Accès rapide : Qibla & Adhan */}
+      <View style={styles.quickRow}>
+        <Pressable
+          style={styles.quickBtn}
+          onPress={() => router.push('/qibla')}
+          accessibilityRole="button"
+          accessibilityLabel="Ouvrir la boussole Qibla"
+        >
+          <Text style={styles.quickEmoji}>🧭</Text>
+          <Text style={styles.quickLabel}>Qibla</Text>
+        </Pressable>
+        <Pressable
+          style={styles.quickBtn}
+          onPress={() => router.push('/adhan')}
+          accessibilityRole="button"
+          accessibilityLabel="Régler les rappels d’adhan"
+        >
+          <Text style={styles.quickEmoji}>🔔</Text>
+          <Text style={styles.quickLabel}>Adhan</Text>
+        </Pressable>
+      </View>
 
       {/* Carte prochaine prière */}
       {ready && next && countdown ? (
@@ -169,6 +193,22 @@ const styles = StyleSheet.create({
   kicker: { color: Brand.gold, fontSize: 12, fontWeight: '800', letterSpacing: 2 },
   city: { color: Brand.cream, fontSize: 15, fontWeight: '700', marginTop: 6 },
   date: { color: Brand.creamMuted, fontSize: 13, marginTop: 2, textTransform: 'capitalize' },
+
+  quickRow: { flexDirection: 'row', gap: Spacing.sm, marginTop: Spacing.md },
+  quickBtn: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: Spacing.sm,
+    paddingVertical: 12,
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: Brand.border,
+    backgroundColor: Brand.forest,
+  },
+  quickEmoji: { fontSize: 18 },
+  quickLabel: { color: Brand.cream, fontSize: 15, fontWeight: '700' },
 
   heroCard: {
     marginTop: Spacing.lg,
