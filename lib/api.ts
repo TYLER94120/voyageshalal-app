@@ -46,8 +46,12 @@ export interface Lieu {
   site?: string;
   mapsUrl?: string; // lien Google Maps fourni par la base (recherche par nom)
   category?: string; // type de cuisine / catégorie d'hôtel
-  price?: string; // gamme de prix (€, €€…)
+  price?: string; // gamme de prix (€, €€…) ou "Gratuit" pour une activité
   halalConfidence?: string; // 'only' | 'yes' (certifié) | 'likely' (à vérifier)
+  reviewCount?: number; // nombre d'avis (popularité)
+  tags?: string[]; // ambiance : familial, romantique, calme, animé, livraison…
+  specialite?: string; // plat signature (restaurants)
+  duree?: string; // durée conseillée (activités, ex. "2h")
   // ── Spécifique hôtels ──
   bookingUrl?: string;
   halalBookingUrl?: string;
@@ -194,6 +198,10 @@ function normalizeLieu(raw: Raw, idx: number, prefix: string): Lieu {
     halalConfidence:
       pickString(raw, 'halalConfidence', 'halal_confidence') ??
       (raw.certificationHalal === true ? 'yes' : undefined),
+    reviewCount: pickNumber(raw, 'nombreAvis', 'reviewCount', 'review_count', 'nbAvis', 'avis'),
+    tags: pickStringList(raw, 'tags', 'ambiance', 'ambiances'),
+    specialite: pickString(raw, 'specialite', 'spécialité', 'specialty', 'signature'),
+    duree: pickString(raw, 'duree', 'durée', 'duration'),
     // Hôtels (tolérant à la coquille "salleDePreiere" présente dans la base).
     bookingUrl: pickString(raw, 'bookingUrl', 'booking_url', 'booking'),
     halalBookingUrl: pickString(raw, 'halalBookingUrl', 'halal_booking_url', 'halalbooking'),

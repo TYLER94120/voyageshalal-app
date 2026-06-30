@@ -16,6 +16,17 @@ import { Brand, Radius, Spacing } from '@/constants/theme';
 import { distanceKm, formatDistance } from '@/lib/geo';
 import { openMapsUrl, openDirections } from '@/lib/maps';
 import { getVille, halalBadge, type Lieu, type VilleDetail } from '@/lib/api';
+import {
+  applyLieuFilters,
+  categoryFacets,
+  EMPTY_FILTERS,
+  hasActiveFilters,
+  sortOptionsFor,
+  tagFacets,
+  tagLabel,
+  type LieuFilters,
+  type SortKey,
+} from '@/lib/lieuSort';
 
 type TabKey = 'restaurants' | 'mosquees' | 'hotels' | 'activites' | 'pratique';
 
@@ -58,6 +69,39 @@ export default function VilleScreen() {
   const [state, setState] = useState<LoadState>('loading');
   const [tab, setTab] = useState<TabKey>('restaurants');
   const [hotelFilters, setHotelFilters] = useState<string[]>([]);
+  const [sortKey, setSortKey] = useState<SortKey | null>(null);
+  const [filters, setFilters] = useState<LieuFilters>(EMPTY_FILTERS);
+  const [userLoc, setUserLoc] = useState<{ latitude: number; longitude: number } | null>(null);
+
+  // Changer d'onglet remet à zéro tri & filtres (chaque onglet a ses propres facettes).
+  const selectTab = useCallback((k: TabKey) => {
+    setTab(k);
+    setSortKey(null);
+    setFilters(EMPTY_FILTERS);
+    setHotelFilters([]);
+  }, []);
+
+  // Position connue de l'utilisateur (sans nouvelle demande de permission) : sert à
+  // trier « au plus proche » quand il est physiquement dans la ville.
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const Location = await import('expo-location');
+        const perm = await Location.getForegroundPermissionsAsync();
+        if (!perm.granted) return;
+        const pos = await Location.getLastKnownPositionAsync();
+        if (alive && pos) {
+          setUserLoc({ latitude: pos.coords.latitude, longitude: pos.coords.longitude });
+        }
+      } catch {
+        /* géoloc indisponible : on retombe sur le centre-ville */
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   const load = useCallback(async () => {
     if (!slug) return;
@@ -86,33 +130,58 @@ export default function VilleScreen() {
     } as Record<TabKey, number>;
   }, [ville]);
 
-  const cityCoords =
-    ville && ville.latitude != null && ville.longitude != null
-      ? { latitude: ville.latitude, longitude: ville.longitude }
-      : null;
+  const cityCoords = useMemo(
+    () =>
+      ville && ville.latitude != null && ville.longitude != null
+        ? { latitude: ville.latitude, longitude: ville.longitude }
+        : null,
+    [ville],
+  );
 
-  // Lieux de l'onglet actif. Hôtels : filtrés par équipement + triés par note
-  // (pas encore de coords). Autres : triés par distance au centre-ville.
-  const lieux: LieuDist[] = useMemo(() => {
+  // Origine des distances : la position de l'utilisateur s'il est dans la ville
+  // (≤ 80 km du centre), sinon le centre-ville.
+  const distOrigin = useMemo(() => {
+    if (userLoc && cityCoords) {
+      const d = distanceKm(userLoc.latitude, userLoc.longitude, cityCoords.latitude, cityCoords.longitude);
+      if (d <= 80) return { coords: userLoc, fromUser: true };
+    }
+    return cityCoords ? { coords: cityCoords, fromUser: false } : null;
+  }, [userLoc, cityCoords]);
+
+  // Liste brute de l'onglet enrichie d'une distance.
+  const rawWithDist = useMemo(() => {
     if (!ville || tab === 'pratique') return [];
-    let arr = ville[tab];
+    return ville[tab].map((l) => ({
+      ...l,
+      dist:
+        distOrigin && l.latitude != null && l.longitude != null
+          ? distanceKm(distOrigin.coords.latitude, distOrigin.coords.longitude, l.latitude, l.longitude)
+          : null,
+    }));
+  }, [ville, tab, distOrigin]);
+
+  // Facettes (tri + filtres) calculées sur la liste réelle de l'onglet.
+  const sortOptions = useMemo(
+    () => sortOptionsFor(rawWithDist, distOrigin != null),
+    [rawWithDist, distOrigin],
+  );
+  const catFacets = useMemo(() => categoryFacets(rawWithDist), [rawWithDist]);
+  const ambianceFacets = useMemo(
+    () => (tab === 'restaurants' ? tagFacets(rawWithDist) : []),
+    [rawWithDist, tab],
+  );
+  const effectiveSort: SortKey = sortKey ?? sortOptions[0]?.key ?? 'proche';
+
+  // Filtres équipements hôtels (booléens), appliqués avant le moteur générique.
+  const lieux = useMemo(() => {
+    let base = rawWithDist;
     if (tab === 'hotels' && hotelFilters.length > 0) {
-      arr = arr.filter((h) =>
+      base = base.filter((h) =>
         hotelFilters.every((k) => HOTEL_FILTERS.find((f) => f.key === k)?.test(h)),
       );
     }
-    const withDist = arr.map((l) => ({
-      ...l,
-      dist:
-        cityCoords && l.latitude != null && l.longitude != null
-          ? distanceKm(cityCoords.latitude, cityCoords.longitude, l.latitude, l.longitude)
-          : null,
-    }));
-    if (tab === 'hotels') {
-      return withDist.sort((a, b) => (b.note ?? 0) - (a.note ?? 0));
-    }
-    return withDist.sort((a, b) => (a.dist ?? Infinity) - (b.dist ?? Infinity));
-  }, [ville, tab, cityCoords, hotelFilters]);
+    return applyLieuFilters(base, filters, effectiveSort);
+  }, [rawWithDist, tab, hotelFilters, filters, effectiveSort]);
 
   const pins = useMemo(() => lieux.filter((l) => l.latitude != null && l.longitude != null), [lieux]);
   const showMap = MAP_TABS.includes(tab) && !!cityCoords;
@@ -241,7 +310,7 @@ export default function VilleScreen() {
                 const active = tab === item.key;
                 const count = counts[item.key] ?? 0;
                 return (
-                  <Pressable onPress={() => setTab(item.key)} style={[styles.tab, active && styles.tabActive]}>
+                  <Pressable onPress={() => selectTab(item.key)} style={[styles.tab, active && styles.tabActive]}>
                     <Text style={styles.tabEmoji}>{item.emoji}</Text>
                     <Text style={[styles.tabLabel, active && styles.tabLabelActive]}>{item.label}</Text>
                     {count > 0 && item.key !== 'pratique' && (
@@ -255,31 +324,110 @@ export default function VilleScreen() {
             />
           </View>
 
-          {/* Filtres équipements (hôtels) */}
-          {tab === 'hotels' && (
-            <View style={styles.hotelFiltersBar}>
-              <FlatList
-                data={HOTEL_FILTERS}
-                keyExtractor={(f) => f.key}
+          {/* Tri + filtres (restaurants / activités / hôtels) */}
+          {tab !== 'pratique' && tab !== 'mosquees' && (
+            <View style={styles.controls}>
+              {sortOptions.length > 1 && (
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.controlRow}
+                >
+                  {sortOptions.map((o) => {
+                    const on = effectiveSort === o.key;
+                    return (
+                      <Pressable
+                        key={o.key}
+                        onPress={() => setSortKey(o.key)}
+                        style={[styles.sortPill, on && styles.sortPillOn]}
+                      >
+                        <Text style={[styles.sortPillText, on && styles.sortPillTextOn]}>{o.label}</Text>
+                      </Pressable>
+                    );
+                  })}
+                </ScrollView>
+              )}
+
+              <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.tabsRow}
-                renderItem={({ item }) => {
-                  const on = hotelFilters.includes(item.key);
-                  return (
-                    <Pressable
+                contentContainerStyle={styles.controlRow}
+              >
+                {tab === 'restaurants' && (
+                  <FilterChip
+                    label="✓ Certifié"
+                    on={filters.certifOnly}
+                    tone="green"
+                    onPress={() => setFilters((f) => ({ ...f, certifOnly: !f.certifOnly }))}
+                  />
+                )}
+                {tab === 'activites' && rawWithDist.some((l) => l.price?.toLowerCase() === 'gratuit') && (
+                  <FilterChip
+                    label="🆓 Gratuit"
+                    on={filters.gratuitOnly}
+                    onPress={() => setFilters((f) => ({ ...f, gratuitOnly: !f.gratuitOnly }))}
+                  />
+                )}
+                {catFacets.map((c) => (
+                  <FilterChip
+                    key={`c-${c}`}
+                    label={c}
+                    on={filters.categories.includes(c)}
+                    onPress={() =>
+                      setFilters((f) => ({
+                        ...f,
+                        categories: f.categories.includes(c)
+                          ? f.categories.filter((x) => x !== c)
+                          : [...f.categories, c],
+                      }))
+                    }
+                  />
+                ))}
+                {ambianceFacets.map((t) => (
+                  <FilterChip
+                    key={`t-${t}`}
+                    label={tagLabel(t)}
+                    on={filters.tags.includes(t)}
+                    onPress={() =>
+                      setFilters((f) => ({
+                        ...f,
+                        tags: f.tags.includes(t) ? f.tags.filter((x) => x !== t) : [...f.tags, t],
+                      }))
+                    }
+                  />
+                ))}
+                {tab === 'hotels' &&
+                  HOTEL_FILTERS.map((hf) => (
+                    <FilterChip
+                      key={`h-${hf.key}`}
+                      label={hf.label}
+                      on={hotelFilters.includes(hf.key)}
                       onPress={() =>
                         setHotelFilters((prev) =>
-                          on ? prev.filter((k) => k !== item.key) : [...prev, item.key],
+                          prev.includes(hf.key) ? prev.filter((k) => k !== hf.key) : [...prev, hf.key],
                         )
                       }
-                      style={[styles.fchip, on && styles.fchipOn]}
-                    >
-                      <Text style={[styles.fchipText, on && styles.fchipTextOn]}>{item.label}</Text>
-                    </Pressable>
-                  );
-                }}
-              />
+                    />
+                  ))}
+              </ScrollView>
+
+              <View style={styles.resultRow}>
+                <Text style={styles.resultCount}>
+                  {lieux.length} résultat{lieux.length > 1 ? 's' : ''}
+                  {distOrigin?.fromUser && effectiveSort === 'proche' ? ' · près de vous' : ''}
+                </Text>
+                {(hasActiveFilters(filters) || hotelFilters.length > 0) && (
+                  <Pressable
+                    hitSlop={8}
+                    onPress={() => {
+                      setFilters(EMPTY_FILTERS);
+                      setHotelFilters([]);
+                    }}
+                  >
+                    <Text style={styles.clearLink}>Effacer</Text>
+                  </Pressable>
+                )}
+              </View>
             </View>
           )}
 
@@ -410,8 +558,16 @@ function LieuCard({ lieu, dist, onGo }: { lieu: LieuDist; dist: number | null; o
           )}
           {lieu.category && <Text style={styles.metaText}>{lieu.category}</Text>}
           {lieu.price && <Text style={styles.metaText}>{lieu.price}</Text>}
+          {lieu.reviewCount != null && (
+            <Text style={styles.metaText}>🔥 {formatCount(lieu.reviewCount)} avis</Text>
+          )}
+          {lieu.duree && <Text style={styles.metaText}>⏱️ {lieu.duree}</Text>}
           {dist != null && <Text style={styles.metaText}>📍 {formatDistance(dist)}</Text>}
         </View>
+
+        {lieu.specialite && (
+          <Text style={styles.specialite}>⭐ Spécialité : {lieu.specialite}</Text>
+        )}
 
         {lieu.description && (
           <Text style={styles.cardDesc} numberOfLines={2}>
@@ -452,6 +608,39 @@ function PratiqueBlock({ text }: { text?: string }) {
   );
 }
 
+// Séparateur de milliers sans dépendre d'Intl (limité sous Hermes).
+function formatCount(n: number): string {
+  return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
+function FilterChip({
+  label,
+  on,
+  onPress,
+  tone,
+}: {
+  label: string;
+  on: boolean;
+  onPress: () => void;
+  tone?: 'green';
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={[styles.fchip, on && (tone === 'green' ? styles.fchipGreenOn : styles.fchipOn)]}
+    >
+      <Text
+        style={[
+          styles.fchipText,
+          on && (tone === 'green' ? styles.fchipTextGreenOn : styles.fchipTextOn),
+        ]}
+      >
+        {label}
+      </Text>
+    </Pressable>
+  );
+}
+
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Brand.night },
 
@@ -483,11 +672,30 @@ const styles = StyleSheet.create({
   list: { flex: 1 },
   listPad: { padding: Spacing.lg, gap: Spacing.md, paddingBottom: Spacing.xl * 2 },
 
-  hotelFiltersBar: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Brand.border, paddingVertical: Spacing.sm },
+  controls: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Brand.border, paddingTop: Spacing.sm, gap: 8 },
+  controlRow: { paddingHorizontal: Spacing.lg, gap: Spacing.sm, alignItems: 'center' },
+  sortPill: {
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 7,
+    borderRadius: Radius.pill,
+    backgroundColor: Brand.forest,
+    borderWidth: 1,
+    borderColor: Brand.border,
+  },
+  sortPillOn: { backgroundColor: Brand.night, borderColor: Brand.gold },
+  sortPillText: { color: Brand.creamMuted, fontSize: 13, fontWeight: '700' },
+  sortPillTextOn: { color: Brand.gold, fontWeight: '800' },
+
   fchip: { paddingHorizontal: Spacing.md, paddingVertical: 7, borderRadius: Radius.pill, borderWidth: 1, borderColor: Brand.border },
   fchipOn: { backgroundColor: Brand.gold, borderColor: Brand.gold },
+  fchipGreenOn: { backgroundColor: '#2d6a4f', borderColor: '#2d6a4f' },
   fchipText: { color: Brand.cream, fontSize: 12, fontWeight: '700' },
   fchipTextOn: { color: Brand.night, fontWeight: '800' },
+  fchipTextGreenOn: { color: '#eafff1', fontWeight: '800' },
+
+  resultRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Spacing.lg, paddingBottom: Spacing.sm },
+  resultCount: { color: Brand.creamMuted, fontSize: 12, fontWeight: '700' },
+  clearLink: { color: Brand.gold, fontSize: 12, fontWeight: '800' },
 
   amenityRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 2 },
   amenity: {
@@ -524,6 +732,7 @@ const styles = StyleSheet.create({
   metaText: { color: Brand.creamMuted, fontSize: 12, fontWeight: '600' },
 
   cardDesc: { color: Brand.creamMuted, fontSize: 13, lineHeight: 19, marginTop: 2 },
+  specialite: { color: Brand.gold, fontSize: 12, fontWeight: '700', marginTop: 2 },
 
   actionsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm, marginTop: Spacing.sm },
   actionBtn: {
