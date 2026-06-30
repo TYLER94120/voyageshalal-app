@@ -41,7 +41,10 @@ const FILTERS: FilterConfig[] = [
 
 const PARIS = { latitude: 48.8566, longitude: 2.3522 };
 const DEFAULT_REGION: Region = { ...PARIS, latitudeDelta: 0.06, longitudeDelta: 0.06 };
-const SEARCH_RADIUS_M = 5000;
+// Rayon de recherche des mosquées : restreint « autour de moi », large en mode
+// ville (mégapoles étalées comme Tokyo → couvrir toute l'agglomération).
+const ME_RADIUS_M = 6000;
+const CITY_RADIUS_M = 25000;
 
 type MosqueState = 'idle' | 'loading' | 'ready' | 'error';
 type CityDetailState = 'idle' | 'loading' | 'ready' | 'error';
@@ -86,10 +89,10 @@ export default function HomeScreen() {
   }, [activeFilter]);
 
   // ── Mosquées réelles (Overpass) ──
-  const loadMosques = useCallback(async (lat: number, lng: number) => {
+  const loadMosques = useCallback(async (lat: number, lng: number, radius: number = ME_RADIUS_M) => {
     setMosqueState('loading');
     try {
-      const res = await fetchNearbyMosques(lat, lng, SEARCH_RADIUS_M);
+      const res = await fetchNearbyMosques(lat, lng, radius);
       setMosques(res);
       setMosqueState('ready');
     } catch (err) {
@@ -187,8 +190,9 @@ export default function HomeScreen() {
 
       setSelectedCity({ nom: ville.nom, ...coords });
       mapCenter.current = coords;
-      mapRef.current?.animateToRegion({ ...coords, latitudeDelta: 0.08, longitudeDelta: 0.08 }, 800);
-      if (activeFilterRef.current === 'mosquees') loadMosques(coords.latitude, coords.longitude);
+      // Vue large pour voir un maximum de mosquées de l'agglomération.
+      mapRef.current?.animateToRegion({ ...coords, latitudeDelta: 0.16, longitudeDelta: 0.16 }, 800);
+      if (activeFilterRef.current === 'mosquees') loadMosques(coords.latitude, coords.longitude, CITY_RADIUS_M);
 
       // Détail de la ville (restaurants / hôtels réels)
       setCityDetail(null);
@@ -275,10 +279,12 @@ export default function HomeScreen() {
       .slice(0, 20);
   }, [places, userLoc, selectedCity]);
 
+  const searchRadius = () => (selectedCity ? CITY_RADIUS_M : ME_RADIUS_M);
+
   const handleFilterPress = (key: FilterKey) => {
     setActiveFilter(key);
     if (key === 'mosquees' && (mosqueState === 'idle' || mosqueState === 'error')) {
-      loadMosques(mapCenter.current.latitude, mapCenter.current.longitude);
+      loadMosques(mapCenter.current.latitude, mapCenter.current.longitude, searchRadius());
     }
   };
 
@@ -406,7 +412,7 @@ export default function HomeScreen() {
               <Text style={styles.statusText}>Chargement des lieux…</Text>
             </View>
           ) : activeFilter === 'mosquees' && mosqueState === 'error' ? (
-            <Pressable onPress={() => loadMosques(mapCenter.current.latitude, mapCenter.current.longitude)}>
+            <Pressable onPress={() => loadMosques(mapCenter.current.latitude, mapCenter.current.longitude, searchRadius())}>
               <Text style={styles.statusText}>Erreur réseau — appuyez pour réessayer</Text>
             </Pressable>
           ) : activeFilter === 'mosquees' && places.length === 0 && mosqueState === 'ready' ? (
@@ -424,7 +430,7 @@ export default function HomeScreen() {
       {activeFilter === 'mosquees' && mosqueState !== 'loading' && !(locDenied && !selectedCity) && (
         <Pressable
           style={styles.searchHere}
-          onPress={() => loadMosques(mapCenter.current.latitude, mapCenter.current.longitude)}
+          onPress={() => loadMosques(mapCenter.current.latitude, mapCenter.current.longitude, searchRadius())}
         >
           <Text style={styles.searchHereText}>🔄 Rechercher dans cette zone</Text>
         </Pressable>
