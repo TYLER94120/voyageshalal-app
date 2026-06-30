@@ -33,6 +33,13 @@ type LieuDist = Lieu & { dist: number | null };
 // Onglets affichant des pins sur la carte (les hôtels n'ont pas encore de coords).
 const MAP_TABS: TabKey[] = ['restaurants', 'mosquees', 'activites'];
 
+// Filtres équipements halal pour les hôtels.
+const HOTEL_FILTERS: { key: string; label: string; test: (l: Lieu) => boolean | undefined }[] = [
+  { key: 'priere', label: '🕌 Salle de prière', test: (l) => l.salleDePriere },
+  { key: 'sansAlcool', label: '🚫 Sans alcool', test: (l) => l.sansAlcool },
+  { key: 'petitDej', label: '🍳 Petit-déj halal', test: (l) => l.petitDejeunerHalal },
+];
+
 function pinColor(tab: TabKey, lieu: Lieu): string {
   if (tab === 'restaurants') {
     const b = halalBadge(lieu.halalConfidence);
@@ -50,6 +57,7 @@ export default function VilleScreen() {
   const [ville, setVille] = useState<VilleDetail | null>(null);
   const [state, setState] = useState<LoadState>('loading');
   const [tab, setTab] = useState<TabKey>('restaurants');
+  const [hotelFilters, setHotelFilters] = useState<string[]>([]);
 
   const load = useCallback(async () => {
     if (!slug) return;
@@ -83,20 +91,28 @@ export default function VilleScreen() {
       ? { latitude: ville.latitude, longitude: ville.longitude }
       : null;
 
-  // Lieux de l'onglet actif, triés par distance au centre-ville.
+  // Lieux de l'onglet actif. Hôtels : filtrés par équipement + triés par note
+  // (pas encore de coords). Autres : triés par distance au centre-ville.
   const lieux: LieuDist[] = useMemo(() => {
     if (!ville || tab === 'pratique') return [];
-    const arr = ville[tab];
-    return arr
-      .map((l) => ({
-        ...l,
-        dist:
-          cityCoords && l.latitude != null && l.longitude != null
-            ? distanceKm(cityCoords.latitude, cityCoords.longitude, l.latitude, l.longitude)
-            : null,
-      }))
-      .sort((a, b) => (a.dist ?? Infinity) - (b.dist ?? Infinity));
-  }, [ville, tab, cityCoords]);
+    let arr = ville[tab];
+    if (tab === 'hotels' && hotelFilters.length > 0) {
+      arr = arr.filter((h) =>
+        hotelFilters.every((k) => HOTEL_FILTERS.find((f) => f.key === k)?.test(h)),
+      );
+    }
+    const withDist = arr.map((l) => ({
+      ...l,
+      dist:
+        cityCoords && l.latitude != null && l.longitude != null
+          ? distanceKm(cityCoords.latitude, cityCoords.longitude, l.latitude, l.longitude)
+          : null,
+    }));
+    if (tab === 'hotels') {
+      return withDist.sort((a, b) => (b.note ?? 0) - (a.note ?? 0));
+    }
+    return withDist.sort((a, b) => (a.dist ?? Infinity) - (b.dist ?? Infinity));
+  }, [ville, tab, cityCoords, hotelFilters]);
 
   const pins = useMemo(() => lieux.filter((l) => l.latitude != null && l.longitude != null), [lieux]);
   const showMap = MAP_TABS.includes(tab) && !!cityCoords;
@@ -239,6 +255,34 @@ export default function VilleScreen() {
             />
           </View>
 
+          {/* Filtres équipements (hôtels) */}
+          {tab === 'hotels' && (
+            <View style={styles.hotelFiltersBar}>
+              <FlatList
+                data={HOTEL_FILTERS}
+                keyExtractor={(f) => f.key}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.tabsRow}
+                renderItem={({ item }) => {
+                  const on = hotelFilters.includes(item.key);
+                  return (
+                    <Pressable
+                      onPress={() =>
+                        setHotelFilters((prev) =>
+                          on ? prev.filter((k) => k !== item.key) : [...prev, item.key],
+                        )
+                      }
+                      style={[styles.fchip, on && styles.fchipOn]}
+                    >
+                      <Text style={[styles.fchipText, on && styles.fchipTextOn]}>{item.label}</Text>
+                    </Pressable>
+                  );
+                }}
+              />
+            </View>
+          )}
+
           {/* Contenu */}
           {tab === 'pratique' ? (
             <ScrollView style={styles.list} contentContainerStyle={styles.listPad}>
@@ -256,11 +300,87 @@ export default function VilleScreen() {
                   <Text style={styles.muted}>Rien pour cet onglet pour le moment.</Text>
                 </View>
               }
-              renderItem={({ item }) => <LieuCard lieu={item} dist={item.dist} onGo={() => goLieu(item)} />}
+              renderItem={({ item }) =>
+                tab === 'hotels' ? (
+                  <HotelCard hotel={item} onGo={() => goLieu(item)} />
+                ) : (
+                  <LieuCard lieu={item} dist={item.dist} onGo={() => goLieu(item)} />
+                )
+              }
             />
           )}
         </>
       )}
+    </View>
+  );
+}
+
+function HotelCard({ hotel, onGo }: { hotel: Lieu; onGo: () => void }) {
+  const amenities: string[] = [];
+  if (hotel.salleDePriere) amenities.push('🕌 Salle de prière');
+  if (hotel.qibla) amenities.push('🧭 Qibla');
+  if (hotel.petitDejeunerHalal) amenities.push('🍳 Petit-déj halal');
+  if (hotel.sansAlcool) amenities.push('🚫 Sans alcool');
+  if (hotel.piscineNonMixte) amenities.push('🏊 Piscine non-mixte');
+  if (hotel.halalFriendly && amenities.length === 0) amenities.push('✓ Halal-friendly');
+
+  return (
+    <View style={styles.card}>
+      <View style={styles.cardBody}>
+        <View style={styles.cardTitleRow}>
+          <Text style={styles.cardName}>{hotel.nom}</Text>
+          {hotel.note != null && (
+            <View style={styles.rating}>
+              <Text style={styles.ratingStar}>★</Text>
+              <Text style={styles.ratingText}>{hotel.note.toFixed(1)}</Text>
+            </View>
+          )}
+        </View>
+
+        <View style={styles.metaRow}>
+          {hotel.category && <Text style={styles.metaText}>{hotel.category}</Text>}
+          {hotel.price && <Text style={styles.metaText}>{hotel.price}</Text>}
+          {hotel.adresse && <Text style={styles.metaText}>📍 {hotel.adresse}</Text>}
+        </View>
+
+        {amenities.length > 0 && (
+          <View style={styles.amenityRow}>
+            {amenities.map((a) => (
+              <Text key={a} style={styles.amenity}>
+                {a}
+              </Text>
+            ))}
+          </View>
+        )}
+
+        {hotel.description && (
+          <Text style={styles.cardDesc} numberOfLines={2}>
+            {hotel.description}
+          </Text>
+        )}
+
+        <View style={styles.actionsRow}>
+          {hotel.halalBookingUrl ? (
+            <Pressable
+              style={styles.bookBtn}
+              onPress={() => Linking.openURL(hotel.halalBookingUrl!).catch(() => undefined)}
+            >
+              <Text style={styles.bookText}>🕌 Réserver halal</Text>
+            </Pressable>
+          ) : null}
+          {hotel.bookingUrl ? (
+            <Pressable
+              style={styles.actionBtn}
+              onPress={() => Linking.openURL(hotel.bookingUrl!).catch(() => undefined)}
+            >
+              <Text style={styles.actionText}>Réserver</Text>
+            </Pressable>
+          ) : null}
+          <Pressable style={styles.actionBtn} onPress={onGo}>
+            <Text style={styles.actionText}>🧭 Itinéraire</Text>
+          </Pressable>
+        </View>
+      </View>
     </View>
   );
 }
@@ -362,6 +482,26 @@ const styles = StyleSheet.create({
 
   list: { flex: 1 },
   listPad: { padding: Spacing.lg, gap: Spacing.md, paddingBottom: Spacing.xl * 2 },
+
+  hotelFiltersBar: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Brand.border, paddingVertical: Spacing.sm },
+  fchip: { paddingHorizontal: Spacing.md, paddingVertical: 7, borderRadius: Radius.pill, borderWidth: 1, borderColor: Brand.border },
+  fchipOn: { backgroundColor: Brand.gold, borderColor: Brand.gold },
+  fchipText: { color: Brand.cream, fontSize: 12, fontWeight: '700' },
+  fchipTextOn: { color: Brand.night, fontWeight: '800' },
+
+  amenityRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 2 },
+  amenity: {
+    backgroundColor: 'rgba(45,106,79,0.85)',
+    color: '#eafff1',
+    fontSize: 11,
+    fontWeight: '700',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: Radius.pill,
+    overflow: 'hidden',
+  },
+  bookBtn: { paddingHorizontal: Spacing.md, paddingVertical: 7, borderRadius: Radius.pill, backgroundColor: Brand.gold },
+  bookText: { color: Brand.night, fontSize: 12, fontWeight: '800' },
 
   card: {
     backgroundColor: Brand.forest,

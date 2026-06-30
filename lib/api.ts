@@ -48,6 +48,16 @@ export interface Lieu {
   category?: string; // type de cuisine / catégorie d'hôtel
   price?: string; // gamme de prix (€, €€…)
   halalConfidence?: string; // 'only' | 'yes' (certifié) | 'likely' (à vérifier)
+  // ── Spécifique hôtels ──
+  bookingUrl?: string;
+  halalBookingUrl?: string;
+  sansAlcool?: boolean;
+  salleDePriere?: boolean;
+  qibla?: boolean;
+  petitDejeunerHalal?: boolean;
+  piscineNonMixte?: boolean;
+  halalFriendly?: boolean;
+  services?: string[];
 }
 
 /** Niveau de confiance halal → badge à afficher (vert certifié / ambre à vérifier). */
@@ -105,6 +115,21 @@ function pickArray(obj: Raw, ...keys: string[]): Raw[] {
     if (Array.isArray(v)) return v.map(asRecord);
   }
   return [];
+}
+
+function pickBool(obj: Raw, ...keys: string[]): boolean | undefined {
+  for (const k of keys) {
+    if (typeof obj[k] === 'boolean') return obj[k] as boolean;
+  }
+  return undefined;
+}
+
+function pickStringList(obj: Raw, ...keys: string[]): string[] | undefined {
+  for (const k of keys) {
+    const v = obj[k];
+    if (Array.isArray(v)) return v.filter((x): x is string => typeof x === 'string');
+  }
+  return undefined;
 }
 
 function slugify(input: string): string {
@@ -169,6 +194,16 @@ function normalizeLieu(raw: Raw, idx: number, prefix: string): Lieu {
     halalConfidence:
       pickString(raw, 'halalConfidence', 'halal_confidence') ??
       (raw.certificationHalal === true ? 'yes' : undefined),
+    // Hôtels (tolérant à la coquille "salleDePreiere" présente dans la base).
+    bookingUrl: pickString(raw, 'bookingUrl', 'booking_url', 'booking'),
+    halalBookingUrl: pickString(raw, 'halalBookingUrl', 'halal_booking_url', 'halalbooking'),
+    sansAlcool: pickBool(raw, 'sansAlcool', 'sans_alcool', 'noAlcohol'),
+    salleDePriere: pickBool(raw, 'salleDePriere', 'salleDePreiere', 'salle_de_priere', 'prayerRoom'),
+    qibla: pickBool(raw, 'qiblaIndicateur', 'qibla', 'qibla_indicateur', 'qiblaDirection'),
+    petitDejeunerHalal: pickBool(raw, 'petitDejeunerHalal', 'petit_dejeuner_halal', 'halalBreakfast'),
+    piscineNonMixte: pickBool(raw, 'piscineNonMixte', 'piscine_non_mixte', 'womenOnlyPool'),
+    halalFriendly: pickBool(raw, 'halalFriendly', 'halal_friendly'),
+    services: pickStringList(raw, 'services', 'equipements', 'amenities'),
   };
 }
 
