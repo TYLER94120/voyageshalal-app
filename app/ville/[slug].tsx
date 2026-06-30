@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -9,7 +9,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import MapView, { Callout, Marker, Region } from 'react-native-maps';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
@@ -50,9 +49,6 @@ const TABS: { key: TabKey; emoji: string; label: string }[] = [
 type LoadState = 'loading' | 'ready' | 'error';
 type LieuDist = Lieu & { dist: number | null };
 
-// Onglets affichant des pins sur la carte.
-const MAP_TABS: TabKey[] = ['restaurants', 'mosquees', 'activites', 'hotels'];
-
 // Filtres équipements halal pour les hôtels.
 const HOTEL_FILTERS: { key: string; label: string; test: (l: Lieu) => boolean | undefined }[] = [
   { key: 'priere', label: '🕌 Salle de prière', test: (l) => l.salleDePriere },
@@ -60,21 +56,10 @@ const HOTEL_FILTERS: { key: string; label: string; test: (l: Lieu) => boolean | 
   { key: 'petitDej', label: '🍳 Petit-déj halal', test: (l) => l.petitDejeunerHalal },
 ];
 
-function pinColor(tab: TabKey, lieu: Lieu): string {
-  if (tab === 'restaurants') {
-    const b = halalBadge(lieu.halalConfidence);
-    return b?.tone === 'amber' ? '#c9a84c' : '#2d6a4f';
-  }
-  if (tab === 'mosquees') return '#1b4332';
-  if (tab === 'activites') return '#6A1B9A';
-  return '#2b6cb0';
-}
-
 export default function VilleScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const router = useRouter();
   const { isFavorite, toggle } = useFavorites();
-  const mapRef = useRef<MapView>(null);
   const [ville, setVille] = useState<VilleDetail | null>(null);
   const [state, setState] = useState<LoadState>('loading');
   const [tab, setTab] = useState<TabKey>('restaurants');
@@ -167,11 +152,26 @@ export default function VilleScreen() {
     };
   }, [cityCoords]);
 
-  // Liste de mosquées de référence : API (curée) + OSM (exhaustive), dédupliquée.
-  const allMosquees = useMemo(
-    () => mergeMosquees(ville?.mosquees ?? [], osmMosquees),
-    [ville, osmMosquees],
-  );
+  // Liste de mosquées de référence : API (curée) + OSM, dédupliquée, puis
+  // plafonnée aux ~120 plus proches du centre (sinon « 1656 » = inutilisable
+  // et coûteux pour le score hôtel).
+  const allMosquees = useMemo(() => {
+    const merged = mergeMosquees(ville?.mosquees ?? [], osmMosquees);
+    if (!cityCoords || merged.length <= 120) return merged;
+    return [...merged]
+      .sort((a, b) => {
+        const da =
+          a.latitude != null && a.longitude != null
+            ? distanceKm(cityCoords.latitude, cityCoords.longitude, a.latitude, a.longitude)
+            : Infinity;
+        const db =
+          b.latitude != null && b.longitude != null
+            ? distanceKm(cityCoords.latitude, cityCoords.longitude, b.latitude, b.longitude)
+            : Infinity;
+        return da - db;
+      })
+      .slice(0, 120);
+  }, [ville, osmMosquees, cityCoords]);
 
   // Hôtels dédupliqués (curés + OSM densifiés) — utilisés partout.
   const hotelsList = useMemo(() => (ville ? dedupeHotels(ville.hotels) : []), [ville]);
@@ -253,36 +253,6 @@ export default function VilleScreen() {
     return applyLieuFilters(base, filters, effectiveSort);
   }, [rawWithDist, tab, hotelFilters, nearMosqueOnly, selectionNames, filters, effectiveSort]);
 
-  // Carte : on plafonne les repères (la liste reste complète). Rendre des
-  // centaines de marqueurs react-native-maps fige la carte ; ~50 suffisent.
-  const MAX_PINS = 50;
-  const pins = useMemo(
-    () => lieux.filter((l) => l.latitude != null && l.longitude != null).slice(0, MAX_PINS),
-    [lieux],
-  );
-  const showMap = MAP_TABS.includes(tab) && !!cityCoords;
-
-  // Cadre la carte sur les pins de l'onglet actif.
-  useEffect(() => {
-    if (!showMap) return;
-    if (pins.length > 0) {
-      mapRef.current?.fitToCoordinates(
-        pins.map((p) => ({ latitude: p.latitude!, longitude: p.longitude! })),
-        { edgePadding: { top: 60, left: 60, right: 60, bottom: 60 }, animated: true },
-      );
-    } else if (cityCoords) {
-      mapRef.current?.animateToRegion(
-        { ...cityCoords, latitudeDelta: 0.12, longitudeDelta: 0.12 },
-        400,
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tab, ville?.slug, pins.length]);
-
-  const initialRegion: Region | undefined = cityCoords
-    ? { ...cityCoords, latitudeDelta: 0.12, longitudeDelta: 0.12 }
-    : undefined;
-
   const goLieu = (l: Lieu) => {
     if (l.mapsUrl) openMapsUrl(l.mapsUrl);
     else if (l.latitude != null && l.longitude != null) openDirections(l.latitude, l.longitude);
@@ -344,63 +314,6 @@ export default function VilleScreen() {
             </View>
           )}
 
-          {/* Carte (onglets géolocalisés) */}
-          {showMap && (
-            <View style={styles.mapWrap}>
-              <MapView
-                ref={mapRef}
-                style={StyleSheet.absoluteFillObject}
-                initialRegion={initialRegion}
-                showsCompass={false}
-                rotateEnabled={false}
-                pitchEnabled={false}
-                toolbarEnabled={false}
-              >
-                {pins.map((p) => (
-                  <Marker
-                    key={p.id}
-                    coordinate={{ latitude: p.latitude!, longitude: p.longitude! }}
-                    pinColor={pinColor(tab, p)}
-                  >
-                    <Callout tooltip onPress={() => goLieu(p)}>
-                      <View style={styles.callout}>
-                        <Text style={styles.calloutName}>{p.nom}</Text>
-                        {tab === 'restaurants' &&
-                          (() => {
-                            const b = halalBadge(p.halalConfidence);
-                            return b ? (
-                              <Text
-                                style={[
-                                  styles.calloutBadge,
-                                  b.tone === 'green' ? styles.calloutGreen : styles.calloutAmber,
-                                ]}
-                              >
-                                {b.label}
-                              </Text>
-                            ) : null;
-                          })()}
-                        {tab === 'hotels' && p.loc?.nearestMosqueKm != null && (
-                          <Text style={styles.calloutMeta}>
-                            🕌 Mosquée à {formatDistance(p.loc.nearestMosqueKm)}
-                            {p.loc.restosNear > 0 ? ` · 🍽️ ${p.loc.restosNear} restos` : ''}
-                          </Text>
-                        )}
-                        <View style={styles.calloutCta}>
-                          <Text style={styles.calloutCtaText}>🧭 Itinéraire</Text>
-                        </View>
-                      </View>
-                    </Callout>
-                  </Marker>
-                ))}
-              </MapView>
-              {pins.length === 0 && (
-                <View style={styles.mapEmpty} pointerEvents="none">
-                  <Text style={styles.mapEmptyText}>Positions bientôt disponibles</Text>
-                </View>
-              )}
-            </View>
-          )}
-
           {/* Onglets */}
           <View style={styles.tabsBar}>
             <FlatList
@@ -430,30 +343,6 @@ export default function VilleScreen() {
           {/* Tri + filtres (restaurants / activités / hôtels) */}
           {tab !== 'pratique' && tab !== 'mosquees' && (
             <View style={styles.controls}>
-              {/* Sélections premium curées (restaurants) */}
-              {tab === 'restaurants' && ville.selections.length > 0 && (
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={styles.controlRow}
-                >
-                  {ville.selections.map((s) => {
-                    const on = selection === s.key;
-                    return (
-                      <Pressable
-                        key={s.key}
-                        onPress={() => setSelection(on ? null : s.key)}
-                        style={[styles.selChip, on && styles.selChipOn]}
-                      >
-                        <Text style={[styles.selChipText, on && styles.selChipTextOn]}>
-                          {s.icon} {s.label}
-                        </Text>
-                      </Pressable>
-                    );
-                  })}
-                </ScrollView>
-              )}
-
               {sortOptions.length > 1 && (
                 <ScrollView
                   horizontal
@@ -488,6 +377,15 @@ export default function VilleScreen() {
                     onPress={() => setFilters((f) => ({ ...f, certifOnly: !f.certifOnly }))}
                   />
                 )}
+                {tab === 'restaurants' &&
+                  ville.selections.map((s) => (
+                    <FilterChip
+                      key={`s-${s.key}`}
+                      label={`${s.icon} ${s.label}`}
+                      on={selection === s.key}
+                      onPress={() => setSelection(selection === s.key ? null : s.key)}
+                    />
+                  ))}
                 {tab === 'activites' && rawWithDist.some((l) => l.price?.toLowerCase() === 'gratuit') && (
                   <FilterChip
                     label="🆓 Gratuit"
