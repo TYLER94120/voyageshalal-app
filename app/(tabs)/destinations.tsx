@@ -19,6 +19,20 @@ import { getVilles, type VilleSummary } from '@/lib/api';
 type LoadState = 'loading' | 'ready' | 'error';
 type SortKey = 'az' | 'score';
 
+// Image de ville avec repli 🕌 si l'URL est absente OU si le chargement échoue
+// (certaines URLs Unsplash de la base sont cassées → on évite la carte vide).
+function CityImage({ uri }: { uri?: string }) {
+  const [err, setErr] = useState(false);
+  if (!uri || err) {
+    return (
+      <View style={[styles.cardImage, styles.cardImageFallback]}>
+        <Text style={styles.cardImageFallbackText}>🕌</Text>
+      </View>
+    );
+  }
+  return <Image source={{ uri }} style={styles.cardImage} onError={() => setErr(true)} />;
+}
+
 export default function DestinationsScreen() {
   const router = useRouter();
   const [villes, setVilles] = useState<VilleSummary[]>([]);
@@ -157,6 +171,7 @@ export default function DestinationsScreen() {
         <FlatList
           data={filtered}
           keyExtractor={(item) => item.slug}
+          style={styles.cardsList}
           contentContainerStyle={styles.list}
           showsVerticalScrollIndicator={false}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={Brand.gold} />}
@@ -167,13 +182,7 @@ export default function DestinationsScreen() {
           }
           renderItem={({ item }) => (
             <Pressable style={styles.card} onPress={() => router.push(`/ville/${item.slug}`)}>
-              {item.image ? (
-                <Image source={{ uri: item.image }} style={styles.cardImage} />
-              ) : (
-                <View style={[styles.cardImage, styles.cardImageFallback]}>
-                  <Text style={styles.cardImageFallbackText}>🕌</Text>
-                </View>
-              )}
+              <CityImage uri={item.image} />
 
               {item.scoreHalal != null && (
                 <View style={styles.scoreBadge}>
@@ -234,6 +243,7 @@ const styles = StyleSheet.create({
   sortChip: { backgroundColor: Brand.forest, borderColor: Brand.gold },
   sortChipText: { color: Brand.gold, fontSize: 13, fontWeight: '800' },
 
+  cardsList: { flex: 1 },
   list: { padding: Spacing.lg, paddingTop: Spacing.md, gap: 14 },
   card: {
     height: 170,
