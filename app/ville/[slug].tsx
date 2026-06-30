@@ -719,9 +719,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Brand.border,
   },
-  sortPillOn: { backgroundColor: Brand.night, borderColor: Brand.gold },
+  sortPillOn: { backgroundColor: Brand.gold, borderColor: Brand.gold },
   sortPillText: { color: Brand.creamMuted, fontSize: 13, fontWeight: '700' },
-  sortPillTextOn: { color: Brand.gold, fontWeight: '800' },
+  sortPillTextOn: { color: Brand.night, fontWeight: '800' },
 
   fchip: { paddingHorizontal: Spacing.md, paddingVertical: 7, borderRadius: Radius.pill, borderWidth: 1, borderColor: Brand.border },
   fchipOn: { backgroundColor: Brand.gold, borderColor: Brand.gold },

@@ -20,7 +20,16 @@ import { fetchNearbyMosques } from '@/lib/overpass';
 import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPlaces';
 import { CitySearchModal } from '@/components/CitySearchModal';
 import { getVille, halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
+import { priceRank } from '@/lib/lieuSort';
 import { consumePendingCity } from '@/lib/pendingCity';
+
+// Tri rapide de la liste resto sur la page d'accueil.
+type QuickSort = 'proche' | 'note' | 'prix';
+const QUICK_SORTS: { key: QuickSort; label: string }[] = [
+  { key: 'proche', label: '📍 Proche' },
+  { key: 'note', label: '⭐ Noté' },
+  { key: 'prix', label: '💶 Prix' },
+];
 
 // ─── Filtres ────────────────────────────────────────────────────────────────
 
@@ -92,6 +101,9 @@ export default function HomeScreen() {
   const [cityDetailState, setCityDetailState] = useState<CityDetailState>('idle');
   // Lieu sélectionné (lien carte ↔ liste du bas).
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Sélection fine côté restaurants : cuisine + tri (ex. « le japonais le plus proche »).
+  const [quickCat, setQuickCat] = useState<string | null>(null);
+  const [quickSort, setQuickSort] = useState<QuickSort>('proche');
 
   const activeFilterRef = useRef(activeFilter);
   useEffect(() => {
@@ -200,6 +212,8 @@ export default function HomeScreen() {
 
       setSelectedCity({ nom: ville.nom, ...coords });
       setSelectedId(null);
+      setQuickCat(null);
+      setQuickSort('proche');
       mapCenter.current = coords;
       // Vue large pour voir un maximum de mosquées de l'agglomération.
       mapRef.current?.animateToRegion({ ...coords, latitudeDelta: 0.16, longitudeDelta: 0.16 }, 800);
@@ -224,6 +238,8 @@ export default function HomeScreen() {
     setCityDetail(null);
     setCityDetailState('idle');
     setSelectedId(null);
+    setQuickCat(null);
+    setQuickSort('proche');
     if (userLoc) {
       mapCenter.current = userLoc;
       mapRef.current?.animateToRegion({ ...userLoc, latitudeDelta: 0.04, longitudeDelta: 0.04 }, 700);
@@ -277,28 +293,51 @@ export default function HomeScreen() {
     }));
   }, [activeFilter, mosques, selectedCity, cityDetail, userLoc]);
 
+  // Cuisines disponibles (restaurants d'une ville chargée) pour la sélection fine.
+  const cuisineOptions = useMemo(() => {
+    if (activeFilter !== 'restaurants') return [];
+    const set = new Set<string>();
+    places.forEach((p) => p.category && set.add(p.category));
+    return Array.from(set).sort((a, b) => a.localeCompare(b, 'fr'));
+  }, [places, activeFilter]);
+
+  // Liste affichée = lieux filtrés par la cuisine choisie (restaurants seulement).
+  const visiblePlaces = useMemo(() => {
+    if (activeFilter === 'restaurants' && quickCat) {
+      return places.filter((p) => p.category === quickCat);
+    }
+    return places;
+  }, [places, activeFilter, quickCat]);
+
+  const showQuickBar = activeFilter === 'restaurants' && cuisineOptions.length > 1;
+
   const markers = useMemo(
     () =>
-      places.filter(
+      visiblePlaces.filter(
         (p): p is PinItem & { latitude: number; longitude: number } =>
           typeof p.latitude === 'number' && typeof p.longitude === 'number',
       ),
-    [places],
+    [visiblePlaces],
   );
 
   const nearbyList: PinWithDist[] = useMemo(() => {
     const origin = selectedCity ?? userLoc ?? mapCenter.current;
-    return places
-      .map((p) => ({
-        ...p,
-        dist:
-          typeof p.latitude === 'number' && typeof p.longitude === 'number'
-            ? distanceKm(origin.latitude, origin.longitude, p.latitude, p.longitude)
-            : null,
-      }))
-      .sort((a, b) => (a.dist ?? Infinity) - (b.dist ?? Infinity))
-      .slice(0, 40);
-  }, [places, userLoc, selectedCity]);
+    const withDist = visiblePlaces.map((p) => ({
+      ...p,
+      dist:
+        typeof p.latitude === 'number' && typeof p.longitude === 'number'
+          ? distanceKm(origin.latitude, origin.longitude, p.latitude, p.longitude)
+          : null,
+    }));
+    withDist.sort((a, b) => {
+      if (activeFilter === 'restaurants') {
+        if (quickSort === 'note') return (b.note ?? -1) - (a.note ?? -1);
+        if (quickSort === 'prix') return (priceRank(a.price) ?? 99) - (priceRank(b.price) ?? 99);
+      }
+      return (a.dist ?? Infinity) - (b.dist ?? Infinity);
+    });
+    return withDist.slice(0, 40);
+  }, [visiblePlaces, userLoc, selectedCity, activeFilter, quickSort]);
 
   const searchRadius = () => (selectedCity ? CITY_RADIUS_M : ME_RADIUS_M);
 
@@ -319,6 +358,8 @@ export default function HomeScreen() {
   const handleFilterPress = (key: FilterKey) => {
     setActiveFilter(key);
     setSelectedId(null);
+    setQuickCat(null);
+    setQuickSort('proche');
     if (key === 'mosquees' && (mosqueState === 'idle' || mosqueState === 'error')) {
       loadMosques(mapCenter.current.latitude, mapCenter.current.longitude, searchRadius());
     }
@@ -470,7 +511,7 @@ export default function HomeScreen() {
             <Text style={styles.statusText}>Aucune mosquée ici — déplacez la carte</Text>
           ) : (
             <Text style={styles.statusText}>
-              {places.length} {activeCfg.label}
+              {visiblePlaces.length} {quickCat ?? activeCfg.label}
               {selectedCity ? ` · ${selectedCity.nom}` : activeFilter === 'mosquees' ? ' à proximité' : ' (démo)'}
             </Text>
           )}
@@ -500,6 +541,47 @@ export default function HomeScreen() {
       {/* Liste des lieux proches */}
       {nearbyList.length > 0 && (
         <View style={styles.cardsWrapper}>
+          {/* Sélection fine restaurants : tri + cuisine (« le japonais le plus proche ») */}
+          {showQuickBar && (
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.quickScroll}
+              style={styles.quickBar}
+            >
+              {QUICK_SORTS.map((s) => {
+                const on = quickSort === s.key;
+                return (
+                  <Pressable
+                    key={s.key}
+                    onPress={() => setQuickSort(s.key)}
+                    style={[styles.quickChip, on && styles.quickChipOn]}
+                  >
+                    <Text style={[styles.quickChipText, on && styles.quickChipTextOn]}>{s.label}</Text>
+                  </Pressable>
+                );
+              })}
+              <View style={styles.quickSep} />
+              <Pressable
+                onPress={() => setQuickCat(null)}
+                style={[styles.quickChip, !quickCat && styles.quickChipOn]}
+              >
+                <Text style={[styles.quickChipText, !quickCat && styles.quickChipTextOn]}>Toutes</Text>
+              </Pressable>
+              {cuisineOptions.map((c) => {
+                const on = quickCat === c;
+                return (
+                  <Pressable
+                    key={c}
+                    onPress={() => setQuickCat(on ? null : c)}
+                    style={[styles.quickChip, on && styles.quickChipOn]}
+                  >
+                    <Text style={[styles.quickChipText, on && styles.quickChipTextOn]}>{c}</Text>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+          )}
           <ScrollView
             ref={cardsRef}
             horizontal
@@ -525,7 +607,9 @@ export default function HomeScreen() {
                       </Text>
                     ) : null;
                   })()}
-                  {i === 0 && p.dist != null && <Text style={styles.nearestTag}>la + proche</Text>}
+                  {i === 0 && p.dist != null && quickSort === 'proche' && (
+                    <Text style={styles.nearestTag}>la + proche</Text>
+                  )}
                   {p.demo && <Text style={styles.demoTag}>démo</Text>}
                 </View>
                 <Text style={styles.placeName} numberOfLines={2}>
@@ -741,6 +825,24 @@ const styles = StyleSheet.create({
 
   cardsWrapper: { position: 'absolute', left: 0, right: 0, bottom: Platform.OS === 'ios' ? 124 : 98 },
   cardsScroll: { paddingHorizontal: 16, gap: 10 },
+
+  quickBar: { maxHeight: 38, marginBottom: 8, flexGrow: 0 },
+  quickScroll: { paddingHorizontal: 16, gap: 8, alignItems: 'center' },
+  quickChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: Radius.pill,
+    backgroundColor: 'rgba(255,255,255,0.95)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.18,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  quickChipOn: { backgroundColor: Brand.gold },
+  quickChipText: { color: '#333', fontSize: 12, fontWeight: '800' },
+  quickChipTextOn: { color: Brand.night, fontWeight: '800' },
+  quickSep: { width: 1, height: 20, backgroundColor: 'rgba(255,255,255,0.5)', marginHorizontal: 2 },
   placeCard: {
     width: 190,
     backgroundColor: 'rgba(255,255,255,0.98)',
