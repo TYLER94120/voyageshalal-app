@@ -46,6 +46,10 @@ const DEFAULT_REGION: Region = { ...PARIS, latitudeDelta: 0.06, longitudeDelta: 
 const ME_RADIUS_M = 6000;
 const CITY_RADIUS_M = 25000;
 
+// Dimensions des cartes du bas (pour le défilement lié à la carte).
+const CARD_W = 190;
+const CARD_GAP = 10;
+
 type MosqueState = 'idle' | 'loading' | 'ready' | 'error';
 type CityDetailState = 'idle' | 'loading' | 'ready' | 'error';
 
@@ -70,6 +74,7 @@ export default function HomeScreen() {
   const mapCenter = useRef({ ...PARIS });
   const watchRef = useRef<Location.LocationSubscription | null>(null);
   const mosquesKicked = useRef(false);
+  const cardsRef = useRef<ScrollView>(null);
 
   const [userLoc, setUserLoc] = useState<{ latitude: number; longitude: number } | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterKey>('mosquees');
@@ -82,6 +87,8 @@ export default function HomeScreen() {
   const [cityModal, setCityModal] = useState(false);
   const [cityDetail, setCityDetail] = useState<VilleDetail | null>(null);
   const [cityDetailState, setCityDetailState] = useState<CityDetailState>('idle');
+  // Lieu sélectionné (lien carte ↔ liste du bas).
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const activeFilterRef = useRef(activeFilter);
   useEffect(() => {
@@ -189,6 +196,7 @@ export default function HomeScreen() {
       if (!coords) return;
 
       setSelectedCity({ nom: ville.nom, ...coords });
+      setSelectedId(null);
       mapCenter.current = coords;
       // Vue large pour voir un maximum de mosquées de l'agglomération.
       mapRef.current?.animateToRegion({ ...coords, latitudeDelta: 0.16, longitudeDelta: 0.16 }, 800);
@@ -212,6 +220,7 @@ export default function HomeScreen() {
     setSelectedCity(null);
     setCityDetail(null);
     setCityDetailState('idle');
+    setSelectedId(null);
     if (userLoc) {
       mapCenter.current = userLoc;
       mapRef.current?.animateToRegion({ ...userLoc, latitudeDelta: 0.04, longitudeDelta: 0.04 }, 700);
@@ -276,13 +285,28 @@ export default function HomeScreen() {
             : null,
       }))
       .sort((a, b) => (a.dist ?? Infinity) - (b.dist ?? Infinity))
-      .slice(0, 20);
+      .slice(0, 40);
   }, [places, userLoc, selectedCity]);
 
   const searchRadius = () => (selectedCity ? CITY_RADIUS_M : ME_RADIUS_M);
 
+  // Fait défiler la liste du bas jusqu'à la carte d'un lieu.
+  const scrollCardsTo = (id: string) => {
+    const idx = nearbyList.findIndex((p) => p.id === id);
+    if (idx >= 0) {
+      cardsRef.current?.scrollTo({ x: Math.max(0, idx * (CARD_W + CARD_GAP) - 16), animated: true });
+    }
+  };
+
+  // Clic sur un repère de la carte → sélectionne + met en avant sa carte.
+  const onMarkerPress = (id: string) => {
+    setSelectedId(id);
+    scrollCardsTo(id);
+  };
+
   const handleFilterPress = (key: FilterKey) => {
     setActiveFilter(key);
+    setSelectedId(null);
     if (key === 'mosquees' && (mosqueState === 'idle' || mosqueState === 'error')) {
       loadMosques(mapCenter.current.latitude, mapCenter.current.longitude, searchRadius());
     }
@@ -339,9 +363,23 @@ export default function HomeScreen() {
           </Marker>
         )}
 
-        {markers.map((place) => (
-          <Marker key={place.id} coordinate={{ latitude: place.latitude, longitude: place.longitude }} pinColor={activeCfg.marker}>
-            <View style={[styles.markerBubble, { backgroundColor: activeCfg.marker }]}>
+        {markers.map((place) => {
+          const isSel = selectedId === place.id;
+          return (
+          <Marker
+            key={place.id}
+            coordinate={{ latitude: place.latitude, longitude: place.longitude }}
+            pinColor={activeCfg.marker}
+            onPress={() => onMarkerPress(place.id)}
+            zIndex={isSel ? 99 : 1}
+          >
+            <View
+              style={[
+                styles.markerBubble,
+                { backgroundColor: activeCfg.marker },
+                isSel && styles.markerBubbleActive,
+              ]}
+            >
               <Text style={styles.markerEmoji}>{activeCfg.emoji}</Text>
             </View>
             <Callout tooltip onPress={() => goPlace(place)}>
@@ -355,7 +393,8 @@ export default function HomeScreen() {
               </View>
             </Callout>
           </Marker>
-        ))}
+          );
+        })}
       </MapView>
 
       {/* En-tête : logo + barre de recherche de ville */}
@@ -449,9 +488,21 @@ export default function HomeScreen() {
       {/* Liste des lieux proches */}
       {nearbyList.length > 0 && (
         <View style={styles.cardsWrapper}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.cardsScroll}>
+          <ScrollView
+            ref={cardsRef}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.cardsScroll}
+          >
             {nearbyList.map((p, i) => (
-              <Pressable key={p.id} style={styles.placeCard} onPress={() => focusPlace(p)}>
+              <Pressable
+                key={p.id}
+                style={[styles.placeCard, selectedId === p.id && styles.placeCardActive]}
+                onPress={() => {
+                  setSelectedId(p.id);
+                  focusPlace(p);
+                }}
+              >
                 <View style={styles.placeCardTop}>
                   <Text style={styles.placeEmoji}>{activeCfg.emoji}</Text>
                   {i === 0 && p.dist != null && <Text style={styles.nearestTag}>la + proche</Text>}
@@ -682,6 +733,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 7,
   },
+  placeCardActive: { borderWidth: 2, borderColor: Brand.gold },
   placeCardTop: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   placeEmoji: { fontSize: 18, flex: 1 },
   nearestTag: {
@@ -774,6 +826,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 6,
+  },
+  markerBubbleActive: {
+    borderColor: Brand.gold,
+    borderWidth: 4,
+    transform: [{ scale: 1.25 }],
   },
   markerEmoji: { fontSize: 20 },
 
