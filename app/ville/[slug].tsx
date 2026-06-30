@@ -255,7 +255,13 @@ export default function VilleScreen() {
     return applyLieuFilters(base, filters, effectiveSort);
   }, [rawWithDist, tab, hotelFilters, nearMosqueOnly, selectionNames, filters, effectiveSort]);
 
-  const pins = useMemo(() => lieux.filter((l) => l.latitude != null && l.longitude != null), [lieux]);
+  // Carte : on plafonne les repères (la liste reste complète). Rendre des
+  // centaines de marqueurs react-native-maps fige la carte ; ~50 suffisent.
+  const MAX_PINS = 50;
+  const pins = useMemo(
+    () => lieux.filter((l) => l.latitude != null && l.longitude != null).slice(0, MAX_PINS),
+    [lieux],
+  );
   const showMap = MAP_TABS.includes(tab) && !!cityCoords;
 
   // Cadre la carte sur les pins de l'onglet actif.

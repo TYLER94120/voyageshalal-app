@@ -358,14 +358,28 @@ export default function HomeScreen() {
 
   const showQuickBar = sortable && !!selectedCity && places.length > 1;
 
+  // On plafonne les repères de la carte : rendre des centaines de marqueurs
+  // personnalisés fige la carte. ~60 suffisent largement à l'écran.
+  const MAX_MARKERS = 60;
   const markers = useMemo(
     () =>
-      visiblePlaces.filter(
-        (p): p is PinItem & { latitude: number; longitude: number } =>
-          typeof p.latitude === 'number' && typeof p.longitude === 'number',
-      ),
+      visiblePlaces
+        .filter(
+          (p): p is PinItem & { latitude: number; longitude: number } =>
+            typeof p.latitude === 'number' && typeof p.longitude === 'number',
+        )
+        .slice(0, MAX_MARKERS),
     [visiblePlaces],
   );
+
+  // tracksViewChanges : true brièvement pour dessiner les marqueurs, puis false
+  // (sinon react-native-maps les redessine à chaque frame → gros lag).
+  const [markersTrack, setMarkersTrack] = useState(true);
+  useEffect(() => {
+    setMarkersTrack(true);
+    const t = setTimeout(() => setMarkersTrack(false), 900);
+    return () => clearTimeout(t);
+  }, [markers, selectedId]);
 
   const nearbyList: PinWithDist[] = useMemo(() => {
     const origin = selectedCity ?? userLoc ?? mapCenter.current;
@@ -472,6 +486,7 @@ export default function HomeScreen() {
             coordinate={{ latitude: place.latitude, longitude: place.longitude }}
             pinColor={activeCfg.marker}
             onPress={() => onMarkerPress(place.id)}
+            tracksViewChanges={markersTrack}
             zIndex={isSel ? 99 : 1}
           >
             <View

@@ -13,7 +13,6 @@
 
 import type { Lieu } from './api';
 import type { OsmPlace } from './overpass';
-import { distanceKm } from './geo';
 
 const DEFAULT_DEDUPE_METERS = 140;
 
@@ -32,19 +31,20 @@ export function mergeMosquees(
   dedupeMeters = DEFAULT_DEDUPE_METERS,
 ): Lieu[] {
   const result: Lieu[] = [];
+  // Déduplication par grille spatiale → O(n) (au lieu de O(n²)). La taille de
+  // cellule ≈ dedupeMeters : deux mosquées dans la même cellule = la même.
+  const cell = Math.max(0.0005, dedupeMeters / 111000); // mètres → degrés (~111 km/°)
+  const seen = new Set<string>();
   // API d'abord : en cas de doublon, on conserve la fiche curée (mieux nommée).
   for (const m of [...api, ...osm]) {
     if (m.latitude == null || m.longitude == null) {
       result.push(m);
       continue;
     }
-    const duplicate = result.some(
-      (r) =>
-        r.latitude != null &&
-        r.longitude != null &&
-        distanceKm(r.latitude, r.longitude, m.latitude!, m.longitude!) * 1000 <= dedupeMeters,
-    );
-    if (!duplicate) result.push(m);
+    const key = `${Math.round(m.latitude / cell)},${Math.round(m.longitude / cell)}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    result.push(m);
   }
   return result;
 }
