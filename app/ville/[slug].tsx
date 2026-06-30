@@ -33,6 +33,7 @@ import { HotelAroundSheet } from '@/components/HotelAroundSheet';
 import { fetchNearbyMosques } from '@/lib/overpass';
 import { mergeMosquees, osmToLieu } from '@/lib/mosques';
 import { HeartButton } from '@/components/HeartButton';
+import { useFavorites } from '@/context/FavoritesContext';
 import { cityFavKey, placeFavKey, type FavoriteItem } from '@/lib/favorites';
 import { useTrips } from '@/context/TripsContext';
 import { tripItemKey, type TripItemType } from '@/lib/trips';
@@ -75,6 +76,7 @@ export default function VilleScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const router = useRouter();
   const { addToTrip, isInTrip, getCityTrip, applyPlan } = useTrips();
+  const { isFavorite, toggle } = useFavorites();
   const mapRef = useRef<MapView>(null);
   const [ville, setVille] = useState<VilleDetail | null>(null);
   const [state, setState] = useState<LoadState>('loading');
@@ -656,6 +658,29 @@ export default function VilleScreen() {
             />
           )}
 
+          {/* Boutons flottants (bas = zone toujours accessible, écran haut cassé) */}
+          <View style={styles.fabColumn}>
+            <Pressable
+              style={styles.fabHeart}
+              onPress={() =>
+                toggle({
+                  id: cityFavKey(ville.slug),
+                  type: 'city',
+                  title: ville.nom,
+                  subtitle: [ville.pays, ville.continent].filter(Boolean).join(' · '),
+                  emoji: '🏙️',
+                  citySlug: ville.slug,
+                  image: ville.image,
+                })
+              }
+            >
+              <Text style={styles.fabHeartText}>{isFavorite(cityFavKey(ville.slug)) ? '❤️' : '🤍'}</Text>
+            </Pressable>
+            <Pressable style={styles.fabTrip} onPress={planOrOpenTrip}>
+              <Text style={styles.fabTripText}>🗓️ Mon séjour</Text>
+            </Pressable>
+          </View>
+
           {aroundHotel && (
             <HotelAroundSheet
               hotel={aroundHotel}
@@ -980,6 +1005,37 @@ const styles = StyleSheet.create({
 
   headerRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
   headerCal: { fontSize: 18 },
+
+  fabColumn: { position: 'absolute', right: 16, bottom: 28, alignItems: 'flex-end', gap: Spacing.sm },
+  fabHeart: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: 'rgba(255,255,255,0.97)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 7,
+    alignSelf: 'flex-end',
+  },
+  fabHeartText: { fontSize: 24 },
+  fabTrip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Brand.gold,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: 14,
+    borderRadius: Radius.pill,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 8,
+  },
+  fabTripText: { color: Brand.night, fontSize: 15, fontWeight: '800' },
 
   offlineBar: { backgroundColor: '#7a5c12', paddingVertical: 6, paddingHorizontal: Spacing.lg },
   offlineText: { color: '#fff', fontSize: 12, fontWeight: '700', textAlign: 'center' },

@@ -257,6 +257,12 @@ export default function TripDetailScreen() {
             </Pressable>
           </View>
         )}
+
+        {trip.items.length > 0 && (
+          <Pressable style={styles.deleteRow} onPress={confirmDelete}>
+            <Text style={styles.deleteRowText}>🗑️ Supprimer ce séjour</Text>
+          </Pressable>
+        )}
       </ScrollView>
     </View>
   );
@@ -286,6 +292,8 @@ const styles = StyleSheet.create({
   autoBannerTitle: { color: Brand.night, fontSize: 16, fontWeight: '800' },
   autoBannerSub: { color: Brand.night, fontSize: 12, fontWeight: '600', textAlign: 'center', opacity: 0.85 },
   autoLink: { color: Brand.gold, fontSize: 13, fontWeight: '800', marginTop: Spacing.xs },
+  deleteRow: { alignItems: 'center', paddingVertical: Spacing.md, marginTop: Spacing.md },
+  deleteRowText: { color: '#e9a', fontSize: 13, fontWeight: '800' },
 
   daysBar: {
     flexDirection: 'row',
