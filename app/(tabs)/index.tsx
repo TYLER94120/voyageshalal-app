@@ -19,7 +19,8 @@ import { openDirections, openDirectionsQuery, openMapsUrl } from '@/lib/maps';
 import { fetchNearbyMosques } from '@/lib/overpass';
 import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPlaces';
 import { CitySearchModal } from '@/components/CitySearchModal';
-import { getVille, halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
+import { halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
+import { getVilleCached } from '@/lib/cityCache';
 import { priceRank } from '@/lib/lieuSort';
 import { dedupeHotels, hotelLocationStats } from '@/lib/hotelLocation';
 import { HotelAroundSheet } from '@/components/HotelAroundSheet';
@@ -249,8 +250,8 @@ export default function HomeScreen() {
       setCityDetail(null);
       setCityDetailState('loading');
       try {
-        const detail = await getVille(ville.slug);
-        setCityDetail(detail);
+        const { data } = await getVilleCached(ville.slug);
+        setCityDetail(data);
         setCityDetailState('ready');
       } catch {
         setCityDetailState('error');
