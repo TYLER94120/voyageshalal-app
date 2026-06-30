@@ -1,11 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
+  BackHandler,
   FlatList,
-  Modal,
-  Platform,
   Pressable,
-  StatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -17,8 +15,10 @@ import { Brand, Radius, Spacing } from '@/constants/theme';
 
 type LoadState = 'loading' | 'ready' | 'error';
 
-const TOP_PAD = (Platform.OS === 'android' ? StatusBar.currentHeight ?? 24 : 52) + Spacing.md;
+const TOP_PAD = Spacing.lg;
 
+// Panneau plein écran (overlay absolu) — fiable sur Android, contrairement au
+// composant <Modal> natif qui s'affiche mal au-dessus d'une MapView.
 export function CitySearchModal({
   visible,
   onClose,
@@ -32,7 +32,7 @@ export function CitySearchModal({
   const [state, setState] = useState<LoadState>('loading');
   const [query, setQuery] = useState('');
 
-  // Charge la liste à l'ouverture (et réessaie si vide).
+  // Charge la liste à l'ouverture.
   useEffect(() => {
     if (!visible || villes.length > 0) return;
     let alive = true;
@@ -51,6 +51,16 @@ export function CitySearchModal({
     };
   }, [visible, villes.length]);
 
+  // Bouton retour Android → ferme le panneau.
+  useEffect(() => {
+    if (!visible) return;
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+      onClose();
+      return true;
+    });
+    return () => sub.remove();
+  }, [visible, onClose]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return villes;
@@ -62,89 +72,99 @@ export function CitySearchModal({
     );
   }, [villes, query]);
 
+  if (!visible) return null;
+
   return (
-    <Modal visible={visible} animationType="slide" onRequestClose={onClose} statusBarTranslucent>
-      <View style={[styles.sheet, { paddingTop: TOP_PAD }]}>
-        <View style={styles.handleRow}>
-          <Text style={styles.title}>Où veux-tu aller ?</Text>
-          <Pressable onPress={onClose} hitSlop={12}>
-            <Text style={styles.close}>✕</Text>
+    <View style={[styles.overlay, { paddingTop: TOP_PAD }]}>
+      <View style={styles.handleRow}>
+        <Text style={styles.title}>Où veux-tu aller ?</Text>
+        <Pressable onPress={onClose} hitSlop={12} style={styles.closeBtn}>
+          <Text style={styles.close}>✕</Text>
+        </Pressable>
+      </View>
+
+      <View style={styles.searchBox}>
+        <Text style={styles.searchIcon}>🔎</Text>
+        <TextInput
+          value={query}
+          onChangeText={setQuery}
+          placeholder="Rechercher une ville…"
+          placeholderTextColor={Brand.creamMuted}
+          style={styles.input}
+          autoFocus
+          autoCorrect={false}
+          returnKeyType="search"
+        />
+        {query.length > 0 && (
+          <Pressable onPress={() => setQuery('')} hitSlop={10}>
+            <Text style={styles.clear}>✕</Text>
           </Pressable>
-        </View>
-
-        <View style={styles.searchBox}>
-          <Text style={styles.searchIcon}>🔎</Text>
-          <TextInput
-            value={query}
-            onChangeText={setQuery}
-            placeholder="Rechercher une ville…"
-            placeholderTextColor={Brand.creamMuted}
-            style={styles.input}
-            autoCorrect={false}
-            returnKeyType="search"
-          />
-          {query.length > 0 && (
-            <Pressable onPress={() => setQuery('')} hitSlop={10}>
-              <Text style={styles.clear}>✕</Text>
-            </Pressable>
-          )}
-        </View>
-
-        {state === 'loading' && (
-          <View style={styles.center}>
-            <ActivityIndicator size="large" color={Brand.gold} />
-            <Text style={styles.muted}>Chargement des villes…</Text>
-          </View>
-        )}
-
-        {state === 'error' && (
-          <View style={styles.center}>
-            <Text style={styles.errEmoji}>📡</Text>
-            <Text style={styles.muted}>Impossible de charger les villes. Vérifie ta connexion.</Text>
-            <Pressable style={styles.retry} onPress={() => setVilles([])}>
-              <Text style={styles.retryText}>Réessayer</Text>
-            </Pressable>
-          </View>
-        )}
-
-        {state === 'ready' && (
-          <FlatList
-            data={filtered}
-            keyExtractor={(v) => v.slug}
-            keyboardShouldPersistTaps="handled"
-            contentContainerStyle={styles.list}
-            ListEmptyComponent={
-              <Text style={[styles.muted, styles.empty]}>Aucune ville pour « {query} ».</Text>
-            }
-            renderItem={({ item }) => (
-              <Pressable
-                style={styles.row}
-                onPress={() => {
-                  onSelect(item);
-                  onClose();
-                }}
-              >
-                <Text style={styles.rowEmoji}>🕌</Text>
-                <View style={styles.rowText}>
-                  <Text style={styles.rowName}>{item.nom}</Text>
-                  {(item.region || item.pays) && (
-                    <Text style={styles.rowSub}>{[item.region, item.pays].filter(Boolean).join(' · ')}</Text>
-                  )}
-                </View>
-                <Text style={styles.rowGo}>›</Text>
-              </Pressable>
-            )}
-          />
         )}
       </View>
-    </Modal>
+
+      {state === 'loading' && (
+        <View style={styles.center}>
+          <ActivityIndicator size="large" color={Brand.gold} />
+          <Text style={styles.muted}>Chargement des villes…</Text>
+        </View>
+      )}
+
+      {state === 'error' && (
+        <View style={styles.center}>
+          <Text style={styles.errEmoji}>📡</Text>
+          <Text style={styles.muted}>Impossible de charger les villes. Vérifie ta connexion.</Text>
+          <Pressable style={styles.retry} onPress={() => setVilles([])}>
+            <Text style={styles.retryText}>Réessayer</Text>
+          </Pressable>
+        </View>
+      )}
+
+      {state === 'ready' && (
+        <FlatList
+          data={filtered}
+          keyExtractor={(v) => v.slug}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={styles.list}
+          ListEmptyComponent={<Text style={[styles.muted, styles.empty]}>Aucune ville pour « {query} ».</Text>}
+          renderItem={({ item }) => (
+            <Pressable
+              style={styles.row}
+              onPress={() => {
+                onSelect(item);
+                onClose();
+              }}
+            >
+              <Text style={styles.rowEmoji}>🕌</Text>
+              <View style={styles.rowText}>
+                <Text style={styles.rowName}>{item.nom}</Text>
+                {(item.region || item.pays) && (
+                  <Text style={styles.rowSub}>{[item.region, item.pays].filter(Boolean).join(' · ')}</Text>
+                )}
+              </View>
+              <Text style={styles.rowGo}>›</Text>
+            </Pressable>
+          )}
+        />
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  sheet: { flex: 1, backgroundColor: Brand.night, paddingHorizontal: Spacing.lg },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1000,
+    elevation: 1000,
+    backgroundColor: Brand.night,
+    paddingHorizontal: Spacing.lg,
+  },
   handleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: Spacing.md },
   title: { color: Brand.cream, fontSize: 22, fontWeight: '800' },
+  closeBtn: { padding: 4 },
   close: { color: Brand.gold, fontSize: 22, fontWeight: '800' },
 
   searchBox: {
