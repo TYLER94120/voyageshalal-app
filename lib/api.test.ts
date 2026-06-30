@@ -1,4 +1,4 @@
-import { parseVillesPayload } from './api';
+import { parseVillesPayload, parseVilleDetailPayload } from './api';
 
 // Échantillon fidèle à la vraie réponse /api/villes (coords imbriquées).
 const PAYLOAD = {
@@ -49,5 +49,64 @@ describe('parseVillesPayload', () => {
     expect(parseVillesPayload([{ slug: 'x', nom: 'X', coordonnees: { lat: 1, lng: 2 } }])).toHaveLength(1);
     expect(parseVillesPayload(null)).toEqual([]);
     expect(parseVillesPayload({})).toEqual([]);
+  });
+});
+
+// Échantillon fidèle au détail /api/villes/tokyo.
+const DETAIL = {
+  nom: 'Tokyo',
+  slug: 'tokyo',
+  pays: 'Japon',
+  coordonnees: { lat: 35.6762, lng: 139.6503 },
+  restaurants: [
+    {
+      nom: 'Naritaya Halal Ramen Asakusa',
+      type: 'Traditionnel local',
+      score: 4.4,
+      adresse: 'Asakusa',
+      mapsUrl: 'https://maps.google.com/?q=Naritaya+Halal+Ramen+Asakusa+Tokyo',
+      priceRange: '€€',
+      specialite: 'Ramen halal',
+      id: 'r1',
+    },
+  ],
+  hotels: [
+    {
+      nom: 'Aman Tokyo',
+      categorie: 'Luxe',
+      score: 4.5,
+      adresse: 'Otemachi',
+      mapsUrl: 'https://maps.google.com/?q=Aman+Tokyo+Tokyo',
+      priceRange: '€€€€',
+      id: 'h1',
+    },
+  ],
+  mosqueesPrincipales: [
+    { nom: 'Tokyo Camii', adresse: 'Shibuya', coordonnees: { lat: 35.68, lng: 139.69 }, id: 'm1' },
+  ],
+};
+
+describe('parseVilleDetailPayload', () => {
+  it('lit restaurants/hôtels avec note, type, prix et lien Maps (sans coords)', () => {
+    const d = parseVilleDetailPayload(DETAIL)!;
+    expect(d.restaurants).toHaveLength(1);
+    const r = d.restaurants[0];
+    expect(r.nom).toBe('Naritaya Halal Ramen Asakusa');
+    expect(r.note).toBe(4.4);
+    expect(r.category).toBe('Traditionnel local');
+    expect(r.price).toBe('€€');
+    expect(r.mapsUrl).toContain('maps.google.com');
+    expect(r.latitude).toBeUndefined();
+
+    const h = d.hotels[0];
+    expect(h.category).toBe('Luxe');
+    expect(h.price).toBe('€€€€');
+  });
+
+  it('mappe mosqueesPrincipales (avec coords) vers mosquees', () => {
+    const d = parseVilleDetailPayload(DETAIL)!;
+    expect(d.mosquees).toHaveLength(1);
+    expect(d.mosquees[0].nom).toBe('Tokyo Camii');
+    expect(d.mosquees[0].latitude).toBeCloseTo(35.68, 2);
   });
 });

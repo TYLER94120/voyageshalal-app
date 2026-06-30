@@ -14,7 +14,7 @@ import * as Location from 'expo-location';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
 import { distanceKm, formatDistance } from '@/lib/geo';
-import { openDirections, openDirectionsQuery } from '@/lib/maps';
+import { openDirections, openDirectionsQuery, openMapsUrl } from '@/lib/maps';
 import { fetchNearbyMosques } from '@/lib/overpass';
 import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPlaces';
 import { CitySearchModal } from '@/components/CitySearchModal';
@@ -52,6 +52,10 @@ interface PinItem {
   latitude?: number;
   longitude?: number;
   address?: string;
+  note?: number;
+  price?: string;
+  category?: string;
+  mapsUrl?: string;
   demo?: boolean;
 }
 interface PinWithDist extends PinItem {
@@ -230,6 +234,10 @@ export default function HomeScreen() {
           latitude: l.latitude,
           longitude: l.longitude,
           address: l.adresse,
+          note: l.note,
+          price: l.price,
+          category: l.category,
+          mapsUrl: l.mapsUrl,
         }));
       }
     }
@@ -275,7 +283,9 @@ export default function HomeScreen() {
   };
 
   const goPlace = (p: PinItem) => {
-    if (typeof p.latitude === 'number' && typeof p.longitude === 'number') {
+    if (p.mapsUrl) {
+      openMapsUrl(p.mapsUrl);
+    } else if (typeof p.latitude === 'number' && typeof p.longitude === 'number') {
       openDirections(p.latitude, p.longitude);
     } else {
       openDirectionsQuery([p.name, selectedCity?.nom].filter(Boolean).join(', '));
@@ -439,8 +449,19 @@ export default function HomeScreen() {
                 <Text style={styles.placeName} numberOfLines={2}>
                   {p.name}
                 </Text>
+                {p.category && (
+                  <Text style={styles.placeCat} numberOfLines={1}>
+                    {p.category}
+                  </Text>
+                )}
                 <View style={styles.placeCardBottom}>
-                  <Text style={styles.placeDist}>{p.dist != null ? formatDistance(p.dist) : 'voir'}</Text>
+                  <Text style={styles.placeDist}>
+                    {p.note != null
+                      ? `⭐ ${p.note.toFixed(1)}${p.price ? ` · ${p.price}` : ''}`
+                      : p.dist != null
+                        ? formatDistance(p.dist)
+                        : 'voir'}
+                  </Text>
                   <Pressable style={styles.goBtn} onPress={() => goPlace(p)} hitSlop={8}>
                     <Text style={styles.goBtnText}>Y aller ›</Text>
                   </Pressable>
@@ -655,6 +676,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   placeName: { fontSize: 14, fontWeight: '700', color: '#1a1a1a', minHeight: 36 },
+  placeCat: { fontSize: 11, fontWeight: '600', color: '#9c4221', marginTop: -2 },
   placeCardBottom: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   placeDist: { fontSize: 13, fontWeight: '700', color: '#666' },
   goBtn: { backgroundColor: Brand.forest, borderRadius: Radius.pill, paddingHorizontal: 12, paddingVertical: 6 },

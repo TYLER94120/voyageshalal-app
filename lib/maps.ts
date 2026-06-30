@@ -24,3 +24,8 @@ export function openDirectionsQuery(query: string): void {
   const url = `https://www.google.com/maps/dir/?api=1&destination=${dest}`;
   Linking.openURL(url).catch(() => undefined);
 }
+
+/** Ouvre directement un lien Maps fourni par la base (recherche/listing). */
+export function openMapsUrl(url: string): void {
+  Linking.openURL(url).catch(() => undefined);
+}

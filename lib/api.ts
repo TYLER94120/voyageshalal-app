@@ -42,6 +42,9 @@ export interface Lieu {
   longitude?: number;
   telephone?: string;
   site?: string;
+  mapsUrl?: string; // lien Google Maps fourni par la base (recherche par nom)
+  category?: string; // type de cuisine / catégorie d'hôtel
+  price?: string; // gamme de prix (€, €€…)
 }
 
 export interface VilleDetail extends VilleSummary {
@@ -142,6 +145,9 @@ function normalizeLieu(raw: Raw, idx: number, prefix: string): Lieu {
     longitude,
     telephone: pickString(raw, 'telephone', 'téléphone', 'phone', 'tel'),
     site: pickString(raw, 'site', 'website', 'url', 'lien'),
+    mapsUrl: pickString(raw, 'mapsUrl', 'maps_url', 'googleMaps', 'google_maps'),
+    category: pickString(raw, 'type', 'categorie', 'catégorie', 'category'),
+    price: pickString(raw, 'priceRange', 'price', 'prix', 'gamme_prix'),
   };
 }
 
@@ -155,7 +161,7 @@ function normalizeVilleDetail(raw: Raw): VilleDetail | null {
   return {
     ...base,
     restaurants: normalizeLieux(raw, 'resto', 'restaurants', 'restos', 'restauration'),
-    mosquees: normalizeLieux(raw, 'mosq', 'mosquees', 'mosquées', 'mosques', 'lieuxDePriere'),
+    mosquees: normalizeLieux(raw, 'mosq', 'mosqueesPrincipales', 'mosquees', 'mosquées', 'mosques', 'lieuxDePriere'),
     hotels: normalizeLieux(raw, 'hotel', 'hotels', 'hôtels', 'hebergements', 'hébergements', 'logements'),
     activites: normalizeLieux(raw, 'act', 'activites', 'activités', 'aFaire', 'activities', 'visites'),
     pratique: pickString(raw, 'pratique', 'infosPratiques', 'infos_pratiques', 'practical', 'transport'),
@@ -218,9 +224,14 @@ export async function getVilles(): Promise<VilleSummary[]> {
   return parseVillesPayload(payload);
 }
 
+/** Parsing pur de la réponse /api/villes/{slug} (testable). */
+export function parseVilleDetailPayload(payload: unknown): VilleDetail | null {
+  return normalizeVilleDetail(extractDetail(payload));
+}
+
 export async function getVille(slug: string): Promise<VilleDetail> {
   const payload = await fetchJson(`${API_BASE}/villes/${encodeURIComponent(slug)}`);
-  const detail = normalizeVilleDetail(extractDetail(payload));
+  const detail = parseVilleDetailPayload(payload);
   if (!detail) {
     throw new Error(`Ville introuvable : ${slug}`);
   }
