@@ -1,19 +1,21 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  Image,
   Linking,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import MapView, { Callout, Marker, Region } from 'react-native-maps';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
+import { distanceKm, formatDistance } from '@/lib/geo';
+import { openMapsUrl, openDirections } from '@/lib/maps';
 import { getVille, halalBadge, type Lieu, type VilleDetail } from '@/lib/api';
-import { setPendingCity } from '@/lib/pendingCity';
 
 type TabKey = 'restaurants' | 'mosquees' | 'hotels' | 'activites' | 'pratique';
 
@@ -26,10 +28,25 @@ const TABS: { key: TabKey; emoji: string; label: string }[] = [
 ];
 
 type LoadState = 'loading' | 'ready' | 'error';
+type LieuDist = Lieu & { dist: number | null };
+
+// Onglets affichant des pins sur la carte (les hôtels n'ont pas encore de coords).
+const MAP_TABS: TabKey[] = ['restaurants', 'mosquees', 'activites'];
+
+function pinColor(tab: TabKey, lieu: Lieu): string {
+  if (tab === 'restaurants') {
+    const b = halalBadge(lieu.halalConfidence);
+    return b?.tone === 'amber' ? '#c9a84c' : '#2d6a4f';
+  }
+  if (tab === 'mosquees') return '#1b4332';
+  if (tab === 'activites') return '#6A1B9A';
+  return '#2b6cb0';
+}
 
 export default function VilleScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const router = useRouter();
+  const mapRef = useRef<MapView>(null);
   const [ville, setVille] = useState<VilleDetail | null>(null);
   const [state, setState] = useState<LoadState>('loading');
   const [tab, setTab] = useState<TabKey>('restaurants');
@@ -50,7 +67,6 @@ export default function VilleScreen() {
     load();
   }, [load]);
 
-  // Compteurs par onglet, pour afficher les badges
   const counts = useMemo(() => {
     if (!ville) return {} as Record<TabKey, number>;
     return {
@@ -62,10 +78,54 @@ export default function VilleScreen() {
     } as Record<TabKey, number>;
   }, [ville]);
 
-  const lieux: Lieu[] = useMemo(() => {
+  const cityCoords =
+    ville && ville.latitude != null && ville.longitude != null
+      ? { latitude: ville.latitude, longitude: ville.longitude }
+      : null;
+
+  // Lieux de l'onglet actif, triés par distance au centre-ville.
+  const lieux: LieuDist[] = useMemo(() => {
     if (!ville || tab === 'pratique') return [];
-    return ville[tab];
-  }, [ville, tab]);
+    const arr = ville[tab];
+    return arr
+      .map((l) => ({
+        ...l,
+        dist:
+          cityCoords && l.latitude != null && l.longitude != null
+            ? distanceKm(cityCoords.latitude, cityCoords.longitude, l.latitude, l.longitude)
+            : null,
+      }))
+      .sort((a, b) => (a.dist ?? Infinity) - (b.dist ?? Infinity));
+  }, [ville, tab, cityCoords]);
+
+  const pins = useMemo(() => lieux.filter((l) => l.latitude != null && l.longitude != null), [lieux]);
+  const showMap = MAP_TABS.includes(tab) && !!cityCoords;
+
+  // Cadre la carte sur les pins de l'onglet actif.
+  useEffect(() => {
+    if (!showMap) return;
+    if (pins.length > 0) {
+      mapRef.current?.fitToCoordinates(
+        pins.map((p) => ({ latitude: p.latitude!, longitude: p.longitude! })),
+        { edgePadding: { top: 60, left: 60, right: 60, bottom: 60 }, animated: true },
+      );
+    } else if (cityCoords) {
+      mapRef.current?.animateToRegion(
+        { ...cityCoords, latitudeDelta: 0.12, longitudeDelta: 0.12 },
+        400,
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab, ville?.slug, pins.length]);
+
+  const initialRegion: Region | undefined = cityCoords
+    ? { ...cityCoords, latitudeDelta: 0.12, longitudeDelta: 0.12 }
+    : undefined;
+
+  const goLieu = (l: Lieu) => {
+    if (l.mapsUrl) openMapsUrl(l.mapsUrl);
+    else if (l.latitude != null && l.longitude != null) openDirections(l.latitude, l.longitude);
+  };
 
   return (
     <View style={styles.container}>
@@ -101,143 +161,114 @@ export default function VilleScreen() {
       )}
 
       {state === 'ready' && ville && (
-        <FlatList
-          data={lieux}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.list}
-          showsVerticalScrollIndicator={false}
-          ListHeaderComponent={
-            <VilleHeader ville={ville} tab={tab} setTab={setTab} counts={counts} />
-          }
-          ListEmptyComponent={
-            tab === 'pratique' ? (
-              <PratiqueBlock text={ville.pratique} />
-            ) : (
-              <View style={styles.emptyTab}>
-                <Text style={styles.muted}>
-                  Aucune adresse renseignée pour cet onglet pour le moment.
-                </Text>
-              </View>
-            )
-          }
-          renderItem={({ item }) => <LieuCard lieu={item} />}
-        />
-      )}
-    </View>
-  );
-}
-
-function VilleHeader({
-  ville,
-  tab,
-  setTab,
-  counts,
-}: {
-  ville: VilleDetail;
-  tab: TabKey;
-  setTab: (t: TabKey) => void;
-  counts: Record<TabKey, number>;
-}) {
-  const router = useRouter();
-  const seeOnMap = () => {
-    setPendingCity({
-      slug: ville.slug,
-      nom: ville.nom,
-      latitude: ville.latitude,
-      longitude: ville.longitude,
-    });
-    router.navigate('/');
-  };
-  return (
-    <View>
-      {ville.image ? (
-        <Image source={{ uri: ville.image }} style={styles.hero} />
-      ) : (
-        <View style={[styles.hero, styles.heroFallback]}>
-          <Text style={styles.heroFallbackText}>🕌</Text>
-        </View>
-      )}
-      <View style={styles.heroOverlay}>
-        <Text style={styles.heroName}>{ville.nom}</Text>
-        {(ville.region || ville.pays) && (
-          <Text style={styles.heroRegion}>
-            📍 {[ville.region, ville.pays].filter(Boolean).join(' · ')}
-          </Text>
-        )}
-      </View>
-
-      {ville.description && <Text style={styles.intro}>{ville.description}</Text>}
-
-      <Pressable style={styles.mapBtn} onPress={seeOnMap}>
-        <Text style={styles.mapBtnText}>🗺️  Voir les mosquées & restos sur la carte</Text>
-      </Pressable>
-
-      {/* Onglets */}
-      <FlatList
-        data={TABS}
-        keyExtractor={(t) => t.key}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.tabsRow}
-        style={styles.tabsList}
-        renderItem={({ item }) => {
-          const active = tab === item.key;
-          const count = counts[item.key] ?? 0;
-          return (
-            <Pressable
-              onPress={() => setTab(item.key)}
-              style={[styles.tab, active && styles.tabActive]}
-            >
-              <Text style={styles.tabEmoji}>{item.emoji}</Text>
-              <Text style={[styles.tabLabel, active && styles.tabLabelActive]}>{item.label}</Text>
-              {count > 0 && item.key !== 'pratique' && (
-                <View style={[styles.badge, active && styles.badgeActive]}>
-                  <Text style={[styles.badgeText, active && styles.badgeTextActive]}>{count}</Text>
+        <>
+          {/* Carte (onglets géolocalisés) */}
+          {showMap && (
+            <View style={styles.mapWrap}>
+              <MapView
+                ref={mapRef}
+                style={StyleSheet.absoluteFillObject}
+                initialRegion={initialRegion}
+                showsCompass={false}
+                rotateEnabled={false}
+                pitchEnabled={false}
+                toolbarEnabled={false}
+              >
+                {pins.map((p) => (
+                  <Marker
+                    key={p.id}
+                    coordinate={{ latitude: p.latitude!, longitude: p.longitude! }}
+                    pinColor={pinColor(tab, p)}
+                  >
+                    <Callout tooltip onPress={() => goLieu(p)}>
+                      <View style={styles.callout}>
+                        <Text style={styles.calloutName}>{p.nom}</Text>
+                        {tab === 'restaurants' &&
+                          (() => {
+                            const b = halalBadge(p.halalConfidence);
+                            return b ? (
+                              <Text
+                                style={[
+                                  styles.calloutBadge,
+                                  b.tone === 'green' ? styles.calloutGreen : styles.calloutAmber,
+                                ]}
+                              >
+                                {b.label}
+                              </Text>
+                            ) : null;
+                          })()}
+                        <View style={styles.calloutCta}>
+                          <Text style={styles.calloutCtaText}>🧭 Itinéraire</Text>
+                        </View>
+                      </View>
+                    </Callout>
+                  </Marker>
+                ))}
+              </MapView>
+              {pins.length === 0 && (
+                <View style={styles.mapEmpty} pointerEvents="none">
+                  <Text style={styles.mapEmptyText}>Positions bientôt disponibles</Text>
                 </View>
               )}
-            </Pressable>
-          );
-        }}
-      />
+            </View>
+          )}
 
-      {tab === 'mosquees' && (
-        <Pressable style={styles.mosqueeHint} onPress={seeOnMap}>
-          <Text style={styles.mosqueeHintText}>
-            📍 La mosquée la plus proche de vous (en temps réel) → ouvrir la carte
-          </Text>
-        </Pressable>
+          {/* Onglets */}
+          <View style={styles.tabsBar}>
+            <FlatList
+              data={TABS}
+              keyExtractor={(t) => t.key}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.tabsRow}
+              renderItem={({ item }) => {
+                const active = tab === item.key;
+                const count = counts[item.key] ?? 0;
+                return (
+                  <Pressable onPress={() => setTab(item.key)} style={[styles.tab, active && styles.tabActive]}>
+                    <Text style={styles.tabEmoji}>{item.emoji}</Text>
+                    <Text style={[styles.tabLabel, active && styles.tabLabelActive]}>{item.label}</Text>
+                    {count > 0 && item.key !== 'pratique' && (
+                      <View style={[styles.badge, active && styles.badgeActive]}>
+                        <Text style={[styles.badgeText, active && styles.badgeTextActive]}>{count}</Text>
+                      </View>
+                    )}
+                  </Pressable>
+                );
+              }}
+            />
+          </View>
+
+          {/* Contenu */}
+          {tab === 'pratique' ? (
+            <ScrollView style={styles.list} contentContainerStyle={styles.listPad}>
+              <PratiqueBlock text={ville.pratique} />
+            </ScrollView>
+          ) : (
+            <FlatList
+              data={lieux}
+              keyExtractor={(item) => item.id}
+              style={styles.list}
+              contentContainerStyle={styles.listPad}
+              showsVerticalScrollIndicator={false}
+              ListEmptyComponent={
+                <View style={styles.emptyTab}>
+                  <Text style={styles.muted}>Rien pour cet onglet pour le moment.</Text>
+                </View>
+              }
+              renderItem={({ item }) => <LieuCard lieu={item} dist={item.dist} onGo={() => goLieu(item)} />}
+            />
+          )}
+        </>
       )}
     </View>
   );
 }
 
-function LieuCard({ lieu }: { lieu: Lieu }) {
-  // Priorité au lien Maps fourni par la base ; sinon coords, sinon nom+adresse.
-  const openMaps = () => {
-    if (lieu.mapsUrl) {
-      Linking.openURL(lieu.mapsUrl).catch(() => undefined);
-      return;
-    }
-    if (lieu.latitude != null && lieu.longitude != null) {
-      Linking.openURL(
-        `https://www.google.com/maps/search/?api=1&query=${lieu.latitude},${lieu.longitude}`,
-      ).catch(() => undefined);
-      return;
-    }
-    const q = [lieu.nom, lieu.adresse].filter(Boolean).join(', ');
-    if (q) {
-      Linking.openURL(
-        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`,
-      ).catch(() => undefined);
-    }
-  };
-
-  // Un lieu a toujours au moins un nom → on peut toujours l'ouvrir dans Maps.
-  const hasLocation = true;
-
+function LieuCard({ lieu, dist, onGo }: { lieu: LieuDist; dist: number | null; onGo: () => void }) {
+  const badge = halalBadge(lieu.halalConfidence);
   return (
     <View style={styles.card}>
-      {lieu.image && <Image source={{ uri: lieu.image }} style={styles.cardImage} />}
       <View style={styles.cardBody}>
         <View style={styles.cardTitleRow}>
           <Text style={styles.cardName}>{lieu.nom}</Text>
@@ -248,47 +279,36 @@ function LieuCard({ lieu }: { lieu: Lieu }) {
             </View>
           )}
         </View>
-        {lieu.adresse && <Text style={styles.cardAddress}>{lieu.adresse}</Text>}
-        {(() => {
-          const badge = halalBadge(lieu.halalConfidence);
-          if (!badge) return null;
-          return (
-            <View
+
+        <View style={styles.metaRow}>
+          {badge && (
+            <Text
               style={[styles.halalBadge, badge.tone === 'green' ? styles.halalGreen : styles.halalAmber]}
             >
-              <Text
-                style={[styles.halalText, badge.tone === 'green' ? styles.halalTextGreen : styles.halalTextAmber]}
-              >
-                {badge.label}
-              </Text>
-            </View>
-          );
-        })()}
+              {badge.label}
+            </Text>
+          )}
+          {lieu.category && <Text style={styles.metaText}>{lieu.category}</Text>}
+          {lieu.price && <Text style={styles.metaText}>{lieu.price}</Text>}
+          {dist != null && <Text style={styles.metaText}>📍 {formatDistance(dist)}</Text>}
+        </View>
+
         {lieu.description && (
-          <Text style={styles.cardDesc} numberOfLines={3}>
+          <Text style={styles.cardDesc} numberOfLines={2}>
             {lieu.description}
           </Text>
         )}
+
         <View style={styles.actionsRow}>
-          {hasLocation && (
-            <Pressable style={styles.actionBtn} onPress={openMaps}>
-              <Text style={styles.actionText}>🧭 Itinéraire</Text>
-            </Pressable>
-          )}
+          <Pressable style={styles.actionBtn} onPress={onGo}>
+            <Text style={styles.actionText}>🧭 Itinéraire</Text>
+          </Pressable>
           {lieu.telephone && (
             <Pressable
               style={styles.actionBtn}
               onPress={() => Linking.openURL(`tel:${lieu.telephone}`).catch(() => undefined)}
             >
               <Text style={styles.actionText}>📞 Appeler</Text>
-            </Pressable>
-          )}
-          {lieu.site && (
-            <Pressable
-              style={styles.actionBtn}
-              onPress={() => Linking.openURL(lieu.site!).catch(() => undefined)}
-            >
-              <Text style={styles.actionText}>🔗 Site</Text>
             </Pressable>
           )}
         </View>
@@ -315,62 +335,12 @@ function PratiqueBlock({ text }: { text?: string }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Brand.night },
 
-  list: { paddingBottom: Spacing.xl },
+  mapWrap: { height: 260, backgroundColor: Brand.forest },
+  mapEmpty: { ...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center' },
+  mapEmptyText: { color: Brand.cream, fontWeight: '700', backgroundColor: Brand.nightSoft, padding: Spacing.sm, borderRadius: Radius.sm },
 
-  hero: { width: '100%', height: 200, backgroundColor: Brand.forest },
-  heroFallback: { alignItems: 'center', justifyContent: 'center' },
-  heroFallbackText: { fontSize: 64 },
-  heroOverlay: {
-    position: 'absolute',
-    left: Spacing.lg,
-    top: 140,
-  },
-  heroName: {
-    color: Brand.cream,
-    fontSize: 30,
-    fontWeight: '800',
-    textShadowColor: 'rgba(0,0,0,0.6)',
-    textShadowRadius: 8,
-  },
-  heroRegion: {
-    color: Brand.gold,
-    fontSize: 14,
-    fontWeight: '700',
-    marginTop: 2,
-    textShadowColor: 'rgba(0,0,0,0.6)',
-    textShadowRadius: 6,
-  },
-  intro: {
-    color: Brand.creamMuted,
-    fontSize: 14,
-    lineHeight: 21,
-    paddingHorizontal: Spacing.lg,
-    paddingTop: Spacing.md,
-  },
-
-  mapBtn: {
-    marginHorizontal: Spacing.lg,
-    marginTop: Spacing.md,
-    backgroundColor: Brand.gold,
-    borderRadius: Radius.pill,
-    paddingVertical: 13,
-    alignItems: 'center',
-  },
-  mapBtnText: { color: Brand.night, fontWeight: '800', fontSize: 14 },
-
-  mosqueeHint: {
-    marginHorizontal: Spacing.lg,
-    marginTop: Spacing.md,
-    backgroundColor: Brand.goldSoft,
-    borderRadius: Radius.md,
-    borderWidth: 1,
-    borderColor: Brand.border,
-    padding: Spacing.md,
-  },
-  mosqueeHintText: { color: Brand.gold, fontSize: 13, fontWeight: '700', textAlign: 'center' },
-
-  tabsList: { marginTop: Spacing.md },
-  tabsRow: { paddingHorizontal: Spacing.lg, gap: Spacing.sm },
+  tabsBar: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Brand.border },
+  tabsRow: { paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm, gap: Spacing.sm },
   tab: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -385,46 +355,34 @@ const styles = StyleSheet.create({
   tabEmoji: { fontSize: 14 },
   tabLabel: { color: Brand.cream, fontSize: 13, fontWeight: '600' },
   tabLabelActive: { color: Brand.night, fontWeight: '800' },
-  badge: {
-    minWidth: 20,
-    paddingHorizontal: 6,
-    paddingVertical: 1,
-    borderRadius: Radius.pill,
-    backgroundColor: Brand.goldSoft,
-    alignItems: 'center',
-  },
+  badge: { minWidth: 20, paddingHorizontal: 6, paddingVertical: 1, borderRadius: Radius.pill, backgroundColor: Brand.goldSoft, alignItems: 'center' },
   badgeActive: { backgroundColor: Brand.night },
   badgeText: { color: Brand.gold, fontSize: 11, fontWeight: '800' },
   badgeTextActive: { color: Brand.gold },
 
+  list: { flex: 1 },
+  listPad: { padding: Spacing.lg, gap: Spacing.md, paddingBottom: Spacing.xl * 2 },
+
   card: {
-    marginHorizontal: Spacing.lg,
-    marginTop: Spacing.md,
     backgroundColor: Brand.forest,
     borderRadius: Radius.md,
     borderWidth: 1,
     borderColor: Brand.border,
     overflow: 'hidden',
   },
-  cardImage: { width: '100%', height: 140, backgroundColor: Brand.night },
-  cardBody: { padding: Spacing.md, gap: 4 },
-  cardTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: Spacing.sm,
-  },
+  cardBody: { padding: Spacing.md, gap: 6 },
+  cardTitleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm },
   cardName: { color: Brand.cream, fontSize: 17, fontWeight: '700', flex: 1 },
   rating: { flexDirection: 'row', alignItems: 'center', gap: 3 },
   ratingStar: { color: Brand.gold, fontSize: 14 },
   ratingText: { color: Brand.gold, fontSize: 13, fontWeight: '800' },
-  cardAddress: { color: Brand.creamMuted, fontSize: 13 },
-  halalBadge: { alignSelf: 'flex-start', borderRadius: Radius.pill, paddingHorizontal: 8, paddingVertical: 2, marginTop: 4 },
-  halalGreen: { backgroundColor: 'rgba(45,106,79,0.9)' },
-  halalAmber: { backgroundColor: 'rgba(201,168,76,0.9)' },
-  halalText: { fontSize: 11, fontWeight: '800' },
-  halalTextGreen: { color: '#eafff1' },
-  halalTextAmber: { color: Brand.night },
+
+  metaRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6 },
+  halalBadge: { borderRadius: Radius.pill, paddingHorizontal: 8, paddingVertical: 2, fontSize: 11, fontWeight: '800', overflow: 'hidden' },
+  halalGreen: { backgroundColor: '#2d6a4f', color: '#eafff1' },
+  halalAmber: { backgroundColor: Brand.gold, color: Brand.night },
+  metaText: { color: Brand.creamMuted, fontSize: 12, fontWeight: '600' },
+
   cardDesc: { color: Brand.creamMuted, fontSize: 13, lineHeight: 19, marginTop: 2 },
 
   actionsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm, marginTop: Spacing.sm },
@@ -438,29 +396,35 @@ const styles = StyleSheet.create({
   },
   actionText: { color: Brand.gold, fontSize: 12, fontWeight: '700' },
 
-  pratiqueBox: {
-    margin: Spacing.lg,
-    padding: Spacing.md,
-    backgroundColor: Brand.forest,
-    borderRadius: Radius.md,
-    borderWidth: 1,
-    borderColor: Brand.border,
-  },
+  pratiqueBox: { backgroundColor: Brand.forest, borderRadius: Radius.md, borderWidth: 1, borderColor: Brand.border, padding: Spacing.md },
   pratiqueText: { color: Brand.cream, fontSize: 14, lineHeight: 22 },
 
   emptyTab: { padding: Spacing.xl, alignItems: 'center' },
+
+  callout: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 10,
+    width: 200,
+    gap: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  calloutName: { fontWeight: '700', fontSize: 14, color: '#111' },
+  calloutBadge: { alignSelf: 'flex-start', borderRadius: Radius.pill, paddingHorizontal: 8, paddingVertical: 2, fontSize: 11, fontWeight: '800', overflow: 'hidden' },
+  calloutGreen: { backgroundColor: '#2d6a4f', color: '#eafff1' },
+  calloutAmber: { backgroundColor: Brand.gold, color: Brand.night },
+  calloutCta: { marginTop: 4, backgroundColor: Brand.forest, borderRadius: Radius.sm, paddingVertical: 7, alignItems: 'center' },
+  calloutCtaText: { color: '#fff', fontWeight: '800', fontSize: 12 },
 
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.xl, gap: Spacing.sm },
   muted: { color: Brand.creamMuted, fontSize: 14, textAlign: 'center' },
   errorIcon: { fontSize: 44 },
   errorTitle: { color: Brand.cream, fontSize: 18, fontWeight: '700' },
-  retryBtn: {
-    marginTop: Spacing.sm,
-    backgroundColor: Brand.gold,
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.sm,
-    borderRadius: Radius.pill,
-  },
+  retryBtn: { marginTop: Spacing.sm, backgroundColor: Brand.gold, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm, borderRadius: Radius.pill },
   retryText: { color: Brand.night, fontWeight: '800', fontSize: 14 },
   linkBtn: { marginTop: Spacing.xs, padding: Spacing.sm },
   linkText: { color: Brand.gold, fontWeight: '700', fontSize: 14 },
