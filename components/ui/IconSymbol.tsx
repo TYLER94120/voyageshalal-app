@@ -8,6 +8,7 @@ const MAPPING = {
   'map.fill': 'map',
   'calendar': 'calendar-today',
   'clock.fill': 'schedule',
+  'heart.fill': 'favorite',
   'person.fill': 'person',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',

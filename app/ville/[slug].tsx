@@ -31,6 +31,8 @@ import { dedupeHotels, hotelLocationStats, type HotelLocationStats } from '@/lib
 import { HotelAroundSheet } from '@/components/HotelAroundSheet';
 import { fetchNearbyMosques } from '@/lib/overpass';
 import { mergeMosquees, osmToLieu } from '@/lib/mosques';
+import { HeartButton } from '@/components/HeartButton';
+import { cityFavKey, placeFavKey, type FavoriteItem } from '@/lib/favorites';
 
 type TabKey = 'restaurants' | 'mosquees' | 'hotels' | 'activites' | 'pratique';
 
@@ -281,6 +283,21 @@ export default function VilleScreen() {
           headerStyle: { backgroundColor: Brand.night },
           headerTintColor: Brand.gold,
           headerTitleStyle: { color: Brand.cream, fontWeight: '800' },
+          headerRight: () =>
+            ville ? (
+              <HeartButton
+                size={22}
+                item={{
+                  id: cityFavKey(ville.slug),
+                  type: 'city',
+                  title: ville.nom,
+                  subtitle: [ville.pays, ville.continent].filter(Boolean).join(' · '),
+                  emoji: '🏙️',
+                  citySlug: ville.slug,
+                  image: ville.image,
+                }}
+              />
+            ) : null,
         }}
       />
 
@@ -548,12 +565,23 @@ export default function VilleScreen() {
                   <Text style={styles.muted}>Rien pour cet onglet pour le moment.</Text>
                 </View>
               }
-              renderItem={({ item }) =>
-                tab === 'hotels' ? (
+              renderItem={({ item }) => {
+                const emoji = tab === 'hotels' ? '🏨' : tab === 'mosquees' ? '🕌' : tab === 'activites' ? '🗺️' : '🍽️';
+                const fav = {
+                  id: placeFavKey(ville.slug, item.id),
+                  type: 'place' as const,
+                  title: item.nom,
+                  subtitle: [ville.nom, item.category].filter(Boolean).join(' · '),
+                  emoji,
+                  citySlug: ville.slug,
+                  mapsUrl: item.mapsUrl,
+                };
+                return tab === 'hotels' ? (
                   <HotelCard
                     hotel={item}
                     loc={item.loc}
                     dist={item.dist}
+                    fav={fav}
                     onGo={() => goLieu(item)}
                     onAround={
                       item.latitude != null && item.longitude != null
@@ -562,9 +590,9 @@ export default function VilleScreen() {
                     }
                   />
                 ) : (
-                  <LieuCard lieu={item} dist={item.dist} onGo={() => goLieu(item)} />
-                )
-              }
+                  <LieuCard lieu={item} dist={item.dist} fav={fav} onGo={() => goLieu(item)} />
+                );
+              }}
             />
           )}
 
@@ -586,12 +614,14 @@ function HotelCard({
   hotel,
   loc,
   dist,
+  fav,
   onGo,
   onAround,
 }: {
   hotel: Lieu;
   loc?: HotelLocationStats;
   dist?: number | null;
+  fav: Omit<FavoriteItem, 'addedAt'>;
   onGo: () => void;
   onAround?: () => void;
 }) {
@@ -614,6 +644,7 @@ function HotelCard({
               <Text style={styles.ratingText}>{hotel.note.toFixed(1)}</Text>
             </View>
           )}
+          <HeartButton item={fav} size={20} />
         </View>
 
         <View style={styles.metaRow}>
@@ -684,7 +715,17 @@ function HotelCard({
   );
 }
 
-function LieuCard({ lieu, dist, onGo }: { lieu: LieuDist; dist: number | null; onGo: () => void }) {
+function LieuCard({
+  lieu,
+  dist,
+  fav,
+  onGo,
+}: {
+  lieu: LieuDist;
+  dist: number | null;
+  fav: Omit<FavoriteItem, 'addedAt'>;
+  onGo: () => void;
+}) {
   const badge = halalBadge(lieu.halalConfidence);
   return (
     <View style={styles.card}>
@@ -697,6 +738,7 @@ function LieuCard({ lieu, dist, onGo }: { lieu: LieuDist; dist: number | null; o
               <Text style={styles.ratingText}>{lieu.note.toFixed(1)}</Text>
             </View>
           )}
+          <HeartButton item={fav} size={20} />
         </View>
 
         <View style={styles.metaRow}>

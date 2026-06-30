@@ -15,6 +15,8 @@ import { useRouter } from 'expo-router';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
 import { getVilles, type VilleSummary } from '@/lib/api';
+import { HeartButton } from '@/components/HeartButton';
+import { cityFavKey } from '@/lib/favorites';
 
 type LoadState = 'loading' | 'ready' | 'error';
 type SortKey = 'az' | 'score';
@@ -190,6 +192,20 @@ export default function DestinationsScreen() {
                 </View>
               )}
 
+              <HeartButton
+                style={styles.cardHeart}
+                size={24}
+                item={{
+                  id: cityFavKey(item.slug),
+                  type: 'city',
+                  title: item.nom,
+                  subtitle: [item.pays, item.continent].filter(Boolean).join(' · '),
+                  emoji: '🏙️',
+                  citySlug: item.slug,
+                  image: item.image,
+                }}
+              />
+
               <View style={styles.cardOverlay}>
                 <Text style={styles.cardName}>{item.nom}</Text>
                 <Text style={styles.cardSub} numberOfLines={1}>
@@ -266,6 +282,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   scoreText: { color: Brand.night, fontWeight: '800', fontSize: 13 },
+  cardHeart: { position: 'absolute', top: 8, left: 8, width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(11,26,15,0.45)', alignItems: 'center', justifyContent: 'center' },
   cardOverlay: {
     position: 'absolute',
     left: 0,

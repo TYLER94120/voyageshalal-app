@@ -10,6 +10,7 @@ import 'react-native-reanimated';
 import { AdhanScheduler } from '@/components/AdhanScheduler';
 import { NextPrayerBanner } from '@/components/NextPrayerBanner';
 import { PrayerProvider } from '@/context/PrayerContext';
+import { FavoritesProvider } from '@/context/FavoritesContext';
 import { configureNotificationHandler } from '@/lib/notifications';
 import { Brand } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -28,6 +29,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <PrayerProvider>
+          <FavoritesProvider>
           <View style={{ flex: 1, backgroundColor: Brand.night }}>
             {/* Reprogrammation des rappels d'adhan au lancement / premier plan */}
             <AdhanScheduler />
@@ -43,6 +45,7 @@ export default function RootLayout() {
               </Stack>
             </View>
           </View>
+          </FavoritesProvider>
         </PrayerProvider>
       </ThemeProvider>
       <StatusBar style="light" />
