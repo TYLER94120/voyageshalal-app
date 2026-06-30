@@ -8,15 +8,19 @@
 
 import type { Lieu } from './api';
 
-export type SortKey = 'proche' | 'note' | 'populaire' | 'prix';
+export type SortKey = 'situe' | 'proche' | 'note' | 'populaire' | 'prix';
 
 export interface SortOption {
   key: SortKey;
   label: string;
 }
 
-/** Lieu enrichi d'une distance (au centre-ville ou à l'utilisateur). */
-export type LieuDist = Lieu & { dist?: number | null };
+/**
+ * Lieu enrichi pour l'affichage :
+ *   • `dist`     distance (au centre-ville ou à l'utilisateur),
+ *   • `locScore` score « bien situé » (hôtels : proximité mosquée + restos halal).
+ */
+export type LieuDist = Lieu & { dist?: number | null; locScore?: number | null };
 
 // ─── Prix ────────────────────────────────────────────────────────────────────
 
@@ -40,6 +44,8 @@ export function isGratuit(l: Lieu): boolean {
 export function sortLieux<T extends LieuDist>(arr: T[], key: SortKey): T[] {
   const copy = [...arr];
   switch (key) {
+    case 'situe':
+      return copy.sort((a, b) => (b.locScore ?? -1) - (a.locScore ?? -1));
     case 'note':
       return copy.sort((a, b) => (b.note ?? -1) - (a.note ?? -1));
     case 'populaire':
@@ -53,8 +59,11 @@ export function sortLieux<T extends LieuDist>(arr: T[], key: SortKey): T[] {
 }
 
 /** Options de tri pertinentes pour une liste (on masque celles sans donnée). */
-export function sortOptionsFor(arr: Lieu[], hasDistance: boolean): SortOption[] {
+export function sortOptionsFor(arr: LieuDist[], hasDistance: boolean): SortOption[] {
   const opts: SortOption[] = [];
+  // « Bien situés » en tête quand on a des scores d'emplacement (hôtels) : c'est
+  // la valeur ajoutée stratégique pour le voyageur musulman.
+  if (arr.some((l) => l.locScore != null)) opts.push({ key: 'situe', label: '🕌 Bien situés' });
   if (hasDistance && arr.some((l) => l.latitude != null && l.longitude != null)) {
     opts.push({ key: 'proche', label: '📍 Au plus proche' });
   }

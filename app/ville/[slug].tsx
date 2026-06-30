@@ -27,6 +27,7 @@ import {
   type LieuFilters,
   type SortKey,
 } from '@/lib/lieuSort';
+import { hotelLocationStats, type HotelLocationStats } from '@/lib/hotelLocation';
 
 type TabKey = 'restaurants' | 'mosquees' | 'hotels' | 'activites' | 'pratique';
 
@@ -41,8 +42,8 @@ const TABS: { key: TabKey; emoji: string; label: string }[] = [
 type LoadState = 'loading' | 'ready' | 'error';
 type LieuDist = Lieu & { dist: number | null };
 
-// Onglets affichant des pins sur la carte (les hôtels n'ont pas encore de coords).
-const MAP_TABS: TabKey[] = ['restaurants', 'mosquees', 'activites'];
+// Onglets affichant des pins sur la carte.
+const MAP_TABS: TabKey[] = ['restaurants', 'mosquees', 'activites', 'hotels'];
 
 // Filtres équipements halal pour les hôtels.
 const HOTEL_FILTERS: { key: string; label: string; test: (l: Lieu) => boolean | undefined }[] = [
@@ -148,16 +149,21 @@ export default function VilleScreen() {
     return cityCoords ? { coords: cityCoords, fromUser: false } : null;
   }, [userLoc, cityCoords]);
 
-  // Liste brute de l'onglet enrichie d'une distance.
+  // Liste brute de l'onglet enrichie d'une distance, et — pour les hôtels — d'un
+  // score « bien situé » (proximité mosquée + restos halal autour).
   const rawWithDist = useMemo(() => {
     if (!ville || tab === 'pratique') return [];
-    return ville[tab].map((l) => ({
-      ...l,
-      dist:
+    return ville[tab].map((l) => {
+      const dist =
         distOrigin && l.latitude != null && l.longitude != null
           ? distanceKm(distOrigin.coords.latitude, distOrigin.coords.longitude, l.latitude, l.longitude)
-          : null,
-    }));
+          : null;
+      if (tab === 'hotels') {
+        const loc = hotelLocationStats(l, ville.mosquees, ville.restaurants, 1);
+        return { ...l, dist, locScore: loc.score, loc };
+      }
+      return { ...l, dist, locScore: null as number | null, loc: undefined as HotelLocationStats | undefined };
+    });
   }, [ville, tab, distOrigin]);
 
   // Facettes (tri + filtres) calculées sur la liste réelle de l'onglet.
@@ -282,6 +288,12 @@ export default function VilleScreen() {
                               </Text>
                             ) : null;
                           })()}
+                        {tab === 'hotels' && p.loc?.nearestMosqueKm != null && (
+                          <Text style={styles.calloutMeta}>
+                            🕌 Mosquée à {formatDistance(p.loc.nearestMosqueKm)}
+                            {p.loc.restosNear > 0 ? ` · 🍽️ ${p.loc.restosNear} restos` : ''}
+                          </Text>
+                        )}
                         <View style={styles.calloutCta}>
                           <Text style={styles.calloutCtaText}>🧭 Itinéraire</Text>
                         </View>
@@ -450,7 +462,7 @@ export default function VilleScreen() {
               }
               renderItem={({ item }) =>
                 tab === 'hotels' ? (
-                  <HotelCard hotel={item} onGo={() => goLieu(item)} />
+                  <HotelCard hotel={item} loc={item.loc} dist={item.dist} onGo={() => goLieu(item)} />
                 ) : (
                   <LieuCard lieu={item} dist={item.dist} onGo={() => goLieu(item)} />
                 )
@@ -463,7 +475,17 @@ export default function VilleScreen() {
   );
 }
 
-function HotelCard({ hotel, onGo }: { hotel: Lieu; onGo: () => void }) {
+function HotelCard({
+  hotel,
+  loc,
+  dist,
+  onGo,
+}: {
+  hotel: Lieu;
+  loc?: HotelLocationStats;
+  dist?: number | null;
+  onGo: () => void;
+}) {
   const amenities: string[] = [];
   if (hotel.salleDePriere) amenities.push('🕌 Salle de prière');
   if (hotel.qibla) amenities.push('🧭 Qibla');
@@ -488,8 +510,23 @@ function HotelCard({ hotel, onGo }: { hotel: Lieu; onGo: () => void }) {
         <View style={styles.metaRow}>
           {hotel.category && <Text style={styles.metaText}>{hotel.category}</Text>}
           {hotel.price && <Text style={styles.metaText}>{hotel.price}</Text>}
-          {hotel.adresse && <Text style={styles.metaText}>📍 {hotel.adresse}</Text>}
+          {dist != null && <Text style={styles.metaText}>📍 {formatDistance(dist)}</Text>}
+          {dist == null && hotel.adresse && <Text style={styles.metaText}>📍 {hotel.adresse}</Text>}
         </View>
+
+        {/* Score « bien situé » : proximité mosquée + restos halal autour */}
+        {loc && (loc.nearestMosqueKm != null || loc.restosNear > 0) && (
+          <View style={styles.locRow}>
+            {loc.nearestMosqueKm != null && (
+              <Text style={styles.locBadge}>🕌 Mosquée à {formatDistance(loc.nearestMosqueKm)}</Text>
+            )}
+            {loc.restosNear > 0 && (
+              <Text style={styles.locBadge}>
+                🍽️ {loc.restosNear} resto{loc.restosNear > 1 ? 's' : ''} halal à proximité
+              </Text>
+            )}
+          </View>
+        )}
 
         {amenities.length > 0 && (
           <View style={styles.amenityRow}>
@@ -734,6 +771,20 @@ const styles = StyleSheet.create({
   cardDesc: { color: Brand.creamMuted, fontSize: 13, lineHeight: 19, marginTop: 2 },
   specialite: { color: Brand.gold, fontSize: 12, fontWeight: '700', marginTop: 2 },
 
+  locRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 2 },
+  locBadge: {
+    backgroundColor: 'rgba(201,168,76,0.16)',
+    borderWidth: 1,
+    borderColor: Brand.gold,
+    color: Brand.gold,
+    fontSize: 11,
+    fontWeight: '800',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: Radius.pill,
+    overflow: 'hidden',
+  },
+
   actionsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm, marginTop: Spacing.sm },
   actionBtn: {
     paddingHorizontal: Spacing.md,
@@ -763,6 +814,7 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   calloutName: { fontWeight: '700', fontSize: 14, color: '#111' },
+  calloutMeta: { fontSize: 12, fontWeight: '700', color: '#1b4332' },
   calloutBadge: { alignSelf: 'flex-start', borderRadius: Radius.pill, paddingHorizontal: 8, paddingVertical: 2, fontSize: 11, fontWeight: '800', overflow: 'hidden' },
   calloutGreen: { backgroundColor: '#2d6a4f', color: '#eafff1' },
   calloutAmber: { backgroundColor: Brand.gold, color: Brand.night },

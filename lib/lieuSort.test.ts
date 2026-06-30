@@ -60,6 +60,25 @@ describe('sortLieux', () => {
     const arr: LieuDist[] = [{ ...lieu({ id: 'x' }), dist: null }, { ...lieu({ id: 'y' }), dist: 1 }];
     expect(sortLieux(arr, 'proche').map((l) => l.id)).toEqual(['y', 'x']);
   });
+  it('situe : meilleur score d’emplacement en premier', () => {
+    const arr: LieuDist[] = [
+      { ...lieu({ id: 'a' }), locScore: 2 },
+      { ...lieu({ id: 'b' }), locScore: 9 },
+      { ...lieu({ id: 'c' }), locScore: null },
+    ];
+    expect(sortLieux(arr, 'situe').map((l) => l.id)).toEqual(['b', 'a', 'c']);
+  });
+});
+
+describe('sortOptionsFor — bien situés', () => {
+  it('ajoute « situe » en tête quand un locScore existe', () => {
+    const arr: LieuDist[] = [{ ...lieu({ note: 4 }), locScore: 7 }];
+    const keys = sortOptionsFor(arr, false).map((o) => o.key);
+    expect(keys[0]).toBe('situe');
+  });
+  it('pas de « situe » sans score', () => {
+    expect(sortOptionsFor([lieu({ note: 4 })], false).map((o) => o.key)).not.toContain('situe');
+  });
 });
 
 describe('sortOptionsFor', () => {
