@@ -44,9 +44,14 @@ const SEARCH_RADIUS_M = 6000;
 
 type MosqueState = 'idle' | 'loading' | 'ready' | 'error';
 
+interface PlaceWithDist extends MapPlace {
+  dist: number;
+}
+
 export default function HomeScreen() {
   const mapRef = useRef<MapView>(null);
   const mapCenter = useRef({ ...PARIS });
+  const watchRef = useRef<Location.LocationSubscription | null>(null);
 
   const [userLoc, setUserLoc] = useState<{ latitude: number; longitude: number } | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterKey>('mosquees');
@@ -60,12 +65,7 @@ export default function HomeScreen() {
     setMosqueState('loading');
     try {
       const res = await fetchNearbyMosques(lat, lng, SEARCH_RADIUS_M);
-      const sorted = [...res].sort(
-        (a, b) =>
-          distanceKm(lat, lng, a.latitude, a.longitude) -
-          distanceKm(lat, lng, b.latitude, b.longitude),
-      );
-      setMosques(sorted);
+      setMosques(res);
       setMosqueState('ready');
     } catch (err) {
       console.warn('[home] Overpass échec', err);
@@ -75,14 +75,19 @@ export default function HomeScreen() {
 
   // ── Géolocalisation ──
   const applyUser = useCallback((coords: { latitude: number; longitude: number }, animate: boolean) => {
-    setUserLoc(coords);
+    setUserLoc({ latitude: coords.latitude, longitude: coords.longitude });
     mapCenter.current = { latitude: coords.latitude, longitude: coords.longitude };
     if (animate) {
-      mapRef.current?.animateToRegion(
-        { ...coords, latitudeDelta: 0.05, longitudeDelta: 0.05 },
-        700,
-      );
+      mapRef.current?.animateToRegion({ ...coords, latitudeDelta: 0.04, longitudeDelta: 0.04 }, 700);
     }
+  }, []);
+
+  const startWatching = useCallback(async () => {
+    if (watchRef.current) return;
+    watchRef.current = await Location.watchPositionAsync(
+      { accuracy: Location.Accuracy.Balanced, distanceInterval: 20 },
+      (loc) => setUserLoc({ latitude: loc.coords.latitude, longitude: loc.coords.longitude }),
+    );
   }, []);
 
   const locate = useCallback(async (): Promise<{ latitude: number; longitude: number } | null> => {
@@ -98,13 +103,14 @@ export default function HomeScreen() {
       if (last) applyUser(last.coords, true);
       const cur = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
       applyUser(cur.coords, true);
+      startWatching();
       return { latitude: cur.coords.latitude, longitude: cur.coords.longitude };
     } catch {
       return null;
     } finally {
       setLocating(false);
     }
-  }, [applyUser]);
+  }, [applyUser, startWatching]);
 
   // Au lancement : géoloc, puis chargement des mosquées autour de l'utilisateur.
   useEffect(() => {
@@ -112,6 +118,10 @@ export default function HomeScreen() {
       const c = coords ?? PARIS;
       loadMosques(c.latitude, c.longitude);
     });
+    return () => {
+      watchRef.current?.remove();
+      watchRef.current = null;
+    };
   }, [locate, loadMosques]);
 
   // ── Lieux affichés selon le filtre ──
@@ -122,20 +132,14 @@ export default function HomeScreen() {
     return demoPlacesAround(activeFilter, origin.latitude, origin.longitude);
   }, [activeFilter, mosques, userLoc]);
 
-  // Mosquée la plus proche (pour le bouton « Itinéraire » direct).
-  const nearest = useMemo(() => {
-    if (activeFilter !== 'mosquees' || !userLoc || mosques.length === 0) return null;
-    let best: MapPlace | null = null;
-    let bd = Infinity;
-    for (const m of mosques) {
-      const d = distanceKm(userLoc.latitude, userLoc.longitude, m.latitude, m.longitude);
-      if (d < bd) {
-        bd = d;
-        best = m;
-      }
-    }
-    return best ? { place: best, dist: bd } : null;
-  }, [activeFilter, userLoc, mosques]);
+  // Liste triée par distance (pour les cartes du bas).
+  const nearbyList: PlaceWithDist[] = useMemo(() => {
+    const origin = userLoc ?? mapCenter.current;
+    return places
+      .map((p) => ({ ...p, dist: distanceKm(origin.latitude, origin.longitude, p.latitude, p.longitude) }))
+      .sort((a, b) => a.dist - b.dist)
+      .slice(0, 15);
+  }, [places, userLoc]);
 
   const handleFilterPress = (key: FilterKey) => {
     setActiveFilter(key);
@@ -144,10 +148,15 @@ export default function HomeScreen() {
     }
   };
 
-  const distanceLabel = (p: MapPlace): string | null => {
-    if (!userLoc) return null;
-    return formatDistance(distanceKm(userLoc.latitude, userLoc.longitude, p.latitude, p.longitude));
+  const focusPlace = (p: MapPlace) => {
+    mapRef.current?.animateToRegion(
+      { latitude: p.latitude, longitude: p.longitude, latitudeDelta: 0.012, longitudeDelta: 0.012 },
+      600,
+    );
   };
+
+  const distanceLabel = (p: MapPlace): string | null =>
+    userLoc ? formatDistance(distanceKm(userLoc.latitude, userLoc.longitude, p.latitude, p.longitude)) : null;
 
   return (
     <View style={styles.container}>
@@ -155,12 +164,24 @@ export default function HomeScreen() {
         ref={mapRef}
         style={StyleSheet.absoluteFillObject}
         initialRegion={DEFAULT_REGION}
-        showsUserLocation
+        showsUserLocation={false}
         showsMyLocationButton={false}
         onRegionChangeComplete={(r) => {
           mapCenter.current = { latitude: r.latitude, longitude: r.longitude };
         }}
       >
+        {/* Marqueur « Moi » bien visible */}
+        {userLoc && (
+          <Marker coordinate={userLoc} anchor={{ x: 0.5, y: 0.5 }} flat tracksViewChanges={false}>
+            <View style={styles.userMarker}>
+              <View style={styles.userPin}>
+                <Text style={styles.userEmoji}>🧍</Text>
+              </View>
+              <Text style={styles.userLabel}>Moi</Text>
+            </View>
+          </Marker>
+        )}
+
         {places.map((place) => (
           <Marker
             key={place.id}
@@ -173,12 +194,10 @@ export default function HomeScreen() {
             <Callout tooltip onPress={() => openDirections(place.latitude, place.longitude)}>
               <View style={styles.callout}>
                 <Text style={styles.calloutName}>{place.name}</Text>
-                {distanceLabel(place) && (
-                  <Text style={styles.calloutDist}>📍 {distanceLabel(place)}</Text>
-                )}
+                {distanceLabel(place) && <Text style={styles.calloutDist}>📍 {distanceLabel(place)}</Text>}
                 {place.demo && <Text style={styles.calloutDemo}>exemple (démo)</Text>}
                 <View style={styles.calloutCta}>
-                  <Text style={styles.calloutCtaText}>🧭 Itinéraire sur Maps</Text>
+                  <Text style={styles.calloutCtaText}>🧭 Y aller (itinéraire)</Text>
                 </View>
               </View>
             </Callout>
@@ -209,7 +228,7 @@ export default function HomeScreen() {
         </View>
       )}
 
-      {/* Bandeau d'état (compteur / chargement / erreur) */}
+      {/* Bandeau d'état */}
       {!locDenied && (
         <View style={[styles.statusBadge, { backgroundColor: activeCfg.color }]}>
           {activeFilter === 'mosquees' && mosqueState === 'loading' ? (
@@ -222,7 +241,7 @@ export default function HomeScreen() {
               <Text style={styles.statusText}>Erreur réseau — appuyez pour réessayer</Text>
             </Pressable>
           ) : activeFilter === 'mosquees' && places.length === 0 && mosqueState === 'ready' ? (
-            <Text style={styles.statusText}>Aucune mosquée trouvée ici — déplacez la carte</Text>
+            <Text style={styles.statusText}>Aucune mosquée ici — déplacez la carte</Text>
           ) : (
             <Text style={styles.statusText}>
               {places.length} {activeCfg.label}
@@ -244,24 +263,36 @@ export default function HomeScreen() {
 
       {/* Recentrer sur moi */}
       <Pressable style={styles.recenter} onPress={locate}>
-        {locating ? (
-          <ActivityIndicator size="small" color={Brand.forest} />
-        ) : (
-          <Text style={styles.recenterIcon}>📍</Text>
-        )}
+        {locating ? <ActivityIndicator size="small" color={Brand.forest} /> : <Text style={styles.recenterIcon}>📍</Text>}
       </Pressable>
 
-      {/* Itinéraire vers la mosquée la plus proche */}
-      {nearest && (
-        <Pressable
-          style={styles.nearestBtn}
-          onPress={() => openDirections(nearest.place.latitude, nearest.place.longitude)}
-        >
-          <Text style={styles.nearestText} numberOfLines={1}>
-            🕌 La plus proche · {formatDistance(nearest.dist)}
-          </Text>
-          <Text style={styles.nearestGo}>Itinéraire ›</Text>
-        </Pressable>
+      {/* Liste des lieux proches (cartes cliquables → Y aller) */}
+      {nearbyList.length > 0 && (
+        <View style={styles.cardsWrapper}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.cardsScroll}>
+            {nearbyList.map((p, i) => (
+              <Pressable key={p.id} style={styles.placeCard} onPress={() => focusPlace(p)}>
+                <View style={styles.placeCardTop}>
+                  <Text style={styles.placeEmoji}>{activeCfg.emoji}</Text>
+                  {i === 0 && <Text style={styles.nearestTag}>la + proche</Text>}
+                </View>
+                <Text style={styles.placeName} numberOfLines={2}>
+                  {p.name}
+                </Text>
+                <View style={styles.placeCardBottom}>
+                  <Text style={styles.placeDist}>{formatDistance(p.dist)}</Text>
+                  <Pressable
+                    style={styles.goBtn}
+                    onPress={() => openDirections(p.latitude, p.longitude)}
+                    hitSlop={8}
+                  >
+                    <Text style={styles.goBtnText}>Y aller ›</Text>
+                  </Pressable>
+                </View>
+              </Pressable>
+            ))}
+          </ScrollView>
+        </View>
       )}
 
       {/* Filtres */}
@@ -273,10 +304,7 @@ export default function HomeScreen() {
               <Pressable
                 key={filter.key}
                 onPress={() => handleFilterPress(filter.key)}
-                style={[
-                  styles.filterPill,
-                  isActive ? { backgroundColor: filter.color } : styles.filterPillInactive,
-                ]}
+                style={[styles.filterPill, isActive ? { backgroundColor: filter.color } : styles.filterPillInactive]}
               >
                 <Text style={styles.filterEmoji}>{filter.emoji}</Text>
                 <Text style={[styles.filterLabel, isActive ? styles.filterLabelActive : styles.filterLabelInactive]}>
@@ -329,12 +357,7 @@ const styles = StyleSheet.create({
   },
   denyText: { color: '#333', fontSize: 13, fontWeight: '600' },
   denyRow: { flexDirection: 'row', gap: Spacing.sm },
-  denyBtn: {
-    backgroundColor: Brand.forest,
-    borderRadius: Radius.pill,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: 8,
-  },
+  denyBtn: { backgroundColor: Brand.forest, borderRadius: Radius.pill, paddingHorizontal: Spacing.md, paddingVertical: 8 },
   denyBtnText: { color: '#fff', fontWeight: '800', fontSize: 13 },
   denyBtnGhost: {
     borderRadius: Radius.pill,
@@ -380,7 +403,7 @@ const styles = StyleSheet.create({
   recenter: {
     position: 'absolute',
     right: 16,
-    bottom: Platform.OS === 'ios' ? 180 : 150,
+    bottom: Platform.OS === 'ios' ? 250 : 220,
     width: 48,
     height: 48,
     borderRadius: 24,
@@ -395,26 +418,38 @@ const styles = StyleSheet.create({
   },
   recenterIcon: { fontSize: 22 },
 
-  nearestBtn: {
-    position: 'absolute',
-    left: 16,
-    right: 16,
-    bottom: Platform.OS === 'ios' ? 130 : 100,
-    backgroundColor: Brand.gold,
-    borderRadius: Radius.pill,
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: 13,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  // Cartes des lieux proches
+  cardsWrapper: { position: 'absolute', left: 0, right: 0, bottom: Platform.OS === 'ios' ? 124 : 98 },
+  cardsScroll: { paddingHorizontal: 16, gap: 10 },
+  placeCard: {
+    width: 190,
+    backgroundColor: 'rgba(255,255,255,0.98)',
+    borderRadius: Radius.md,
+    padding: 12,
+    gap: 6,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.22,
     shadowRadius: 8,
-    elevation: 8,
+    elevation: 7,
   },
-  nearestText: { color: Brand.night, fontWeight: '800', fontSize: 15, flex: 1 },
-  nearestGo: { color: Brand.night, fontWeight: '800', fontSize: 15 },
+  placeCardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  placeEmoji: { fontSize: 18 },
+  nearestTag: {
+    backgroundColor: Brand.gold,
+    color: Brand.night,
+    fontSize: 10,
+    fontWeight: '800',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: Radius.pill,
+    overflow: 'hidden',
+  },
+  placeName: { fontSize: 14, fontWeight: '700', color: '#1a1a1a', minHeight: 36 },
+  placeCardBottom: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  placeDist: { fontSize: 13, fontWeight: '700', color: '#666' },
+  goBtn: { backgroundColor: Brand.forest, borderRadius: Radius.pill, paddingHorizontal: 12, paddingVertical: 6 },
+  goBtnText: { color: '#fff', fontWeight: '800', fontSize: 12 },
 
   filtersWrapper: { position: 'absolute', bottom: Platform.OS === 'ios' ? 70 : 44, left: 0, right: 0 },
   filtersScroll: { paddingHorizontal: 16, gap: 10 },
@@ -436,6 +471,36 @@ const styles = StyleSheet.create({
   filterLabel: { fontSize: 14, fontWeight: '700', letterSpacing: 0.2 },
   filterLabelActive: { color: '#fff' },
   filterLabelInactive: { color: '#333' },
+
+  // Marqueur utilisateur
+  userMarker: { alignItems: 'center' },
+  userPin: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#fff',
+    borderWidth: 3,
+    borderColor: '#2563eb',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 6,
+  },
+  userEmoji: { fontSize: 18 },
+  userLabel: {
+    marginTop: 2,
+    backgroundColor: '#2563eb',
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: '800',
+    paddingHorizontal: 6,
+    paddingVertical: 1,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
 
   markerBubble: {
     width: 40,
@@ -468,12 +533,6 @@ const styles = StyleSheet.create({
   calloutName: { fontWeight: '700', fontSize: 14, color: '#111' },
   calloutDist: { fontSize: 12, color: '#666' },
   calloutDemo: { fontSize: 11, color: '#999', fontStyle: 'italic' },
-  calloutCta: {
-    marginTop: 6,
-    backgroundColor: Brand.forest,
-    borderRadius: Radius.sm,
-    paddingVertical: 7,
-    alignItems: 'center',
-  },
+  calloutCta: { marginTop: 6, backgroundColor: Brand.forest, borderRadius: Radius.sm, paddingVertical: 8, alignItems: 'center' },
   calloutCtaText: { color: '#fff', fontWeight: '800', fontSize: 12 },
 });
