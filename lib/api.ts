@@ -99,10 +99,22 @@ function slugify(input: string): string {
 
 // ─── Normalisation ───────────────────────────────────────────────────────────
 
+// Coordonnées : à plat (latitude/longitude/lat/lng) ou imbriquées
+// (coordonnees/coords/location/geo : { lat, lng }).
+function pickCoords(raw: Raw): { latitude?: number; longitude?: number } {
+  const nested = asRecord(raw.coordonnees ?? raw.coords ?? raw.location ?? raw.geo);
+  const latitude =
+    pickNumber(raw, 'latitude', 'lat') ?? pickNumber(nested, 'lat', 'latitude');
+  const longitude =
+    pickNumber(raw, 'longitude', 'lng', 'lon', 'long') ?? pickNumber(nested, 'lng', 'lon', 'longitude', 'long');
+  return { latitude, longitude };
+}
+
 function normalizeVilleSummary(raw: Raw): VilleSummary | null {
   const nom = pickString(raw, 'nom', 'name', 'ville', 'title', 'label');
   if (!nom) return null;
   const slug = pickString(raw, 'slug', 'id', 'identifier') ?? slugify(nom);
+  const { latitude, longitude } = pickCoords(raw);
   return {
     slug,
     nom,
@@ -110,14 +122,15 @@ function normalizeVilleSummary(raw: Raw): VilleSummary | null {
     pays: pickString(raw, 'pays', 'country'),
     description: pickString(raw, 'description', 'resume', 'résumé', 'intro', 'excerpt'),
     image: pickString(raw, 'image', 'imageUrl', 'image_url', 'photo', 'cover', 'thumbnail'),
-    latitude: pickNumber(raw, 'latitude', 'lat'),
-    longitude: pickNumber(raw, 'longitude', 'lng', 'lon', 'long'),
+    latitude,
+    longitude,
   };
 }
 
 function normalizeLieu(raw: Raw, idx: number, prefix: string): Lieu {
   const nom = pickString(raw, 'nom', 'name', 'title', 'label') ?? 'Lieu';
   const slug = pickString(raw, 'slug', 'id') ?? `${prefix}-${idx}`;
+  const { latitude, longitude } = pickCoords(raw);
   return {
     id: String(slug),
     nom,
@@ -125,8 +138,8 @@ function normalizeLieu(raw: Raw, idx: number, prefix: string): Lieu {
     description: pickString(raw, 'description', 'resume', 'résumé', 'excerpt'),
     image: pickString(raw, 'image', 'imageUrl', 'image_url', 'photo', 'thumbnail'),
     note: pickNumber(raw, 'note', 'rating', 'stars', 'score'),
-    latitude: pickNumber(raw, 'latitude', 'lat'),
-    longitude: pickNumber(raw, 'longitude', 'lng', 'lon', 'long'),
+    latitude,
+    longitude,
     telephone: pickString(raw, 'telephone', 'téléphone', 'phone', 'tel'),
     site: pickString(raw, 'site', 'website', 'url', 'lien'),
   };
@@ -192,12 +205,17 @@ function extractDetail(payload: unknown): Raw {
 
 // ─── API publique ────────────────────────────────────────────────────────────
 
-export async function getVilles(): Promise<VilleSummary[]> {
-  const payload = await fetchJson(`${API_BASE}/villes`);
+/** Parsing pur de la réponse /api/villes (testable). */
+export function parseVillesPayload(payload: unknown): VilleSummary[] {
   return extractList(payload)
     .map(normalizeVilleSummary)
     .filter((v): v is VilleSummary => v !== null)
     .sort((a, b) => a.nom.localeCompare(b.nom, 'fr'));
+}
+
+export async function getVilles(): Promise<VilleSummary[]> {
+  const payload = await fetchJson(`${API_BASE}/villes`);
+  return parseVillesPayload(payload);
 }
 
 export async function getVille(slug: string): Promise<VilleDetail> {
