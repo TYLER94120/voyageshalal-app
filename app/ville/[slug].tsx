@@ -15,7 +15,7 @@ import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { Brand, Radius, Spacing } from '@/constants/theme';
 import { distanceKm, formatDistance } from '@/lib/geo';
 import { openMapsUrl, openDirections } from '@/lib/maps';
-import { getVille, halalBadge, type Lieu, type VilleDetail } from '@/lib/api';
+import { getVille, halalBadge, type Lieu, type PratiqueItem, type VilleDetail } from '@/lib/api';
 import {
   applyLieuFilters,
   categoryFacets,
@@ -168,7 +168,7 @@ export default function VilleScreen() {
       mosquees: Math.max(ville.mosquees.length, allMosquees.length),
       hotels: hotelsList.length,
       activites: ville.activites.length,
-      pratique: ville.pratique ? 1 : 0,
+      pratique: ville.pratiqueInfos.length > 0 || ville.pratique ? 1 : 0,
     } as Record<TabKey, number>;
   }, [ville, allMosquees, hotelsList]);
 
@@ -481,7 +481,7 @@ export default function VilleScreen() {
           {/* Contenu */}
           {tab === 'pratique' ? (
             <ScrollView style={styles.list} contentContainerStyle={styles.listPad}>
-              <PratiqueBlock text={ville.pratique} />
+              <PratiqueBlock items={ville.pratiqueInfos} text={ville.pratique} />
             </ScrollView>
           ) : (
             <FlatList
@@ -691,8 +691,8 @@ function LieuCard({ lieu, dist, onGo }: { lieu: LieuDist; dist: number | null; o
   );
 }
 
-function PratiqueBlock({ text }: { text?: string }) {
-  if (!text) {
+function PratiqueBlock({ items, text }: { items: PratiqueItem[]; text?: string }) {
+  if (items.length === 0 && !text) {
     return (
       <View style={styles.emptyTab}>
         <Text style={styles.muted}>Infos pratiques bientôt disponibles.</Text>
@@ -700,8 +700,21 @@ function PratiqueBlock({ text }: { text?: string }) {
     );
   }
   return (
-    <View style={styles.pratiqueBox}>
-      <Text style={styles.pratiqueText}>{text}</Text>
+    <View style={styles.pratiqueWrap}>
+      {items.map((it) => (
+        <View key={it.key} style={styles.pratiqueRow}>
+          <Text style={styles.pratiqueIcon}>{it.icon}</Text>
+          <View style={styles.pratiqueRowText}>
+            <Text style={styles.pratiqueLabel}>{it.label}</Text>
+            <Text style={styles.pratiqueValue}>{it.value}</Text>
+          </View>
+        </View>
+      ))}
+      {text ? (
+        <View style={styles.pratiqueBox}>
+          <Text style={styles.pratiqueText}>{text}</Text>
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -859,7 +872,22 @@ const styles = StyleSheet.create({
   },
   actionText: { color: Brand.gold, fontSize: 12, fontWeight: '700' },
 
-  pratiqueBox: { backgroundColor: Brand.forest, borderRadius: Radius.md, borderWidth: 1, borderColor: Brand.border, padding: Spacing.md },
+  pratiqueWrap: { gap: Spacing.sm },
+  pratiqueRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: Spacing.md,
+    backgroundColor: Brand.forest,
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: Brand.border,
+    padding: Spacing.md,
+  },
+  pratiqueIcon: { fontSize: 22, width: 28, textAlign: 'center' },
+  pratiqueRowText: { flex: 1, gap: 2 },
+  pratiqueLabel: { color: Brand.gold, fontSize: 12, fontWeight: '800', letterSpacing: 0.3, textTransform: 'uppercase' },
+  pratiqueValue: { color: Brand.cream, fontSize: 15, fontWeight: '600', lineHeight: 21 },
+  pratiqueBox: { backgroundColor: Brand.forest, borderRadius: Radius.md, borderWidth: 1, borderColor: Brand.border, padding: Spacing.md, marginTop: Spacing.xs },
   pratiqueText: { color: Brand.cream, fontSize: 14, lineHeight: 22 },
 
   emptyTab: { padding: Spacing.xl, alignItems: 'center' },

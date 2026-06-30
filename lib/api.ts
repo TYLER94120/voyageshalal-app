@@ -77,12 +77,56 @@ export function halalBadge(conf?: string): { label: string; tone: 'green' | 'amb
   return null;
 }
 
+export interface PratiqueItem {
+  key: string;
+  label: string;
+  icon: string;
+  value: string;
+}
+
 export interface VilleDetail extends VilleSummary {
   restaurants: Lieu[];
   mosquees: Lieu[];
   hotels: Lieu[];
   activites: Lieu[];
   pratique?: string; // infos pratiques (texte libre / markdown léger)
+  pratiqueInfos: PratiqueItem[]; // infos pratiques structurées (visa, transport…)
+}
+
+// Champs pratiques connus → libellé FR + icône, dans un ordre logique de voyage.
+const PRATIQUE_FIELDS: { keys: string[]; label: string; icon: string }[] = [
+  { keys: ['visa'], label: 'Visa', icon: '🛂' },
+  { keys: ['vaccins', 'sante', 'santé', 'vaccin'], label: 'Santé / vaccins', icon: '💉' },
+  { keys: ['langue', 'langues'], label: 'Langue', icon: '🗣️' },
+  { keys: ['monnaie', 'devise'], label: 'Monnaie', icon: '💱' },
+  { keys: ['decalageHoraire', 'decalage_horaire', 'decalage', 'décalage', 'fuseau'], label: 'Décalage horaire', icon: '🕐' },
+  { keys: ['transport', 'transports'], label: 'Transport', icon: '🚇' },
+  { keys: ['priseElectrique', 'prise_electrique', 'prise', 'electricite', 'électricité'], label: 'Prises électriques', icon: '🔌' },
+  { keys: ['meilleure_periode', 'meilleurePeriode', 'saison', 'climat'], label: 'Meilleure période', icon: '📅' },
+  { keys: ['appel_priere', 'appelPriere', 'appel_prière'], label: 'Appel à la prière', icon: '🕌' },
+  { keys: ['nourriture_halal', 'nourritureHalal', 'halal'], label: 'Nourriture halal', icon: '🍽️' },
+  { keys: ['alcool', 'alcohol'], label: 'Alcool', icon: '🍷' },
+  { keys: ['securite', 'sécurité', 'security'], label: 'Sécurité', icon: '🛡️' },
+  { keys: ['wifi', 'internet'], label: 'Wi-Fi / Internet', icon: '📶' },
+];
+
+function normalizePratique(raw: Raw): PratiqueItem[] {
+  // Les infos peuvent être dans infoPratique, infos_pratiques, ou à la racine.
+  const sources = [
+    asRecord(raw.infoPratique ?? raw.info_pratique),
+    asRecord(raw.infosPratiques ?? raw.infos_pratiques),
+    raw,
+  ];
+  const items: PratiqueItem[] = [];
+  for (const field of PRATIQUE_FIELDS) {
+    let value: string | undefined;
+    for (const src of sources) {
+      value = pickString(src, ...field.keys);
+      if (value) break;
+    }
+    if (value) items.push({ key: field.keys[0], label: field.label, icon: field.icon, value });
+  }
+  return items;
 }
 
 // ─── Helpers de lecture tolérante ────────────────────────────────────────────
@@ -228,7 +272,8 @@ function normalizeVilleDetail(raw: Raw): VilleDetail | null {
     mosquees: normalizeLieux(raw, 'mosq', 'mosqueesPrincipales', 'mosquees', 'mosquées', 'mosques', 'lieuxDePriere'),
     hotels: normalizeLieux(raw, 'hotel', 'hotels', 'hôtels', 'hebergements', 'hébergements', 'logements'),
     activites: normalizeLieux(raw, 'act', 'activites', 'activités', 'aFaire', 'activities', 'visites'),
-    pratique: pickString(raw, 'pratique', 'infosPratiques', 'infos_pratiques', 'practical', 'transport'),
+    pratique: pickString(raw, 'pratique', 'practical', 'conseils', 'description_pratique'),
+    pratiqueInfos: normalizePratique(raw),
   };
 }
 

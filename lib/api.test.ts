@@ -109,4 +109,36 @@ describe('parseVilleDetailPayload', () => {
     expect(d.mosquees[0].nom).toBe('Tokyo Camii');
     expect(d.mosquees[0].latitude).toBeCloseTo(35.68, 2);
   });
+
+  it('fusionne infoPratique + infos_pratiques en infos structurées ordonnées', () => {
+    const payload = {
+      nom: 'Tokyo',
+      infoPratique: {
+        visa: 'Exemption 90 jours',
+        transport: 'Métro JR, Suica',
+        decalageHoraire: '+8h',
+      },
+      infos_pratiques: {
+        langue: 'Japonais',
+        monnaie: 'Yen (JPY)',
+        appel_priere: '5 fois par jour',
+        securite: 'Précautions habituelles',
+      },
+    };
+    const d = parseVilleDetailPayload(payload)!;
+    const byKey = Object.fromEntries(d.pratiqueInfos.map((p) => [p.key, p.value]));
+    expect(byKey.visa).toBe('Exemption 90 jours');
+    expect(byKey.langue).toBe('Japonais');
+    expect(byKey.monnaie).toBe('Yen (JPY)');
+    expect(byKey.appel_priere).toBe('5 fois par jour');
+    // Ordre logique : visa avant langue avant transport.
+    const keys = d.pratiqueInfos.map((p) => p.key);
+    expect(keys.indexOf('visa')).toBeLessThan(keys.indexOf('langue'));
+    expect(keys.indexOf('langue')).toBeLessThan(keys.indexOf('transport'));
+  });
+
+  it('pratiqueInfos vide si aucune info pratique', () => {
+    const d = parseVilleDetailPayload({ nom: 'Ville X' })!;
+    expect(d.pratiqueInfos).toEqual([]);
+  });
 });
