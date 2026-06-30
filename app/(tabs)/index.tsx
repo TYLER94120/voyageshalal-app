@@ -17,6 +17,8 @@ import { distanceKm, formatDistance } from '@/lib/geo';
 import { openDirections } from '@/lib/maps';
 import { fetchNearbyMosques } from '@/lib/overpass';
 import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPlaces';
+import { CitySearchModal } from '@/components/CitySearchModal';
+import type { VilleSummary } from '@/lib/api';
 
 // ─── Filtres ────────────────────────────────────────────────────────────────
 
@@ -60,6 +62,9 @@ export default function HomeScreen() {
   const [locDenied, setLocDenied] = useState(false);
   const [mosques, setMosques] = useState<MapPlace[]>([]);
   const [mosqueState, setMosqueState] = useState<MosqueState>('idle');
+  // Mode « ville » : projection dans une destination choisie (Tokyo, etc.).
+  const [selectedCity, setSelectedCity] = useState<{ nom: string; latitude: number; longitude: number } | null>(null);
+  const [cityModal, setCityModal] = useState(false);
   // Bug Android react-native-maps : un marqueur custom rendu avec
   // tracksViewChanges=false dès le départ apparaît vide. On laisse "true"
   // brièvement le temps du rendu, puis on fige pour les performances.
@@ -157,22 +162,59 @@ export default function HomeScreen() {
     }
   }, [userLoc, userTracks]);
 
+  // Projection dans une ville choisie : coords de la base, sinon géocodage.
+  const selectCity = useCallback(
+    async (ville: VilleSummary) => {
+      let coords: { latitude: number; longitude: number } | null =
+        typeof ville.latitude === 'number' && typeof ville.longitude === 'number'
+          ? { latitude: ville.latitude, longitude: ville.longitude }
+          : null;
+      if (!coords) {
+        try {
+          const q = [ville.nom, ville.pays].filter(Boolean).join(', ');
+          const g = await Location.geocodeAsync(q);
+          if (g[0]) coords = { latitude: g[0].latitude, longitude: g[0].longitude };
+        } catch {
+          // géocodage indisponible
+        }
+      }
+      if (!coords) return;
+      setSelectedCity({ nom: ville.nom, ...coords });
+      mapCenter.current = coords;
+      mapRef.current?.animateToRegion({ ...coords, latitudeDelta: 0.08, longitudeDelta: 0.08 }, 800);
+      if (activeFilterRef.current === 'mosquees') loadMosques(coords.latitude, coords.longitude);
+    },
+    [loadMosques],
+  );
+
+  // Retour « autour de moi » (quitte le mode ville).
+  const goToMe = useCallback(() => {
+    setSelectedCity(null);
+    if (userLoc) {
+      mapCenter.current = userLoc;
+      mapRef.current?.animateToRegion({ ...userLoc, latitudeDelta: 0.04, longitudeDelta: 0.04 }, 700);
+      if (activeFilterRef.current === 'mosquees') loadMosques(userLoc.latitude, userLoc.longitude);
+    } else {
+      locate();
+    }
+  }, [userLoc, loadMosques, locate]);
+
   // ── Lieux affichés selon le filtre ──
   const activeCfg = FILTERS.find((f) => f.key === activeFilter)!;
   const places: MapPlace[] = useMemo(() => {
     if (activeFilter === 'mosquees') return mosques;
-    const origin = userLoc ?? mapCenter.current;
+    const origin = selectedCity ?? userLoc ?? mapCenter.current;
     return demoPlacesAround(activeFilter, origin.latitude, origin.longitude);
-  }, [activeFilter, mosques, userLoc]);
+  }, [activeFilter, mosques, userLoc, selectedCity]);
 
-  // Liste triée par distance (pour les cartes du bas).
+  // Liste triée par distance, depuis la ville choisie ou ma position.
   const nearbyList: PlaceWithDist[] = useMemo(() => {
-    const origin = userLoc ?? mapCenter.current;
+    const origin = selectedCity ?? userLoc ?? mapCenter.current;
     return places
       .map((p) => ({ ...p, dist: distanceKm(origin.latitude, origin.longitude, p.latitude, p.longitude) }))
       .sort((a, b) => a.dist - b.dist)
       .slice(0, 15);
-  }, [places, userLoc]);
+  }, [places, userLoc, selectedCity]);
 
   const handleFilterPress = (key: FilterKey) => {
     setActiveFilter(key);
@@ -248,6 +290,21 @@ export default function HomeScreen() {
           <Text style={styles.headerEmoji}>🌙</Text>
           <Text style={styles.headerTitle}>VoyagesHalal</Text>
         </View>
+
+        {selectedCity ? (
+          <View style={styles.cityActive}>
+            <Pressable onPress={() => setCityModal(true)} style={styles.cityActiveMain}>
+              <Text style={styles.cityActiveText} numberOfLines={1}>📍 {selectedCity.nom}</Text>
+            </Pressable>
+            <Pressable onPress={goToMe} hitSlop={8}>
+              <Text style={styles.cityClear}>✕</Text>
+            </Pressable>
+          </View>
+        ) : (
+          <Pressable style={styles.cityBtn} onPress={() => setCityModal(true)}>
+            <Text style={styles.cityBtnText}>🌍 Ville</Text>
+          </Pressable>
+        )}
       </View>
 
       {/* Localisation refusée */}
@@ -282,7 +339,7 @@ export default function HomeScreen() {
           ) : (
             <Text style={styles.statusText}>
               {places.length} {activeCfg.label}
-              {activeFilter === 'mosquees' ? ' à proximité' : ' (démo)'}
+              {activeFilter !== 'mosquees' ? ' (démo)' : selectedCity ? ` · ${selectedCity.nom}` : ' à proximité'}
             </Text>
           )}
         </View>
@@ -298,8 +355,8 @@ export default function HomeScreen() {
         </Pressable>
       )}
 
-      {/* Recentrer sur moi */}
-      <Pressable style={styles.recenter} onPress={locate}>
+      {/* Recentrer sur moi (et quitter le mode ville) */}
+      <Pressable style={styles.recenter} onPress={goToMe}>
         {locating ? <ActivityIndicator size="small" color={Brand.forest} /> : <Text style={styles.recenterIcon}>📍</Text>}
       </Pressable>
 
@@ -352,6 +409,8 @@ export default function HomeScreen() {
           })}
         </ScrollView>
       </View>
+
+      <CitySearchModal visible={cityModal} onClose={() => setCityModal(false)} onSelect={selectCity} />
     </View>
   );
 }
@@ -359,7 +418,46 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Brand.night },
 
-  header: { position: 'absolute', top: 14, left: 16, right: 16, flexDirection: 'row' },
+  header: {
+    position: 'absolute',
+    top: 14,
+    left: 16,
+    right: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 8,
+  },
+  cityBtn: {
+    backgroundColor: 'rgba(255,255,255,0.95)',
+    borderRadius: 24,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  cityBtnText: { color: Brand.forest, fontWeight: '800', fontSize: 14 },
+  cityActive: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    maxWidth: '55%',
+    backgroundColor: Brand.gold,
+    borderRadius: 24,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  cityActiveMain: { flexShrink: 1 },
+  cityActiveText: { color: Brand.night, fontWeight: '800', fontSize: 14 },
+  cityClear: { color: Brand.night, fontWeight: '800', fontSize: 16 },
   headerPill: {
     flexDirection: 'row',
     alignItems: 'center',
