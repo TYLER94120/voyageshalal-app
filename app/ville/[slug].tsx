@@ -4,7 +4,6 @@ import {
   FlatList,
   Image,
   Linking,
-  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -200,26 +199,41 @@ function VilleHeader({
           );
         }}
       />
+
+      {tab === 'mosquees' && (
+        <Pressable style={styles.mosqueeHint} onPress={seeOnMap}>
+          <Text style={styles.mosqueeHintText}>
+            📍 La mosquée la plus proche de vous (en temps réel) → ouvrir la carte
+          </Text>
+        </Pressable>
+      )}
     </View>
   );
 }
 
 function LieuCard({ lieu }: { lieu: Lieu }) {
+  // Priorité au lien Maps fourni par la base ; sinon coords, sinon nom+adresse.
   const openMaps = () => {
+    if (lieu.mapsUrl) {
+      Linking.openURL(lieu.mapsUrl).catch(() => undefined);
+      return;
+    }
     if (lieu.latitude != null && lieu.longitude != null) {
-      const url = Platform.select({
-        ios: `maps://?q=${encodeURIComponent(lieu.nom)}&ll=${lieu.latitude},${lieu.longitude}`,
-        default: `https://www.google.com/maps/search/?api=1&query=${lieu.latitude},${lieu.longitude}`,
-      });
-      if (url) Linking.openURL(url).catch(() => undefined);
-    } else if (lieu.adresse) {
       Linking.openURL(
-        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lieu.adresse)}`,
+        `https://www.google.com/maps/search/?api=1&query=${lieu.latitude},${lieu.longitude}`,
+      ).catch(() => undefined);
+      return;
+    }
+    const q = [lieu.nom, lieu.adresse].filter(Boolean).join(', ');
+    if (q) {
+      Linking.openURL(
+        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`,
       ).catch(() => undefined);
     }
   };
 
-  const hasLocation = (lieu.latitude != null && lieu.longitude != null) || !!lieu.adresse;
+  // Un lieu a toujours au moins un nom → on peut toujours l'ouvrir dans Maps.
+  const hasLocation = true;
 
   return (
     <View style={styles.card}>
@@ -328,6 +342,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mapBtnText: { color: Brand.night, fontWeight: '800', fontSize: 14 },
+
+  mosqueeHint: {
+    marginHorizontal: Spacing.lg,
+    marginTop: Spacing.md,
+    backgroundColor: Brand.goldSoft,
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: Brand.border,
+    padding: Spacing.md,
+  },
+  mosqueeHintText: { color: Brand.gold, fontSize: 13, fontWeight: '700', textAlign: 'center' },
 
   tabsList: { marginTop: Spacing.md },
   tabsRow: { paddingHorizontal: Spacing.lg, gap: Spacing.sm },
