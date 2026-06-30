@@ -28,6 +28,7 @@ import {
   type SortKey,
 } from '@/lib/lieuSort';
 import { hotelLocationStats, type HotelLocationStats } from '@/lib/hotelLocation';
+import { HotelAroundSheet } from '@/components/HotelAroundSheet';
 
 type TabKey = 'restaurants' | 'mosquees' | 'hotels' | 'activites' | 'pratique';
 
@@ -73,6 +74,7 @@ export default function VilleScreen() {
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [filters, setFilters] = useState<LieuFilters>(EMPTY_FILTERS);
   const [userLoc, setUserLoc] = useState<{ latitude: number; longitude: number } | null>(null);
+  const [aroundHotel, setAroundHotel] = useState<Lieu | null>(null);
 
   // Changer d'onglet remet à zéro tri & filtres (chaque onglet a ses propres facettes).
   const selectTab = useCallback((k: TabKey) => {
@@ -462,11 +464,30 @@ export default function VilleScreen() {
               }
               renderItem={({ item }) =>
                 tab === 'hotels' ? (
-                  <HotelCard hotel={item} loc={item.loc} dist={item.dist} onGo={() => goLieu(item)} />
+                  <HotelCard
+                    hotel={item}
+                    loc={item.loc}
+                    dist={item.dist}
+                    onGo={() => goLieu(item)}
+                    onAround={
+                      item.latitude != null && item.longitude != null
+                        ? () => setAroundHotel(item)
+                        : undefined
+                    }
+                  />
                 ) : (
                   <LieuCard lieu={item} dist={item.dist} onGo={() => goLieu(item)} />
                 )
               }
+            />
+          )}
+
+          {aroundHotel && (
+            <HotelAroundSheet
+              hotel={aroundHotel}
+              mosquees={ville.mosquees}
+              restaurants={ville.restaurants}
+              onClose={() => setAroundHotel(null)}
             />
           )}
         </>
@@ -480,11 +501,13 @@ function HotelCard({
   loc,
   dist,
   onGo,
+  onAround,
 }: {
   hotel: Lieu;
   loc?: HotelLocationStats;
   dist?: number | null;
   onGo: () => void;
+  onAround?: () => void;
 }) {
   const amenities: string[] = [];
   if (hotel.salleDePriere) amenities.push('🕌 Salle de prière');
@@ -545,6 +568,11 @@ function HotelCard({
         )}
 
         <View style={styles.actionsRow}>
+          {onAround && (
+            <Pressable style={styles.aroundBtn} onPress={onAround}>
+              <Text style={styles.aroundText}>🗺️ Voir autour</Text>
+            </Pressable>
+          )}
           {hotel.halalBookingUrl ? (
             <Pressable
               style={styles.bookBtn}
@@ -747,6 +775,8 @@ const styles = StyleSheet.create({
   },
   bookBtn: { paddingHorizontal: Spacing.md, paddingVertical: 7, borderRadius: Radius.pill, backgroundColor: Brand.gold },
   bookText: { color: Brand.night, fontSize: 12, fontWeight: '800' },
+  aroundBtn: { paddingHorizontal: Spacing.md, paddingVertical: 7, borderRadius: Radius.pill, backgroundColor: Brand.forest, borderWidth: 1, borderColor: Brand.gold },
+  aroundText: { color: Brand.gold, fontSize: 12, fontWeight: '800' },
 
   card: {
     backgroundColor: Brand.forest,

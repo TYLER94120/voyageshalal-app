@@ -67,3 +67,26 @@ export function hotelLocationStats(
 
   return { nearestMosqueKm, nearestMosqueNom, restosNear, radiusKm, score };
 }
+
+export interface NearbyLieu {
+  lieu: Lieu;
+  distKm: number;
+}
+
+/** Lieux géolocalisés dans un rayon autour d'un point, triés du plus proche au plus loin. */
+export function nearbyLieux(
+  lat: number,
+  lng: number,
+  list: Lieu[],
+  radiusKm: number,
+  limit?: number,
+): NearbyLieu[] {
+  const out: NearbyLieu[] = [];
+  for (const l of list) {
+    if (!hasCoords(l)) continue;
+    const d = distanceKm(lat, lng, l.latitude!, l.longitude!);
+    if (d <= radiusKm) out.push({ lieu: l, distKm: d });
+  }
+  out.sort((a, b) => a.distKm - b.distKm);
+  return limit != null ? out.slice(0, limit) : out;
+}

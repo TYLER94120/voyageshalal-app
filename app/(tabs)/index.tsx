@@ -22,6 +22,7 @@ import { CitySearchModal } from '@/components/CitySearchModal';
 import { getVille, halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
 import { priceRank } from '@/lib/lieuSort';
 import { hotelLocationStats } from '@/lib/hotelLocation';
+import { HotelAroundSheet } from '@/components/HotelAroundSheet';
 import { consumePendingCity } from '@/lib/pendingCity';
 
 // Tri rapide de la liste (restaurants / hôtels) sur la page d'accueil.
@@ -124,6 +125,8 @@ export default function HomeScreen() {
   // Sélection fine côté restaurants : cuisine + tri (ex. « le japonais le plus proche »).
   const [quickCat, setQuickCat] = useState<string | null>(null);
   const [quickSort, setQuickSort] = useState<QuickSort>('proche');
+  // Hôtel dont on regarde « autour » (mini-carte mosquées + restos).
+  const [aroundHotelId, setAroundHotelId] = useState<string | null>(null);
 
   const activeFilterRef = useRef(activeFilter);
   useEffect(() => {
@@ -667,10 +670,12 @@ export default function HomeScreen() {
                   </Text>
                 )}
                 {p.nearestMosqueKm != null && (
-                  <Text style={styles.placeLoc} numberOfLines={1}>
-                    🕌 {formatDistance(p.nearestMosqueKm)}
-                    {p.restosNear ? ` · 🍽️ ${p.restosNear} restos` : ''}
-                  </Text>
+                  <Pressable onPress={() => setAroundHotelId(p.id)} hitSlop={6}>
+                    <Text style={styles.placeLoc} numberOfLines={1}>
+                      🕌 {formatDistance(p.nearestMosqueKm)}
+                      {p.restosNear ? ` · 🍽️ ${p.restosNear} restos` : ''} · voir autour ›
+                    </Text>
+                  </Pressable>
                 )}
                 <View style={styles.placeCardBottom}>
                   <Text style={styles.placeDist}>
@@ -712,6 +717,18 @@ export default function HomeScreen() {
       </View>
 
       <CitySearchModal visible={cityModal} onClose={() => setCityModal(false)} onSelect={selectCity} />
+
+      {(() => {
+        const h = cityDetail?.hotels.find((x) => x.id === aroundHotelId);
+        return h ? (
+          <HotelAroundSheet
+            hotel={h}
+            mosquees={cityDetail!.mosquees}
+            restaurants={cityDetail!.restaurants}
+            onClose={() => setAroundHotelId(null)}
+          />
+        ) : null;
+      })()}
     </View>
   );
 }

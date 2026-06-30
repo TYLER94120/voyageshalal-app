@@ -1,5 +1,5 @@
 import type { Lieu } from './api';
-import { hotelLocationStats } from './hotelLocation';
+import { hotelLocationStats, nearbyLieux } from './hotelLocation';
 
 function L(over: Partial<Lieu>): Lieu {
   return { id: over.id ?? 'x', nom: over.nom ?? 'L', ...over };
@@ -53,5 +53,29 @@ describe('hotelLocationStats', () => {
     );
     expect(bien.score!).toBeGreaterThan(isole.score!);
     expect(isole.restosNear).toBe(0);
+  });
+});
+
+describe('nearbyLieux', () => {
+  const list = [
+    L({ id: 'a', nom: 'Proche', latitude: 48.8575, longitude: 2.3525 }),
+    L({ id: 'b', nom: 'Moyen', latitude: 48.861, longitude: 2.356 }),
+    L({ id: 'c', nom: 'Loin', latitude: 49.0, longitude: 2.6 }),
+    L({ id: 'd', nom: 'SansCoords' }),
+  ];
+
+  it('trie du plus proche au plus loin et respecte le rayon', () => {
+    const out = nearbyLieux(48.857, 2.352, list, 2);
+    expect(out.map((n) => n.lieu.id)).toEqual(['a', 'b']);
+    expect(out[0].distKm).toBeLessThan(out[1].distKm);
+  });
+
+  it('applique la limite', () => {
+    expect(nearbyLieux(48.857, 2.352, list, 50, 1).map((n) => n.lieu.id)).toEqual(['a']);
+  });
+
+  it('ignore les lieux sans coordonnées', () => {
+    const out = nearbyLieux(48.857, 2.352, list, 100);
+    expect(out.some((n) => n.lieu.id === 'd')).toBe(false);
   });
 });
