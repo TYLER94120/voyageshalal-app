@@ -33,6 +33,10 @@ export default function FavorisScreen() {
             ? `${favorites.length} ${favorites.length > 1 ? 'éléments sauvegardés' : 'sauvegardé'}`
             : 'Vos coups de cœur, au même endroit'}
         </Text>
+        <Pressable style={styles.tripsLink} onPress={() => router.push('/trips')}>
+          <Text style={styles.tripsLinkText}>🗓️ Mes voyages</Text>
+          <Text style={styles.tripsLinkChevron}>›</Text>
+        </Pressable>
       </View>
 
       {favorites.length === 0 ? (
@@ -91,6 +95,20 @@ const styles = StyleSheet.create({
   kicker: { color: Brand.gold, fontSize: 12, fontWeight: '700', letterSpacing: 2 },
   title: { color: Brand.cream, fontSize: 34, fontWeight: '800', marginTop: 2 },
   subtitle: { color: Brand.creamMuted, fontSize: 14, marginTop: 4 },
+  tripsLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: Spacing.md,
+    backgroundColor: Brand.forest,
+    borderWidth: 1,
+    borderColor: Brand.gold,
+    borderRadius: Radius.pill,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 10,
+  },
+  tripsLinkText: { color: Brand.gold, fontSize: 14, fontWeight: '800' },
+  tripsLinkChevron: { color: Brand.gold, fontSize: 20, fontWeight: '800' },
 
   list: { padding: Spacing.lg, paddingBottom: Spacing.xl * 3 },
   sectionTitle: { color: Brand.cream, fontSize: 16, fontWeight: '800', marginTop: Spacing.sm, marginBottom: 6 },
