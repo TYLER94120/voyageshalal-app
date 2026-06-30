@@ -29,6 +29,8 @@ import {
 } from '@/lib/lieuSort';
 import { hotelLocationStats, type HotelLocationStats } from '@/lib/hotelLocation';
 import { HotelAroundSheet } from '@/components/HotelAroundSheet';
+import { fetchNearbyMosques } from '@/lib/overpass';
+import { mergeMosquees, osmToLieu } from '@/lib/mosques';
 
 type TabKey = 'restaurants' | 'mosquees' | 'hotels' | 'activites' | 'pratique';
 
@@ -75,6 +77,8 @@ export default function VilleScreen() {
   const [filters, setFilters] = useState<LieuFilters>(EMPTY_FILTERS);
   const [userLoc, setUserLoc] = useState<{ latitude: number; longitude: number } | null>(null);
   const [aroundHotel, setAroundHotel] = useState<Lieu | null>(null);
+  // Mosquées exhaustives (OpenStreetMap) pour fiabiliser le score & la carte.
+  const [osmMosquees, setOsmMosquees] = useState<Lieu[]>([]);
 
   // Changer d'onglet remet à zéro tri & filtres (chaque onglet a ses propres facettes).
   const selectTab = useCallback((k: TabKey) => {
@@ -122,17 +126,6 @@ export default function VilleScreen() {
     load();
   }, [load]);
 
-  const counts = useMemo(() => {
-    if (!ville) return {} as Record<TabKey, number>;
-    return {
-      restaurants: ville.restaurants.length,
-      mosquees: ville.mosquees.length,
-      hotels: ville.hotels.length,
-      activites: ville.activites.length,
-      pratique: ville.pratique ? 1 : 0,
-    } as Record<TabKey, number>;
-  }, [ville]);
-
   const cityCoords = useMemo(
     () =>
       ville && ville.latitude != null && ville.longitude != null
@@ -140,6 +133,41 @@ export default function VilleScreen() {
         : null,
     [ville],
   );
+
+  // Mosquées exhaustives via OpenStreetMap (comme l'accueil) : fiabilise le score
+  // hôtel et complète la fiche ville. 18 km couvrent l'agglomération.
+  useEffect(() => {
+    setOsmMosquees([]);
+    if (!cityCoords) return;
+    let alive = true;
+    fetchNearbyMosques(cityCoords.latitude, cityCoords.longitude, 18000)
+      .then((places) => {
+        if (alive) setOsmMosquees(places.map(osmToLieu));
+      })
+      .catch(() => {
+        /* OSM indisponible : on garde les mosquées principales de l'API */
+      });
+    return () => {
+      alive = false;
+    };
+  }, [cityCoords]);
+
+  // Liste de mosquées de référence : API (curée) + OSM (exhaustive), dédupliquée.
+  const allMosquees = useMemo(
+    () => mergeMosquees(ville?.mosquees ?? [], osmMosquees),
+    [ville, osmMosquees],
+  );
+
+  const counts = useMemo(() => {
+    if (!ville) return {} as Record<TabKey, number>;
+    return {
+      restaurants: ville.restaurants.length,
+      mosquees: Math.max(ville.mosquees.length, allMosquees.length),
+      hotels: ville.hotels.length,
+      activites: ville.activites.length,
+      pratique: ville.pratique ? 1 : 0,
+    } as Record<TabKey, number>;
+  }, [ville, allMosquees]);
 
   // Origine des distances : la position de l'utilisateur s'il est dans la ville
   // (≤ 80 km du centre), sinon le centre-ville.
@@ -155,18 +183,20 @@ export default function VilleScreen() {
   // score « bien situé » (proximité mosquée + restos halal autour).
   const rawWithDist = useMemo(() => {
     if (!ville || tab === 'pratique') return [];
-    return ville[tab].map((l) => {
+    // L'onglet Mosquées affiche la liste exhaustive (API + OSM).
+    const source = tab === 'mosquees' ? allMosquees : ville[tab];
+    return source.map((l) => {
       const dist =
         distOrigin && l.latitude != null && l.longitude != null
           ? distanceKm(distOrigin.coords.latitude, distOrigin.coords.longitude, l.latitude, l.longitude)
           : null;
       if (tab === 'hotels') {
-        const loc = hotelLocationStats(l, ville.mosquees, ville.restaurants, 1);
+        const loc = hotelLocationStats(l, allMosquees, ville.restaurants, 1);
         return { ...l, dist, locScore: loc.score, loc };
       }
       return { ...l, dist, locScore: null as number | null, loc: undefined as HotelLocationStats | undefined };
     });
-  }, [ville, tab, distOrigin]);
+  }, [ville, tab, distOrigin, allMosquees]);
 
   // Facettes (tri + filtres) calculées sur la liste réelle de l'onglet.
   const sortOptions = useMemo(
@@ -485,7 +515,7 @@ export default function VilleScreen() {
           {aroundHotel && (
             <HotelAroundSheet
               hotel={aroundHotel}
-              mosquees={ville.mosquees}
+              mosquees={allMosquees}
               restaurants={ville.restaurants}
               onClose={() => setAroundHotel(null)}
             />

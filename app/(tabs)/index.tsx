@@ -23,6 +23,7 @@ import { getVille, halalBadge, type VilleDetail, type VilleSummary } from '@/lib
 import { priceRank } from '@/lib/lieuSort';
 import { hotelLocationStats } from '@/lib/hotelLocation';
 import { HotelAroundSheet } from '@/components/HotelAroundSheet';
+import { mergeMosquees, osmToLieu } from '@/lib/mosques';
 import { consumePendingCity } from '@/lib/pendingCity';
 
 // Tri rapide de la liste (restaurants / hôtels) sur la page d'accueil.
@@ -240,7 +241,9 @@ export default function HomeScreen() {
       mapCenter.current = coords;
       // Vue large pour voir un maximum de mosquées de l'agglomération.
       mapRef.current?.animateToRegion({ ...coords, latitudeDelta: 0.16, longitudeDelta: 0.16 }, 800);
-      if (activeFilterRef.current === 'mosquees') loadMosques(coords.latitude, coords.longitude, CITY_RADIUS_M);
+      // Toujours charger les mosquées réelles (OSM) : affichées si l'onglet Mosquées
+      // est actif, et indispensables au score « hôtel bien situé ».
+      loadMosques(coords.latitude, coords.longitude, CITY_RADIUS_M);
 
       // Détail de la ville (restaurants / hôtels réels)
       setCityDetail(null);
@@ -283,6 +286,13 @@ export default function HomeScreen() {
   // ── Lieux affichés ──
   const activeCfg = FILTERS.find((f) => f.key === activeFilter)!;
 
+  // Mosquées de référence de la ville : principales (API) + exhaustives (OSM),
+  // dédupliquées → score hôtel fiable.
+  const cityMosquees = useMemo(
+    () => (cityDetail ? mergeMosquees(cityDetail.mosquees, mosques.map(osmToLieu)) : []),
+    [cityDetail, mosques],
+  );
+
   const places: PinItem[] = useMemo(() => {
     if (activeFilter === 'mosquees') {
       return mosques.map((m) => ({ id: m.id, name: m.name, latitude: m.latitude, longitude: m.longitude }));
@@ -305,7 +315,7 @@ export default function HomeScreen() {
             halalConfidence: l.halalConfidence,
           };
           if (activeFilter === 'hotels') {
-            const loc = hotelLocationStats(l, cityDetail.mosquees, cityDetail.restaurants, 1);
+            const loc = hotelLocationStats(l, cityMosquees, cityDetail.restaurants, 1);
             base.locScore = loc.score;
             base.nearestMosqueKm = loc.nearestMosqueKm;
             base.restosNear = loc.restosNear;
@@ -323,7 +333,7 @@ export default function HomeScreen() {
       longitude: p.longitude,
       demo: true,
     }));
-  }, [activeFilter, mosques, selectedCity, cityDetail, userLoc]);
+  }, [activeFilter, mosques, selectedCity, cityDetail, userLoc, cityMosquees]);
 
   // Restaurants : la sélection fine s'applique aussi aux hôtels (gammes/budgets).
   const sortable = activeFilter === 'restaurants' || activeFilter === 'hotels';
@@ -723,7 +733,7 @@ export default function HomeScreen() {
         return h ? (
           <HotelAroundSheet
             hotel={h}
-            mosquees={cityDetail!.mosquees}
+            mosquees={cityMosquees}
             restaurants={cityDetail!.restaurants}
             onClose={() => setAroundHotelId(null)}
           />
