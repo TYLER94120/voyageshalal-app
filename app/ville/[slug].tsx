@@ -36,6 +36,7 @@ import { HeartButton } from '@/components/HeartButton';
 import { cityFavKey, placeFavKey, type FavoriteItem } from '@/lib/favorites';
 import { useTrips } from '@/context/TripsContext';
 import { tripItemKey, type TripItemType } from '@/lib/trips';
+import { autoPlanTrip } from '@/lib/autoPlan';
 
 type TabKey = 'restaurants' | 'mosquees' | 'hotels' | 'activites' | 'pratique';
 
@@ -73,7 +74,7 @@ function pinColor(tab: TabKey, lieu: Lieu): string {
 export default function VilleScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const router = useRouter();
-  const { addToTrip, isInTrip } = useTrips();
+  const { addToTrip, isInTrip, getCityTrip, applyPlan } = useTrips();
   const mapRef = useRef<MapView>(null);
   const [ville, setVille] = useState<VilleDetail | null>(null);
   const [state, setState] = useState<LoadState>('loading');
@@ -281,6 +282,19 @@ export default function VilleScreen() {
     else if (l.latitude != null && l.longitude != null) openDirections(l.latitude, l.longitude);
   };
 
+  // 🗓️ : ouvre le séjour de la ville (le crée automatiquement au 1er accès).
+  const planOrOpenTrip = () => {
+    if (!ville) return;
+    if (!getCityTrip(ville.slug)) {
+      const { items } = autoPlanTrip(ville, 3);
+      applyPlan(
+        { slug: ville.slug, nom: ville.nom, latitude: ville.latitude, longitude: ville.longitude },
+        items,
+      );
+    }
+    router.push(`/trips/${ville.slug}`);
+  };
+
   return (
     <View style={styles.container}>
       <Stack.Screen
@@ -292,18 +306,23 @@ export default function VilleScreen() {
           headerTitleStyle: { color: Brand.cream, fontWeight: '800' },
           headerRight: () =>
             ville ? (
-              <HeartButton
-                size={22}
-                item={{
-                  id: cityFavKey(ville.slug),
-                  type: 'city',
-                  title: ville.nom,
-                  subtitle: [ville.pays, ville.continent].filter(Boolean).join(' · '),
-                  emoji: '🏙️',
-                  citySlug: ville.slug,
-                  image: ville.image,
-                }}
-              />
+              <View style={styles.headerRight}>
+                <Pressable hitSlop={8} onPress={planOrOpenTrip}>
+                  <Text style={styles.headerCal}>🗓️</Text>
+                </Pressable>
+                <HeartButton
+                  size={22}
+                  item={{
+                    id: cityFavKey(ville.slug),
+                    type: 'city',
+                    title: ville.nom,
+                    subtitle: [ville.pays, ville.continent].filter(Boolean).join(' · '),
+                    emoji: '🏙️',
+                    citySlug: ville.slug,
+                    image: ville.image,
+                  }}
+                />
+              </View>
             ) : null,
         }}
       />
@@ -958,6 +977,9 @@ function FilterChip({
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Brand.night },
+
+  headerRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
+  headerCal: { fontSize: 18 },
 
   offlineBar: { backgroundColor: '#7a5c12', paddingVertical: 6, paddingHorizontal: Spacing.lg },
   offlineText: { color: '#fff', fontSize: 12, fontWeight: '700', textAlign: 'center' },

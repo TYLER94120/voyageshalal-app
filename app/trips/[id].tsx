@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
@@ -8,15 +8,18 @@ import { itemsForDay } from '@/lib/trips';
 import { openDirections, openMapsUrl } from '@/lib/maps';
 import { computeDay, formatTime } from '@/lib/prayer';
 import { DEFAULT_SETTINGS, loadSettings, type PrayerSettings } from '@/lib/prayerSettings';
+import { getVilleCached } from '@/lib/cityCache';
+import { autoPlanTrip } from '@/lib/autoPlan';
 
 export default function TripDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
-  const { getCityTrip, removeFromTrip, moveItemDay, setTripDays, deleteTrip } = useTrips();
+  const { getCityTrip, removeFromTrip, moveItemDay, setTripDays, deleteTrip, applyPlan } = useTrips();
   const trip = getCityTrip(String(id));
 
   const [day, setDay] = useState(1);
   const [settings, setSettings] = useState<PrayerSettings>(DEFAULT_SETTINGS);
+  const [planning, setPlanning] = useState(false);
 
   useEffect(() => {
     loadSettings().then(setSettings);
@@ -49,6 +52,49 @@ export default function TripDetailScreen() {
 
   const dayItems = itemsForDay(trip, day);
 
+  const organizeAuto = async () => {
+    setPlanning(true);
+    try {
+      const { data } = await getVilleCached(trip.citySlug);
+      const { items } = autoPlanTrip(data, trip.days);
+      if (items.length === 0) {
+        Alert.alert(
+          'Pas assez de données',
+          "Cette ville n'a pas encore assez de lieux géolocalisés pour un programme automatique.",
+        );
+        return;
+      }
+      applyPlan(
+        {
+          slug: trip.citySlug,
+          nom: trip.cityNom,
+          latitude: trip.latitude ?? data.latitude,
+          longitude: trip.longitude ?? data.longitude,
+        },
+        items,
+      );
+      setDay(1);
+    } catch {
+      Alert.alert(
+        'Connexion requise',
+        "Impossible de générer le programme : ouvre d'abord cette ville une fois en ligne.",
+      );
+    } finally {
+      setPlanning(false);
+    }
+  };
+
+  const handleAuto = () => {
+    if (trip.items.length > 0) {
+      Alert.alert('Réorganiser le séjour ?', 'Le programme actuel sera remplacé par une proposition automatique.', [
+        { text: 'Annuler', style: 'cancel' },
+        { text: 'Réorganiser', onPress: organizeAuto },
+      ]);
+    } else {
+      organizeAuto();
+    }
+  };
+
   const confirmDelete = () => {
     Alert.alert('Supprimer ce séjour ?', `« ${trip.cityNom} » et toutes ses étapes seront effacés.`, [
       { text: 'Annuler', style: 'cancel' },
@@ -70,9 +116,14 @@ export default function TripDetailScreen() {
           headerTitle: trip.cityNom,
           ...headerStyle,
           headerRight: () => (
-            <Pressable hitSlop={10} onPress={confirmDelete}>
-              <Text style={styles.headerDelete}>🗑️</Text>
-            </Pressable>
+            <View style={styles.headerActions}>
+              <Pressable hitSlop={10} onPress={handleAuto}>
+                <Text style={styles.headerAuto}>✨</Text>
+              </Pressable>
+              <Pressable hitSlop={10} onPress={confirmDelete}>
+                <Text style={styles.headerDelete}>🗑️</Text>
+              </Pressable>
+            </View>
           ),
         }}
       />
@@ -118,6 +169,23 @@ export default function TripDetailScreen() {
       </ScrollView>
 
       <ScrollView style={styles.body} contentContainerStyle={styles.bodyPad}>
+        {/* Organisateur automatique (séjour vide) */}
+        {trip.items.length === 0 && (
+          <Pressable style={styles.autoBanner} onPress={handleAuto} disabled={planning}>
+            {planning ? (
+              <ActivityIndicator color={Brand.night} />
+            ) : (
+              <>
+                <Text style={styles.autoBannerTitle}>✨ Organiser mon séjour pour moi</Text>
+                <Text style={styles.autoBannerSub}>
+                  Un programme équilibré en 1 tap : meilleur hôtel, restos & activités variés,
+                  répartis sur {trip.days} jour{trip.days > 1 ? 's' : ''}
+                </Text>
+              </>
+            )}
+          </Pressable>
+        )}
+
         {/* Horaires de prière du jour */}
         {prayers.length > 0 && (
           <View style={styles.prayerCard}>
@@ -139,6 +207,9 @@ export default function TripDetailScreen() {
             <Text style={styles.dayEmptyText}>Aucune étape ce jour-là.</Text>
             <Pressable style={styles.addBtn} onPress={() => router.push(`/ville/${trip.citySlug}`)}>
               <Text style={styles.addBtnText}>➕ Ajouter des lieux</Text>
+            </Pressable>
+            <Pressable onPress={handleAuto} disabled={planning}>
+              <Text style={styles.autoLink}>✨ Ou laisse-moi organiser</Text>
             </Pressable>
           </View>
         ) : (
@@ -199,7 +270,22 @@ const headerStyle = {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Brand.night },
+  headerActions: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
+  headerAuto: { fontSize: 18 },
   headerDelete: { fontSize: 18 },
+
+  autoBanner: {
+    backgroundColor: Brand.gold,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    gap: 4,
+    alignItems: 'center',
+    minHeight: 64,
+    justifyContent: 'center',
+  },
+  autoBannerTitle: { color: Brand.night, fontSize: 16, fontWeight: '800' },
+  autoBannerSub: { color: Brand.night, fontSize: 12, fontWeight: '600', textAlign: 'center', opacity: 0.85 },
+  autoLink: { color: Brand.gold, fontSize: 13, fontWeight: '800', marginTop: Spacing.xs },
 
   daysBar: {
     flexDirection: 'row',

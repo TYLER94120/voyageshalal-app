@@ -30,6 +30,11 @@ interface TripsValue {
   moveItemDay: (citySlug: string, itemId: string, day: number) => void;
   setTripDays: (citySlug: string, days: number) => void;
   deleteTrip: (citySlug: string) => void;
+  // Remplace les étapes d'un séjour (organisateur automatique).
+  applyPlan: (
+    city: { slug: string; nom: string; latitude?: number; longitude?: number },
+    items: TripItem[],
+  ) => void;
 }
 
 const TripsContext = createContext<TripsValue | null>(null);
@@ -96,9 +101,20 @@ export function TripsProvider({ children }: { children: React.ReactNode }) {
     setTrips((prev) => removeTrip(prev, citySlug));
   }, []);
 
+  const applyPlan = useCallback<TripsValue['applyPlan']>((city, items) => {
+    setTrips((prev) => {
+      const now = Date.now();
+      const existing = findTripByCity(prev, city.slug);
+      const base =
+        existing ?? makeTrip(city.slug, city.nom, { latitude: city.latitude, longitude: city.longitude }, now);
+      const maxDay = items.reduce((m, it) => Math.max(m, it.day), 1);
+      return upsertTrip(prev, { ...base, days: Math.max(base.days, maxDay), items, updatedAt: now });
+    });
+  }, []);
+
   return (
     <TripsContext.Provider
-      value={{ trips, ready, getCityTrip, isInTrip, addToTrip, removeFromTrip, moveItemDay, setTripDays, deleteTrip }}
+      value={{ trips, ready, getCityTrip, isInTrip, addToTrip, removeFromTrip, moveItemDay, setTripDays, deleteTrip, applyPlan }}
     >
       {children}
     </TripsContext.Provider>
