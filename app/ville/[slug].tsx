@@ -15,7 +15,8 @@ import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { Brand, Radius, Spacing } from '@/constants/theme';
 import { distanceKm, formatDistance } from '@/lib/geo';
 import { openMapsUrl, openDirections } from '@/lib/maps';
-import { getVille, halalBadge, type Lieu, type PratiqueItem, type VilleDetail } from '@/lib/api';
+import { halalBadge, type Lieu, type PratiqueItem, type VilleDetail } from '@/lib/api';
+import { getVilleCached } from '@/lib/cityCache';
 import {
   applyLieuFilters,
   categoryFacets,
@@ -84,6 +85,7 @@ export default function VilleScreen() {
   // Sélection premium active (restaurants) + filtre « proche mosquée » (hôtels).
   const [selection, setSelection] = useState<string | null>(null);
   const [nearMosqueOnly, setNearMosqueOnly] = useState(false);
+  const [offline, setOffline] = useState(false);
 
   // Changer d'onglet remet à zéro tri & filtres (chaque onglet a ses propres facettes).
   const selectTab = useCallback((k: TabKey) => {
@@ -121,7 +123,9 @@ export default function VilleScreen() {
     if (!slug) return;
     setState('loading');
     try {
-      setVille(await getVille(slug));
+      const { data, offline: off } = await getVilleCached(slug);
+      setVille(data);
+      setOffline(off);
       setState('ready');
     } catch (err) {
       console.warn('[ville] échec chargement', slug, err);
@@ -324,6 +328,12 @@ export default function VilleScreen() {
 
       {state === 'ready' && ville && (
         <>
+          {offline && (
+            <View style={styles.offlineBar}>
+              <Text style={styles.offlineText}>📡 Hors-ligne — dernière version enregistrée</Text>
+            </View>
+          )}
+
           {/* Carte (onglets géolocalisés) */}
           {showMap && (
             <View style={styles.mapWrap}>
@@ -893,6 +903,9 @@ function FilterChip({
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Brand.night },
+
+  offlineBar: { backgroundColor: '#7a5c12', paddingVertical: 6, paddingHorizontal: Spacing.lg },
+  offlineText: { color: '#fff', fontSize: 12, fontWeight: '700', textAlign: 'center' },
 
   mapWrap: { height: 260, backgroundColor: Brand.forest },
   mapEmpty: { ...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center' },

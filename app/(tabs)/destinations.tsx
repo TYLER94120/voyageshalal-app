@@ -14,7 +14,8 @@ import {
 import { useRouter } from 'expo-router';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
-import { getVilles, type VilleSummary } from '@/lib/api';
+import { type VilleSummary } from '@/lib/api';
+import { getVillesCached } from '@/lib/cityCache';
 import { HeartButton } from '@/components/HeartButton';
 import { cityFavKey } from '@/lib/favorites';
 
@@ -47,7 +48,7 @@ export default function DestinationsScreen() {
   const load = useCallback(async (isRefresh = false) => {
     if (!isRefresh) setState('loading');
     try {
-      const data = await getVilles();
+      const { data } = await getVillesCached();
       setVilles(data);
       setState('ready');
     } catch (err) {
