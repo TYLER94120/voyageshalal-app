@@ -3,18 +3,21 @@ import {
   ActivityIndicator,
   FlatList,
   Modal,
+  Platform,
   Pressable,
+  StatusBar,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { getVilles, type VilleSummary } from '@/lib/api';
 import { Brand, Radius, Spacing } from '@/constants/theme';
 
 type LoadState = 'loading' | 'ready' | 'error';
+
+const TOP_PAD = (Platform.OS === 'android' ? StatusBar.currentHeight ?? 24 : 52) + Spacing.md;
 
 export function CitySearchModal({
   visible,
@@ -25,12 +28,11 @@ export function CitySearchModal({
   onClose: () => void;
   onSelect: (ville: VilleSummary) => void;
 }) {
-  const insets = useSafeAreaInsets();
   const [villes, setVilles] = useState<VilleSummary[]>([]);
   const [state, setState] = useState<LoadState>('loading');
   const [query, setQuery] = useState('');
 
-  // Charge la liste une première fois à l'ouverture.
+  // Charge la liste à l'ouverture (et réessaie si vide).
   useEffect(() => {
     if (!visible || villes.length > 0) return;
     let alive = true;
@@ -41,7 +43,9 @@ export function CitySearchModal({
         setVilles(data);
         setState('ready');
       })
-      .catch(() => alive && setState('error'));
+      .catch(() => {
+        if (alive) setState('error');
+      });
     return () => {
       alive = false;
     };
@@ -59,10 +63,10 @@ export function CitySearchModal({
   }, [villes, query]);
 
   return (
-    <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
-      <View style={[styles.sheet, { paddingTop: insets.top + Spacing.md }]}>
+    <Modal visible={visible} animationType="slide" onRequestClose={onClose} statusBarTranslucent>
+      <View style={[styles.sheet, { paddingTop: TOP_PAD }]}>
         <View style={styles.handleRow}>
-          <Text style={styles.title}>Choisir une destination</Text>
+          <Text style={styles.title}>Où veux-tu aller ?</Text>
           <Pressable onPress={onClose} hitSlop={12}>
             <Text style={styles.close}>✕</Text>
           </Pressable>
@@ -76,7 +80,6 @@ export function CitySearchModal({
             placeholder="Rechercher une ville…"
             placeholderTextColor={Brand.creamMuted}
             style={styles.input}
-            autoFocus
             autoCorrect={false}
             returnKeyType="search"
           />
@@ -96,13 +99,9 @@ export function CitySearchModal({
 
         {state === 'error' && (
           <View style={styles.center}>
+            <Text style={styles.errEmoji}>📡</Text>
             <Text style={styles.muted}>Impossible de charger les villes. Vérifie ta connexion.</Text>
-            <Pressable
-              style={styles.retry}
-              onPress={() => {
-                setVilles([]);
-              }}
-            >
+            <Pressable style={styles.retry} onPress={() => setVilles([])}>
               <Text style={styles.retryText}>Réessayer</Text>
             </Pressable>
           </View>
@@ -115,9 +114,7 @@ export function CitySearchModal({
             keyboardShouldPersistTaps="handled"
             contentContainerStyle={styles.list}
             ListEmptyComponent={
-              <Text style={[styles.muted, { textAlign: 'center', marginTop: Spacing.xl }]}>
-                Aucune ville pour « {query} ».
-              </Text>
+              <Text style={[styles.muted, styles.empty]}>Aucune ville pour « {query} ».</Text>
             }
             renderItem={({ item }) => (
               <Pressable
@@ -146,12 +143,7 @@ export function CitySearchModal({
 
 const styles = StyleSheet.create({
   sheet: { flex: 1, backgroundColor: Brand.night, paddingHorizontal: Spacing.lg },
-  handleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: Spacing.md,
-  },
+  handleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: Spacing.md },
   title: { color: Brand.cream, fontSize: 22, fontWeight: '800' },
   close: { color: Brand.gold, fontSize: 22, fontWeight: '800' },
 
@@ -171,6 +163,7 @@ const styles = StyleSheet.create({
   clear: { color: Brand.creamMuted, fontSize: 16 },
 
   list: { paddingVertical: Spacing.md, gap: Spacing.sm },
+  empty: { textAlign: 'center', marginTop: Spacing.xl },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -189,7 +182,8 @@ const styles = StyleSheet.create({
   rowGo: { color: Brand.gold, fontSize: 24, fontWeight: '300' },
 
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, padding: Spacing.xl },
-  muted: { color: Brand.creamMuted, fontSize: 14 },
+  errEmoji: { fontSize: 40 },
+  muted: { color: Brand.creamMuted, fontSize: 14, textAlign: 'center' },
   retry: {
     marginTop: Spacing.sm,
     backgroundColor: Brand.gold,

@@ -342,11 +342,10 @@ export default function HomeScreen() {
         ))}
       </MapView>
 
-      {/* En-tête */}
+      {/* En-tête : logo + barre de recherche de ville */}
       <View style={styles.header}>
-        <View style={styles.headerPill}>
-          <Text style={styles.headerEmoji}>🌙</Text>
-          <Text style={styles.headerTitle}>VoyagesHalal</Text>
+        <View style={styles.brandDot}>
+          <Text style={styles.brandEmoji}>🌙</Text>
         </View>
 
         {selectedCity ? (
@@ -359,8 +358,11 @@ export default function HomeScreen() {
             </Pressable>
           </View>
         ) : (
-          <Pressable style={styles.cityBtn} onPress={() => setCityModal(true)}>
-            <Text style={styles.cityBtnText}>🌍 Ville</Text>
+          <Pressable style={styles.searchBar} onPress={() => setCityModal(true)}>
+            <Text style={styles.searchBarIcon}>🔍</Text>
+            <Text style={styles.searchBarText} numberOfLines={1}>
+              Une ville ? Tokyo, Dubaï, Istanbul…
+            </Text>
           </Pressable>
         )}
       </View>
@@ -488,53 +490,55 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 8,
   },
-  cityBtn: {
-    backgroundColor: 'rgba(255,255,255,0.95)',
-    borderRadius: 24,
+  brandDot: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: Brand.forest,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  brandEmoji: { fontSize: 20 },
+  searchBar: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    height: 44,
+    backgroundColor: 'rgba(255,255,255,0.97)',
+    borderRadius: 22,
     paddingHorizontal: 14,
-    paddingVertical: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
     shadowRadius: 8,
     elevation: 6,
   },
-  cityBtnText: { color: Brand.forest, fontWeight: '800', fontSize: 14 },
+  searchBarIcon: { fontSize: 15 },
+  searchBarText: { flex: 1, color: '#888', fontSize: 14, fontWeight: '600' },
   cityActive: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    maxWidth: '55%',
+    height: 44,
     backgroundColor: Brand.gold,
-    borderRadius: 24,
+    borderRadius: 22,
     paddingHorizontal: 14,
-    paddingVertical: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 8,
     elevation: 6,
   },
-  cityActiveMain: { flexShrink: 1 },
-  cityActiveText: { color: Brand.night, fontWeight: '800', fontSize: 14 },
+  cityActiveMain: { flex: 1 },
+  cityActiveText: { color: Brand.night, fontWeight: '800', fontSize: 15 },
   cityClear: { color: Brand.night, fontWeight: '800', fontSize: 16 },
-
-  headerPill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.95)',
-    borderRadius: 24,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    gap: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 6,
-  },
-  headerEmoji: { fontSize: 18 },
-  headerTitle: { fontSize: 16, fontWeight: '700', color: Brand.forest, letterSpacing: 0.3 },
 
   denyBanner: {
     position: 'absolute',
