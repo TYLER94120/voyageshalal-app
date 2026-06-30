@@ -84,6 +84,13 @@ export interface PratiqueItem {
   value: string;
 }
 
+export interface VilleSelection {
+  key: string;
+  label: string;
+  icon: string;
+  names: string[]; // noms de lieux (restaurants) à mettre en avant
+}
+
 export interface VilleDetail extends VilleSummary {
   restaurants: Lieu[];
   mosquees: Lieu[];
@@ -91,6 +98,36 @@ export interface VilleDetail extends VilleSummary {
   activites: Lieu[];
   pratique?: string; // infos pratiques (texte libre / markdown léger)
   pratiqueInfos: PratiqueItem[]; // infos pratiques structurées (visa, transport…)
+  selections: VilleSelection[]; // sélections premium curées (incontournables…)
+}
+
+// Sélections premium connues → libellé FR + icône, dans un ordre de pertinence.
+const SELECTION_FIELDS: { keys: string[]; label: string; icon: string }[] = [
+  { keys: ['incontournables'], label: 'Incontournables', icon: '⭐' },
+  { keys: ['mieuxNotes', 'mieux_notes'], label: 'Mieux notés', icon: '🏆' },
+  { keys: ['meilleurRapportQualitePrix', 'meilleur_rapport_qualite_prix', 'rapportQualitePrix'], label: 'Rapport qualité-prix', icon: '💰' },
+  { keys: ['pepitesCachees', 'pepites_cachees'], label: 'Pépites cachées', icon: '💎' },
+  { keys: ['idealFamille', 'ideal_famille'], label: 'Idéal famille', icon: '👨‍👩‍👧' },
+  { keys: ['gastronomique'], label: 'Gastronomique', icon: '🍴' },
+];
+
+function normalizeSelections(raw: Raw): VilleSelection[] {
+  const prem = asRecord(raw.selectionsPremium ?? raw.selections_premium ?? raw.selections);
+  const out: VilleSelection[] = [];
+  for (const field of SELECTION_FIELDS) {
+    let names: string[] | undefined;
+    for (const k of field.keys) {
+      const v = prem[k] ?? raw[k];
+      if (Array.isArray(v)) {
+        names = v.filter((x): x is string => typeof x === 'string' && x.trim().length > 0);
+        break;
+      }
+    }
+    if (names && names.length > 0) {
+      out.push({ key: field.keys[0], label: field.label, icon: field.icon, names });
+    }
+  }
+  return out;
 }
 
 // Champs pratiques connus → libellé FR + icône, dans un ordre logique de voyage.
@@ -274,6 +311,7 @@ function normalizeVilleDetail(raw: Raw): VilleDetail | null {
     activites: normalizeLieux(raw, 'act', 'activites', 'activités', 'aFaire', 'activities', 'visites'),
     pratique: pickString(raw, 'pratique', 'practical', 'conseils', 'description_pratique'),
     pratiqueInfos: normalizePratique(raw),
+    selections: normalizeSelections(raw),
   };
 }
 

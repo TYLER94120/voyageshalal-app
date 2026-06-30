@@ -79,6 +79,9 @@ export default function VilleScreen() {
   const [aroundHotel, setAroundHotel] = useState<Lieu | null>(null);
   // Mosquées exhaustives (OpenStreetMap) pour fiabiliser le score & la carte.
   const [osmMosquees, setOsmMosquees] = useState<Lieu[]>([]);
+  // Sélection premium active (restaurants) + filtre « proche mosquée » (hôtels).
+  const [selection, setSelection] = useState<string | null>(null);
+  const [nearMosqueOnly, setNearMosqueOnly] = useState(false);
 
   // Changer d'onglet remet à zéro tri & filtres (chaque onglet a ses propres facettes).
   const selectTab = useCallback((k: TabKey) => {
@@ -86,6 +89,8 @@ export default function VilleScreen() {
     setSortKey(null);
     setFilters(EMPTY_FILTERS);
     setHotelFilters([]);
+    setSelection(null);
+    setNearMosqueOnly(false);
   }, []);
 
   // Position connue de l'utilisateur (sans nouvelle demande de permission) : sert à
@@ -213,7 +218,15 @@ export default function VilleScreen() {
   );
   const effectiveSort: SortKey = sortKey ?? sortOptions[0]?.key ?? 'proche';
 
-  // Filtres équipements hôtels (booléens), appliqués avant le moteur générique.
+  // Noms de la sélection premium active (restaurants), normalisés pour le matching.
+  const selectionNames = useMemo(() => {
+    if (tab !== 'restaurants' || !selection || !ville) return null;
+    const sel = ville.selections.find((s) => s.key === selection);
+    if (!sel) return null;
+    return new Set(sel.names.map((n) => n.trim().toLowerCase()));
+  }, [tab, selection, ville]);
+
+  // Filtres hôtels (équipements + proche mosquée) et sélection premium (restos).
   const lieux = useMemo(() => {
     let base = rawWithDist;
     if (tab === 'hotels' && hotelFilters.length > 0) {
@@ -221,8 +234,14 @@ export default function VilleScreen() {
         hotelFilters.every((k) => HOTEL_FILTERS.find((f) => f.key === k)?.test(h)),
       );
     }
+    if (tab === 'hotels' && nearMosqueOnly) {
+      base = base.filter((h) => h.loc?.nearestMosqueKm != null && h.loc.nearestMosqueKm <= 0.5);
+    }
+    if (selectionNames) {
+      base = base.filter((l) => selectionNames.has(l.nom.trim().toLowerCase()));
+    }
     return applyLieuFilters(base, filters, effectiveSort);
-  }, [rawWithDist, tab, hotelFilters, filters, effectiveSort]);
+  }, [rawWithDist, tab, hotelFilters, nearMosqueOnly, selectionNames, filters, effectiveSort]);
 
   const pins = useMemo(() => lieux.filter((l) => l.latitude != null && l.longitude != null), [lieux]);
   const showMap = MAP_TABS.includes(tab) && !!cityCoords;
@@ -374,6 +393,30 @@ export default function VilleScreen() {
           {/* Tri + filtres (restaurants / activités / hôtels) */}
           {tab !== 'pratique' && tab !== 'mosquees' && (
             <View style={styles.controls}>
+              {/* Sélections premium curées (restaurants) */}
+              {tab === 'restaurants' && ville.selections.length > 0 && (
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.controlRow}
+                >
+                  {ville.selections.map((s) => {
+                    const on = selection === s.key;
+                    return (
+                      <Pressable
+                        key={s.key}
+                        onPress={() => setSelection(on ? null : s.key)}
+                        style={[styles.selChip, on && styles.selChipOn]}
+                      >
+                        <Text style={[styles.selChipText, on && styles.selChipTextOn]}>
+                          {s.icon} {s.label}
+                        </Text>
+                      </Pressable>
+                    );
+                  })}
+                </ScrollView>
+              )}
+
               {sortOptions.length > 1 && (
                 <ScrollView
                   horizontal
@@ -443,6 +486,14 @@ export default function VilleScreen() {
                     }
                   />
                 ))}
+                {tab === 'hotels' && (
+                  <FilterChip
+                    label="🕌 ≤ 500 m mosquée"
+                    on={nearMosqueOnly}
+                    tone="green"
+                    onPress={() => setNearMosqueOnly((v) => !v)}
+                  />
+                )}
                 {tab === 'hotels' &&
                   HOTEL_FILTERS.map((hf) => (
                     <FilterChip
@@ -463,12 +514,14 @@ export default function VilleScreen() {
                   {lieux.length} résultat{lieux.length > 1 ? 's' : ''}
                   {distOrigin?.fromUser && effectiveSort === 'proche' ? ' · près de vous' : ''}
                 </Text>
-                {(hasActiveFilters(filters) || hotelFilters.length > 0) && (
+                {(hasActiveFilters(filters) || hotelFilters.length > 0 || nearMosqueOnly || selection) && (
                   <Pressable
                     hitSlop={8}
                     onPress={() => {
                       setFilters(EMPTY_FILTERS);
                       setHotelFilters([]);
+                      setNearMosqueOnly(false);
+                      setSelection(null);
                     }}
                   >
                     <Text style={styles.clearLink}>Effacer</Text>
@@ -481,7 +534,7 @@ export default function VilleScreen() {
           {/* Contenu */}
           {tab === 'pratique' ? (
             <ScrollView style={styles.list} contentContainerStyle={styles.listPad}>
-              <PratiqueBlock items={ville.pratiqueInfos} text={ville.pratique} />
+              <PratiqueBlock items={ville.pratiqueInfos} text={ville.pratique} ville={ville.nom} pays={ville.pays} />
             </ScrollView>
           ) : (
             <FlatList
@@ -691,7 +744,36 @@ function LieuCard({ lieu, dist, onGo }: { lieu: LieuDist; dist: number | null; o
   );
 }
 
-function PratiqueBlock({ items, text }: { items: PratiqueItem[]; text?: string }) {
+// Pour certaines infos, un tap ouvre une recherche web utile (visa, transport…).
+function pratiqueSearchQuery(key: string, ville: string, pays?: string): string | null {
+  const lieu = pays || ville;
+  switch (key) {
+    case 'visa':
+      return `visa ${pays || ville} pour français conditions`;
+    case 'vaccins':
+      return `vaccins voyage ${lieu} recommandations`;
+    case 'transport':
+      return `transports en commun ${ville} touriste`;
+    case 'monnaie':
+      return `convertir euro ${lieu} taux`;
+    case 'meilleure_periode':
+      return `meilleure période pour visiter ${ville} météo`;
+    default:
+      return null;
+  }
+}
+
+function PratiqueBlock({
+  items,
+  text,
+  ville,
+  pays,
+}: {
+  items: PratiqueItem[];
+  text?: string;
+  ville: string;
+  pays?: string;
+}) {
   if (items.length === 0 && !text) {
     return (
       <View style={styles.emptyTab}>
@@ -699,17 +781,32 @@ function PratiqueBlock({ items, text }: { items: PratiqueItem[]; text?: string }
       </View>
     );
   }
+  const openSearch = (q: string) =>
+    Linking.openURL(`https://www.google.com/search?q=${encodeURIComponent(q)}`).catch(() => undefined);
   return (
     <View style={styles.pratiqueWrap}>
-      {items.map((it) => (
-        <View key={it.key} style={styles.pratiqueRow}>
-          <Text style={styles.pratiqueIcon}>{it.icon}</Text>
-          <View style={styles.pratiqueRowText}>
-            <Text style={styles.pratiqueLabel}>{it.label}</Text>
-            <Text style={styles.pratiqueValue}>{it.value}</Text>
+      {items.map((it) => {
+        const query = pratiqueSearchQuery(it.key, ville, pays);
+        const row = (
+          <>
+            <Text style={styles.pratiqueIcon}>{it.icon}</Text>
+            <View style={styles.pratiqueRowText}>
+              <Text style={styles.pratiqueLabel}>{it.label}</Text>
+              <Text style={styles.pratiqueValue}>{it.value}</Text>
+            </View>
+            {query ? <Text style={styles.pratiqueGo}>Rechercher ↗</Text> : null}
+          </>
+        );
+        return query ? (
+          <Pressable key={it.key} style={styles.pratiqueRow} onPress={() => openSearch(query)}>
+            {row}
+          </Pressable>
+        ) : (
+          <View key={it.key} style={styles.pratiqueRow}>
+            {row}
           </View>
-        </View>
-      ))}
+        );
+      })}
       {text ? (
         <View style={styles.pratiqueBox}>
           <Text style={styles.pratiqueText}>{text}</Text>
@@ -796,6 +893,18 @@ const styles = StyleSheet.create({
   sortPillOn: { backgroundColor: Brand.gold, borderColor: Brand.gold },
   sortPillText: { color: Brand.creamMuted, fontSize: 13, fontWeight: '700' },
   sortPillTextOn: { color: Brand.night, fontWeight: '800' },
+
+  selChip: {
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 7,
+    borderRadius: Radius.pill,
+    backgroundColor: 'rgba(201,168,76,0.14)',
+    borderWidth: 1,
+    borderColor: Brand.gold,
+  },
+  selChipOn: { backgroundColor: Brand.gold, borderColor: Brand.gold },
+  selChipText: { color: Brand.gold, fontSize: 12, fontWeight: '800' },
+  selChipTextOn: { color: Brand.night, fontWeight: '800' },
 
   fchip: { paddingHorizontal: Spacing.md, paddingVertical: 7, borderRadius: Radius.pill, borderWidth: 1, borderColor: Brand.border },
   fchipOn: { backgroundColor: Brand.gold, borderColor: Brand.gold },
@@ -887,6 +996,7 @@ const styles = StyleSheet.create({
   pratiqueRowText: { flex: 1, gap: 2 },
   pratiqueLabel: { color: Brand.gold, fontSize: 12, fontWeight: '800', letterSpacing: 0.3, textTransform: 'uppercase' },
   pratiqueValue: { color: Brand.cream, fontSize: 15, fontWeight: '600', lineHeight: 21 },
+  pratiqueGo: { color: Brand.gold, fontSize: 11, fontWeight: '800', alignSelf: 'center' },
   pratiqueBox: { backgroundColor: Brand.forest, borderRadius: Radius.md, borderWidth: 1, borderColor: Brand.border, padding: Spacing.md, marginTop: Spacing.xs },
   pratiqueText: { color: Brand.cream, fontSize: 14, lineHeight: 22 },
 

@@ -141,4 +141,23 @@ describe('parseVilleDetailPayload', () => {
     const d = parseVilleDetailPayload({ nom: 'Ville X' })!;
     expect(d.pratiqueInfos).toEqual([]);
   });
+
+  it('extrait les sélections premium curées dans l’ordre', () => {
+    const payload = {
+      nom: 'Tokyo',
+      selectionsPremium: {
+        mieuxNotes: ['A', 'B'],
+        incontournables: ['X', 'Y', 'Z'],
+        idealFamille: ['F1'],
+      },
+    };
+    const d = parseVilleDetailPayload(payload)!;
+    expect(d.selections.map((s) => s.key)).toEqual(['incontournables', 'mieuxNotes', 'idealFamille']);
+    expect(d.selections[0].names).toEqual(['X', 'Y', 'Z']);
+    expect(d.selections[0].icon).toBe('⭐');
+  });
+
+  it('selections vide si rien', () => {
+    expect(parseVilleDetailPayload({ nom: 'X' })!.selections).toEqual([]);
+  });
 });
