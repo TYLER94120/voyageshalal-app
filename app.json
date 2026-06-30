@@ -21,7 +21,12 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#0b1a0f"
       },
-      "package": "com.voyageshalal.app"
+      "package": "com.voyageshalal.app",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDGZZgkVgfGLSJl7QHUynUDR3xzel-9x_U"
+        }
+      }
     },
     "web": {
       "bundler": "metro",
