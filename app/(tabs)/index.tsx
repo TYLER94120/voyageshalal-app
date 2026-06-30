@@ -14,11 +14,11 @@ import * as Location from 'expo-location';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
 import { distanceKm, formatDistance } from '@/lib/geo';
-import { openDirections } from '@/lib/maps';
+import { openDirections, openDirectionsQuery } from '@/lib/maps';
 import { fetchNearbyMosques } from '@/lib/overpass';
 import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPlaces';
 import { CitySearchModal } from '@/components/CitySearchModal';
-import type { VilleSummary } from '@/lib/api';
+import { getVille, type VilleDetail, type VilleSummary } from '@/lib/api';
 
 // ─── Filtres ────────────────────────────────────────────────────────────────
 
@@ -30,14 +30,13 @@ interface FilterConfig {
   label: string;
   color: string;
   marker: string;
-  real: boolean;
 }
 
 const FILTERS: FilterConfig[] = [
-  { key: 'mosquees', emoji: '🕌', label: 'Mosquées', color: Brand.forest, marker: '#2d6a4f', real: true },
-  { key: 'restaurants', emoji: '🍽️', label: 'Restaurants halal', color: '#9c4221', marker: '#c05621', real: false },
-  { key: 'hotels', emoji: '🏨', label: 'Hôtels', color: '#1d4e89', marker: '#2b6cb0', real: false },
-  { key: 'commerces', emoji: '🥩', label: 'Boucheries halal', color: '#702459', marker: '#97266d', real: false },
+  { key: 'mosquees', emoji: '🕌', label: 'Mosquées', color: Brand.forest, marker: '#2d6a4f' },
+  { key: 'restaurants', emoji: '🍽️', label: 'Restaurants halal', color: '#9c4221', marker: '#c05621' },
+  { key: 'hotels', emoji: '🏨', label: 'Hôtels', color: '#1d4e89', marker: '#2b6cb0' },
+  { key: 'commerces', emoji: '🥩', label: 'Boucheries halal', color: '#702459', marker: '#97266d' },
 ];
 
 const PARIS = { latitude: 48.8566, longitude: 2.3522 };
@@ -45,9 +44,18 @@ const DEFAULT_REGION: Region = { ...PARIS, latitudeDelta: 0.06, longitudeDelta: 
 const SEARCH_RADIUS_M = 5000;
 
 type MosqueState = 'idle' | 'loading' | 'ready' | 'error';
+type CityDetailState = 'idle' | 'loading' | 'ready' | 'error';
 
-interface PlaceWithDist extends MapPlace {
-  dist: number;
+interface PinItem {
+  id: string;
+  name: string;
+  latitude?: number;
+  longitude?: number;
+  address?: string;
+  demo?: boolean;
+}
+interface PinWithDist extends PinItem {
+  dist: number | null;
 }
 
 export default function HomeScreen() {
@@ -62,13 +70,11 @@ export default function HomeScreen() {
   const [locDenied, setLocDenied] = useState(false);
   const [mosques, setMosques] = useState<MapPlace[]>([]);
   const [mosqueState, setMosqueState] = useState<MosqueState>('idle');
-  // Mode « ville » : projection dans une destination choisie (Tokyo, etc.).
+  const [userTracks, setUserTracks] = useState(true);
   const [selectedCity, setSelectedCity] = useState<{ nom: string; latitude: number; longitude: number } | null>(null);
   const [cityModal, setCityModal] = useState(false);
-  // Bug Android react-native-maps : un marqueur custom rendu avec
-  // tracksViewChanges=false dès le départ apparaît vide. On laisse "true"
-  // brièvement le temps du rendu, puis on fige pour les performances.
-  const [userTracks, setUserTracks] = useState(true);
+  const [cityDetail, setCityDetail] = useState<VilleDetail | null>(null);
+  const [cityDetailState, setCityDetailState] = useState<CityDetailState>('idle');
 
   const activeFilterRef = useRef(activeFilter);
   useEffect(() => {
@@ -88,8 +94,6 @@ export default function HomeScreen() {
     }
   }, []);
 
-  // Lance le chargement des mosquées dès la 1ʳᵉ position connue (1 seule fois),
-  // sans attendre le GPS précis → ressenti bien plus rapide.
   const kickMosques = useCallback(
     (lat: number, lng: number) => {
       if (mosquesKicked.current || activeFilterRef.current !== 'mosquees') return;
@@ -128,7 +132,7 @@ export default function HomeScreen() {
       const last = await Location.getLastKnownPositionAsync();
       if (last) {
         applyUser(last.coords, true);
-        kickMosques(last.coords.latitude, last.coords.longitude); // démarrage anticipé
+        kickMosques(last.coords.latitude, last.coords.longitude);
       }
       const cur = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
       applyUser(cur.coords, true);
@@ -142,7 +146,6 @@ export default function HomeScreen() {
     }
   }, [applyUser, startWatching, kickMosques]);
 
-  // Au lancement : géoloc, puis (au cas où) chargement autour de la position.
   useEffect(() => {
     locate().then((coords) => {
       const c = coords ?? PARIS;
@@ -154,7 +157,6 @@ export default function HomeScreen() {
     };
   }, [locate, kickMosques]);
 
-  // Fige le marqueur "Moi" après son premier rendu (perf + visibilité Android).
   useEffect(() => {
     if (userLoc && userTracks) {
       const t = setTimeout(() => setUserTracks(false), 2000);
@@ -162,7 +164,7 @@ export default function HomeScreen() {
     }
   }, [userLoc, userTracks]);
 
-  // Projection dans une ville choisie : coords de la base, sinon géocodage.
+  // ── Mode ville ──
   const selectCity = useCallback(
     async (ville: VilleSummary) => {
       let coords: { latitude: number; longitude: number } | null =
@@ -171,25 +173,37 @@ export default function HomeScreen() {
           : null;
       if (!coords) {
         try {
-          const q = [ville.nom, ville.pays].filter(Boolean).join(', ');
-          const g = await Location.geocodeAsync(q);
+          const g = await Location.geocodeAsync([ville.nom, ville.pays].filter(Boolean).join(', '));
           if (g[0]) coords = { latitude: g[0].latitude, longitude: g[0].longitude };
         } catch {
           // géocodage indisponible
         }
       }
       if (!coords) return;
+
       setSelectedCity({ nom: ville.nom, ...coords });
       mapCenter.current = coords;
       mapRef.current?.animateToRegion({ ...coords, latitudeDelta: 0.08, longitudeDelta: 0.08 }, 800);
       if (activeFilterRef.current === 'mosquees') loadMosques(coords.latitude, coords.longitude);
+
+      // Détail de la ville (restaurants / hôtels réels)
+      setCityDetail(null);
+      setCityDetailState('loading');
+      try {
+        const detail = await getVille(ville.slug);
+        setCityDetail(detail);
+        setCityDetailState('ready');
+      } catch {
+        setCityDetailState('error');
+      }
     },
     [loadMosques],
   );
 
-  // Retour « autour de moi » (quitte le mode ville).
   const goToMe = useCallback(() => {
     setSelectedCity(null);
+    setCityDetail(null);
+    setCityDetailState('idle');
     if (userLoc) {
       mapCenter.current = userLoc;
       mapRef.current?.animateToRegion({ ...userLoc, latitudeDelta: 0.04, longitudeDelta: 0.04 }, 700);
@@ -199,21 +213,58 @@ export default function HomeScreen() {
     }
   }, [userLoc, loadMosques, locate]);
 
-  // ── Lieux affichés selon le filtre ──
+  // ── Lieux affichés ──
   const activeCfg = FILTERS.find((f) => f.key === activeFilter)!;
-  const places: MapPlace[] = useMemo(() => {
-    if (activeFilter === 'mosquees') return mosques;
-    const origin = selectedCity ?? userLoc ?? mapCenter.current;
-    return demoPlacesAround(activeFilter, origin.latitude, origin.longitude);
-  }, [activeFilter, mosques, userLoc, selectedCity]);
 
-  // Liste triée par distance, depuis la ville choisie ou ma position.
-  const nearbyList: PlaceWithDist[] = useMemo(() => {
+  const places: PinItem[] = useMemo(() => {
+    if (activeFilter === 'mosquees') {
+      return mosques.map((m) => ({ id: m.id, name: m.name, latitude: m.latitude, longitude: m.longitude }));
+    }
+    // Restaurants / hôtels : vraies données de la ville si disponibles.
+    if (selectedCity && cityDetail && (activeFilter === 'restaurants' || activeFilter === 'hotels')) {
+      const arr = activeFilter === 'restaurants' ? cityDetail.restaurants : cityDetail.hotels;
+      if (arr && arr.length > 0) {
+        return arr.map((l) => ({
+          id: l.id,
+          name: l.nom,
+          latitude: l.latitude,
+          longitude: l.longitude,
+          address: l.adresse,
+        }));
+      }
+    }
+    // Sinon : démo, autour de la ville choisie ou de l'utilisateur.
+    const origin = selectedCity ?? userLoc ?? mapCenter.current;
+    return demoPlacesAround(activeFilter as DemoCategory, origin.latitude, origin.longitude).map((p) => ({
+      id: p.id,
+      name: p.name,
+      latitude: p.latitude,
+      longitude: p.longitude,
+      demo: true,
+    }));
+  }, [activeFilter, mosques, selectedCity, cityDetail, userLoc]);
+
+  const markers = useMemo(
+    () =>
+      places.filter(
+        (p): p is PinItem & { latitude: number; longitude: number } =>
+          typeof p.latitude === 'number' && typeof p.longitude === 'number',
+      ),
+    [places],
+  );
+
+  const nearbyList: PinWithDist[] = useMemo(() => {
     const origin = selectedCity ?? userLoc ?? mapCenter.current;
     return places
-      .map((p) => ({ ...p, dist: distanceKm(origin.latitude, origin.longitude, p.latitude, p.longitude) }))
-      .sort((a, b) => a.dist - b.dist)
-      .slice(0, 15);
+      .map((p) => ({
+        ...p,
+        dist:
+          typeof p.latitude === 'number' && typeof p.longitude === 'number'
+            ? distanceKm(origin.latitude, origin.longitude, p.latitude, p.longitude)
+            : null,
+      }))
+      .sort((a, b) => (a.dist ?? Infinity) - (b.dist ?? Infinity))
+      .slice(0, 20);
   }, [places, userLoc, selectedCity]);
 
   const handleFilterPress = (key: FilterKey) => {
@@ -223,15 +274,27 @@ export default function HomeScreen() {
     }
   };
 
-  const focusPlace = (p: MapPlace) => {
-    mapRef.current?.animateToRegion(
-      { latitude: p.latitude, longitude: p.longitude, latitudeDelta: 0.012, longitudeDelta: 0.012 },
-      600,
-    );
+  const goPlace = (p: PinItem) => {
+    if (typeof p.latitude === 'number' && typeof p.longitude === 'number') {
+      openDirections(p.latitude, p.longitude);
+    } else {
+      openDirectionsQuery([p.name, selectedCity?.nom].filter(Boolean).join(', '));
+    }
   };
 
-  const distanceLabel = (p: MapPlace): string | null =>
-    userLoc ? formatDistance(distanceKm(userLoc.latitude, userLoc.longitude, p.latitude, p.longitude)) : null;
+  const focusPlace = (p: PinItem) => {
+    if (typeof p.latitude === 'number' && typeof p.longitude === 'number') {
+      mapRef.current?.animateToRegion(
+        { latitude: p.latitude, longitude: p.longitude, latitudeDelta: 0.012, longitudeDelta: 0.012 },
+        600,
+      );
+    } else {
+      goPlace(p);
+    }
+  };
+
+  const cityLoadingLieux =
+    !!selectedCity && cityDetailState === 'loading' && (activeFilter === 'restaurants' || activeFilter === 'hotels');
 
   return (
     <View style={styles.container}>
@@ -249,7 +312,6 @@ export default function HomeScreen() {
           mapCenter.current = { latitude: r.latitude, longitude: r.longitude };
         }}
       >
-        {/* Marqueur « Moi » bien visible */}
         {userLoc && (
           <Marker coordinate={userLoc} anchor={{ x: 0.5, y: 0.5 }} tracksViewChanges={userTracks}>
             <View style={styles.userMarker}>
@@ -261,19 +323,15 @@ export default function HomeScreen() {
           </Marker>
         )}
 
-        {places.map((place) => (
-          <Marker
-            key={place.id}
-            coordinate={{ latitude: place.latitude, longitude: place.longitude }}
-            pinColor={activeCfg.marker}
-          >
+        {markers.map((place) => (
+          <Marker key={place.id} coordinate={{ latitude: place.latitude, longitude: place.longitude }} pinColor={activeCfg.marker}>
             <View style={[styles.markerBubble, { backgroundColor: activeCfg.marker }]}>
               <Text style={styles.markerEmoji}>{activeCfg.emoji}</Text>
             </View>
-            <Callout tooltip onPress={() => openDirections(place.latitude, place.longitude)}>
+            <Callout tooltip onPress={() => goPlace(place)}>
               <View style={styles.callout}>
                 <Text style={styles.calloutName}>{place.name}</Text>
-                {distanceLabel(place) && <Text style={styles.calloutDist}>📍 {distanceLabel(place)}</Text>}
+                {place.address && <Text style={styles.calloutDist}>{place.address}</Text>}
                 {place.demo && <Text style={styles.calloutDemo}>exemple (démo)</Text>}
                 <View style={styles.calloutCta}>
                   <Text style={styles.calloutCtaText}>🧭 Y aller (itinéraire)</Text>
@@ -308,9 +366,9 @@ export default function HomeScreen() {
       </View>
 
       {/* Localisation refusée */}
-      {locDenied && (
+      {locDenied && !selectedCity && (
         <View style={styles.denyBanner}>
-          <Text style={styles.denyText}>📍 Active ta localisation pour voir les lieux autour de toi.</Text>
+          <Text style={styles.denyText}>📍 Active ta localisation, ou choisis une ville en haut à droite.</Text>
           <View style={styles.denyRow}>
             <Pressable style={styles.denyBtn} onPress={locate}>
               <Text style={styles.denyBtnText}>Réessayer</Text>
@@ -323,12 +381,17 @@ export default function HomeScreen() {
       )}
 
       {/* Bandeau d'état */}
-      {!locDenied && (
+      {!(locDenied && !selectedCity) && (
         <View style={[styles.statusBadge, { backgroundColor: activeCfg.color }]}>
           {activeFilter === 'mosquees' && mosqueState === 'loading' ? (
             <View style={styles.statusRow}>
               <ActivityIndicator size="small" color="#fff" />
               <Text style={styles.statusText}>Recherche des mosquées…</Text>
+            </View>
+          ) : cityLoadingLieux ? (
+            <View style={styles.statusRow}>
+              <ActivityIndicator size="small" color="#fff" />
+              <Text style={styles.statusText}>Chargement des lieux…</Text>
             </View>
           ) : activeFilter === 'mosquees' && mosqueState === 'error' ? (
             <Pressable onPress={() => loadMosques(mapCenter.current.latitude, mapCenter.current.longitude)}>
@@ -339,14 +402,14 @@ export default function HomeScreen() {
           ) : (
             <Text style={styles.statusText}>
               {places.length} {activeCfg.label}
-              {activeFilter !== 'mosquees' ? ' (démo)' : selectedCity ? ` · ${selectedCity.nom}` : ' à proximité'}
+              {selectedCity ? ` · ${selectedCity.nom}` : activeFilter === 'mosquees' ? ' à proximité' : ' (démo)'}
             </Text>
           )}
         </View>
       )}
 
       {/* « Rechercher dans cette zone » (mosquées) */}
-      {activeFilter === 'mosquees' && mosqueState !== 'loading' && !locDenied && (
+      {activeFilter === 'mosquees' && mosqueState !== 'loading' && !(locDenied && !selectedCity) && (
         <Pressable
           style={styles.searchHere}
           onPress={() => loadMosques(mapCenter.current.latitude, mapCenter.current.longitude)}
@@ -360,7 +423,7 @@ export default function HomeScreen() {
         {locating ? <ActivityIndicator size="small" color={Brand.forest} /> : <Text style={styles.recenterIcon}>📍</Text>}
       </Pressable>
 
-      {/* Liste des lieux proches (cartes cliquables → Y aller) */}
+      {/* Liste des lieux proches */}
       {nearbyList.length > 0 && (
         <View style={styles.cardsWrapper}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.cardsScroll}>
@@ -368,18 +431,15 @@ export default function HomeScreen() {
               <Pressable key={p.id} style={styles.placeCard} onPress={() => focusPlace(p)}>
                 <View style={styles.placeCardTop}>
                   <Text style={styles.placeEmoji}>{activeCfg.emoji}</Text>
-                  {i === 0 && <Text style={styles.nearestTag}>la + proche</Text>}
+                  {i === 0 && p.dist != null && <Text style={styles.nearestTag}>la + proche</Text>}
+                  {p.demo && <Text style={styles.demoTag}>démo</Text>}
                 </View>
                 <Text style={styles.placeName} numberOfLines={2}>
                   {p.name}
                 </Text>
                 <View style={styles.placeCardBottom}>
-                  <Text style={styles.placeDist}>{formatDistance(p.dist)}</Text>
-                  <Pressable
-                    style={styles.goBtn}
-                    onPress={() => openDirections(p.latitude, p.longitude)}
-                    hitSlop={8}
-                  >
+                  <Text style={styles.placeDist}>{p.dist != null ? formatDistance(p.dist) : 'voir'}</Text>
+                  <Pressable style={styles.goBtn} onPress={() => goPlace(p)} hitSlop={8}>
                     <Text style={styles.goBtnText}>Y aller ›</Text>
                   </Pressable>
                 </View>
@@ -458,6 +518,7 @@ const styles = StyleSheet.create({
   cityActiveMain: { flexShrink: 1 },
   cityActiveText: { color: Brand.night, fontWeight: '800', fontSize: 14 },
   cityClear: { color: Brand.night, fontWeight: '800', fontSize: 16 },
+
   headerPill: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -553,7 +614,6 @@ const styles = StyleSheet.create({
   },
   recenterIcon: { fontSize: 22 },
 
-  // Cartes des lieux proches
   cardsWrapper: { position: 'absolute', left: 0, right: 0, bottom: Platform.OS === 'ios' ? 124 : 98 },
   cardsScroll: { paddingHorizontal: 16, gap: 10 },
   placeCard: {
@@ -568,11 +628,21 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 7,
   },
-  placeCardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  placeEmoji: { fontSize: 18 },
+  placeCardTop: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  placeEmoji: { fontSize: 18, flex: 1 },
   nearestTag: {
     backgroundColor: Brand.gold,
     color: Brand.night,
+    fontSize: 10,
+    fontWeight: '800',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: Radius.pill,
+    overflow: 'hidden',
+  },
+  demoTag: {
+    backgroundColor: '#e2e8f0',
+    color: '#475569',
     fontSize: 10,
     fontWeight: '800',
     paddingHorizontal: 6,
@@ -607,7 +677,6 @@ const styles = StyleSheet.create({
   filterLabelActive: { color: '#fff' },
   filterLabelInactive: { color: '#333' },
 
-  // Marqueur utilisateur
   userMarker: { alignItems: 'center' },
   userPin: {
     width: 36,

@@ -17,3 +17,10 @@ export function openDirections(latitude: number, longitude: number): void {
     if (fallback) Linking.openURL(fallback).catch(() => undefined);
   });
 }
+
+/** Itinéraire vers un lieu décrit par texte (nom + ville) quand on n'a pas de coords. */
+export function openDirectionsQuery(query: string): void {
+  const dest = encodeURIComponent(query);
+  const url = `https://www.google.com/maps/dir/?api=1&destination=${dest}`;
+  Linking.openURL(url).catch(() => undefined);
+}
