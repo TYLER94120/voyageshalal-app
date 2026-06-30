@@ -47,6 +47,20 @@ export interface Lieu {
   mapsUrl?: string; // lien Google Maps fourni par la base (recherche par nom)
   category?: string; // type de cuisine / catégorie d'hôtel
   price?: string; // gamme de prix (€, €€…)
+  halalConfidence?: string; // 'only' | 'yes' (certifié) | 'likely' (à vérifier)
+}
+
+/** Niveau de confiance halal → badge à afficher (vert certifié / ambre à vérifier). */
+export function halalBadge(conf?: string): { label: string; tone: 'green' | 'amber' } | null {
+  if (!conf) return null;
+  const c = conf.toLowerCase();
+  if (c === 'only' || c === 'yes' || c === 'certified' || c === 'certifie') {
+    return { label: '✓ Halal', tone: 'green' };
+  }
+  if (c === 'likely' || c === 'maybe' || c === 'probable') {
+    return { label: '≈ à vérifier', tone: 'amber' };
+  }
+  return null;
 }
 
 export interface VilleDetail extends VilleSummary {
@@ -152,6 +166,9 @@ function normalizeLieu(raw: Raw, idx: number, prefix: string): Lieu {
     mapsUrl: pickString(raw, 'mapsUrl', 'maps_url', 'googleMaps', 'google_maps'),
     category: pickString(raw, 'type', 'categorie', 'catégorie', 'category'),
     price: pickString(raw, 'priceRange', 'price', 'prix', 'gamme_prix'),
+    halalConfidence:
+      pickString(raw, 'halalConfidence', 'halal_confidence') ??
+      (raw.certificationHalal === true ? 'yes' : undefined),
   };
 }
 

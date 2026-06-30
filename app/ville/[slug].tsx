@@ -12,7 +12,7 @@ import {
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
-import { getVille, type Lieu, type VilleDetail } from '@/lib/api';
+import { getVille, halalBadge, type Lieu, type VilleDetail } from '@/lib/api';
 import { setPendingCity } from '@/lib/pendingCity';
 
 type TabKey = 'restaurants' | 'mosquees' | 'hotels' | 'activites' | 'pratique';
@@ -249,6 +249,21 @@ function LieuCard({ lieu }: { lieu: Lieu }) {
           )}
         </View>
         {lieu.adresse && <Text style={styles.cardAddress}>{lieu.adresse}</Text>}
+        {(() => {
+          const badge = halalBadge(lieu.halalConfidence);
+          if (!badge) return null;
+          return (
+            <View
+              style={[styles.halalBadge, badge.tone === 'green' ? styles.halalGreen : styles.halalAmber]}
+            >
+              <Text
+                style={[styles.halalText, badge.tone === 'green' ? styles.halalTextGreen : styles.halalTextAmber]}
+              >
+                {badge.label}
+              </Text>
+            </View>
+          );
+        })()}
         {lieu.description && (
           <Text style={styles.cardDesc} numberOfLines={3}>
             {lieu.description}
@@ -404,6 +419,12 @@ const styles = StyleSheet.create({
   ratingStar: { color: Brand.gold, fontSize: 14 },
   ratingText: { color: Brand.gold, fontSize: 13, fontWeight: '800' },
   cardAddress: { color: Brand.creamMuted, fontSize: 13 },
+  halalBadge: { alignSelf: 'flex-start', borderRadius: Radius.pill, paddingHorizontal: 8, paddingVertical: 2, marginTop: 4 },
+  halalGreen: { backgroundColor: 'rgba(45,106,79,0.9)' },
+  halalAmber: { backgroundColor: 'rgba(201,168,76,0.9)' },
+  halalText: { fontSize: 11, fontWeight: '800' },
+  halalTextGreen: { color: '#eafff1' },
+  halalTextAmber: { color: Brand.night },
   cardDesc: { color: Brand.creamMuted, fontSize: 13, lineHeight: 19, marginTop: 2 },
 
   actionsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm, marginTop: Spacing.sm },

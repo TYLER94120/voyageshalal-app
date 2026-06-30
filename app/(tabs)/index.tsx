@@ -19,7 +19,7 @@ import { openDirections, openDirectionsQuery, openMapsUrl } from '@/lib/maps';
 import { fetchNearbyMosques } from '@/lib/overpass';
 import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPlaces';
 import { CitySearchModal } from '@/components/CitySearchModal';
-import { getVille, type VilleDetail, type VilleSummary } from '@/lib/api';
+import { getVille, halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
 import { consumePendingCity } from '@/lib/pendingCity';
 
 // ─── Filtres ────────────────────────────────────────────────────────────────
@@ -65,6 +65,7 @@ interface PinItem {
   price?: string;
   category?: string;
   mapsUrl?: string;
+  halalConfidence?: string;
   demo?: boolean;
 }
 interface PinWithDist extends PinItem {
@@ -261,6 +262,7 @@ export default function HomeScreen() {
           price: l.price,
           category: l.category,
           mapsUrl: l.mapsUrl,
+          halalConfidence: l.halalConfidence,
         }));
       }
     }
@@ -515,6 +517,14 @@ export default function HomeScreen() {
               >
                 <View style={styles.placeCardTop}>
                   <Text style={styles.placeEmoji}>{activeCfg.emoji}</Text>
+                  {(() => {
+                    const b = halalBadge(p.halalConfidence);
+                    return b ? (
+                      <Text style={[styles.halalTag, b.tone === 'green' ? styles.halalTagGreen : styles.halalTagAmber]}>
+                        {b.label}
+                      </Text>
+                    ) : null;
+                  })()}
                   {i === 0 && p.dist != null && <Text style={styles.nearestTag}>la + proche</Text>}
                   {p.demo && <Text style={styles.demoTag}>démo</Text>}
                 </View>
@@ -766,6 +776,16 @@ const styles = StyleSheet.create({
     borderRadius: Radius.pill,
     overflow: 'hidden',
   },
+  halalTag: {
+    fontSize: 10,
+    fontWeight: '800',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: Radius.pill,
+    overflow: 'hidden',
+  },
+  halalTagGreen: { backgroundColor: '#2d6a4f', color: '#eafff1' },
+  halalTagAmber: { backgroundColor: Brand.gold, color: Brand.night },
   placeName: { fontSize: 14, fontWeight: '700', color: '#1a1a1a', minHeight: 36 },
   placeCat: { fontSize: 11, fontWeight: '600', color: '#9c4221', marginTop: -2 },
   placeCardBottom: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
