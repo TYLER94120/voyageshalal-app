@@ -21,7 +21,7 @@ import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPl
 import { CitySearchModal } from '@/components/CitySearchModal';
 import { getVille, halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
 import { priceRank } from '@/lib/lieuSort';
-import { hotelLocationStats } from '@/lib/hotelLocation';
+import { dedupeHotels, hotelLocationStats } from '@/lib/hotelLocation';
 import { HotelAroundSheet } from '@/components/HotelAroundSheet';
 import { mergeMosquees, osmToLieu } from '@/lib/mosques';
 import { consumePendingCity } from '@/lib/pendingCity';
@@ -299,7 +299,8 @@ export default function HomeScreen() {
     }
     // Restaurants / hôtels : vraies données de la ville si disponibles.
     if (selectedCity && cityDetail && (activeFilter === 'restaurants' || activeFilter === 'hotels')) {
-      const arr = activeFilter === 'restaurants' ? cityDetail.restaurants : cityDetail.hotels;
+      const arr =
+        activeFilter === 'restaurants' ? cityDetail.restaurants : dedupeHotels(cityDetail.hotels);
       if (arr && arr.length > 0) {
         return arr.map((l) => {
           const base: PinItem = {

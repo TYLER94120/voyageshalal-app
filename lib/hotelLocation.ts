@@ -68,6 +68,59 @@ export function hotelLocationStats(
   return { nearestMosqueKm, nearestMosqueNom, restosNear, radiusKm, score };
 }
 
+// ─── Déduplication d'hôtels ──────────────────────────────────────────────────
+// La densification back ajoute des hôtels OSM par-dessus les hôtels curés : un
+// même établissement peut apparaître deux fois. On déduplique de façon PRUDENTE
+// (même nom normalisé ET coords quasi identiques) pour ne jamais fusionner deux
+// hôtels réellement distincts. L'entrée curée (en premier) est conservée.
+
+const DEDUPE_METERS = 70;
+const GENERIC_WORDS = new Set([
+  'hotel', 'hôtel', 'the', 'le', 'la', 'les', 'inn', 'resort', 'spa', 'ryokan',
+  'auberge', 'hostel', 'guesthouse', 'palace', 'suites', 'suite', 'apartments',
+  'apartment', 'appartement',
+]);
+
+function normalizeHotelName(name: string): string {
+  return name
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .split(' ')
+    .filter((w) => w.length > 0 && !GENERIC_WORDS.has(w))
+    .join(' ')
+    .trim();
+}
+
+function namesMatch(a: string, b: string): boolean {
+  if (!a || !b) return false;
+  if (a === b) return true;
+  const shorter = a.length <= b.length ? a : b;
+  const longer = a.length <= b.length ? b : a;
+  return shorter.length >= 4 && longer.includes(shorter);
+}
+
+/** Supprime les doublons d'hôtels (même nom + coords ~identiques), curés gardés. */
+export function dedupeHotels(hotels: Lieu[], meters = DEDUPE_METERS): Lieu[] {
+  const out: Lieu[] = [];
+  const norms: string[] = [];
+  for (const h of hotels) {
+    const hn = normalizeHotelName(h.nom);
+    const isDup =
+      hasCoords(h) &&
+      out.some((o, i) => {
+        if (!hasCoords(o) || !namesMatch(hn, norms[i])) return false;
+        return distanceKm(o.latitude!, o.longitude!, h.latitude!, h.longitude!) * 1000 <= meters;
+      });
+    if (!isDup) {
+      out.push(h);
+      norms.push(hn);
+    }
+  }
+  return out;
+}
+
 export interface NearbyLieu {
   lieu: Lieu;
   distKm: number;

@@ -27,7 +27,7 @@ import {
   type LieuFilters,
   type SortKey,
 } from '@/lib/lieuSort';
-import { hotelLocationStats, type HotelLocationStats } from '@/lib/hotelLocation';
+import { dedupeHotels, hotelLocationStats, type HotelLocationStats } from '@/lib/hotelLocation';
 import { HotelAroundSheet } from '@/components/HotelAroundSheet';
 import { fetchNearbyMosques } from '@/lib/overpass';
 import { mergeMosquees, osmToLieu } from '@/lib/mosques';
@@ -158,16 +158,19 @@ export default function VilleScreen() {
     [ville, osmMosquees],
   );
 
+  // Hôtels dédupliqués (curés + OSM densifiés) — utilisés partout.
+  const hotelsList = useMemo(() => (ville ? dedupeHotels(ville.hotels) : []), [ville]);
+
   const counts = useMemo(() => {
     if (!ville) return {} as Record<TabKey, number>;
     return {
       restaurants: ville.restaurants.length,
       mosquees: Math.max(ville.mosquees.length, allMosquees.length),
-      hotels: ville.hotels.length,
+      hotels: hotelsList.length,
       activites: ville.activites.length,
       pratique: ville.pratique ? 1 : 0,
     } as Record<TabKey, number>;
-  }, [ville, allMosquees]);
+  }, [ville, allMosquees, hotelsList]);
 
   // Origine des distances : la position de l'utilisateur s'il est dans la ville
   // (≤ 80 km du centre), sinon le centre-ville.
@@ -183,8 +186,8 @@ export default function VilleScreen() {
   // score « bien situé » (proximité mosquée + restos halal autour).
   const rawWithDist = useMemo(() => {
     if (!ville || tab === 'pratique') return [];
-    // L'onglet Mosquées affiche la liste exhaustive (API + OSM).
-    const source = tab === 'mosquees' ? allMosquees : ville[tab];
+    // Mosquées : liste exhaustive (API + OSM). Hôtels : dédupliqués.
+    const source = tab === 'mosquees' ? allMosquees : tab === 'hotels' ? hotelsList : ville[tab];
     return source.map((l) => {
       const dist =
         distOrigin && l.latitude != null && l.longitude != null
@@ -196,7 +199,7 @@ export default function VilleScreen() {
       }
       return { ...l, dist, locScore: null as number | null, loc: undefined as HotelLocationStats | undefined };
     });
-  }, [ville, tab, distOrigin, allMosquees]);
+  }, [ville, tab, distOrigin, allMosquees, hotelsList]);
 
   // Facettes (tri + filtres) calculées sur la liste réelle de l'onglet.
   const sortOptions = useMemo(

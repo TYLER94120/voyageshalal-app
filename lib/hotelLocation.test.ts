@@ -1,5 +1,5 @@
 import type { Lieu } from './api';
-import { hotelLocationStats, nearbyLieux } from './hotelLocation';
+import { dedupeHotels, hotelLocationStats, nearbyLieux } from './hotelLocation';
 
 function L(over: Partial<Lieu>): Lieu {
   return { id: over.id ?? 'x', nom: over.nom ?? 'L', ...over };
@@ -77,5 +77,37 @@ describe('nearbyLieux', () => {
   it('ignore les lieux sans coordonnées', () => {
     const out = nearbyLieux(48.857, 2.352, list, 100);
     expect(out.some((n) => n.lieu.id === 'd')).toBe(false);
+  });
+});
+
+describe('dedupeHotels', () => {
+  it('fusionne curé + OSM du même hôtel (nom + coords proches), garde le curé', () => {
+    const hotels = [
+      L({ id: 'cure', nom: 'Aman Tokyo', latitude: 35.6869, longitude: 139.7641 }),
+      L({ id: 'osm', nom: 'Hotel Aman', latitude: 35.68692, longitude: 139.76412 }),
+    ];
+    const out = dedupeHotels(hotels);
+    expect(out.map((h) => h.id)).toEqual(['cure']);
+  });
+
+  it('garde deux hôtels différents même très proches', () => {
+    const hotels = [
+      L({ id: 'a', nom: 'Park Hyatt', latitude: 35.6869, longitude: 139.7641 }),
+      L({ id: 'b', nom: 'Mandarin Oriental', latitude: 35.68691, longitude: 139.76411 }),
+    ];
+    expect(dedupeHotels(hotels).map((h) => h.id)).toEqual(['a', 'b']);
+  });
+
+  it('garde un même nom situé loin (établissements distincts)', () => {
+    const hotels = [
+      L({ id: 'a', nom: 'Ibis', latitude: 35.68, longitude: 139.76 }),
+      L({ id: 'b', nom: 'Ibis', latitude: 35.70, longitude: 139.80 }),
+    ];
+    expect(dedupeHotels(hotels)).toHaveLength(2);
+  });
+
+  it('conserve les hôtels sans coordonnées', () => {
+    const hotels = [L({ id: 'a', nom: 'Sans coords' }), L({ id: 'b', nom: 'Sans coords' })];
+    expect(dedupeHotels(hotels)).toHaveLength(2);
   });
 });
