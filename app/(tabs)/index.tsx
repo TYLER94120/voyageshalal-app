@@ -40,7 +40,7 @@ const FILTERS: FilterConfig[] = [
 
 const PARIS = { latitude: 48.8566, longitude: 2.3522 };
 const DEFAULT_REGION: Region = { ...PARIS, latitudeDelta: 0.06, longitudeDelta: 0.06 };
-const SEARCH_RADIUS_M = 6000;
+const SEARCH_RADIUS_M = 5000;
 
 type MosqueState = 'idle' | 'loading' | 'ready' | 'error';
 
@@ -52,6 +52,7 @@ export default function HomeScreen() {
   const mapRef = useRef<MapView>(null);
   const mapCenter = useRef({ ...PARIS });
   const watchRef = useRef<Location.LocationSubscription | null>(null);
+  const mosquesKicked = useRef(false);
 
   const [userLoc, setUserLoc] = useState<{ latitude: number; longitude: number } | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterKey>('mosquees');
@@ -59,6 +60,15 @@ export default function HomeScreen() {
   const [locDenied, setLocDenied] = useState(false);
   const [mosques, setMosques] = useState<MapPlace[]>([]);
   const [mosqueState, setMosqueState] = useState<MosqueState>('idle');
+  // Bug Android react-native-maps : un marqueur custom rendu avec
+  // tracksViewChanges=false dès le départ apparaît vide. On laisse "true"
+  // brièvement le temps du rendu, puis on fige pour les performances.
+  const [userTracks, setUserTracks] = useState(true);
+
+  const activeFilterRef = useRef(activeFilter);
+  useEffect(() => {
+    activeFilterRef.current = activeFilter;
+  }, [activeFilter]);
 
   // ── Mosquées réelles (Overpass) ──
   const loadMosques = useCallback(async (lat: number, lng: number) => {
@@ -72,6 +82,17 @@ export default function HomeScreen() {
       setMosqueState('error');
     }
   }, []);
+
+  // Lance le chargement des mosquées dès la 1ʳᵉ position connue (1 seule fois),
+  // sans attendre le GPS précis → ressenti bien plus rapide.
+  const kickMosques = useCallback(
+    (lat: number, lng: number) => {
+      if (mosquesKicked.current || activeFilterRef.current !== 'mosquees') return;
+      mosquesKicked.current = true;
+      loadMosques(lat, lng);
+    },
+    [loadMosques],
+  );
 
   // ── Géolocalisation ──
   const applyUser = useCallback((coords: { latitude: number; longitude: number }, animate: boolean) => {
@@ -100,9 +121,13 @@ export default function HomeScreen() {
       }
       setLocDenied(false);
       const last = await Location.getLastKnownPositionAsync();
-      if (last) applyUser(last.coords, true);
+      if (last) {
+        applyUser(last.coords, true);
+        kickMosques(last.coords.latitude, last.coords.longitude); // démarrage anticipé
+      }
       const cur = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
       applyUser(cur.coords, true);
+      kickMosques(cur.coords.latitude, cur.coords.longitude);
       startWatching();
       return { latitude: cur.coords.latitude, longitude: cur.coords.longitude };
     } catch {
@@ -110,19 +135,27 @@ export default function HomeScreen() {
     } finally {
       setLocating(false);
     }
-  }, [applyUser, startWatching]);
+  }, [applyUser, startWatching, kickMosques]);
 
-  // Au lancement : géoloc, puis chargement des mosquées autour de l'utilisateur.
+  // Au lancement : géoloc, puis (au cas où) chargement autour de la position.
   useEffect(() => {
     locate().then((coords) => {
       const c = coords ?? PARIS;
-      loadMosques(c.latitude, c.longitude);
+      kickMosques(c.latitude, c.longitude);
     });
     return () => {
       watchRef.current?.remove();
       watchRef.current = null;
     };
-  }, [locate, loadMosques]);
+  }, [locate, kickMosques]);
+
+  // Fige le marqueur "Moi" après son premier rendu (perf + visibilité Android).
+  useEffect(() => {
+    if (userLoc && userTracks) {
+      const t = setTimeout(() => setUserTracks(false), 2000);
+      return () => clearTimeout(t);
+    }
+  }, [userLoc, userTracks]);
 
   // ── Lieux affichés selon le filtre ──
   const activeCfg = FILTERS.find((f) => f.key === activeFilter)!;
@@ -166,13 +199,17 @@ export default function HomeScreen() {
         initialRegion={DEFAULT_REGION}
         showsUserLocation={false}
         showsMyLocationButton={false}
+        showsCompass={false}
+        rotateEnabled={false}
+        pitchEnabled={false}
+        toolbarEnabled={false}
         onRegionChangeComplete={(r) => {
           mapCenter.current = { latitude: r.latitude, longitude: r.longitude };
         }}
       >
         {/* Marqueur « Moi » bien visible */}
         {userLoc && (
-          <Marker coordinate={userLoc} anchor={{ x: 0.5, y: 0.5 }} flat tracksViewChanges={false}>
+          <Marker coordinate={userLoc} anchor={{ x: 0.5, y: 0.5 }} tracksViewChanges={userTracks}>
             <View style={styles.userMarker}>
               <View style={styles.userPin}>
                 <Text style={styles.userEmoji}>🧍</Text>
