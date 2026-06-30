@@ -33,11 +33,9 @@ import { HotelAroundSheet } from '@/components/HotelAroundSheet';
 import { fetchNearbyMosques } from '@/lib/overpass';
 import { mergeMosquees, osmToLieu } from '@/lib/mosques';
 import { HeartButton } from '@/components/HeartButton';
+import { DayPlanSheet } from '@/components/DayPlanSheet';
 import { useFavorites } from '@/context/FavoritesContext';
 import { cityFavKey, placeFavKey, type FavoriteItem } from '@/lib/favorites';
-import { useTrips } from '@/context/TripsContext';
-import { tripItemKey, type TripItemType } from '@/lib/trips';
-import { autoPlanTrip } from '@/lib/autoPlan';
 
 type TabKey = 'restaurants' | 'mosquees' | 'hotels' | 'activites' | 'pratique';
 
@@ -75,7 +73,6 @@ function pinColor(tab: TabKey, lieu: Lieu): string {
 export default function VilleScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const router = useRouter();
-  const { addToTrip, isInTrip, getCityTrip, applyPlan } = useTrips();
   const { isFavorite, toggle } = useFavorites();
   const mapRef = useRef<MapView>(null);
   const [ville, setVille] = useState<VilleDetail | null>(null);
@@ -92,6 +89,7 @@ export default function VilleScreen() {
   const [selection, setSelection] = useState<string | null>(null);
   const [nearMosqueOnly, setNearMosqueOnly] = useState(false);
   const [offline, setOffline] = useState(false);
+  const [showPlan, setShowPlan] = useState(false);
 
   // Changer d'onglet remet à zéro tri & filtres (chaque onglet a ses propres facettes).
   const selectTab = useCallback((k: TabKey) => {
@@ -290,19 +288,6 @@ export default function VilleScreen() {
     else if (l.latitude != null && l.longitude != null) openDirections(l.latitude, l.longitude);
   };
 
-  // 🗓️ : ouvre le séjour de la ville (le crée automatiquement au 1er accès).
-  const planOrOpenTrip = () => {
-    if (!ville) return;
-    if (!getCityTrip(ville.slug)) {
-      const { items } = autoPlanTrip(ville, 3);
-      applyPlan(
-        { slug: ville.slug, nom: ville.nom, latitude: ville.latitude, longitude: ville.longitude },
-        items,
-      );
-    }
-    router.push(`/trips/${ville.slug}`);
-  };
-
   return (
     <View style={styles.container}>
       <Stack.Screen
@@ -314,23 +299,18 @@ export default function VilleScreen() {
           headerTitleStyle: { color: Brand.cream, fontWeight: '800' },
           headerRight: () =>
             ville ? (
-              <View style={styles.headerRight}>
-                <Pressable hitSlop={8} onPress={planOrOpenTrip}>
-                  <Text style={styles.headerCal}>🗓️</Text>
-                </Pressable>
-                <HeartButton
-                  size={22}
-                  item={{
-                    id: cityFavKey(ville.slug),
-                    type: 'city',
-                    title: ville.nom,
-                    subtitle: [ville.pays, ville.continent].filter(Boolean).join(' · '),
-                    emoji: '🏙️',
-                    citySlug: ville.slug,
-                    image: ville.image,
-                  }}
-                />
-              </View>
+              <HeartButton
+                size={22}
+                item={{
+                  id: cityFavKey(ville.slug),
+                  type: 'city',
+                  title: ville.nom,
+                  subtitle: [ville.pays, ville.continent].filter(Boolean).join(' · '),
+                  emoji: '🏙️',
+                  citySlug: ville.slug,
+                  image: ville.image,
+                }}
+              />
             ) : null,
         }}
       />
@@ -600,6 +580,14 @@ export default function VilleScreen() {
               style={styles.list}
               contentContainerStyle={styles.listPad}
               showsVerticalScrollIndicator={false}
+              ListHeaderComponent={
+                tab === 'restaurants' && (ville.restaurants.length > 0 || ville.activites.length > 0) ? (
+                  <Pressable style={styles.ideaPill} onPress={() => setShowPlan(true)}>
+                    <Text style={styles.ideaText}>✨ Idée de journée halal-friendly</Text>
+                    <Text style={styles.ideaChevron}>›</Text>
+                  </Pressable>
+                ) : null
+              }
               ListEmptyComponent={
                 <View style={styles.emptyTab}>
                   <Text style={styles.muted}>Rien pour cet onglet pour le moment.</Text>
@@ -616,33 +604,12 @@ export default function VilleScreen() {
                   citySlug: ville.slug,
                   mapsUrl: item.mapsUrl,
                 };
-                const tripType: TripItemType =
-                  tab === 'hotels' ? 'hotel' : tab === 'activites' ? 'activite' : tab === 'mosquees' ? 'mosquee' : 'restaurant';
-                const tripItem = {
-                  id: tripItemKey(tripType, item.id),
-                  lieuId: item.id,
-                  type: tripType,
-                  title: item.nom,
-                  subtitle: item.category,
-                  emoji,
-                  mapsUrl: item.mapsUrl,
-                  latitude: item.latitude,
-                  longitude: item.longitude,
-                };
-                const inTrip = isInTrip(ville.slug, tripItem.id);
-                const onAddTrip = () =>
-                  addToTrip(
-                    { slug: ville.slug, nom: ville.nom, latitude: ville.latitude, longitude: ville.longitude },
-                    tripItem,
-                  );
                 return tab === 'hotels' ? (
                   <HotelCard
                     hotel={item}
                     loc={item.loc}
                     dist={item.dist}
                     fav={fav}
-                    inTrip={inTrip}
-                    onAddTrip={onAddTrip}
                     onGo={() => goLieu(item)}
                     onAround={
                       item.latitude != null && item.longitude != null
@@ -651,41 +618,29 @@ export default function VilleScreen() {
                     }
                   />
                 ) : (
-                  <LieuCard
-                    lieu={item}
-                    dist={item.dist}
-                    fav={fav}
-                    inTrip={inTrip}
-                    onAddTrip={onAddTrip}
-                    onGo={() => goLieu(item)}
-                  />
+                  <LieuCard lieu={item} dist={item.dist} fav={fav} onGo={() => goLieu(item)} />
                 );
               }}
             />
           )}
 
-          {/* Boutons flottants (bas = zone toujours accessible, écran haut cassé) */}
-          <View style={styles.fabColumn}>
-            <Pressable
-              style={styles.fabHeart}
-              onPress={() =>
-                toggle({
-                  id: cityFavKey(ville.slug),
-                  type: 'city',
-                  title: ville.nom,
-                  subtitle: [ville.pays, ville.continent].filter(Boolean).join(' · '),
-                  emoji: '🏙️',
-                  citySlug: ville.slug,
-                  image: ville.image,
-                })
-              }
-            >
-              <Text style={styles.fabHeartText}>{isFavorite(cityFavKey(ville.slug)) ? '❤️' : '🤍'}</Text>
-            </Pressable>
-            <Pressable style={styles.fabTrip} onPress={planOrOpenTrip}>
-              <Text style={styles.fabTripText}>🗓️ Mon séjour</Text>
-            </Pressable>
-          </View>
+          {/* Favori ville en bas (zone accessible, écran haut cassé) */}
+          <Pressable
+            style={styles.fabHeart}
+            onPress={() =>
+              toggle({
+                id: cityFavKey(ville.slug),
+                type: 'city',
+                title: ville.nom,
+                subtitle: [ville.pays, ville.continent].filter(Boolean).join(' · '),
+                emoji: '🏙️',
+                citySlug: ville.slug,
+                image: ville.image,
+              })
+            }
+          >
+            <Text style={styles.fabHeartText}>{isFavorite(cityFavKey(ville.slug)) ? '❤️' : '🤍'}</Text>
+          </Pressable>
 
           {aroundHotel && (
             <HotelAroundSheet
@@ -695,6 +650,8 @@ export default function VilleScreen() {
               onClose={() => setAroundHotel(null)}
             />
           )}
+
+          {showPlan && <DayPlanSheet ville={ville} onClose={() => setShowPlan(false)} />}
         </>
       )}
     </View>
@@ -706,8 +663,6 @@ function HotelCard({
   loc,
   dist,
   fav,
-  inTrip,
-  onAddTrip,
   onGo,
   onAround,
 }: {
@@ -715,8 +670,6 @@ function HotelCard({
   loc?: HotelLocationStats;
   dist?: number | null;
   fav: Omit<FavoriteItem, 'addedAt'>;
-  inTrip: boolean;
-  onAddTrip: () => void;
   onGo: () => void;
   onAround?: () => void;
 }) {
@@ -780,7 +733,6 @@ function HotelCard({
         )}
 
         <View style={styles.actionsRow}>
-          <TripButton inTrip={inTrip} onAdd={onAddTrip} />
           {onAround && (
             <Pressable style={styles.aroundBtn} onPress={onAround}>
               <Text style={styles.aroundText}>🗺️ Voir autour</Text>
@@ -815,15 +767,11 @@ function LieuCard({
   lieu,
   dist,
   fav,
-  inTrip,
-  onAddTrip,
   onGo,
 }: {
   lieu: LieuDist;
   dist: number | null;
   fav: Omit<FavoriteItem, 'addedAt'>;
-  inTrip: boolean;
-  onAddTrip: () => void;
   onGo: () => void;
 }) {
   const badge = halalBadge(lieu.halalConfidence);
@@ -869,7 +817,6 @@ function LieuCard({
         )}
 
         <View style={styles.actionsRow}>
-          <TripButton inTrip={inTrip} onAdd={onAddTrip} />
           <Pressable style={styles.actionBtn} onPress={onGo}>
             <Text style={styles.actionText}>🧭 Itinéraire</Text>
           </Pressable>
@@ -964,19 +911,6 @@ function formatCount(n: number): string {
   return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }
 
-function TripButton({ inTrip, onAdd }: { inTrip: boolean; onAdd: () => void }) {
-  return (
-    <Pressable
-      style={[styles.tripBtn, inTrip && styles.tripBtnOn]}
-      onPress={onAdd}
-      disabled={inTrip}
-    >
-      <Text style={[styles.tripBtnText, inTrip && styles.tripBtnTextOn]}>
-        {inTrip ? '✓ Au séjour' : '➕ Séjour'}
-      </Text>
-    </Pressable>
-  );
-}
 
 function FilterChip({
   label,
@@ -1009,11 +943,10 @@ function FilterChip({
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Brand.night },
 
-  headerRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
-  headerCal: { fontSize: 18 },
-
-  fabColumn: { position: 'absolute', right: 16, bottom: 28, alignItems: 'flex-end', gap: Spacing.sm },
   fabHeart: {
+    position: 'absolute',
+    right: 16,
+    bottom: 28,
     width: 52,
     height: 52,
     borderRadius: 26,
@@ -1025,23 +958,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 7,
-    alignSelf: 'flex-end',
   },
   fabHeartText: { fontSize: 24 },
-  fabTrip: {
+
+  ideaPill: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Brand.gold,
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: 14,
+    justifyContent: 'space-between',
+    backgroundColor: Brand.forest,
+    borderWidth: 1,
+    borderColor: Brand.border,
     borderRadius: Radius.pill,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 8,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 9,
+    marginBottom: Spacing.md,
   },
-  fabTripText: { color: Brand.night, fontSize: 15, fontWeight: '800' },
+  ideaText: { color: Brand.gold, fontSize: 13, fontWeight: '800' },
+  ideaChevron: { color: Brand.gold, fontSize: 18, fontWeight: '800' },
 
   offlineBar: { backgroundColor: '#7a5c12', paddingVertical: 6, paddingHorizontal: Spacing.lg },
   offlineText: { color: '#fff', fontSize: 12, fontWeight: '700', textAlign: 'center' },
@@ -1126,10 +1059,6 @@ const styles = StyleSheet.create({
   bookText: { color: Brand.night, fontSize: 12, fontWeight: '800' },
   aroundBtn: { paddingHorizontal: Spacing.md, paddingVertical: 7, borderRadius: Radius.pill, backgroundColor: Brand.forest, borderWidth: 1, borderColor: Brand.gold },
   aroundText: { color: Brand.gold, fontSize: 12, fontWeight: '800' },
-  tripBtn: { paddingHorizontal: Spacing.md, paddingVertical: 7, borderRadius: Radius.pill, backgroundColor: Brand.gold },
-  tripBtnOn: { backgroundColor: 'rgba(45,106,79,0.85)' },
-  tripBtnText: { color: Brand.night, fontSize: 12, fontWeight: '800' },
-  tripBtnTextOn: { color: '#eafff1', fontWeight: '800' },
 
   card: {
     backgroundColor: Brand.forest,

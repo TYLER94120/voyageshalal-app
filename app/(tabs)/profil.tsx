@@ -4,7 +4,6 @@ import { useRouter, type Href } from 'expo-router';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
 import { useFavorites } from '@/context/FavoritesContext';
-import { useTrips } from '@/context/TripsContext';
 import { loadSettings } from '@/lib/prayerSettings';
 import { METHODS } from '@/lib/prayer';
 
@@ -13,11 +12,7 @@ type Row = { icon: string; label: string; sub?: string; route?: Href; url?: stri
 export default function ProfilScreen() {
   const router = useRouter();
   const { favorites } = useFavorites();
-  const { trips } = useTrips();
   const [methodLabel, setMethodLabel] = useState<string>('—');
-
-  const tripsSub =
-    trips.length > 0 ? `${trips.length} séjour${trips.length > 1 ? 's' : ''} planifié${trips.length > 1 ? 's' : ''}` : 'Planifiez vos journées';
 
   useEffect(() => {
     loadSettings().then((s) => {
@@ -38,7 +33,6 @@ export default function ProfilScreen() {
     {
       title: 'Explorer',
       rows: [
-        { icon: '🗓️', label: 'Mes voyages', sub: tripsSub, route: '/trips' },
         { icon: '❤️', label: 'Mes favoris', sub: `${favorites.length} sauvegardé${favorites.length > 1 ? 's' : ''}`, route: '/reservations' },
         { icon: '🗺️', label: 'Destinations', sub: 'Villes halal-friendly', route: '/destinations' },
       ],

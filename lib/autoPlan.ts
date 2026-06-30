@@ -1,24 +1,35 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Organisateur automatique de séjour : à partir des données réelles d'une ville,
-// bâtit un programme équilibré jour par jour (1 hôtel bien situé + restos variés
-// + activités variées). Déterministe, pur, testable, hors-ligne. Ce n'est pas un
-// LLM : c'est une heuristique soignée qui privilégie le curé, le certifié halal,
-// le bien noté et la variété — pour « satisfaire tout le monde ».
+// Suggestion d'une « journée type » halal-friendly à partir des données réelles
+// d'une ville : 1 bon hôtel bien situé + restos variés + activités variées.
+// Déterministe, pur, testable, hors-ligne. Lecture seule (pas de planificateur
+// éditable) : c'est une INSPIRATION, pas un outil de gestion.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import type { Lieu, VilleDetail } from './api';
 import { hotelLocationStats } from './hotelLocation';
-import { tripItemKey, type TripItem, type TripItemType } from './trips';
+
+export type PlanItemType = 'hotel' | 'restaurant' | 'activite';
+
+export interface PlanItem {
+  id: string;
+  type: PlanItemType;
+  title: string;
+  subtitle?: string;
+  emoji: string;
+  mapsUrl?: string;
+  latitude?: number;
+  longitude?: number;
+  day: number; // 1-based (utile si on suggère plusieurs jours)
+}
 
 function isCertified(l: Lieu): boolean {
   const c = l.halalConfidence?.toLowerCase();
   return c === 'only' || c === 'yes' || c === 'certified' || c === 'certifie';
 }
 
-function toItem(l: Lieu, type: TripItemType, emoji: string, day: number): TripItem {
+function toItem(l: Lieu, type: PlanItemType, emoji: string, day: number): PlanItem {
   return {
-    id: tripItemKey(type, l.id),
-    lieuId: l.id,
+    id: `${type}:${l.id}`,
     type,
     title: l.nom,
     subtitle: l.category,
@@ -39,7 +50,6 @@ export function pickVaried<T>(sorted: T[], n: number, keyOf: (t: T) => string): 
   const out: T[] = [];
   const taken = new Set<number>();
   const seen = new Set<string>();
-  // 1re passe : une entrée par catégorie distincte
   for (let i = 0; i < sorted.length && out.length < n; i++) {
     const k = keyOf(sorted[i]);
     if (!seen.has(k)) {
@@ -48,7 +58,6 @@ export function pickVaried<T>(sorted: T[], n: number, keyOf: (t: T) => string): 
       out.push(sorted[i]);
     }
   }
-  // 2e passe : compléter avec les meilleurs restants
   for (let i = 0; i < sorted.length && out.length < n; i++) {
     if (!taken.has(i)) out.push(sorted[i]);
   }
@@ -68,39 +77,37 @@ function restoRank(ville: VilleDetail): Lieu[] {
   return [...ville.restaurants].sort((a, b) => score(b) - score(a));
 }
 
-export interface AutoPlanResult {
-  items: TripItem[];
-  counts: { hotels: number; restaurants: number; activites: number };
+export interface PlanResult {
+  hotel?: PlanItem;
+  restaurants: PlanItem[];
+  activites: PlanItem[];
+  items: PlanItem[];
 }
 
-/** Construit un programme équilibré sur `days` jours. */
-export function autoPlanTrip(ville: VilleDetail, days: number): AutoPlanResult {
+/** Construit une suggestion équilibrée sur `days` jours (par défaut une journée). */
+export function autoPlanTrip(ville: VilleDetail, days = 1): PlanResult {
   const D = Math.min(Math.max(1, days), 14);
-  const items: TripItem[] = [];
 
-  // 1 hôtel : le mieux situé (score), à défaut le mieux noté.
   const hotels = [...ville.hotels].sort((a, b) => {
     const sa = hotelLocationStats(a, ville.mosquees, ville.restaurants, 1).score ?? -1;
     const sb = hotelLocationStats(b, ville.mosquees, ville.restaurants, 1).score ?? -1;
     return sb - sa || (b.note ?? 0) - (a.note ?? 0);
   });
-  if (hotels[0]) items.push(toItem(hotels[0], 'hotel', '🏨', 1));
+  const hotel = hotels[0] ? toItem(hotels[0], 'hotel', '🏨', 1) : undefined;
 
-  // ~2 restaurants/jour, variés.
-  const restos = pickVaried(restoRank(ville), D * 2, (r) => r.category ?? r.id);
-  restos.forEach((r, i) => items.push(toItem(r, 'restaurant', '🍽️', (i % D) + 1)));
+  const restos = pickVaried(restoRank(ville), D * 2, (r) => r.category ?? r.id).map((r, i) =>
+    toItem(r, 'restaurant', '🍽️', (i % D) + 1),
+  );
 
-  // ~2 activités/jour, variées par thème.
   const actsSorted = [...ville.activites].sort((a, b) => (b.note ?? 0) - (a.note ?? 0));
-  const acts = pickVaried(actsSorted, D * 2, (a) => a.category ?? a.id);
-  acts.forEach((a, i) => items.push(toItem(a, 'activite', '🗺️', (i % D) + 1)));
+  const activites = pickVaried(actsSorted, D * 2, (a) => a.category ?? a.id).map((a, i) =>
+    toItem(a, 'activite', '🗺️', (i % D) + 1),
+  );
 
   return {
-    items,
-    counts: {
-      hotels: hotels[0] ? 1 : 0,
-      restaurants: restos.length,
-      activites: acts.length,
-    },
+    hotel,
+    restaurants: restos,
+    activites,
+    items: [...(hotel ? [hotel] : []), ...restos, ...activites],
   };
 }

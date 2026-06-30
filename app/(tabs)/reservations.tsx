@@ -38,7 +38,7 @@ export default function FavorisScreen() {
   if (favorites.length === 0) {
     return (
       <View style={styles.container}>
-        <Header router={router} count={0} />
+        <Header count={0} />
         <View style={styles.empty}>
           <Text style={styles.emptyIcon}>🤍</Text>
           <Text style={styles.emptyTitle}>Aucun favori pour l’instant</Text>
@@ -55,7 +55,7 @@ export default function FavorisScreen() {
 
   return (
     <View style={styles.container}>
-      <Header router={router} count={favorites.length} />
+      <Header count={favorites.length} />
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         {/* Villes sauvegardées */}
         {cities.length > 0 && (
@@ -120,7 +120,7 @@ export default function FavorisScreen() {
   );
 }
 
-function Header({ router, count }: { router: ReturnType<typeof useRouter>; count: number }) {
+function Header({ count }: { count: number }) {
   return (
     <View style={styles.header}>
       <Text style={styles.kicker}>MES ENVIES</Text>
@@ -128,10 +128,6 @@ function Header({ router, count }: { router: ReturnType<typeof useRouter>; count
       <Text style={styles.subtitle}>
         {count > 0 ? `${count} ${count > 1 ? 'éléments sauvegardés' : 'sauvegardé'}` : 'Vos coups de cœur, au même endroit'}
       </Text>
-      <Pressable style={styles.tripsLink} onPress={() => router.push('/trips')}>
-        <Text style={styles.tripsLinkText}>🗓️ Mes voyages</Text>
-        <Text style={styles.tripsLinkChevron}>›</Text>
-      </Pressable>
     </View>
   );
 }
@@ -142,20 +138,6 @@ const styles = StyleSheet.create({
   kicker: { color: Brand.gold, fontSize: 12, fontWeight: '700', letterSpacing: 2 },
   title: { color: Brand.cream, fontSize: 34, fontWeight: '800', marginTop: 2 },
   subtitle: { color: Brand.creamMuted, fontSize: 14, marginTop: 4 },
-  tripsLink: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: Spacing.md,
-    backgroundColor: Brand.forest,
-    borderWidth: 1,
-    borderColor: Brand.gold,
-    borderRadius: Radius.pill,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: 10,
-  },
-  tripsLinkText: { color: Brand.gold, fontSize: 14, fontWeight: '800' },
-  tripsLinkChevron: { color: Brand.gold, fontSize: 20, fontWeight: '800' },
 
   scroll: { padding: Spacing.lg, paddingTop: Spacing.sm, paddingBottom: Spacing.xl * 3 },
   section: { marginBottom: Spacing.lg },

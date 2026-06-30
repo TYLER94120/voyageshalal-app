@@ -61,21 +61,19 @@ describe('autoPlanTrip', () => {
   });
 
   it('choisit l’hôtel le mieux situé', () => {
-    const { items } = autoPlanTrip(v, 2);
-    const hotel = items.find((i) => i.type === 'hotel');
+    const { hotel } = autoPlanTrip(v, 2);
     expect(hotel?.title).toBe('Bien situé');
     expect(hotel?.day).toBe(1);
   });
 
   it('répartit restaurants et activités sur les jours, variés', () => {
-    const { items, counts } = autoPlanTrip(v, 2);
-    const restos = items.filter((i) => i.type === 'restaurant');
-    expect(counts.restaurants).toBeGreaterThanOrEqual(3);
+    const { restaurants } = autoPlanTrip(v, 2);
+    expect(restaurants.length).toBeGreaterThanOrEqual(3);
     // variété : les 3 premières catégories distinctes d'abord
-    const cats = restos.slice(0, 3).map((r) => r.subtitle);
+    const cats = restaurants.slice(0, 3).map((r) => r.subtitle);
     expect(new Set(cats).size).toBeGreaterThanOrEqual(3);
     // réparti sur 2 jours
-    expect(new Set(restos.map((r) => r.day)).size).toBe(2);
+    expect(new Set(restaurants.map((r) => r.day)).size).toBe(2);
   });
 
   it('ville vide → programme vide', () => {
