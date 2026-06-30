@@ -435,6 +435,11 @@ export default function HomeScreen() {
         {locating ? <ActivityIndicator size="small" color={Brand.forest} /> : <Text style={styles.recenterIcon}>📍</Text>}
       </Pressable>
 
+      {/* Recherche de ville accessible depuis le bas (miroir du bouton 📍) */}
+      <Pressable style={styles.cityFab} onPress={() => setCityModal(true)}>
+        <Text style={styles.cityFabIcon}>🌍</Text>
+      </Pressable>
+
       {/* Liste des lieux proches */}
       {nearbyList.length > 0 && (
         <View style={styles.cardsWrapper}>
@@ -638,6 +643,24 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   recenterIcon: { fontSize: 22 },
+
+  cityFab: {
+    position: 'absolute',
+    left: 16,
+    bottom: Platform.OS === 'ios' ? 250 : 220,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: Brand.gold,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 7,
+  },
+  cityFabIcon: { fontSize: 22 },
 
   cardsWrapper: { position: 'absolute', left: 0, right: 0, bottom: Platform.OS === 'ios' ? 124 : 98 },
   cardsScroll: { paddingHorizontal: 16, gap: 10 },
