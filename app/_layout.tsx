@@ -11,6 +11,7 @@ import { AdhanScheduler } from '@/components/AdhanScheduler';
 import { NextPrayerBanner } from '@/components/NextPrayerBanner';
 import { PrayerProvider } from '@/context/PrayerContext';
 import { FavoritesProvider } from '@/context/FavoritesContext';
+import { TripsProvider } from '@/context/TripsContext';
 import { configureNotificationHandler } from '@/lib/notifications';
 import { Brand } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -30,6 +31,7 @@ export default function RootLayout() {
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <PrayerProvider>
           <FavoritesProvider>
+          <TripsProvider>
           <View style={{ flex: 1, backgroundColor: Brand.night }}>
             {/* Reprogrammation des rappels d'adhan au lancement / premier plan */}
             <AdhanScheduler />
@@ -39,12 +41,15 @@ export default function RootLayout() {
               <Stack>
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                 <Stack.Screen name="ville/[slug]" options={{ headerShown: true }} />
+                <Stack.Screen name="trips/index" options={{ headerShown: true }} />
+                <Stack.Screen name="trips/[id]" options={{ headerShown: true }} />
                 <Stack.Screen name="qibla" options={{ headerShown: true }} />
                 <Stack.Screen name="adhan" options={{ headerShown: true }} />
                 <Stack.Screen name="+not-found" />
               </Stack>
             </View>
           </View>
+          </TripsProvider>
           </FavoritesProvider>
         </PrayerProvider>
       </ThemeProvider>

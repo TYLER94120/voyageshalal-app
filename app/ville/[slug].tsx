@@ -34,6 +34,8 @@ import { fetchNearbyMosques } from '@/lib/overpass';
 import { mergeMosquees, osmToLieu } from '@/lib/mosques';
 import { HeartButton } from '@/components/HeartButton';
 import { cityFavKey, placeFavKey, type FavoriteItem } from '@/lib/favorites';
+import { useTrips } from '@/context/TripsContext';
+import { tripItemKey, type TripItemType } from '@/lib/trips';
 
 type TabKey = 'restaurants' | 'mosquees' | 'hotels' | 'activites' | 'pratique';
 
@@ -71,6 +73,7 @@ function pinColor(tab: TabKey, lieu: Lieu): string {
 export default function VilleScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const router = useRouter();
+  const { addToTrip, isInTrip } = useTrips();
   const mapRef = useRef<MapView>(null);
   const [ville, setVille] = useState<VilleDetail | null>(null);
   const [state, setState] = useState<LoadState>('loading');
@@ -586,12 +589,33 @@ export default function VilleScreen() {
                   citySlug: ville.slug,
                   mapsUrl: item.mapsUrl,
                 };
+                const tripType: TripItemType =
+                  tab === 'hotels' ? 'hotel' : tab === 'activites' ? 'activite' : tab === 'mosquees' ? 'mosquee' : 'restaurant';
+                const tripItem = {
+                  id: tripItemKey(tripType, item.id),
+                  lieuId: item.id,
+                  type: tripType,
+                  title: item.nom,
+                  subtitle: item.category,
+                  emoji,
+                  mapsUrl: item.mapsUrl,
+                  latitude: item.latitude,
+                  longitude: item.longitude,
+                };
+                const inTrip = isInTrip(ville.slug, tripItem.id);
+                const onAddTrip = () =>
+                  addToTrip(
+                    { slug: ville.slug, nom: ville.nom, latitude: ville.latitude, longitude: ville.longitude },
+                    tripItem,
+                  );
                 return tab === 'hotels' ? (
                   <HotelCard
                     hotel={item}
                     loc={item.loc}
                     dist={item.dist}
                     fav={fav}
+                    inTrip={inTrip}
+                    onAddTrip={onAddTrip}
                     onGo={() => goLieu(item)}
                     onAround={
                       item.latitude != null && item.longitude != null
@@ -600,7 +624,14 @@ export default function VilleScreen() {
                     }
                   />
                 ) : (
-                  <LieuCard lieu={item} dist={item.dist} fav={fav} onGo={() => goLieu(item)} />
+                  <LieuCard
+                    lieu={item}
+                    dist={item.dist}
+                    fav={fav}
+                    inTrip={inTrip}
+                    onAddTrip={onAddTrip}
+                    onGo={() => goLieu(item)}
+                  />
                 );
               }}
             />
@@ -625,6 +656,8 @@ function HotelCard({
   loc,
   dist,
   fav,
+  inTrip,
+  onAddTrip,
   onGo,
   onAround,
 }: {
@@ -632,6 +665,8 @@ function HotelCard({
   loc?: HotelLocationStats;
   dist?: number | null;
   fav: Omit<FavoriteItem, 'addedAt'>;
+  inTrip: boolean;
+  onAddTrip: () => void;
   onGo: () => void;
   onAround?: () => void;
 }) {
@@ -695,6 +730,7 @@ function HotelCard({
         )}
 
         <View style={styles.actionsRow}>
+          <TripButton inTrip={inTrip} onAdd={onAddTrip} />
           {onAround && (
             <Pressable style={styles.aroundBtn} onPress={onAround}>
               <Text style={styles.aroundText}>🗺️ Voir autour</Text>
@@ -729,11 +765,15 @@ function LieuCard({
   lieu,
   dist,
   fav,
+  inTrip,
+  onAddTrip,
   onGo,
 }: {
   lieu: LieuDist;
   dist: number | null;
   fav: Omit<FavoriteItem, 'addedAt'>;
+  inTrip: boolean;
+  onAddTrip: () => void;
   onGo: () => void;
 }) {
   const badge = halalBadge(lieu.halalConfidence);
@@ -779,6 +819,7 @@ function LieuCard({
         )}
 
         <View style={styles.actionsRow}>
+          <TripButton inTrip={inTrip} onAdd={onAddTrip} />
           <Pressable style={styles.actionBtn} onPress={onGo}>
             <Text style={styles.actionText}>🧭 Itinéraire</Text>
           </Pressable>
@@ -871,6 +912,20 @@ function PratiqueBlock({
 // Séparateur de milliers sans dépendre d'Intl (limité sous Hermes).
 function formatCount(n: number): string {
   return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
+function TripButton({ inTrip, onAdd }: { inTrip: boolean; onAdd: () => void }) {
+  return (
+    <Pressable
+      style={[styles.tripBtn, inTrip && styles.tripBtnOn]}
+      onPress={onAdd}
+      disabled={inTrip}
+    >
+      <Text style={[styles.tripBtnText, inTrip && styles.tripBtnTextOn]}>
+        {inTrip ? '✓ Au séjour' : '➕ Séjour'}
+      </Text>
+    </Pressable>
+  );
 }
 
 function FilterChip({
@@ -987,6 +1042,10 @@ const styles = StyleSheet.create({
   bookText: { color: Brand.night, fontSize: 12, fontWeight: '800' },
   aroundBtn: { paddingHorizontal: Spacing.md, paddingVertical: 7, borderRadius: Radius.pill, backgroundColor: Brand.forest, borderWidth: 1, borderColor: Brand.gold },
   aroundText: { color: Brand.gold, fontSize: 12, fontWeight: '800' },
+  tripBtn: { paddingHorizontal: Spacing.md, paddingVertical: 7, borderRadius: Radius.pill, backgroundColor: Brand.gold },
+  tripBtnOn: { backgroundColor: 'rgba(45,106,79,0.85)' },
+  tripBtnText: { color: Brand.night, fontSize: 12, fontWeight: '800' },
+  tripBtnTextOn: { color: '#eafff1', fontWeight: '800' },
 
   card: {
     backgroundColor: Brand.forest,
