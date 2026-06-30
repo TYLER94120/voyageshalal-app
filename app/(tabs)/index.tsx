@@ -21,15 +21,31 @@ import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPl
 import { CitySearchModal } from '@/components/CitySearchModal';
 import { getVille, halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
 import { priceRank } from '@/lib/lieuSort';
+import { hotelLocationStats } from '@/lib/hotelLocation';
 import { consumePendingCity } from '@/lib/pendingCity';
 
-// Tri rapide de la liste resto sur la page d'accueil.
-type QuickSort = 'proche' | 'note' | 'prix';
-const QUICK_SORTS: { key: QuickSort; label: string }[] = [
-  { key: 'proche', label: '📍 Proche' },
-  { key: 'note', label: '⭐ Noté' },
-  { key: 'prix', label: '💶 Prix' },
-];
+// Tri rapide de la liste (restaurants / hôtels) sur la page d'accueil.
+type QuickSort = 'proche' | 'situe' | 'note' | 'prix';
+
+// Restaurants : proximité d'abord. Hôtels : « bien situés » (mosquée + restos) d'abord.
+function quickSortsFor(filter: FilterKey): { key: QuickSort; label: string }[] {
+  if (filter === 'hotels') {
+    return [
+      { key: 'situe', label: '🕌 Bien situés' },
+      { key: 'prix', label: '💶 Prix' },
+      { key: 'note', label: '⭐ Noté' },
+    ];
+  }
+  return [
+    { key: 'proche', label: '📍 Proche' },
+    { key: 'note', label: '⭐ Noté' },
+    { key: 'prix', label: '💶 Prix' },
+  ];
+}
+
+function defaultQuickSort(filter: FilterKey): QuickSort {
+  return filter === 'hotels' ? 'situe' : 'proche';
+}
 
 // ─── Filtres ────────────────────────────────────────────────────────────────
 
@@ -76,6 +92,10 @@ interface PinItem {
   mapsUrl?: string;
   halalConfidence?: string;
   demo?: boolean;
+  // Hôtels : emplacement stratégique (proximité mosquée + restos halal).
+  locScore?: number | null;
+  nearestMosqueKm?: number | null;
+  restosNear?: number;
 }
 interface PinWithDist extends PinItem {
   dist: number | null;
@@ -213,7 +233,7 @@ export default function HomeScreen() {
       setSelectedCity({ nom: ville.nom, ...coords });
       setSelectedId(null);
       setQuickCat(null);
-      setQuickSort('proche');
+      setQuickSort(defaultQuickSort(activeFilterRef.current));
       mapCenter.current = coords;
       // Vue large pour voir un maximum de mosquées de l'agglomération.
       mapRef.current?.animateToRegion({ ...coords, latitudeDelta: 0.16, longitudeDelta: 0.16 }, 800);
@@ -239,7 +259,7 @@ export default function HomeScreen() {
     setCityDetailState('idle');
     setSelectedId(null);
     setQuickCat(null);
-    setQuickSort('proche');
+    setQuickSort(defaultQuickSort(activeFilterRef.current));
     if (userLoc) {
       mapCenter.current = userLoc;
       mapRef.current?.animateToRegion({ ...userLoc, latitudeDelta: 0.04, longitudeDelta: 0.04 }, 700);
@@ -268,18 +288,27 @@ export default function HomeScreen() {
     if (selectedCity && cityDetail && (activeFilter === 'restaurants' || activeFilter === 'hotels')) {
       const arr = activeFilter === 'restaurants' ? cityDetail.restaurants : cityDetail.hotels;
       if (arr && arr.length > 0) {
-        return arr.map((l) => ({
-          id: l.id,
-          name: l.nom,
-          latitude: l.latitude,
-          longitude: l.longitude,
-          address: l.adresse,
-          note: l.note,
-          price: l.price,
-          category: l.category,
-          mapsUrl: l.mapsUrl,
-          halalConfidence: l.halalConfidence,
-        }));
+        return arr.map((l) => {
+          const base: PinItem = {
+            id: l.id,
+            name: l.nom,
+            latitude: l.latitude,
+            longitude: l.longitude,
+            address: l.adresse,
+            note: l.note,
+            price: l.price,
+            category: l.category,
+            mapsUrl: l.mapsUrl,
+            halalConfidence: l.halalConfidence,
+          };
+          if (activeFilter === 'hotels') {
+            const loc = hotelLocationStats(l, cityDetail.mosquees, cityDetail.restaurants, 1);
+            base.locScore = loc.score;
+            base.nearestMosqueKm = loc.nearestMosqueKm;
+            base.restosNear = loc.restosNear;
+          }
+          return base;
+        });
       }
     }
     // Sinon : démo, autour de la ville choisie ou de l'utilisateur.
@@ -293,23 +322,26 @@ export default function HomeScreen() {
     }));
   }, [activeFilter, mosques, selectedCity, cityDetail, userLoc]);
 
-  // Cuisines disponibles (restaurants d'une ville chargée) pour la sélection fine.
-  const cuisineOptions = useMemo(() => {
-    if (activeFilter !== 'restaurants') return [];
+  // Restaurants : la sélection fine s'applique aussi aux hôtels (gammes/budgets).
+  const sortable = activeFilter === 'restaurants' || activeFilter === 'hotels';
+
+  // Catégories disponibles : cuisines (restos) ou gammes (hôtels : Luxe, Budget, Capsule…).
+  const categoryOptions = useMemo(() => {
+    if (!sortable) return [];
     const set = new Set<string>();
     places.forEach((p) => p.category && set.add(p.category));
     return Array.from(set).sort((a, b) => a.localeCompare(b, 'fr'));
-  }, [places, activeFilter]);
+  }, [places, sortable]);
 
-  // Liste affichée = lieux filtrés par la cuisine choisie (restaurants seulement).
+  // Liste affichée = lieux filtrés par la catégorie choisie.
   const visiblePlaces = useMemo(() => {
-    if (activeFilter === 'restaurants' && quickCat) {
+    if (sortable && quickCat) {
       return places.filter((p) => p.category === quickCat);
     }
     return places;
-  }, [places, activeFilter, quickCat]);
+  }, [places, sortable, quickCat]);
 
-  const showQuickBar = activeFilter === 'restaurants' && cuisineOptions.length > 1;
+  const showQuickBar = sortable && !!selectedCity && places.length > 1;
 
   const markers = useMemo(
     () =>
@@ -330,14 +362,15 @@ export default function HomeScreen() {
           : null,
     }));
     withDist.sort((a, b) => {
-      if (activeFilter === 'restaurants') {
+      if (sortable) {
+        if (quickSort === 'situe') return (b.locScore ?? -1) - (a.locScore ?? -1);
         if (quickSort === 'note') return (b.note ?? -1) - (a.note ?? -1);
         if (quickSort === 'prix') return (priceRank(a.price) ?? 99) - (priceRank(b.price) ?? 99);
       }
       return (a.dist ?? Infinity) - (b.dist ?? Infinity);
     });
     return withDist.slice(0, 40);
-  }, [visiblePlaces, userLoc, selectedCity, activeFilter, quickSort]);
+  }, [visiblePlaces, userLoc, selectedCity, sortable, quickSort]);
 
   const searchRadius = () => (selectedCity ? CITY_RADIUS_M : ME_RADIUS_M);
 
@@ -359,7 +392,7 @@ export default function HomeScreen() {
     setActiveFilter(key);
     setSelectedId(null);
     setQuickCat(null);
-    setQuickSort('proche');
+    setQuickSort(defaultQuickSort(key));
     if (key === 'mosquees' && (mosqueState === 'idle' || mosqueState === 'error')) {
       loadMosques(mapCenter.current.latitude, mapCenter.current.longitude, searchRadius());
     }
@@ -439,6 +472,12 @@ export default function HomeScreen() {
               <View style={styles.callout}>
                 <Text style={styles.calloutName}>{place.name}</Text>
                 {place.address && <Text style={styles.calloutDist}>{place.address}</Text>}
+                {place.nearestMosqueKm != null && (
+                  <Text style={styles.calloutLoc}>
+                    🕌 Mosquée à {formatDistance(place.nearestMosqueKm)}
+                    {place.restosNear ? ` · 🍽️ ${place.restosNear} restos` : ''}
+                  </Text>
+                )}
                 {place.demo && <Text style={styles.calloutDemo}>exemple (démo)</Text>}
                 <View style={styles.calloutCta}>
                   <Text style={styles.calloutCtaText}>🧭 Y aller (itinéraire)</Text>
@@ -549,7 +588,7 @@ export default function HomeScreen() {
               contentContainerStyle={styles.quickScroll}
               style={styles.quickBar}
             >
-              {QUICK_SORTS.map((s) => {
+              {quickSortsFor(activeFilter).map((s) => {
                 const on = quickSort === s.key;
                 return (
                   <Pressable
@@ -561,14 +600,18 @@ export default function HomeScreen() {
                   </Pressable>
                 );
               })}
-              <View style={styles.quickSep} />
-              <Pressable
-                onPress={() => setQuickCat(null)}
-                style={[styles.quickChip, !quickCat && styles.quickChipOn]}
-              >
-                <Text style={[styles.quickChipText, !quickCat && styles.quickChipTextOn]}>Toutes</Text>
-              </Pressable>
-              {cuisineOptions.map((c) => {
+              {categoryOptions.length > 1 && <View style={styles.quickSep} />}
+              {categoryOptions.length > 1 && (
+                <Pressable
+                  onPress={() => setQuickCat(null)}
+                  style={[styles.quickChip, !quickCat && styles.quickChipOn]}
+                >
+                  <Text style={[styles.quickChipText, !quickCat && styles.quickChipTextOn]}>
+                    {activeFilter === 'hotels' ? 'Tous' : 'Toutes'}
+                  </Text>
+                </Pressable>
+              )}
+              {(categoryOptions.length > 1 ? categoryOptions : []).map((c) => {
                 const on = quickCat === c;
                 return (
                   <Pressable
@@ -610,6 +653,9 @@ export default function HomeScreen() {
                   {i === 0 && p.dist != null && quickSort === 'proche' && (
                     <Text style={styles.nearestTag}>la + proche</Text>
                   )}
+                  {i === 0 && quickSort === 'situe' && p.locScore != null && (
+                    <Text style={styles.nearestTag}>🕌 top emplacement</Text>
+                  )}
                   {p.demo && <Text style={styles.demoTag}>démo</Text>}
                 </View>
                 <Text style={styles.placeName} numberOfLines={2}>
@@ -618,6 +664,12 @@ export default function HomeScreen() {
                 {p.category && (
                   <Text style={styles.placeCat} numberOfLines={1}>
                     {p.category}
+                  </Text>
+                )}
+                {p.nearestMosqueKm != null && (
+                  <Text style={styles.placeLoc} numberOfLines={1}>
+                    🕌 {formatDistance(p.nearestMosqueKm)}
+                    {p.restosNear ? ` · 🍽️ ${p.restosNear} restos` : ''}
                   </Text>
                 )}
                 <View style={styles.placeCardBottom}>
@@ -890,6 +942,7 @@ const styles = StyleSheet.create({
   halalTagAmber: { backgroundColor: Brand.gold, color: Brand.night },
   placeName: { fontSize: 14, fontWeight: '700', color: '#1a1a1a', minHeight: 36 },
   placeCat: { fontSize: 11, fontWeight: '600', color: '#9c4221', marginTop: -2 },
+  placeLoc: { fontSize: 11, fontWeight: '800', color: '#1b4332' },
   placeCardBottom: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   placeDist: { fontSize: 13, fontWeight: '700', color: '#666' },
   goBtn: { backgroundColor: Brand.forest, borderRadius: Radius.pill, paddingHorizontal: 12, paddingVertical: 6 },
@@ -980,6 +1033,7 @@ const styles = StyleSheet.create({
   },
   calloutName: { fontWeight: '700', fontSize: 14, color: '#111' },
   calloutDist: { fontSize: 12, color: '#666' },
+  calloutLoc: { fontSize: 12, fontWeight: '700', color: '#1b4332' },
   calloutDemo: { fontSize: 11, color: '#999', fontStyle: 'italic' },
   calloutCta: { marginTop: 6, backgroundColor: Brand.forest, borderRadius: Radius.sm, paddingVertical: 8, alignItems: 'center' },
   calloutCtaText: { color: '#fff', fontWeight: '800', fontSize: 12 },
