@@ -51,7 +51,7 @@ Voyage et infos locales (Travel & Local)
 ## Coordonnées
 - Email développeur : contact@voyageshalal.fr
 - Site web : https://www.voyageshalal.fr
-- Politique de confidentialité : (URL après hébergement de PRIVACY.md)
+- Politique de confidentialité : https://www.voyageshalal.fr/confidentialite
 
 ## Déclaration « Sécurité des données » (Play Console)
 - **Position** : collectée ? → *Utilisée* mais **non collectée/stockée** par nous,
