@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#1B5E20"
+      "backgroundColor": "#0b1a0f"
     },
     "ios": {
       "supportsTablet": true,
@@ -19,7 +19,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#1B5E20"
+        "backgroundColor": "#0b1a0f"
       },
       "package": "com.voyageshalal.app"
     },
@@ -34,6 +34,7 @@
       [
         "expo-location",
         {
+          "locationWhenInUsePermission": "VoyagesHalal utilise votre position pour afficher les mosquées, restaurants halal et hôtels près de vous.",
           "locationAlwaysAndWhenInUsePermission": "VoyagesHalal utilise votre position pour afficher les lieux halal près de vous."
         }
       ],
@@ -43,7 +44,7 @@
           "image": "./assets/images/splash.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#1B5E20"
+          "backgroundColor": "#0b1a0f"
         }
       ],
       [
