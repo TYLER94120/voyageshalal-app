@@ -61,6 +61,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "owner": "voyageshalal1",
+    "extra": {
+      "eas": {
+        "projectId": "dad12ec8-c7bb-4df5-bf06-bafbc35f48a4"
+      }
     }
   }
 }
