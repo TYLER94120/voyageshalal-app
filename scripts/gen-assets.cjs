@@ -60,17 +60,6 @@ function toPng(size, rgba) {
 }
 
 // ── Géométrie ──
-function inStar(px, py, cx, cy, rO, rI, rot) {
-  const r = Math.hypot(px - cx, py - cy);
-  if (r > rO) return false;
-  let ang = Math.atan2(py - cy, px - cx) - rot;
-  const seg = Math.PI / 5;
-  let a = ((ang % (2 * seg)) + 2 * seg) % (2 * seg);
-  const t = a <= seg ? a / seg : (2 * seg - a) / seg;
-  const edge = rO + (rI - rO) * t;
-  return r <= edge;
-}
-
 function lerp(a, b, t) {
   return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
 }
@@ -79,17 +68,15 @@ function lerp(a, b, t) {
 function render(size, { gradient, scale }) {
   const SS = 3;
   const S = size * SS;
-  const cx = S / 2;
   const cy = S / 2;
   const Rb = (S / 2) * scale; // rayon du croissant
+  // On décale le croissant vers la droite pour qu'il paraisse centré (sa masse
+  // visible est à gauche du cercle).
+  const cx = S / 2 + Rb * 0.2;
   const cutR = Rb * 0.84;
   const cutCx = cx + Rb * 0.36; // ouverture vers la droite
   const cutCy = cy - Rb * 0.06;
-  const starCx = cx + Rb * 0.66;
-  const starCy = cy - Rb * 0.02;
-  const starRO = Rb * 0.3;
-  const starRI = starRO * 0.42;
-  const maxR = Math.hypot(cx, cy);
+  const maxR = Math.hypot(S / 2, S / 2);
 
   // Rendu haute résolution → moyenne.
   const hi = new Uint8ClampedArray(S * S * 4);
@@ -98,7 +85,7 @@ function render(size, { gradient, scale }) {
       const i = (y * S + x) * 4;
       let bg;
       if (gradient) {
-        const d = Math.hypot(x - cx, y - cy) / maxR;
+        const d = Math.hypot(x - S / 2, y - S / 2) / maxR;
         const [r, g, b] = lerp(NIGHT_LIGHT, NIGHT, Math.min(1, d * 1.05));
         bg = [r, g, b, 255];
       } else {
@@ -107,9 +94,8 @@ function render(size, { gradient, scale }) {
       const dBig = Math.hypot(x + 0.5 - cx, y + 0.5 - cy);
       const dCut = Math.hypot(x + 0.5 - cutCx, y + 0.5 - cutCy);
       const inCrescent = dBig <= Rb && dCut > cutR;
-      const inStarShape = inStar(x + 0.5, y + 0.5, starCx, starCy, starRO, starRI, -Math.PI / 2);
       let px = bg;
-      if (inCrescent || inStarShape) {
+      if (inCrescent) {
         // léger dégradé doré (reflet en haut-gauche).
         const t = Math.min(1, Math.max(0, (y - (cy - Rb)) / (2 * Rb)));
         const [r, g, b] = lerp(GOLD_HI, GOLD, t);
