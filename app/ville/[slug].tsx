@@ -14,6 +14,7 @@ import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
 import { getVille, type Lieu, type VilleDetail } from '@/lib/api';
+import { setPendingCity } from '@/lib/pendingCity';
 
 type TabKey = 'restaurants' | 'mosquees' | 'hotels' | 'activites' | 'pratique';
 
@@ -138,6 +139,16 @@ function VilleHeader({
   setTab: (t: TabKey) => void;
   counts: Record<TabKey, number>;
 }) {
+  const router = useRouter();
+  const seeOnMap = () => {
+    setPendingCity({
+      slug: ville.slug,
+      nom: ville.nom,
+      latitude: ville.latitude,
+      longitude: ville.longitude,
+    });
+    router.navigate('/');
+  };
   return (
     <View>
       {ville.image ? (
@@ -157,6 +168,10 @@ function VilleHeader({
       </View>
 
       {ville.description && <Text style={styles.intro}>{ville.description}</Text>}
+
+      <Pressable style={styles.mapBtn} onPress={seeOnMap}>
+        <Text style={styles.mapBtnText}>🗺️  Voir les mosquées & restos sur la carte</Text>
+      </Pressable>
 
       {/* Onglets */}
       <FlatList
@@ -303,6 +318,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.lg,
     paddingTop: Spacing.md,
   },
+
+  mapBtn: {
+    marginHorizontal: Spacing.lg,
+    marginTop: Spacing.md,
+    backgroundColor: Brand.gold,
+    borderRadius: Radius.pill,
+    paddingVertical: 13,
+    alignItems: 'center',
+  },
+  mapBtnText: { color: Brand.night, fontWeight: '800', fontSize: 14 },
 
   tabsList: { marginTop: Spacing.md },
   tabsRow: { paddingHorizontal: Spacing.lg, gap: Spacing.sm },

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import MapView, { Callout, Marker, Region } from 'react-native-maps';
 import * as Location from 'expo-location';
+import { useFocusEffect } from 'expo-router';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
 import { distanceKm, formatDistance } from '@/lib/geo';
@@ -19,6 +20,7 @@ import { fetchNearbyMosques } from '@/lib/overpass';
 import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPlaces';
 import { CitySearchModal } from '@/components/CitySearchModal';
 import { getVille, type VilleDetail, type VilleSummary } from '@/lib/api';
+import { consumePendingCity } from '@/lib/pendingCity';
 
 // ─── Filtres ────────────────────────────────────────────────────────────────
 
@@ -229,6 +231,14 @@ export default function HomeScreen() {
       locate();
     }
   }, [userLoc, loadMosques, locate]);
+
+  // Projection demandée depuis la fiche ville (« Voir sur la carte »).
+  useFocusEffect(
+    useCallback(() => {
+      const pc = consumePendingCity();
+      if (pc) selectCity(pc as VilleSummary);
+    }, [selectCity]),
+  );
 
   // ── Lieux affichés ──
   const activeCfg = FILTERS.find((f) => f.key === activeFilter)!;

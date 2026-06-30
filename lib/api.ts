@@ -19,8 +19,10 @@ export interface VilleSummary {
   nom: string;
   region?: string;
   pays?: string;
+  continent?: string;
   description?: string;
   image?: string;
+  scoreHalal?: number; // note halal sur 5
   latitude?: number;
   longitude?: number;
 }
@@ -123,8 +125,10 @@ function normalizeVilleSummary(raw: Raw): VilleSummary | null {
     nom,
     region: pickString(raw, 'region', 'région', 'departement', 'département'),
     pays: pickString(raw, 'pays', 'country'),
+    continent: pickString(raw, 'continent'),
     description: pickString(raw, 'description', 'resume', 'résumé', 'intro', 'excerpt'),
     image: pickString(raw, 'image', 'imageUrl', 'image_url', 'photo', 'cover', 'thumbnail'),
+    scoreHalal: pickNumber(raw, 'score_halal', 'scoreHalal'),
     latitude,
     longitude,
   };

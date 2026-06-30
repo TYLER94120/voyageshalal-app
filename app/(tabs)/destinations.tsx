@@ -17,6 +17,7 @@ import { Brand, Radius, Spacing } from '@/constants/theme';
 import { getVilles, type VilleSummary } from '@/lib/api';
 
 type LoadState = 'loading' | 'ready' | 'error';
+type SortKey = 'az' | 'score';
 
 export default function DestinationsScreen() {
   const router = useRouter();
@@ -24,7 +25,8 @@ export default function DestinationsScreen() {
   const [state, setState] = useState<LoadState>('loading');
   const [refreshing, setRefreshing] = useState(false);
   const [query, setQuery] = useState('');
-  const [region, setRegion] = useState<string | null>(null);
+  const [continent, setContinent] = useState<string | null>(null);
+  const [sort, setSort] = useState<SortKey>('score');
 
   const load = useCallback(async (isRefresh = false) => {
     if (!isRefresh) setState('loading');
@@ -49,48 +51,47 @@ export default function DestinationsScreen() {
     load(true);
   }, [load]);
 
-  // Régions disponibles, pour les filtres rapides
-  const regions = useMemo(() => {
+  // Continents disponibles (filtres principaux, peu nombreux et clairs).
+  const continents = useMemo(() => {
     const set = new Set<string>();
-    villes.forEach((v) => {
-      const r = v.region ?? v.pays;
-      if (r) set.add(r);
-    });
+    villes.forEach((v) => v.continent && set.add(v.continent));
     return Array.from(set).sort((a, b) => a.localeCompare(b, 'fr'));
   }, [villes]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return villes.filter((v) => {
-      const matchesRegion = !region || v.region === region || v.pays === region;
-      const matchesQuery =
+    const list = villes.filter((v) => {
+      const matchCont = !continent || v.continent === continent;
+      const matchQ =
         !q ||
         v.nom.toLowerCase().includes(q) ||
-        (v.region?.toLowerCase().includes(q) ?? false) ||
-        (v.pays?.toLowerCase().includes(q) ?? false);
-      return matchesRegion && matchesQuery;
+        (v.pays?.toLowerCase().includes(q) ?? false) ||
+        (v.region?.toLowerCase().includes(q) ?? false);
+      return matchCont && matchQ;
     });
-  }, [villes, query, region]);
+    if (sort === 'score') {
+      return [...list].sort((a, b) => (b.scoreHalal ?? 0) - (a.scoreHalal ?? 0));
+    }
+    return [...list].sort((a, b) => a.nom.localeCompare(b.nom, 'fr'));
+  }, [villes, query, continent, sort]);
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.kicker}>VOYAGESHALAL</Text>
-        <Text style={styles.title}>Destinations</Text>
+        <Text style={styles.kicker}>DESTINATIONS</Text>
+        <Text style={styles.title}>Où partir ?</Text>
         <Text style={styles.subtitle}>
-          {state === 'ready'
-            ? `${villes.length} villes prêtes pour un voyage halal`
-            : 'Explorez les villes halal-friendly'}
+          {state === 'ready' ? `${villes.length} villes halal-friendly dans le monde` : 'Inspirez votre prochain voyage'}
         </Text>
       </View>
 
-      {/* Barre de recherche */}
+      {/* Recherche */}
       <View style={styles.searchBox}>
         <Text style={styles.searchIcon}>🔎</Text>
         <TextInput
           value={query}
           onChangeText={setQuery}
-          placeholder="Rechercher une ville…"
+          placeholder="Rechercher une ville, un pays…"
           placeholderTextColor={Brand.creamMuted}
           style={styles.searchInput}
           autoCorrect={false}
@@ -103,21 +104,29 @@ export default function DestinationsScreen() {
         )}
       </View>
 
-      {/* Filtres par région */}
-      {regions.length > 0 && (
+      {/* Filtres continent + tri */}
+      {state === 'ready' && (
         <FlatList
-          data={['Toutes', ...regions]}
-          keyExtractor={(r) => r}
+          data={['Toutes', ...continents]}
+          keyExtractor={(c) => c}
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.chipsRow}
           style={styles.chipsList}
+          contentContainerStyle={styles.chipsRow}
+          ListHeaderComponent={
+            <Pressable
+              onPress={() => setSort((s) => (s === 'score' ? 'az' : 'score'))}
+              style={[styles.chip, styles.sortChip]}
+            >
+              <Text style={styles.sortChipText}>{sort === 'score' ? '★ Top halal' : 'A→Z'}</Text>
+            </Pressable>
+          }
           renderItem={({ item }) => {
             const isAll = item === 'Toutes';
-            const active = isAll ? region === null : region === item;
+            const active = isAll ? continent === null : continent === item;
             return (
               <Pressable
-                onPress={() => setRegion(isAll ? null : item)}
+                onPress={() => setContinent(isAll ? null : item)}
                 style={[styles.chip, active && styles.chipActive]}
               >
                 <Text style={[styles.chipText, active && styles.chipTextActive]}>{item}</Text>
@@ -127,20 +136,18 @@ export default function DestinationsScreen() {
         />
       )}
 
-      {/* Contenu */}
       {state === 'loading' && (
         <View style={styles.center}>
           <ActivityIndicator size="large" color={Brand.gold} />
-          <Text style={styles.muted}>Chargement des villes…</Text>
+          <Text style={styles.muted}>Chargement des destinations…</Text>
         </View>
       )}
 
       {state === 'error' && (
         <View style={styles.center}>
-          <Text style={styles.errorIcon}>📡</Text>
-          <Text style={styles.errorTitle}>Connexion impossible</Text>
-          <Text style={styles.muted}>Impossible de joindre l’API VoyagesHalal.</Text>
-          <Pressable style={styles.retryBtn} onPress={() => load()}>
+          <Text style={styles.errEmoji}>📡</Text>
+          <Text style={styles.muted}>Impossible de charger les destinations.</Text>
+          <Pressable style={styles.retry} onPress={() => load()}>
             <Text style={styles.retryText}>Réessayer</Text>
           </Pressable>
         </View>
@@ -152,19 +159,14 @@ export default function DestinationsScreen() {
           keyExtractor={(item) => item.slug}
           contentContainerStyle={styles.list}
           showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={Brand.gold} />
-          }
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={Brand.gold} />}
           ListEmptyComponent={
             <View style={styles.center}>
-              <Text style={styles.muted}>Aucune ville ne correspond à « {query} ».</Text>
+              <Text style={styles.muted}>Aucune destination ne correspond.</Text>
             </View>
           }
           renderItem={({ item }) => (
-            <Pressable
-              style={styles.card}
-              onPress={() => router.push(`/ville/${item.slug}`)}
-            >
+            <Pressable style={styles.card} onPress={() => router.push(`/ville/${item.slug}`)}>
               {item.image ? (
                 <Image source={{ uri: item.image }} style={styles.cardImage} />
               ) : (
@@ -172,20 +174,19 @@ export default function DestinationsScreen() {
                   <Text style={styles.cardImageFallbackText}>🕌</Text>
                 </View>
               )}
-              <View style={styles.cardBody}>
+
+              {item.scoreHalal != null && (
+                <View style={styles.scoreBadge}>
+                  <Text style={styles.scoreText}>★ {item.scoreHalal.toFixed(1)}</Text>
+                </View>
+              )}
+
+              <View style={styles.cardOverlay}>
                 <Text style={styles.cardName}>{item.nom}</Text>
-                {(item.region || item.pays) && (
-                  <Text style={styles.cardRegion}>
-                    📍 {[item.region, item.pays].filter(Boolean).join(' · ')}
-                  </Text>
-                )}
-                {item.description && (
-                  <Text style={styles.cardDesc} numberOfLines={2}>
-                    {item.description}
-                  </Text>
-                )}
+                <Text style={styles.cardSub} numberOfLines={1}>
+                  {[item.pays, item.continent].filter(Boolean).join(' · ')}
+                </Text>
               </View>
-              <Text style={styles.cardChevron}>›</Text>
             </Pressable>
           )}
         />
@@ -195,32 +196,11 @@ export default function DestinationsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Brand.night,
-  },
-  header: {
-    paddingTop: Platform.OS === 'ios' ? 64 : 44,
-    paddingHorizontal: Spacing.lg,
-    paddingBottom: Spacing.sm,
-  },
-  kicker: {
-    color: Brand.gold,
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 2,
-  },
-  title: {
-    color: Brand.cream,
-    fontSize: 34,
-    fontWeight: '800',
-    marginTop: 2,
-  },
-  subtitle: {
-    color: Brand.creamMuted,
-    fontSize: 14,
-    marginTop: 4,
-  },
+  container: { flex: 1, backgroundColor: Brand.night },
+  header: { paddingTop: Platform.OS === 'ios' ? 60 : 40, paddingHorizontal: Spacing.lg, paddingBottom: Spacing.sm },
+  kicker: { color: Brand.gold, fontSize: 12, fontWeight: '700', letterSpacing: 2 },
+  title: { color: Brand.cream, fontSize: 34, fontWeight: '800', marginTop: 2 },
+  subtitle: { color: Brand.creamMuted, fontSize: 14, marginTop: 4 },
 
   searchBox: {
     flexDirection: 'row',
@@ -236,133 +216,67 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   searchIcon: { fontSize: 16 },
-  searchInput: {
-    flex: 1,
-    color: Brand.cream,
-    fontSize: 15,
-    paddingVertical: 0,
-  },
-  clearIcon: {
-    color: Brand.creamMuted,
-    fontSize: 16,
-    paddingHorizontal: 4,
-  },
+  searchInput: { flex: 1, color: Brand.cream, fontSize: 15, paddingVertical: 0 },
+  clearIcon: { color: Brand.creamMuted, fontSize: 16, paddingHorizontal: 4 },
 
-  chipsList: {
-    maxHeight: 56,
-    marginTop: Spacing.sm,
-  },
-  chipsRow: {
-    paddingHorizontal: Spacing.lg,
-    gap: Spacing.sm,
-    alignItems: 'center',
-  },
+  chipsList: { maxHeight: 56, marginTop: Spacing.sm },
+  chipsRow: { paddingHorizontal: Spacing.lg, gap: Spacing.sm, alignItems: 'center' },
   chip: {
     paddingHorizontal: Spacing.md,
     paddingVertical: 8,
     borderRadius: Radius.pill,
     borderWidth: 1,
     borderColor: Brand.border,
-    backgroundColor: 'transparent',
   },
-  chipActive: {
-    backgroundColor: Brand.gold,
-    borderColor: Brand.gold,
-  },
-  chipText: {
-    color: Brand.cream,
-    fontSize: 13,
-    fontWeight: '600',
-  },
-  chipTextActive: {
-    color: Brand.night,
-    fontWeight: '800',
-  },
+  chipActive: { backgroundColor: Brand.gold, borderColor: Brand.gold },
+  chipText: { color: Brand.cream, fontSize: 13, fontWeight: '600' },
+  chipTextActive: { color: Brand.night, fontWeight: '800' },
+  sortChip: { backgroundColor: Brand.forest, borderColor: Brand.gold },
+  sortChipText: { color: Brand.gold, fontSize: 13, fontWeight: '800' },
 
-  list: {
-    padding: Spacing.lg,
-    paddingTop: Spacing.md,
-    gap: Spacing.md,
-  },
+  list: { padding: Spacing.lg, paddingTop: Spacing.md, gap: 14 },
   card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Brand.forest,
+    height: 170,
     borderRadius: Radius.md,
+    overflow: 'hidden',
+    backgroundColor: Brand.forest,
     borderWidth: 1,
     borderColor: Brand.border,
-    overflow: 'hidden',
-    padding: Spacing.sm,
-    gap: Spacing.md,
   },
-  cardImage: {
-    width: 72,
-    height: 72,
-    borderRadius: Radius.sm,
-    backgroundColor: Brand.night,
+  cardImage: { width: '100%', height: '100%' },
+  cardImageFallback: { alignItems: 'center', justifyContent: 'center' },
+  cardImageFallbackText: { fontSize: 48 },
+  scoreBadge: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: Brand.gold,
+    borderRadius: Radius.pill,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
   },
-  cardImageFallback: {
-    alignItems: 'center',
-    justifyContent: 'center',
+  scoreText: { color: Brand.night, fontWeight: '800', fontSize: 13 },
+  cardOverlay: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 12,
+    backgroundColor: 'rgba(11,26,15,0.62)',
   },
-  cardImageFallbackText: {
-    fontSize: 30,
-  },
-  cardBody: {
-    flex: 1,
-    gap: 2,
-  },
-  cardName: {
-    color: Brand.cream,
-    fontSize: 17,
-    fontWeight: '700',
-  },
-  cardRegion: {
-    color: Brand.gold,
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  cardDesc: {
-    color: Brand.creamMuted,
-    fontSize: 13,
-    lineHeight: 18,
-    marginTop: 2,
-  },
-  cardChevron: {
-    color: Brand.gold,
-    fontSize: 28,
-    fontWeight: '300',
-    paddingRight: Spacing.xs,
-  },
+  cardName: { color: '#fff', fontSize: 20, fontWeight: '800' },
+  cardSub: { color: '#f0e9d8', fontSize: 13, fontWeight: '600', marginTop: 2 },
 
-  center: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: Spacing.xl,
-    gap: Spacing.sm,
-  },
-  muted: {
-    color: Brand.creamMuted,
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  errorIcon: { fontSize: 44 },
-  errorTitle: {
-    color: Brand.cream,
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  retryBtn: {
+  center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.xl, gap: Spacing.sm },
+  muted: { color: Brand.creamMuted, fontSize: 14, textAlign: 'center' },
+  errEmoji: { fontSize: 44 },
+  retry: {
     marginTop: Spacing.sm,
     backgroundColor: Brand.gold,
     paddingHorizontal: Spacing.lg,
     paddingVertical: Spacing.sm,
     borderRadius: Radius.pill,
   },
-  retryText: {
-    color: Brand.night,
-    fontWeight: '800',
-    fontSize: 14,
-  },
+  retryText: { color: Brand.night, fontWeight: '800', fontSize: 14 },
 });
