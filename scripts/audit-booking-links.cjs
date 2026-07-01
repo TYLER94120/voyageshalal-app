@@ -68,6 +68,11 @@ async function mapLimit(items, limit, fn) {
   let citiesWithHotels = 0;
   let citiesZeroLink = [];
   let done = 0;
+  // Un lien Booking ne rapporte QUE s'il contient un identifiant affilié (aid=).
+  let bookingWithAid = 0;
+  const sampleBooking = [];
+  const sampleHalal = [];
+  const AID_RE = /[?&](aid|label|affiliate|partner_id)=/i;
 
   await mapLimit(villes, CONCURRENCY, async (v) => {
     const slug = v.slug || v.id;
@@ -80,8 +85,15 @@ async function mapLimit(items, limit, fn) {
       totalHotels++;
       const hb = firstStr(h, HALAL_BOOK_KEYS);
       const bk = firstStr(h, BOOK_KEYS);
-      if (hb) withHalal++;
-      if (bk) withBooking++;
+      if (hb) {
+        withHalal++;
+        if (sampleHalal.length < 3) sampleHalal.push(hb);
+      }
+      if (bk) {
+        withBooking++;
+        if (AID_RE.test(bk)) bookingWithAid++;
+        if (sampleBooking.length < 3) sampleBooking.push(bk);
+      }
       if (hb || bk) {
         withEither++;
         cityLinks++;
@@ -100,6 +112,23 @@ async function mapLimit(items, limit, fn) {
   console.log(`  • lien Booking.com      : ${withBooking}  (${pct(withBooking)})`);
   console.log(`  • au moins un lien      : ${withEither}  (${pct(withEither)})`);
   console.log(`  • AUCUN lien (perdu)    : ${totalHotels - withEither}  (${pct(totalHotels - withEither)})`);
+
+  // LE point décisif : les liens Booking rapportent-ils vraiment (tag affilié) ?
+  const affPct = withBooking ? ((100 * bookingWithAid) / withBooking).toFixed(1) : '0';
+  console.log('\n──── Les liens rapportent-ils ? (tag affilié dans l’URL) ────');
+  console.log(`  • Booking AVEC tag affilié (aid=…) : ${bookingWithAid} / ${withBooking}  (${affPct}%)`);
+  if (bookingWithAid === 0) {
+    console.log('  ⚠️  AUCUN tag affilié détecté → ces clics ne rapportent (probablement) RIEN.');
+  }
+  if (sampleBooking.length) {
+    console.log('\nExemples de liens Booking (pour vérifier le format) :');
+    sampleBooking.forEach((u) => console.log('  ' + u.slice(0, 160)));
+  }
+  if (sampleHalal.length) {
+    console.log('\nExemples de liens HalalBooking :');
+    sampleHalal.forEach((u) => console.log('  ' + u.slice(0, 160)));
+  }
+
   if (citiesZeroLink.length) {
     console.log(`\nVilles avec hôtels mais 0 lien (${citiesZeroLink.length}) — ex. :`);
     console.log('  ' + citiesZeroLink.slice(0, 15).join(', ') + (citiesZeroLink.length > 15 ? ' …' : ''));
