@@ -3,7 +3,7 @@ import { AppState, Platform } from 'react-native';
 
 import { usePrayerContext } from '@/context/PrayerContext';
 import { loadAdhanSettings } from '@/lib/notificationSettings';
-import { rescheduleAdhan } from '@/lib/notifications';
+import { rescheduleAdhan, updatePersistentNotification } from '@/lib/notifications';
 
 /**
  * Composant sans rendu, monté à la racine sous PrayerProvider.
@@ -31,16 +31,29 @@ export function AdhanScheduler() {
       const loc = locationRef.current;
       if (!loc.ready) return;
       const adhan = await loadAdhanSettings();
-      if (cancelled || !adhan.enabled) return;
+      if (cancelled) return;
       const s = settingsRef.current;
-      await rescheduleAdhan({
-        enabled: true,
-        latitude: loc.latitude,
-        longitude: loc.longitude,
-        methodKey: s.methodKey,
-        madhab: s.madhab,
-        prayers: adhan.prayers,
-      });
+      if (adhan.enabled) {
+        await rescheduleAdhan({
+          enabled: true,
+          latitude: loc.latitude,
+          longitude: loc.longitude,
+          methodKey: s.methodKey,
+          madhab: s.madhab,
+          prayers: adhan.prayers,
+        });
+      }
+      if (cancelled) return;
+      // Rafraîchit l'épingle des horaires (nouveau jour) à chaque ouverture.
+      if (adhan.persistent) {
+        await updatePersistentNotification({
+          enabled: true,
+          latitude: loc.latitude,
+          longitude: loc.longitude,
+          methodKey: s.methodKey,
+          madhab: s.madhab,
+        });
+      }
     };
 
     run();

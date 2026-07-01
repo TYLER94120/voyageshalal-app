@@ -7,11 +7,14 @@ export { ADHAN_PRAYERS, type AdhanPrayer } from './adhanSchedule';
 export interface AdhanSettings {
   enabled: boolean;
   prayers: Record<AdhanPrayer, boolean>;
+  // Notification permanente « épinglée » avec les horaires du jour (Android).
+  persistent: boolean;
 }
 
 export const DEFAULT_ADHAN_SETTINGS: AdhanSettings = {
   enabled: false,
   prayers: { fajr: true, dhuhr: true, asr: true, maghrib: true, isha: true },
+  persistent: false,
 };
 
 const STORAGE_KEY = 'voyageshalal.adhan.v1';
@@ -26,7 +29,7 @@ function sanitize(raw: unknown): AdhanSettings {
   for (const p of ADHAN_PRAYERS) {
     if (typeof prayersRaw[p] === 'boolean') prayers[p] = prayersRaw[p] as boolean;
   }
-  return { enabled: obj.enabled === true, prayers };
+  return { enabled: obj.enabled === true, prayers, persistent: obj.persistent === true };
 }
 
 export async function loadAdhanSettings(): Promise<AdhanSettings> {

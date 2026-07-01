@@ -12,7 +12,7 @@ import {
   type AdhanPrayer,
   type AdhanSettings,
 } from '@/lib/notificationSettings';
-import { rescheduleAdhan, type RescheduleResult } from '@/lib/notifications';
+import { rescheduleAdhan, updatePersistentNotification, type RescheduleResult } from '@/lib/notifications';
 import { Brand, Radius, Spacing } from '@/constants/theme';
 
 export default function AdhanScreen() {
@@ -53,16 +53,21 @@ export default function AdhanScreen() {
           madhab: prayerSettings.madhab,
           prayers: next.prayers,
         });
+        // Épingle des horaires (indépendante des rappels sonores).
+        const persistOk = await updatePersistentNotification({
+          enabled: next.persistent,
+          latitude: location.latitude,
+          longitude: location.longitude,
+          methodKey: prayerSettings.methodKey,
+          madhab: prayerSettings.madhab,
+        });
         setResult(res);
-        if (res.status === 'denied') {
-          // Permission refusée → on repasse OFF, et on persiste l'état corrigé
-          // (sinon le stockage resterait « activé » et re-solliciterait à chaque lancement).
-          const off: AdhanSettings = { ...next, enabled: false };
-          setAdhan(off);
-          saveAdhanSettings(off);
-        } else {
-          saveAdhanSettings(next);
-        }
+        // Corrige l'état si une permission a été refusée (évite de re-solliciter).
+        let corrected = next;
+        if (res.status === 'denied') corrected = { ...corrected, enabled: false };
+        if (next.persistent && !persistOk) corrected = { ...corrected, persistent: false };
+        if (corrected !== next) setAdhan(corrected);
+        saveAdhanSettings(corrected);
       } finally {
         setBusy(false);
       }
@@ -92,6 +97,7 @@ export default function AdhanScreen() {
   const toggleMaster = (enabled: boolean) => apply({ ...adhan, enabled });
   const togglePrayer = (p: AdhanPrayer, on: boolean) =>
     apply({ ...adhan, prayers: { ...adhan.prayers, [p]: on } });
+  const togglePersistent = (persistent: boolean) => apply({ ...adhan, persistent });
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -129,6 +135,28 @@ export default function AdhanScreen() {
 
       {/* Statut */}
       {result && <StatusLine result={result} />}
+
+      {/* Horaires épinglés (notification permanente) — option indépendante */}
+      <View style={styles.masterCard}>
+        <View style={styles.masterText}>
+          <Text style={styles.masterTitle}>📌 Épingler les horaires</Text>
+          <Text style={styles.masterHint}>
+            Une notification permanente affiche les 5 horaires du jour, même l’app fermée.
+          </Text>
+        </View>
+        <Switch
+          value={adhan.persistent}
+          onValueChange={togglePersistent}
+          disabled={busy}
+          trackColor={{ false: Brand.border, true: Brand.gold }}
+          thumbColor={Brand.cream}
+        />
+      </View>
+      {adhan.persistent && Platform.OS === 'ios' && (
+        <Text style={[styles.status, styles.statusWarn]}>
+          ℹ️ Sur iPhone, la notification n’est pas permanente (limite iOS) — elle reste affichée mais peut être balayée.
+        </Text>
+      )}
 
       {/* Sélection par prière */}
       <Text style={styles.sectionTitle}>Prières notifiées</Text>

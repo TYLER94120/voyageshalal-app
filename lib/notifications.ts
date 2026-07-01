@@ -15,10 +15,14 @@ import * as Notifications from 'expo-notifications';
 import { type MadhabKey } from './prayer';
 import { type AdhanPrayer } from './notificationSettings';
 import { buildSchedule } from './adhanSchedule';
+import { buildPersistentContent } from './persistentNotif';
 
 export { buildSchedule } from './adhanSchedule';
 
 export const ADHAN_CHANNEL = 'adhan';
+// Notification « horaires épinglés » : canal silencieux + id fixe (remplaçable).
+export const PERSISTENT_CHANNEL = 'prayer-persistent';
+export const PERSISTENT_ID = 'prayer-persistent';
 // Son par défaut tant qu'aucun asset adhan n'est fourni (cf. en-tête).
 const ADHAN_SOUND: string | boolean = 'default';
 
@@ -111,4 +115,74 @@ export async function rescheduleAdhan(params: RescheduleParams): Promise<Resched
     });
   }
   return { status: 'scheduled', count: items.length };
+}
+
+// ─── Horaires épinglés (notification permanente) ─────────────────────────────
+
+async function ensurePersistentChannel(): Promise<void> {
+  if (Platform.OS !== 'android') return;
+  await Notifications.setNotificationChannelAsync(PERSISTENT_CHANNEL, {
+    name: 'Horaires de prière (épinglés)',
+    // LOW = visible dans la barre, sans son ni intrusion (c'est un affichage).
+    importance: Notifications.AndroidImportance.LOW,
+    showBadge: false,
+  });
+}
+
+export interface PersistentParams {
+  enabled: boolean;
+  latitude: number;
+  longitude: number;
+  methodKey: string;
+  madhab: MadhabKey;
+  now?: Date;
+}
+
+/**
+ * Met à jour (ou retire) la notification permanente des horaires. Sticky sur
+ * Android (non balayable). Se rafraîchit à chaque appel (mêmes id → remplace) :
+ * l'app la reposte à l'ouverture pour rester à jour. iOS n'a pas de permanent →
+ * on affiche une notification simple (best-effort).
+ */
+export async function updatePersistentNotification(params: PersistentParams): Promise<boolean> {
+  // Toujours retirer l'épingle précédente (affichée et/ou programmée).
+  try {
+    await Notifications.dismissNotificationAsync(PERSISTENT_ID);
+  } catch {
+    // rien à retirer
+  }
+  try {
+    await Notifications.cancelScheduledNotificationAsync(PERSISTENT_ID);
+  } catch {
+    // rien à annuler
+  }
+  if (!params.enabled) return false;
+
+  const granted = await requestNotificationPermission();
+  if (!granted) return false;
+  await ensurePersistentChannel();
+
+  const { title, subtitle, body } = buildPersistentContent(
+    params.latitude,
+    params.longitude,
+    params.now ?? new Date(),
+    params.methodKey,
+    params.madhab,
+  );
+
+  await Notifications.scheduleNotificationAsync({
+    identifier: PERSISTENT_ID,
+    content: {
+      title,
+      subtitle,
+      body,
+      color: '#c9a84c',
+      sound: false,
+      sticky: Platform.OS === 'android', // ongoing : non balayable
+      autoDismiss: false,
+    },
+    // { channelId } = livraison immédiate sur le canal silencieux (Android).
+    trigger: Platform.OS === 'android' ? { channelId: PERSISTENT_CHANNEL } : null,
+  });
+  return true;
 }
