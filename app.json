@@ -7,6 +7,12 @@
     "icon": "./assets/images/icon.png",
     "scheme": "voyageshalal",
     "userInterfaceStyle": "automatic",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/dad12ec8-c7bb-4df5-bf06-bafbc35f48a4"
+    },
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
