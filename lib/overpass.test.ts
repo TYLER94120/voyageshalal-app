@@ -1,4 +1,4 @@
-import { buildMosqueQuery, parseOverpass } from './overpass';
+import { buildButcherQuery, buildMosqueQuery, parseOverpass } from './overpass';
 
 describe('buildMosqueQuery', () => {
   it('cible les lieux de culte musulmans dans le rayon', () => {
@@ -8,6 +8,26 @@ describe('buildMosqueQuery', () => {
     expect(q).toContain('around:6000,48.85,2.35');
     expect(q).toContain('node');
     expect(q).toContain('way');
+  });
+});
+
+describe('buildButcherQuery', () => {
+  it('cible les boucheries halal (diet:halal ou nom halal) dans le rayon', () => {
+    const q = buildButcherQuery(48.85, 2.35, 6000);
+    expect(q).toContain('"shop"="butcher"');
+    expect(q).toContain('"diet:halal"');
+    expect(q).toContain('"name"~"halal",i');
+    expect(q).toContain('around:6000,48.85,2.35');
+  });
+});
+
+describe('parseOverpass — nom par défaut personnalisable', () => {
+  it('utilise le repli fourni (ex. boucherie)', () => {
+    const places = parseOverpass(
+      { elements: [{ type: 'node', id: 5, lat: 1, lon: 2, tags: {} }] },
+      'Boucherie halal',
+    );
+    expect(places[0].name).toBe('Boucherie halal');
   });
 });
 

@@ -16,7 +16,7 @@ import { useFocusEffect } from 'expo-router';
 import { Brand, Radius, Spacing } from '@/constants/theme';
 import { distanceKm, formatDistance } from '@/lib/geo';
 import { openDirections, openDirectionsQuery, openMapsUrl } from '@/lib/maps';
-import { fetchNearbyMosques } from '@/lib/overpass';
+import { fetchNearbyButchers, fetchNearbyMosques } from '@/lib/overpass';
 import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPlaces';
 import { CitySearchModal } from '@/components/CitySearchModal';
 import { getNearbySpots, halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
@@ -92,7 +92,9 @@ const DEFAULT_REGION: Region = { ...PARIS, latitudeDelta: 0.06, longitudeDelta: 
 const ME_RADIUS_M = 6000;
 const CITY_RADIUS_M = 25000;
 // Rayon des lieux « autour de moi » (restos/hôtels/activités via /api/nearby).
-const NEARBY_RADIUS_KM = 8;
+// 15 km : en banlieue, la donnée resto est clairsemée → on élargit pour offrir
+// plus de choix (les plus proches restent en tête du tri).
+const NEARBY_RADIUS_KM = 15;
 
 // Dimensions des cartes du bas (pour le défilement lié à la carte).
 const CARD_W = 190;
@@ -135,6 +137,9 @@ export default function HomeScreen() {
   const [locDenied, setLocDenied] = useState(false);
   const [mosques, setMosques] = useState<MapPlace[]>([]);
   const [mosqueState, setMosqueState] = useState<MosqueState>('idle');
+  // Boucheries halal réelles (OpenStreetMap), chargées quand l'onglet est actif.
+  const [butchers, setButchers] = useState<MapPlace[]>([]);
+  const [butcherState, setButcherState] = useState<MosqueState>('idle');
   const [userTracks, setUserTracks] = useState(true);
   const [selectedCity, setSelectedCity] = useState<{ nom: string; latitude: number; longitude: number } | null>(null);
   const [cityModal, setCityModal] = useState(false);
@@ -185,6 +190,19 @@ export default function HomeScreen() {
     },
     [loadMosques],
   );
+
+  // ── Boucheries halal réelles (Overpass), à la demande ──
+  const loadButchers = useCallback(async (lat: number, lng: number, radius: number = ME_RADIUS_M) => {
+    setButcherState('loading');
+    try {
+      const res = await fetchNearbyButchers(lat, lng, radius);
+      setButchers(res);
+      setButcherState('ready');
+    } catch (err) {
+      console.warn('[home] Overpass boucheries échec', err);
+      setButcherState('error');
+    }
+  }, []);
 
   // ── Géolocalisation ──
   const applyUser = useCallback((coords: { latitude: number; longitude: number }, animate: boolean) => {
@@ -392,6 +410,10 @@ export default function HomeScreen() {
     if (activeFilter === 'mosquees') {
       return mosques.map((m) => ({ id: m.id, name: m.name, latitude: m.latitude, longitude: m.longitude }));
     }
+    // Boucheries halal RÉELLES (OpenStreetMap), pas de démo.
+    if (activeFilter === 'commerces') {
+      return butchers.map((b) => ({ id: b.id, name: b.name, latitude: b.latitude, longitude: b.longitude }));
+    }
     // Restaurants / hôtels / activités : vraies données de la ville si disponibles.
     if (
       selectedCity &&
@@ -437,7 +459,7 @@ export default function HomeScreen() {
       longitude: p.longitude,
       demo: true,
     }));
-  }, [activeFilter, mosques, selectedCity, cityDetail, distOrigin, cityMosquees]);
+  }, [activeFilter, mosques, butchers, selectedCity, cityDetail, distOrigin, cityMosquees]);
 
   // Sélection fine (cuisine/tri) : restaurants, hôtels (gammes/budgets) et activités (thèmes).
   const sortable =
@@ -528,6 +550,10 @@ export default function HomeScreen() {
     setQuickSort(defaultQuickSort(key));
     if (key === 'mosquees' && (mosqueState === 'idle' || mosqueState === 'error')) {
       loadMosques(mapCenter.current.latitude, mapCenter.current.longitude, searchRadius());
+    }
+    // Boucheries halal réelles (OSM) : charge au 1er affichage de l'onglet.
+    if (key === 'commerces' && (butcherState === 'idle' || butcherState === 'error')) {
+      loadButchers(mapCenter.current.latitude, mapCenter.current.longitude, searchRadius());
     }
   };
 
@@ -680,12 +706,23 @@ export default function HomeScreen() {
               <ActivityIndicator size="small" color="#fff" />
               <Text style={styles.statusText}>Chargement des lieux…</Text>
             </View>
+          ) : activeFilter === 'commerces' && butcherState === 'loading' ? (
+            <View style={styles.statusRow}>
+              <ActivityIndicator size="small" color="#fff" />
+              <Text style={styles.statusText}>Recherche des boucheries halal…</Text>
+            </View>
           ) : activeFilter === 'mosquees' && mosqueState === 'error' ? (
             <Pressable onPress={() => loadMosques(mapCenter.current.latitude, mapCenter.current.longitude, searchRadius())}>
               <Text style={styles.statusText}>Erreur réseau — appuyez pour réessayer</Text>
             </Pressable>
+          ) : activeFilter === 'commerces' && butcherState === 'error' ? (
+            <Pressable onPress={() => loadButchers(mapCenter.current.latitude, mapCenter.current.longitude, searchRadius())}>
+              <Text style={styles.statusText}>Erreur réseau — appuyez pour réessayer</Text>
+            </Pressable>
           ) : activeFilter === 'mosquees' && places.length === 0 && mosqueState === 'ready' ? (
             <Text style={styles.statusText}>Aucune mosquée ici — déplacez la carte</Text>
+          ) : activeFilter === 'commerces' && places.length === 0 && butcherState === 'ready' ? (
+            <Text style={styles.statusText}>Aucune boucherie halal trouvée ici</Text>
           ) : (
             <Text style={styles.statusText}>
               {visiblePlaces.length} {quickCat ?? activeCfg.label}
@@ -706,6 +743,16 @@ export default function HomeScreen() {
         <Pressable
           style={styles.searchHere}
           onPress={() => loadMosques(mapCenter.current.latitude, mapCenter.current.longitude, searchRadius())}
+        >
+          <Text style={styles.searchHereText}>🔄 Rechercher dans cette zone</Text>
+        </Pressable>
+      )}
+
+      {/* « Rechercher dans cette zone » (boucheries halal) */}
+      {activeFilter === 'commerces' && butcherState !== 'loading' && !(locDenied && !selectedCity) && (
+        <Pressable
+          style={styles.searchHere}
+          onPress={() => loadButchers(mapCenter.current.latitude, mapCenter.current.longitude, searchRadius())}
         >
           <Text style={styles.searchHereText}>🔄 Rechercher dans cette zone</Text>
         </Pressable>

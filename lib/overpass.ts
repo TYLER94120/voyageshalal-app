@@ -37,6 +37,23 @@ export function buildMosqueQuery(latitude: number, longitude: number, radius: nu
 out center;`;
 }
 
+/**
+ * Requête Overpass QL : boucheries HALAL dans un rayon (mètres). On ne remonte
+ * que les boucheries explicitement halal (`diet:halal` = yes/only) OU dont le nom
+ * contient « halal » — pas de boucherie générique (honnêteté halal).
+ */
+export function buildButcherQuery(latitude: number, longitude: number, radius: number): string {
+  const around = `(around:${Math.round(radius)},${latitude},${longitude})`;
+  return `[out:json][timeout:15];
+(
+  node["shop"="butcher"]["diet:halal"~"^(yes|only)$",i]${around};
+  way["shop"="butcher"]["diet:halal"~"^(yes|only)$",i]${around};
+  node["shop"="butcher"]["name"~"halal",i]${around};
+  way["shop"="butcher"]["name"~"halal",i]${around};
+);
+out center;`;
+}
+
 type RawElement = {
   type?: string;
   id?: number;
@@ -47,7 +64,7 @@ type RawElement = {
 };
 
 /** Transforme la réponse Overpass en lieux normalisés (tolérant). */
-export function parseOverpass(payload: unknown): OsmPlace[] {
+export function parseOverpass(payload: unknown, defaultName = 'Mosquée'): OsmPlace[] {
   const obj = (payload && typeof payload === 'object' ? payload : {}) as { elements?: unknown };
   const elements = Array.isArray(obj.elements) ? (obj.elements as RawElement[]) : [];
   const places: OsmPlace[] = [];
@@ -56,7 +73,7 @@ export function parseOverpass(payload: unknown): OsmPlace[] {
     const lon = typeof el.lon === 'number' ? el.lon : el.center?.lon;
     if (typeof lat !== 'number' || typeof lon !== 'number') continue;
     const tags = el.tags ?? {};
-    const name = tags.name || tags['name:fr'] || tags['name:ar'] || 'Mosquée';
+    const name = tags.name || tags['name:fr'] || tags['name:ar'] || defaultName;
     places.push({
       id: `${el.type ?? 'node'}/${el.id ?? `${lat},${lon}`}`,
       name,
@@ -67,7 +84,7 @@ export function parseOverpass(payload: unknown): OsmPlace[] {
   return places;
 }
 
-async function postOverpass(endpoint: string, query: string): Promise<OsmPlace[]> {
+async function postOverpass(endpoint: string, query: string, defaultName: string): Promise<OsmPlace[]> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), PER_REQUEST_TIMEOUT_MS);
   try {
@@ -78,7 +95,7 @@ async function postOverpass(endpoint: string, query: string): Promise<OsmPlace[]
       signal: controller.signal,
     });
     if (!res.ok) throw new Error(`Overpass ${res.status}`);
-    return parseOverpass(await res.json());
+    return parseOverpass(await res.json(), defaultName);
   } finally {
     clearTimeout(timer);
   }
@@ -86,23 +103,25 @@ async function postOverpass(endpoint: string, query: string): Promise<OsmPlace[]
 
 // ── Cache mémoire ──
 const cache = new Map<string, { at: number; places: OsmPlace[] }>();
-function cacheKey(lat: number, lng: number, radius: number): string {
+function cacheKey(kind: string, lat: number, lng: number, radius: number): string {
   // ~1 km de granularité : les re-recherches proches réutilisent le cache.
-  return `${lat.toFixed(2)},${lng.toFixed(2)},${radius}`;
+  return `${kind}:${lat.toFixed(2)},${lng.toFixed(2)},${radius}`;
 }
 
-/** Mosquées proches (course entre miroirs + cache). */
-export async function fetchNearbyMosques(
-  latitude: number,
-  longitude: number,
-  radius = 5000,
+/** Course entre miroirs + cache mémoire, pour une requête Overpass donnée. */
+async function raceOverpass(
+  kind: string,
+  query: string,
+  lat: number,
+  lng: number,
+  radius: number,
+  defaultName: string,
 ): Promise<OsmPlace[]> {
-  const key = cacheKey(latitude, longitude, radius);
+  const key = cacheKey(kind, lat, lng, radius);
   const hit = cache.get(key);
   if (hit && Date.now() - hit.at < CACHE_TTL_MS) return hit.places;
 
-  const query = buildMosqueQuery(latitude, longitude, radius);
-  const attempts = ENDPOINTS.map((ep) => postOverpass(ep, query));
+  const attempts = ENDPOINTS.map((ep) => postOverpass(ep, query, defaultName));
   let places: OsmPlace[];
   try {
     places = await Promise.any(attempts); // premier miroir qui répond
@@ -111,4 +130,14 @@ export async function fetchNearbyMosques(
   }
   cache.set(key, { at: Date.now(), places });
   return places;
+}
+
+/** Mosquées proches (course entre miroirs + cache). */
+export function fetchNearbyMosques(latitude: number, longitude: number, radius = 5000): Promise<OsmPlace[]> {
+  return raceOverpass('mosq', buildMosqueQuery(latitude, longitude, radius), latitude, longitude, radius, 'Mosquée');
+}
+
+/** Boucheries halal proches (course entre miroirs + cache). */
+export function fetchNearbyButchers(latitude: number, longitude: number, radius = 5000): Promise<OsmPlace[]> {
+  return raceOverpass('bouch', buildButcherQuery(latitude, longitude, radius), latitude, longitude, radius, 'Boucherie halal');
 }
