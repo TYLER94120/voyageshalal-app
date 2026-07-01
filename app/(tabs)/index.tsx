@@ -20,7 +20,7 @@ import { fetchNearbyMosques } from '@/lib/overpass';
 import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPlaces';
 import { CitySearchModal } from '@/components/CitySearchModal';
 import { halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
-import { getVilleCached } from '@/lib/cityCache';
+import { getVilleCached, getVillesCached } from '@/lib/cityCache';
 import { priceRank, recommendedScore } from '@/lib/lieuSort';
 import { CuisineSheet } from '@/components/CuisineSheet';
 import { dedupeHotels, hotelLocationStats } from '@/lib/hotelLocation';
@@ -91,6 +91,24 @@ const DEFAULT_REGION: Region = { ...PARIS, latitudeDelta: 0.06, longitudeDelta: 
 // ville (mégapoles étalées comme Tokyo → couvrir toute l'agglomération).
 const ME_RADIUS_M = 6000;
 const CITY_RADIUS_M = 25000;
+// À l'ouverture, on charge automatiquement la ville de la base la plus proche si
+// l'utilisateur est à moins de ce rayon (→ filtres dispo direct, centrés sur lui).
+const AUTO_CITY_MAX_KM = 40;
+
+/** Ville de la base la plus proche d'un point, dans la limite AUTO_CITY_MAX_KM. */
+function nearestCity(villes: VilleSummary[], lat: number, lng: number): VilleSummary | null {
+  let best: VilleSummary | null = null;
+  let bestD = Infinity;
+  for (const v of villes) {
+    if (v.latitude == null || v.longitude == null) continue;
+    const d = distanceKm(lat, lng, v.latitude, v.longitude);
+    if (d < bestD) {
+      bestD = d;
+      best = v;
+    }
+  }
+  return best && bestD <= AUTO_CITY_MAX_KM ? best : null;
+}
 
 // Dimensions des cartes du bas (pour le défilement lié à la carte).
 const CARD_W = 190;
@@ -148,10 +166,33 @@ export default function HomeScreen() {
   // Hôtel dont on regarde « autour » (mini-carte mosquées + restos).
   const [aroundHotelId, setAroundHotelId] = useState<string | null>(null);
 
+  // Liste des villes (pour auto-détecter la plus proche à l'ouverture).
+  const [villes, setVilles] = useState<VilleSummary[]>([]);
+  // « Mode autour de moi » : la ville est chargée pour ses données réelles, mais
+  // on reste centré/étiqueté sur l'utilisateur (pas de projection sur la ville).
+  const [aroundMe, setAroundMe] = useState(false);
+  const autoTried = useRef(false);
+  const userLocRef = useRef<{ latitude: number; longitude: number } | null>(null);
+  const villesRef = useRef<VilleSummary[]>([]);
+
   const activeFilterRef = useRef(activeFilter);
   useEffect(() => {
     activeFilterRef.current = activeFilter;
   }, [activeFilter]);
+  useEffect(() => {
+    userLocRef.current = userLoc;
+  }, [userLoc]);
+  useEffect(() => {
+    villesRef.current = villes;
+  }, [villes]);
+
+  useEffect(() => {
+    getVillesCached()
+      .then(({ data }) => setVilles(data))
+      .catch(() => {
+        /* liste indisponible : l'auto-sélection sera simplement ignorée */
+      });
+  }, []);
 
   // ── Mosquées réelles (Overpass) ──
   const loadMosques = useCallback(async (lat: number, lng: number, radius: number = ME_RADIUS_M) => {
@@ -238,7 +279,7 @@ export default function HomeScreen() {
 
   // ── Mode ville ──
   const selectCity = useCallback(
-    async (ville: VilleSummary) => {
+    async (ville: VilleSummary, opts?: { keepUserView?: boolean }) => {
       let coords: { latitude: number; longitude: number } | null =
         typeof ville.latitude === 'number' && typeof ville.longitude === 'number'
           ? { latitude: ville.latitude, longitude: ville.longitude }
@@ -257,12 +298,25 @@ export default function HomeScreen() {
       setSelectedId(null);
       setQuickCat(null);
       setQuickSort(defaultQuickSort(activeFilterRef.current));
-      mapCenter.current = coords;
-      // Vue large pour voir un maximum de mosquées de l'agglomération.
-      mapRef.current?.animateToRegion({ ...coords, latitudeDelta: 0.16, longitudeDelta: 0.16 }, 800);
-      // Toujours charger les mosquées réelles (OSM) : affichées si l'onglet Mosquées
-      // est actif, et indispensables au score « hôtel bien situé ».
-      loadMosques(coords.latitude, coords.longitude, CITY_RADIUS_M);
+      // Mode « autour de moi » : données réelles de la ville, mais on reste
+      // centré et étiqueté sur l'utilisateur (aucune projection sur la ville).
+      setAroundMe(!!opts?.keepUserView);
+
+      // Auto-sélection à l'ouverture : on garde la vue centrée sur l'utilisateur
+      // et les mosquées autour de LUI (et non du centre-ville).
+      const user = opts?.keepUserView ? userLocRef.current : null;
+      if (user) {
+        mapCenter.current = user;
+        mapRef.current?.animateToRegion({ ...user, latitudeDelta: 0.05, longitudeDelta: 0.05 }, 700);
+        loadMosques(user.latitude, user.longitude, ME_RADIUS_M);
+      } else {
+        mapCenter.current = coords;
+        // Vue large pour voir un maximum de mosquées de l'agglomération.
+        mapRef.current?.animateToRegion({ ...coords, latitudeDelta: 0.16, longitudeDelta: 0.16 }, 800);
+        // Mosquées réelles (OSM) : affichées si l'onglet Mosquées est actif, et
+        // indispensables au score « hôtel bien situé ».
+        loadMosques(coords.latitude, coords.longitude, CITY_RADIUS_M);
+      }
 
       // Détail de la ville (restaurants / hôtels réels)
       setCityDetail(null);
@@ -278,21 +332,48 @@ export default function HomeScreen() {
     [loadMosques],
   );
 
+  // Charge la ville de la base la plus proche EN MODE « autour de moi » (données
+  // réelles, vue et étiquette gardées sur l'utilisateur). Renvoie true si trouvée.
+  const autoLoadNearMe = useCallback((): boolean => {
+    const u = userLocRef.current;
+    if (!u) return false;
+    const c = nearestCity(villesRef.current, u.latitude, u.longitude);
+    if (c) {
+      selectCity(c, { keepUserView: true });
+      return true;
+    }
+    return false;
+  }, [selectCity]);
+
+  // À l'ouverture : dès qu'on connaît la position ET la liste des villes, on
+  // charge (une seule fois) la ville la plus proche en mode « autour de moi » →
+  // filtres dispo direct, sans quitter sa position. Loin de tout → démo.
+  useEffect(() => {
+    if (autoTried.current || selectedCity || !userLoc || villes.length === 0) return;
+    autoTried.current = true;
+    autoLoadNearMe();
+  }, [userLoc, villes, selectedCity, autoLoadNearMe]);
+
   const goToMe = useCallback(() => {
-    setSelectedCity(null);
-    setCityDetail(null);
-    setCityDetailState('idle');
     setSelectedId(null);
     setQuickCat(null);
     setQuickSort(defaultQuickSort(activeFilterRef.current));
     if (userLoc) {
       mapCenter.current = userLoc;
-      mapRef.current?.animateToRegion({ ...userLoc, latitudeDelta: 0.04, longitudeDelta: 0.04 }, 700);
-      if (activeFilterRef.current === 'mosquees') loadMosques(userLoc.latitude, userLoc.longitude);
+      mapRef.current?.animateToRegion({ ...userLoc, latitudeDelta: 0.05, longitudeDelta: 0.05 }, 700);
+      // Revenir « autour de moi » : recharger la ville la plus proche en mode
+      // autour de moi (garde les filtres). Sinon repli démo pur.
+      if (!autoLoadNearMe()) {
+        setSelectedCity(null);
+        setAroundMe(false);
+        setCityDetail(null);
+        setCityDetailState('idle');
+        if (activeFilterRef.current === 'mosquees') loadMosques(userLoc.latitude, userLoc.longitude);
+      }
     } else {
       locate();
     }
-  }, [userLoc, loadMosques, locate]);
+  }, [userLoc, autoLoadNearMe, loadMosques, locate]);
 
   // Projection demandée depuis la fiche ville (« Voir sur la carte »).
   useFocusEffect(
@@ -304,6 +385,16 @@ export default function HomeScreen() {
 
   // ── Lieux affichés ──
   const activeCfg = FILTERS.find((f) => f.key === activeFilter)!;
+
+  // Origine des distances : la position de l'utilisateur s'il est physiquement
+  // près de la ville sélectionnée (≤ AUTO_CITY_MAX_KM), sinon le centre-ville.
+  const distOrigin = useMemo(() => {
+    if (userLoc && selectedCity) {
+      const d = distanceKm(userLoc.latitude, userLoc.longitude, selectedCity.latitude, selectedCity.longitude);
+      if (d <= AUTO_CITY_MAX_KM) return userLoc;
+    }
+    return selectedCity ?? userLoc ?? mapCenter.current;
+  }, [userLoc, selectedCity]);
 
   // Mosquées de référence de la ville : principales (API) + exhaustives (OSM),
   // dédupliquées → score hôtel fiable.
@@ -353,7 +444,7 @@ export default function HomeScreen() {
       }
     }
     // Sinon : démo, autour de la ville choisie ou de l'utilisateur.
-    const origin = selectedCity ?? userLoc ?? mapCenter.current;
+    const origin = distOrigin;
     return demoPlacesAround(activeFilter as DemoCategory, origin.latitude, origin.longitude).map((p) => ({
       id: p.id,
       name: p.name,
@@ -361,7 +452,7 @@ export default function HomeScreen() {
       longitude: p.longitude,
       demo: true,
     }));
-  }, [activeFilter, mosques, selectedCity, cityDetail, userLoc, cityMosquees]);
+  }, [activeFilter, mosques, selectedCity, cityDetail, distOrigin, cityMosquees]);
 
   // Sélection fine (cuisine/tri) : restaurants, hôtels (gammes/budgets) et activités (thèmes).
   const sortable =
@@ -409,7 +500,7 @@ export default function HomeScreen() {
   }, [markers, selectedId]);
 
   const nearbyList: PinWithDist[] = useMemo(() => {
-    const origin = selectedCity ?? userLoc ?? mapCenter.current;
+    const origin = distOrigin;
     const withDist = visiblePlaces.map((p) => ({
       ...p,
       dist:
@@ -427,9 +518,9 @@ export default function HomeScreen() {
       return (a.dist ?? Infinity) - (b.dist ?? Infinity);
     });
     return withDist.slice(0, 40);
-  }, [visiblePlaces, userLoc, selectedCity, sortable, quickSort]);
+  }, [visiblePlaces, distOrigin, sortable, quickSort]);
 
-  const searchRadius = () => (selectedCity ? CITY_RADIUS_M : ME_RADIUS_M);
+  const searchRadius = () => (selectedCity && !aroundMe ? CITY_RADIUS_M : ME_RADIUS_M);
 
   // Fait défiler la liste du bas jusqu'à la carte d'un lieu.
   const scrollCardsTo = (id: string) => {
@@ -556,11 +647,15 @@ export default function HomeScreen() {
         {selectedCity ? (
           <View style={styles.cityActive}>
             <Pressable onPress={() => setCityModal(true)} style={styles.cityActiveMain}>
-              <Text style={styles.cityActiveText} numberOfLines={1}>📍 {selectedCity.nom}</Text>
+              <Text style={styles.cityActiveText} numberOfLines={1}>
+                📍 {aroundMe ? 'Autour de moi' : selectedCity.nom}
+              </Text>
             </Pressable>
-            <Pressable onPress={goToMe} hitSlop={8}>
-              <Text style={styles.cityClear}>✕</Text>
-            </Pressable>
+            {!aroundMe && (
+              <Pressable onPress={goToMe} hitSlop={8}>
+                <Text style={styles.cityClear}>✕</Text>
+              </Pressable>
+            )}
           </View>
         ) : (
           <Pressable style={styles.searchBar} onPress={() => setCityModal(true)}>
@@ -609,7 +704,13 @@ export default function HomeScreen() {
           ) : (
             <Text style={styles.statusText}>
               {visiblePlaces.length} {quickCat ?? activeCfg.label}
-              {selectedCity ? ` · ${selectedCity.nom}` : activeFilter === 'mosquees' ? ' à proximité' : ' (démo)'}
+              {selectedCity
+                ? aroundMe
+                  ? ' · autour de moi'
+                  : ` · ${selectedCity.nom}`
+                : activeFilter === 'mosquees'
+                  ? ' à proximité'
+                  : ' (démo)'}
             </Text>
           )}
         </View>
@@ -630,9 +731,12 @@ export default function HomeScreen() {
         {locating ? <ActivityIndicator size="small" color={Brand.forest} /> : <Text style={styles.recenterIcon}>📍</Text>}
       </Pressable>
 
-      {/* Recherche de ville accessible depuis le bas (miroir du bouton 📍) */}
+      {/* Changer de ville, accessible depuis le bas (zone atteignable) */}
       <Pressable style={styles.cityFab} onPress={() => setCityModal(true)}>
         <Text style={styles.cityFabIcon}>🌍</Text>
+        <Text style={styles.cityFabLabel} numberOfLines={1}>
+          {selectedCity && !aroundMe ? selectedCity.nom : 'Ville'}
+        </Text>
       </Pressable>
 
       {/* Liste des lieux proches */}
@@ -932,21 +1036,26 @@ const styles = StyleSheet.create({
 
   cityFab: {
     position: 'absolute',
-    left: 16,
-    bottom: Platform.OS === 'ios' ? 250 : 220,
-    width: 48,
+    // En bas-droite, empilé au-dessus du bouton recentrer, pour ne pas
+    // chevaucher le filtre « Cuisine & tri » (aligné à gauche au-dessus des cartes).
+    right: 16,
+    bottom: Platform.OS === 'ios' ? 312 : 282,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
     height: 48,
+    maxWidth: 180,
+    paddingHorizontal: 14,
     borderRadius: 24,
     backgroundColor: Brand.gold,
-    alignItems: 'center',
-    justifyContent: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 6,
     elevation: 7,
   },
-  cityFabIcon: { fontSize: 22 },
+  cityFabIcon: { fontSize: 20 },
+  cityFabLabel: { color: Brand.night, fontSize: 13, fontWeight: '800', flexShrink: 1 },
 
   cardsWrapper: { position: 'absolute', left: 0, right: 0, bottom: Platform.OS === 'ios' ? 124 : 98 },
   cardsScroll: { paddingHorizontal: 16, gap: 10 },
