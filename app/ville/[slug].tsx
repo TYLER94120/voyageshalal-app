@@ -21,14 +21,23 @@ import {
   categoryFacets,
   EMPTY_FILTERS,
   hasActiveFilters,
+  sortLieux,
   sortOptionsFor,
   tagFacets,
   tagLabel,
   type LieuFilters,
   type SortKey,
 } from '@/lib/lieuSort';
+import {
+  applyHotelFilter,
+  EMPTY_HOTEL_FILTER,
+  hasActiveHotelFilter,
+  hotelFacets,
+  type HotelFilterState,
+} from '@/lib/hotelFilter';
 import { dedupeHotels, hotelLocationStats, type HotelLocationStats } from '@/lib/hotelLocation';
 import { HotelAroundSheet } from '@/components/HotelAroundSheet';
+import { HotelFilterSheet } from '@/components/HotelFilterSheet';
 import { fetchNearbyMosques } from '@/lib/overpass';
 import { mergeMosquees, osmToLieu } from '@/lib/mosques';
 import { HeartButton } from '@/components/HeartButton';
@@ -49,13 +58,6 @@ const TABS: { key: TabKey; emoji: string; label: string }[] = [
 type LoadState = 'loading' | 'ready' | 'error';
 type LieuDist = Lieu & { dist: number | null };
 
-// Filtres équipements halal pour les hôtels.
-const HOTEL_FILTERS: { key: string; label: string; test: (l: Lieu) => boolean | undefined }[] = [
-  { key: 'priere', label: '🕌 Salle de prière', test: (l) => l.salleDePriere },
-  { key: 'sansAlcool', label: '🚫 Sans alcool', test: (l) => l.sansAlcool },
-  { key: 'petitDej', label: '🍳 Petit-déj halal', test: (l) => l.petitDejeunerHalal },
-];
-
 export default function VilleScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const router = useRouter();
@@ -63,7 +65,8 @@ export default function VilleScreen() {
   const [ville, setVille] = useState<VilleDetail | null>(null);
   const [state, setState] = useState<LoadState>('loading');
   const [tab, setTab] = useState<TabKey>('restaurants');
-  const [hotelFilters, setHotelFilters] = useState<string[]>([]);
+  const [hotelFilter, setHotelFilter] = useState<HotelFilterState>(EMPTY_HOTEL_FILTER);
+  const [showHotelSheet, setShowHotelSheet] = useState(false);
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [filters, setFilters] = useState<LieuFilters>(EMPTY_FILTERS);
   const [userLoc, setUserLoc] = useState<{ latitude: number; longitude: number } | null>(null);
@@ -72,7 +75,6 @@ export default function VilleScreen() {
   const [osmMosquees, setOsmMosquees] = useState<Lieu[]>([]);
   // Sélection premium active (restaurants) + filtre « proche mosquée » (hôtels).
   const [selection, setSelection] = useState<string | null>(null);
-  const [nearMosqueOnly, setNearMosqueOnly] = useState(false);
   const [offline, setOffline] = useState(false);
   const [showPlan, setShowPlan] = useState(false);
 
@@ -81,9 +83,9 @@ export default function VilleScreen() {
     setTab(k);
     setSortKey(null);
     setFilters(EMPTY_FILTERS);
-    setHotelFilters([]);
+    setHotelFilter(EMPTY_HOTEL_FILTER);
     setSelection(null);
-    setNearMosqueOnly(false);
+    setShowHotelSheet(false);
   }, []);
 
   // Position connue de l'utilisateur (sans nouvelle demande de permission) : sert à
@@ -228,6 +230,15 @@ export default function VilleScreen() {
   );
   const effectiveSort: SortKey = sortKey ?? sortOptions[0]?.key ?? 'proche';
 
+  // Facettes hôtels (Budget / Emplacement / Type / Équipements) — graceful.
+  const hFacets = useMemo(() => hotelFacets(rawWithDist), [rawWithDist]);
+  const hotelActiveCount =
+    hotelFilter.bands.length +
+    hotelFilter.types.length +
+    hotelFilter.amenities.length +
+    (hotelFilter.nearMosque ? 1 : 0) +
+    (hotelFilter.restosAround ? 1 : 0);
+
   // Noms de la sélection premium active (restaurants), normalisés pour le matching.
   const selectionNames = useMemo(() => {
     if (tab !== 'restaurants' || !selection || !ville) return null;
@@ -236,22 +247,18 @@ export default function VilleScreen() {
     return new Set(sel.names.map((n) => n.trim().toLowerCase()));
   }, [tab, selection, ville]);
 
-  // Filtres hôtels (équipements + proche mosquée) et sélection premium (restos).
+  // Hôtels : filtre « façon Booking » (budget/emplacement/type/équipements).
+  // Autres onglets : filtres cuisine/ambiance/certif + sélection premium (restos).
   const lieux = useMemo(() => {
+    if (tab === 'hotels') {
+      return sortLieux(applyHotelFilter(rawWithDist, hotelFilter), effectiveSort);
+    }
     let base = rawWithDist;
-    if (tab === 'hotels' && hotelFilters.length > 0) {
-      base = base.filter((h) =>
-        hotelFilters.every((k) => HOTEL_FILTERS.find((f) => f.key === k)?.test(h)),
-      );
-    }
-    if (tab === 'hotels' && nearMosqueOnly) {
-      base = base.filter((h) => h.loc?.nearestMosqueKm != null && h.loc.nearestMosqueKm <= 0.5);
-    }
     if (selectionNames) {
       base = base.filter((l) => selectionNames.has(l.nom.trim().toLowerCase()));
     }
     return applyLieuFilters(base, filters, effectiveSort);
-  }, [rawWithDist, tab, hotelFilters, nearMosqueOnly, selectionNames, filters, effectiveSort]);
+  }, [rawWithDist, tab, hotelFilter, selectionNames, filters, effectiveSort]);
 
   const goLieu = (l: Lieu) => {
     if (l.mapsUrl) openMapsUrl(l.mapsUrl);
@@ -343,119 +350,110 @@ export default function VilleScreen() {
           {/* Tri + filtres (restaurants / activités / hôtels) */}
           {tab !== 'pratique' && tab !== 'mosquees' && (
             <View style={styles.controls}>
-              {sortOptions.length > 1 && (
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={styles.controlRow}
-                >
-                  {sortOptions.map((o) => {
-                    const on = effectiveSort === o.key;
-                    return (
-                      <Pressable
-                        key={o.key}
-                        onPress={() => setSortKey(o.key)}
-                        style={[styles.sortPill, on && styles.sortPillOn]}
-                      >
-                        <Text style={[styles.sortPillText, on && styles.sortPillTextOn]}>{o.label}</Text>
-                      </Pressable>
-                    );
-                  })}
-                </ScrollView>
-              )}
+              {tab === 'hotels' ? (
+                // Hôtels : un seul bouton replié → feuille « façon Booking ».
+                <View style={styles.controlRow}>
+                  <Pressable style={styles.hotelFilterBtn} onPress={() => setShowHotelSheet(true)}>
+                    <Text style={styles.hotelFilterBtnText}>
+                      🏨 Filtrer & trier{hotelActiveCount > 0 ? ` · ${hotelActiveCount}` : ''} ▾
+                    </Text>
+                  </Pressable>
+                </View>
+              ) : (
+                <>
+                  {sortOptions.length > 1 && (
+                    <ScrollView
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      contentContainerStyle={styles.controlRow}
+                    >
+                      {sortOptions.map((o) => {
+                        const on = effectiveSort === o.key;
+                        return (
+                          <Pressable
+                            key={o.key}
+                            onPress={() => setSortKey(o.key)}
+                            style={[styles.sortPill, on && styles.sortPillOn]}
+                          >
+                            <Text style={[styles.sortPillText, on && styles.sortPillTextOn]}>{o.label}</Text>
+                          </Pressable>
+                        );
+                      })}
+                    </ScrollView>
+                  )}
 
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.controlRow}
-              >
-                {tab === 'restaurants' && (
-                  <FilterChip
-                    label="✓ Certifié"
-                    on={filters.certifOnly}
-                    tone="green"
-                    onPress={() => setFilters((f) => ({ ...f, certifOnly: !f.certifOnly }))}
-                  />
-                )}
-                {tab === 'restaurants' &&
-                  ville.selections.map((s) => (
-                    <FilterChip
-                      key={`s-${s.key}`}
-                      label={`${s.icon} ${s.label}`}
-                      on={selection === s.key}
-                      onPress={() => setSelection(selection === s.key ? null : s.key)}
-                    />
-                  ))}
-                {tab === 'activites' && rawWithDist.some((l) => l.price?.toLowerCase() === 'gratuit') && (
-                  <FilterChip
-                    label="🆓 Gratuit"
-                    on={filters.gratuitOnly}
-                    onPress={() => setFilters((f) => ({ ...f, gratuitOnly: !f.gratuitOnly }))}
-                  />
-                )}
-                {catFacets.map((c) => (
-                  <FilterChip
-                    key={`c-${c}`}
-                    label={c}
-                    on={filters.categories.includes(c)}
-                    onPress={() =>
-                      setFilters((f) => ({
-                        ...f,
-                        categories: f.categories.includes(c)
-                          ? f.categories.filter((x) => x !== c)
-                          : [...f.categories, c],
-                      }))
-                    }
-                  />
-                ))}
-                {ambianceFacets.map((t) => (
-                  <FilterChip
-                    key={`t-${t}`}
-                    label={tagLabel(t)}
-                    on={filters.tags.includes(t)}
-                    onPress={() =>
-                      setFilters((f) => ({
-                        ...f,
-                        tags: f.tags.includes(t) ? f.tags.filter((x) => x !== t) : [...f.tags, t],
-                      }))
-                    }
-                  />
-                ))}
-                {tab === 'hotels' && (
-                  <FilterChip
-                    label="🕌 ≤ 500 m mosquée"
-                    on={nearMosqueOnly}
-                    tone="green"
-                    onPress={() => setNearMosqueOnly((v) => !v)}
-                  />
-                )}
-                {tab === 'hotels' &&
-                  HOTEL_FILTERS.map((hf) => (
-                    <FilterChip
-                      key={`h-${hf.key}`}
-                      label={hf.label}
-                      on={hotelFilters.includes(hf.key)}
-                      onPress={() =>
-                        setHotelFilters((prev) =>
-                          prev.includes(hf.key) ? prev.filter((k) => k !== hf.key) : [...prev, hf.key],
-                        )
-                      }
-                    />
-                  ))}
-              </ScrollView>
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.controlRow}
+                  >
+                    {tab === 'restaurants' && (
+                      <FilterChip
+                        label="✓ Certifié"
+                        on={filters.certifOnly}
+                        tone="green"
+                        onPress={() => setFilters((f) => ({ ...f, certifOnly: !f.certifOnly }))}
+                      />
+                    )}
+                    {tab === 'restaurants' &&
+                      ville.selections.map((s) => (
+                        <FilterChip
+                          key={`s-${s.key}`}
+                          label={`${s.icon} ${s.label}`}
+                          on={selection === s.key}
+                          onPress={() => setSelection(selection === s.key ? null : s.key)}
+                        />
+                      ))}
+                    {tab === 'activites' && rawWithDist.some((l) => l.price?.toLowerCase() === 'gratuit') && (
+                      <FilterChip
+                        label="🆓 Gratuit"
+                        on={filters.gratuitOnly}
+                        onPress={() => setFilters((f) => ({ ...f, gratuitOnly: !f.gratuitOnly }))}
+                      />
+                    )}
+                    {catFacets.map((c) => (
+                      <FilterChip
+                        key={`c-${c}`}
+                        label={c}
+                        on={filters.categories.includes(c)}
+                        onPress={() =>
+                          setFilters((f) => ({
+                            ...f,
+                            categories: f.categories.includes(c)
+                              ? f.categories.filter((x) => x !== c)
+                              : [...f.categories, c],
+                          }))
+                        }
+                      />
+                    ))}
+                    {ambianceFacets.map((t) => (
+                      <FilterChip
+                        key={`t-${t}`}
+                        label={tagLabel(t)}
+                        on={filters.tags.includes(t)}
+                        onPress={() =>
+                          setFilters((f) => ({
+                            ...f,
+                            tags: f.tags.includes(t) ? f.tags.filter((x) => x !== t) : [...f.tags, t],
+                          }))
+                        }
+                      />
+                    ))}
+                  </ScrollView>
+                </>
+              )}
 
               <View style={styles.resultRow}>
                 <Text style={styles.resultCount}>
                   {lieux.length} résultat{lieux.length > 1 ? 's' : ''}
                   {distOrigin?.fromUser && effectiveSort === 'proche' ? ' · près de vous' : ''}
                 </Text>
-                {(hasActiveFilters(filters) || hotelFilters.length > 0 || nearMosqueOnly || selection) && (
+                {(hasActiveFilters(filters) || selection || hasActiveHotelFilter(hotelFilter)) && (
                   <Pressable
                     hitSlop={8}
                     onPress={() => {
                       setFilters(EMPTY_FILTERS);
-                      setHotelFilters([]);
-                      setNearMosqueOnly(false);
+                      setHotelFilter(EMPTY_HOTEL_FILTER);
                       setSelection(null);
                     }}
                   >
@@ -550,6 +548,21 @@ export default function VilleScreen() {
           )}
 
           {showPlan && <DayPlanSheet ville={ville} onClose={() => setShowPlan(false)} />}
+
+          {tab === 'hotels' && (
+            <HotelFilterSheet
+              visible={showHotelSheet}
+              facets={hFacets}
+              sorts={sortOptions}
+              activeSort={effectiveSort}
+              onPickSort={(k) => setSortKey(k as SortKey)}
+              state={hotelFilter}
+              onChange={setHotelFilter}
+              onReset={() => setHotelFilter(EMPTY_HOTEL_FILTER)}
+              onClose={() => setShowHotelSheet(false)}
+              resultCount={lieux.length}
+            />
+          )}
         </>
       )}
     </View>
@@ -918,6 +931,17 @@ const styles = StyleSheet.create({
   sortPillOn: { backgroundColor: Brand.gold, borderColor: Brand.gold },
   sortPillText: { color: Brand.creamMuted, fontSize: 13, fontWeight: '700' },
   sortPillTextOn: { color: Brand.night, fontWeight: '800' },
+
+  hotelFilterBtn: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: 10,
+    borderRadius: Radius.pill,
+    backgroundColor: Brand.gold,
+    borderWidth: 1.5,
+    borderColor: Brand.gold,
+  },
+  hotelFilterBtnText: { color: Brand.night, fontSize: 14, fontWeight: '800' },
 
   selChip: {
     paddingHorizontal: Spacing.md,

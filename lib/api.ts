@@ -53,6 +53,7 @@ export interface Lieu {
   specialite?: string; // plat signature (restaurants)
   duree?: string; // durée conseillée (activités, ex. "2h")
   // ── Spécifique hôtels ──
+  prixNuitEur?: number; // prix indicatif €/nuit (bandes budget ≤50 / 50-100 / …)
   bookingUrl?: string;
   halalBookingUrl?: string;
   sansAlcool?: boolean;
@@ -294,6 +295,7 @@ function normalizeLieu(raw: Raw, idx: number, prefix: string): Lieu {
     specialite: pickString(raw, 'specialite', 'spécialité', 'specialty', 'signature'),
     duree: pickString(raw, 'duree', 'durée', 'duration'),
     // Hôtels (tolérant à la coquille "salleDePreiere" présente dans la base).
+    prixNuitEur: pickNumber(raw, 'prixNuitEur', 'prix_nuit_eur', 'prixNuit', 'nightlyPrice', 'pricePerNight'),
     bookingUrl: pickString(raw, 'bookingUrl', 'booking_url', 'booking'),
     halalBookingUrl: pickString(raw, 'halalBookingUrl', 'halal_booking_url', 'halalbooking'),
     sansAlcool: pickBool(raw, 'sansAlcool', 'sans_alcool', 'noAlcohol'),
