@@ -57,6 +57,14 @@ function quickSortLabel(filter: FilterKey, key: QuickSort): string {
   return quickSortsFor(filter).find((s) => s.key === key)?.label ?? '';
 }
 
+// Nom de la catégorie selon l'onglet : cuisine (restos), gamme (hôtels), thème (activités).
+function catNoun(filter: FilterKey): string {
+  return filter === 'hotels' ? 'Gamme' : filter === 'activites' ? 'Thème' : 'Cuisine';
+}
+function catAllLabel(filter: FilterKey): string {
+  return filter === 'hotels' ? 'Toutes gammes' : filter === 'activites' ? 'Tous thèmes' : 'Toutes cuisines';
+}
+
 // ─── Filtres ────────────────────────────────────────────────────────────────
 
 type FilterKey = 'mosquees' | DemoCategory;
@@ -74,6 +82,7 @@ const FILTERS: FilterConfig[] = [
   { key: 'restaurants', emoji: '🍽️', label: 'Restaurants halal', color: '#9c4221', marker: '#c05621' },
   { key: 'hotels', emoji: '🏨', label: 'Hôtels', color: '#1d4e89', marker: '#2b6cb0' },
   { key: 'commerces', emoji: '🥩', label: 'Boucheries halal', color: '#702459', marker: '#97266d' },
+  { key: 'activites', emoji: '🗺️', label: 'À faire', color: '#215f52', marker: '#2f8f7a' },
 ];
 
 const PARIS = { latitude: 48.8566, longitude: 2.3522 };
@@ -307,10 +316,18 @@ export default function HomeScreen() {
     if (activeFilter === 'mosquees') {
       return mosques.map((m) => ({ id: m.id, name: m.name, latitude: m.latitude, longitude: m.longitude }));
     }
-    // Restaurants / hôtels : vraies données de la ville si disponibles.
-    if (selectedCity && cityDetail && (activeFilter === 'restaurants' || activeFilter === 'hotels')) {
+    // Restaurants / hôtels / activités : vraies données de la ville si disponibles.
+    if (
+      selectedCity &&
+      cityDetail &&
+      (activeFilter === 'restaurants' || activeFilter === 'hotels' || activeFilter === 'activites')
+    ) {
       const arr =
-        activeFilter === 'restaurants' ? cityDetail.restaurants : dedupeHotels(cityDetail.hotels);
+        activeFilter === 'restaurants'
+          ? cityDetail.restaurants
+          : activeFilter === 'hotels'
+            ? dedupeHotels(cityDetail.hotels)
+            : cityDetail.activites;
       if (arr && arr.length > 0) {
         return arr.map((l) => {
           const base: PinItem = {
@@ -346,8 +363,9 @@ export default function HomeScreen() {
     }));
   }, [activeFilter, mosques, selectedCity, cityDetail, userLoc, cityMosquees]);
 
-  // Restaurants : la sélection fine s'applique aussi aux hôtels (gammes/budgets).
-  const sortable = activeFilter === 'restaurants' || activeFilter === 'hotels';
+  // Sélection fine (cuisine/tri) : restaurants, hôtels (gammes/budgets) et activités (thèmes).
+  const sortable =
+    activeFilter === 'restaurants' || activeFilter === 'hotels' || activeFilter === 'activites';
 
   // Catégories disponibles : cuisines (restos) ou gammes (hôtels : Luxe, Budget, Capsule…).
   const categoryOptions = useMemo(() => {
@@ -626,8 +644,7 @@ export default function HomeScreen() {
               <Pressable style={styles.quickBtn} onPress={() => setQuickSheet(true)}>
                 <Text style={styles.quickBtnText} numberOfLines={1}>
                   {activeCfg.emoji}{' '}
-                  {quickCat ??
-                    (activeFilter === 'hotels' ? 'Gamme & tri' : 'Cuisine & tri')}
+                  {quickCat ?? `${catNoun(activeFilter)} & tri`}
                   {quickSort !== defaultQuickSort(activeFilter)
                     ? ` · ${quickSortLabel(activeFilter, quickSort)}`
                     : ''}{' '}
@@ -744,9 +761,9 @@ export default function HomeScreen() {
       {showQuickBar && (
         <CuisineSheet
           visible={quickSheet}
-          title={activeFilter === 'hotels' ? '🏨 Gamme & tri' : '🍽️ Cuisine & tri'}
-          categoryLabel={activeFilter === 'hotels' ? 'Gamme' : 'Cuisine'}
-          allLabel={activeFilter === 'hotels' ? 'Toutes gammes' : 'Toutes cuisines'}
+          title={`${activeCfg.emoji} ${catNoun(activeFilter)} & tri`}
+          categoryLabel={catNoun(activeFilter)}
+          allLabel={catAllLabel(activeFilter)}
           sorts={quickSortsFor(activeFilter)}
           activeSort={quickSort}
           onPickSort={(k) => setQuickSort(k as QuickSort)}

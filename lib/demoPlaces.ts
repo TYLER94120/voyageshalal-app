@@ -11,7 +11,7 @@ export interface MapPlace {
   demo?: boolean;
 }
 
-export type DemoCategory = 'restaurants' | 'hotels' | 'commerces';
+export type DemoCategory = 'restaurants' | 'hotels' | 'commerces' | 'activites';
 
 // Décalages fixes (≈ 0.4 à 3 km) pour un rendu stable d'un render à l'autre.
 const OFFSETS = [
@@ -43,6 +43,13 @@ const NAMES: Record<DemoCategory, string[]> = {
     'Boucherie El Medina',
     'Halal Market',
     'Boucherie Sary',
+  ],
+  activites: [
+    'Vieille ville & médina',
+    'Grand bazar',
+    'Musée d’art islamique',
+    'Jardin botanique',
+    'Croisière au coucher du soleil',
   ],
 };
 
