@@ -77,6 +77,16 @@ export function halalBadge(conf?: string): { label: string; tone: 'green' | 'amb
   return null;
 }
 
+/**
+ * Score halal officiel pour l'affichage : la donnée source est sur 5
+ * (`score_halal`), on l'affiche sur **10** (× 2) comme le site web, source
+ * unique de vérité. Ex. 5 → "10", 4.9 → "9.8". Pas de dénominateur ici (le
+ * composant ajoute « /10 »).
+ */
+export function formatScore10(score: number): string {
+  return (score * 2).toFixed(1).replace(/\.0$/, '');
+}
+
 export interface PratiqueItem {
   key: string;
   label: string;

@@ -14,7 +14,7 @@ import {
 import { useRouter } from 'expo-router';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
-import { type VilleSummary } from '@/lib/api';
+import { formatScore10, type VilleSummary } from '@/lib/api';
 import { getVillesCached } from '@/lib/cityCache';
 import { HeartButton } from '@/components/HeartButton';
 import { cityFavKey } from '@/lib/favorites';
@@ -189,7 +189,8 @@ export default function DestinationsScreen() {
 
               {item.scoreHalal != null && (
                 <View style={styles.scoreBadge}>
-                  <Text style={styles.scoreText}>★ {item.scoreHalal.toFixed(1)}</Text>
+                  {/* Échelle alignée sur le web : score_halal (/5) × 2, affiché en /10. */}
+                  <Text style={styles.scoreText}>★ {formatScore10(item.scoreHalal)}/10</Text>
                 </View>
               )}
 

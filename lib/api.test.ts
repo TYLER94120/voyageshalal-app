@@ -1,4 +1,15 @@
-import { parseVillesPayload, parseVilleDetailPayload } from './api';
+import { formatScore10, parseVillesPayload, parseVilleDetailPayload } from './api';
+
+describe('formatScore10 — échelle /10 alignée sur le web', () => {
+  it('score /5 × 2, sans décimale superflue', () => {
+    expect(formatScore10(5)).toBe('10'); // Istanbul, Dubaï, Marrakech → 10/10
+    expect(formatScore10(4.5)).toBe('9'); // Kuala Lumpur → 9/10
+  });
+  it('garde une décimale utile', () => {
+    expect(formatScore10(4.9)).toBe('9.8'); // Médine → 9.8/10
+    expect(formatScore10(4.7)).toBe('9.4'); // Doha → 9.4/10
+  });
+});
 
 // Échantillon fidèle à la vraie réponse /api/villes (coords imbriquées).
 const PAYLOAD = {
