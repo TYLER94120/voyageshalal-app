@@ -6,6 +6,7 @@ import {
   hasActiveFilters,
   isGratuit,
   priceRank,
+  recommendedScore,
   sortLieux,
   sortOptionsFor,
   tagFacets,
@@ -67,6 +68,62 @@ describe('sortLieux', () => {
       { ...lieu({ id: 'c' }), locScore: null },
     ];
     expect(sortLieux(arr, 'situe').map((l) => l.id)).toEqual(['b', 'a', 'c']);
+  });
+});
+
+describe('recommendedScore', () => {
+  it('à distance et prix égaux, la meilleure note gagne', () => {
+    const good = recommendedScore({ note: 4.8, dist: 2, price: '€€' });
+    const bad = recommendedScore({ note: 3.2, dist: 2, price: '€€' });
+    expect(good).toBeGreaterThan(bad);
+  });
+  it('à note et prix égaux, le plus proche gagne', () => {
+    const near = recommendedScore({ note: 4, dist: 0.5, price: '€€' });
+    const far = recommendedScore({ note: 4, dist: 8, price: '€€' });
+    expect(near).toBeGreaterThan(far);
+  });
+  it('à note et distance égales, le moins cher gagne (rapport qualité-prix)', () => {
+    const cheap = recommendedScore({ note: 4.5, dist: 2, price: '€' });
+    const pricey = recommendedScore({ note: 4.5, dist: 2, price: '€€€€' });
+    expect(cheap).toBeGreaterThan(pricey);
+  });
+  it('bonus certifié halal', () => {
+    const base = { note: 4, dist: 2, price: '€€' };
+    expect(recommendedScore({ ...base, halalConfidence: 'only' })).toBeGreaterThan(
+      recommendedScore(base),
+    );
+  });
+  it('bonus populaire (reviewCount)', () => {
+    const base = { note: 4, dist: 2, price: '€€' };
+    expect(recommendedScore({ ...base, reviewCount: 2000 })).toBeGreaterThan(
+      recommendedScore({ ...base, reviewCount: 0 }),
+    );
+  });
+  it('données manquantes → neutre, ne casse pas le tri', () => {
+    expect(Number.isFinite(recommendedScore({}))).toBe(true);
+  });
+});
+
+describe('sortLieux — reco', () => {
+  it('classe par score recommandé décroissant', () => {
+    const arr: LieuDist[] = [
+      { ...lieu({ id: 'far', note: 4.9, price: '€€€€' }), dist: 20 },
+      { ...lieu({ id: 'reco', note: 4.6, price: '€' }), dist: 0.4 },
+      { ...lieu({ id: 'meh', note: 3.0, price: '€€' }), dist: 3 },
+    ];
+    expect(sortLieux(arr, 'reco')[0].id).toBe('reco');
+    expect(sortLieux(arr, 'reco').map((l) => l.id)).not.toContain(undefined);
+  });
+});
+
+describe('sortOptionsFor — recommandé', () => {
+  it('ajoute « reco » en tête avec l’option reco et des notes', () => {
+    const arr: LieuDist[] = [{ ...lieu({ note: 4.3 }), dist: 1 }];
+    expect(sortOptionsFor(arr, true, { reco: true })[0].key).toBe('reco');
+  });
+  it('pas de « reco » sans l’option', () => {
+    const arr: LieuDist[] = [{ ...lieu({ note: 4.3 }), dist: 1 }];
+    expect(sortOptionsFor(arr, true).map((o) => o.key)).not.toContain('reco');
   });
 });
 

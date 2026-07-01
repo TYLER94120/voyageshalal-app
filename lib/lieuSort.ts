@@ -8,7 +8,7 @@
 
 import type { Lieu } from './api';
 
-export type SortKey = 'situe' | 'proche' | 'note' | 'populaire' | 'prix';
+export type SortKey = 'reco' | 'situe' | 'proche' | 'note' | 'populaire' | 'prix';
 
 export interface SortOption {
   key: SortKey;
@@ -38,12 +38,55 @@ export function isGratuit(l: Lieu): boolean {
   return priceRank(l.price) === 0;
 }
 
+// ─── Score « Recommandé » ─────────────────────────────────────────────────────
+
+const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
+
+function isCertifiedConf(conf?: string): boolean {
+  const c = conf?.toLowerCase();
+  return c === 'only' || c === 'yes' || c === 'certified' || c === 'certifie';
+}
+
+/** Sous-ensemble minimal de champs nécessaires au score « Recommandé ». */
+export interface Recommendable {
+  note?: number | null;
+  price?: string;
+  dist?: number | null;
+  reviewCount?: number | null;
+  halalConfidence?: string;
+}
+
+/**
+ * Score « Recommandé » (≈ 0..1) : combine la **note** (~40 %), la **proximité**
+ * (~35 %) et le **rapport qualité-prix** (~25 %), plus de petits bonus pour un
+ * lieu **certifié halal** et **populaire**. Pensé pour les restaurants — « le
+ * japonais le plus proche, bien noté et au bon prix ». Les valeurs manquantes
+ * sont traitées de façon neutre pour ne pas trop pénaliser un lieu incomplet.
+ */
+export function recommendedScore(l: Recommendable): number {
+  const noteScore = l.note != null ? clamp01(l.note / 5) : 0.5;
+  // Décroissance douce : 0 km → 1, 2 km → 0.5, 6 km → 0.25.
+  const proxScore = l.dist != null ? 1 / (1 + Math.max(0, l.dist) / 2) : 0.4;
+  const pr = priceRank(l.price);
+  // Moins cher = mieux (€ → 1, €€€€ → 0.25) ; inconnu → légèrement neutre.
+  const cheapness = pr != null ? clamp01((5 - pr) / 4) : 0.6;
+  // Le rapport qualité-prix récompense une bonne note à petit prix.
+  const valueScore = noteScore * cheapness;
+
+  let score = 0.4 * noteScore + 0.35 * proxScore + 0.25 * valueScore;
+  if (isCertifiedConf(l.halalConfidence)) score += 0.05;
+  if (l.reviewCount != null) score += Math.min(l.reviewCount / 800, 1) * 0.04;
+  return score;
+}
+
 // ─── Tri ─────────────────────────────────────────────────────────────────────
 
 /** Trie une copie de la liste selon la clé. Les valeurs manquantes finissent en bas. */
 export function sortLieux<T extends LieuDist>(arr: T[], key: SortKey): T[] {
   const copy = [...arr];
   switch (key) {
+    case 'reco':
+      return copy.sort((a, b) => recommendedScore(b) - recommendedScore(a));
     case 'situe':
       return copy.sort((a, b) => (b.locScore ?? -1) - (a.locScore ?? -1));
     case 'note':
@@ -58,9 +101,19 @@ export function sortLieux<T extends LieuDist>(arr: T[], key: SortKey): T[] {
   }
 }
 
-/** Options de tri pertinentes pour une liste (on masque celles sans donnée). */
-export function sortOptionsFor(arr: LieuDist[], hasDistance: boolean): SortOption[] {
+/**
+ * Options de tri pertinentes pour une liste (on masque celles sans donnée).
+ * `reco` (Recommandé) est proposé en tête pour les restaurants — tri par défaut,
+ * combinant note + proximité + rapport qualité-prix.
+ */
+export function sortOptionsFor(
+  arr: LieuDist[],
+  hasDistance: boolean,
+  opts0?: { reco?: boolean },
+): SortOption[] {
   const opts: SortOption[] = [];
+  // « Recommandé » en premier (restaurants) : la meilleure suggestion par défaut.
+  if (opts0?.reco && arr.some((l) => l.note != null)) opts.push({ key: 'reco', label: '✨ Recommandé' });
   // « Bien situés » en tête quand on a des scores d'emplacement (hôtels) : c'est
   // la valeur ajoutée stratégique pour le voyageur musulman.
   if (arr.some((l) => l.locScore != null)) opts.push({ key: 'situe', label: '🕌 Bien situés' });

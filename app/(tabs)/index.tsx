@@ -21,16 +21,18 @@ import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPl
 import { CitySearchModal } from '@/components/CitySearchModal';
 import { halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
 import { getVilleCached } from '@/lib/cityCache';
-import { priceRank } from '@/lib/lieuSort';
+import { priceRank, recommendedScore } from '@/lib/lieuSort';
+import { CuisineSheet } from '@/components/CuisineSheet';
 import { dedupeHotels, hotelLocationStats } from '@/lib/hotelLocation';
 import { HotelAroundSheet } from '@/components/HotelAroundSheet';
 import { mergeMosquees, osmToLieu } from '@/lib/mosques';
 import { consumePendingCity } from '@/lib/pendingCity';
 
 // Tri rapide de la liste (restaurants / hôtels) sur la page d'accueil.
-type QuickSort = 'proche' | 'situe' | 'note' | 'prix';
+type QuickSort = 'reco' | 'proche' | 'situe' | 'note' | 'prix';
 
-// Restaurants : proximité d'abord. Hôtels : « bien situés » (mosquée + restos) d'abord.
+// Restaurants : « Recommandé » d'abord (note + proximité + rapport qualité-prix).
+// Hôtels : « bien situés » (mosquée + restos) d'abord.
 function quickSortsFor(filter: FilterKey): { key: QuickSort; label: string }[] {
   if (filter === 'hotels') {
     return [
@@ -40,6 +42,7 @@ function quickSortsFor(filter: FilterKey): { key: QuickSort; label: string }[] {
     ];
   }
   return [
+    { key: 'reco', label: '✨ Recommandé' },
     { key: 'proche', label: '📍 Proche' },
     { key: 'note', label: '⭐ Noté' },
     { key: 'prix', label: '💶 Prix' },
@@ -47,7 +50,11 @@ function quickSortsFor(filter: FilterKey): { key: QuickSort; label: string }[] {
 }
 
 function defaultQuickSort(filter: FilterKey): QuickSort {
-  return filter === 'hotels' ? 'situe' : 'proche';
+  return filter === 'hotels' ? 'situe' : 'reco';
+}
+
+function quickSortLabel(filter: FilterKey, key: QuickSort): string {
+  return quickSortsFor(filter).find((s) => s.key === key)?.label ?? '';
 }
 
 // ─── Filtres ────────────────────────────────────────────────────────────────
@@ -126,7 +133,9 @@ export default function HomeScreen() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   // Sélection fine côté restaurants : cuisine + tri (ex. « le japonais le plus proche »).
   const [quickCat, setQuickCat] = useState<string | null>(null);
-  const [quickSort, setQuickSort] = useState<QuickSort>('proche');
+  const [quickSort, setQuickSort] = useState<QuickSort>('reco');
+  // Ouverture de la petite feuille cuisine + tri (accueil épuré : 1 bouton).
+  const [quickSheet, setQuickSheet] = useState(false);
   // Hôtel dont on regarde « autour » (mini-carte mosquées + restos).
   const [aroundHotelId, setAroundHotelId] = useState<string | null>(null);
 
@@ -392,6 +401,7 @@ export default function HomeScreen() {
     }));
     withDist.sort((a, b) => {
       if (sortable) {
+        if (quickSort === 'reco') return recommendedScore(b) - recommendedScore(a);
         if (quickSort === 'situe') return (b.locScore ?? -1) - (a.locScore ?? -1);
         if (quickSort === 'note') return (b.note ?? -1) - (a.note ?? -1);
         if (quickSort === 'prix') return (priceRank(a.price) ?? 99) - (priceRank(b.price) ?? 99);
@@ -610,50 +620,32 @@ export default function HomeScreen() {
       {/* Liste des lieux proches */}
       {nearbyList.length > 0 && (
         <View style={styles.cardsWrapper}>
-          {/* Sélection fine restaurants : tri + cuisine (« le japonais le plus proche ») */}
+          {/* Accueil épuré : un seul bouton « cuisine + tri » (« le japonais le plus proche ») */}
           {showQuickBar && (
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.quickScroll}
-              style={styles.quickBar}
-            >
-              {quickSortsFor(activeFilter).map((s) => {
-                const on = quickSort === s.key;
-                return (
-                  <Pressable
-                    key={s.key}
-                    onPress={() => setQuickSort(s.key)}
-                    style={[styles.quickChip, on && styles.quickChipOn]}
-                  >
-                    <Text style={[styles.quickChipText, on && styles.quickChipTextOn]}>{s.label}</Text>
-                  </Pressable>
-                );
-              })}
-              {categoryOptions.length > 1 && <View style={styles.quickSep} />}
-              {categoryOptions.length > 1 && (
+            <View style={styles.quickBar}>
+              <Pressable style={styles.quickBtn} onPress={() => setQuickSheet(true)}>
+                <Text style={styles.quickBtnText} numberOfLines={1}>
+                  {activeCfg.emoji}{' '}
+                  {quickCat ?? (activeFilter === 'hotels' ? 'Gamme' : 'Cuisine')}
+                  {quickSort !== defaultQuickSort(activeFilter)
+                    ? ` · ${quickSortLabel(activeFilter, quickSort)}`
+                    : ''}{' '}
+                  ▾
+                </Text>
+              </Pressable>
+              {(quickCat || quickSort !== defaultQuickSort(activeFilter)) && (
                 <Pressable
-                  onPress={() => setQuickCat(null)}
-                  style={[styles.quickChip, !quickCat && styles.quickChipOn]}
+                  hitSlop={8}
+                  style={styles.quickReset}
+                  onPress={() => {
+                    setQuickCat(null);
+                    setQuickSort(defaultQuickSort(activeFilter));
+                  }}
                 >
-                  <Text style={[styles.quickChipText, !quickCat && styles.quickChipTextOn]}>
-                    {activeFilter === 'hotels' ? 'Tous' : 'Toutes'}
-                  </Text>
+                  <Text style={styles.quickResetText}>✕</Text>
                 </Pressable>
               )}
-              {(categoryOptions.length > 1 ? categoryOptions : []).map((c) => {
-                const on = quickCat === c;
-                return (
-                  <Pressable
-                    key={c}
-                    onPress={() => setQuickCat(on ? null : c)}
-                    style={[styles.quickChip, on && styles.quickChipOn]}
-                  >
-                    <Text style={[styles.quickChipText, on && styles.quickChipTextOn]}>{c}</Text>
-                  </Pressable>
-                );
-              })}
-            </ScrollView>
+            </View>
           )}
           <ScrollView
             ref={cardsRef}
@@ -680,6 +672,9 @@ export default function HomeScreen() {
                       </Text>
                     ) : null;
                   })()}
+                  {i === 0 && quickSort === 'reco' && (p.note != null || p.dist != null) && (
+                    <Text style={styles.nearestTag}>✨ Reco</Text>
+                  )}
                   {i === 0 && p.dist != null && quickSort === 'proche' && (
                     <Text style={styles.nearestTag}>la + proche</Text>
                   )}
@@ -744,6 +739,22 @@ export default function HomeScreen() {
       </View>
 
       <CitySearchModal visible={cityModal} onClose={() => setCityModal(false)} onSelect={selectCity} />
+
+      {showQuickBar && (
+        <CuisineSheet
+          visible={quickSheet}
+          title={activeFilter === 'hotels' ? '🏨 Gamme & tri' : '🍽️ Cuisine & tri'}
+          categoryLabel={activeFilter === 'hotels' ? 'Gamme' : 'Cuisine'}
+          allLabel={activeFilter === 'hotels' ? 'Toutes gammes' : 'Toutes cuisines'}
+          sorts={quickSortsFor(activeFilter)}
+          activeSort={quickSort}
+          onPickSort={(k) => setQuickSort(k as QuickSort)}
+          categories={categoryOptions.length > 1 ? categoryOptions : []}
+          activeCategory={quickCat}
+          onPickCategory={setQuickCat}
+          onClose={() => setQuickSheet(false)}
+        />
+      )}
 
       {(() => {
         const h = cityDetail?.hotels.find((x) => x.id === aroundHotelId);
@@ -922,23 +933,31 @@ const styles = StyleSheet.create({
   cardsWrapper: { position: 'absolute', left: 0, right: 0, bottom: Platform.OS === 'ios' ? 124 : 98 },
   cardsScroll: { paddingHorizontal: 16, gap: 10 },
 
-  quickBar: { maxHeight: 38, marginBottom: 8, flexGrow: 0 },
-  quickScroll: { paddingHorizontal: 16, gap: 8, alignItems: 'center' },
-  quickChip: {
-    paddingHorizontal: 12,
-    paddingVertical: 7,
+  quickBar: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, marginBottom: 8 },
+  quickBtn: {
+    alignSelf: 'flex-start',
+    maxWidth: '85%',
+    paddingHorizontal: 14,
+    paddingVertical: 8,
     borderRadius: Radius.pill,
-    backgroundColor: 'rgba(255,255,255,0.95)',
+    backgroundColor: 'rgba(255,255,255,0.97)',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.18,
     shadowRadius: 4,
     elevation: 4,
   },
-  quickChipOn: { backgroundColor: Brand.gold },
-  quickChipText: { color: '#333', fontSize: 12, fontWeight: '800' },
-  quickChipTextOn: { color: Brand.night, fontWeight: '800' },
-  quickSep: { width: 1, height: 20, backgroundColor: 'rgba(255,255,255,0.5)', marginHorizontal: 2 },
+  quickBtnText: { color: Brand.night, fontSize: 13, fontWeight: '800' },
+  quickReset: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 4,
+  },
+  quickResetText: { color: Brand.night, fontSize: 13, fontWeight: '800' },
   placeCard: {
     width: 190,
     backgroundColor: 'rgba(255,255,255,0.98)',

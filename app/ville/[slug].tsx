@@ -218,8 +218,8 @@ export default function VilleScreen() {
 
   // Facettes (tri + filtres) calculées sur la liste réelle de l'onglet.
   const sortOptions = useMemo(
-    () => sortOptionsFor(rawWithDist, distOrigin != null),
-    [rawWithDist, distOrigin],
+    () => sortOptionsFor(rawWithDist, distOrigin != null, { reco: tab === 'restaurants' }),
+    [rawWithDist, distOrigin, tab],
   );
   const catFacets = useMemo(() => categoryFacets(rawWithDist), [rawWithDist]);
   const ambianceFacets = useMemo(
