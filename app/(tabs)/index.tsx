@@ -626,7 +626,8 @@ export default function HomeScreen() {
               <Pressable style={styles.quickBtn} onPress={() => setQuickSheet(true)}>
                 <Text style={styles.quickBtnText} numberOfLines={1}>
                   {activeCfg.emoji}{' '}
-                  {quickCat ?? (activeFilter === 'hotels' ? 'Gamme' : 'Cuisine')}
+                  {quickCat ??
+                    (activeFilter === 'hotels' ? 'Gamme & tri' : 'Cuisine & tri')}
                   {quickSort !== defaultQuickSort(activeFilter)
                     ? ` · ${quickSortLabel(activeFilter, quickSort)}`
                     : ''}{' '}
@@ -937,17 +938,19 @@ const styles = StyleSheet.create({
   quickBtn: {
     alignSelf: 'flex-start',
     maxWidth: '85%',
-    paddingHorizontal: 14,
-    paddingVertical: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 9,
     borderRadius: Radius.pill,
-    backgroundColor: 'rgba(255,255,255,0.97)',
+    backgroundColor: Brand.gold,
+    borderWidth: 1.5,
+    borderColor: '#fff',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.18,
-    shadowRadius: 4,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.28,
+    shadowRadius: 5,
+    elevation: 6,
   },
-  quickBtnText: { color: Brand.night, fontSize: 13, fontWeight: '800' },
+  quickBtnText: { color: Brand.night, fontSize: 13.5, fontWeight: '800' },
   quickReset: {
     width: 30,
     height: 30,
