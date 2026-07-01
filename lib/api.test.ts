@@ -1,4 +1,35 @@
-import { formatScore10, parseVillesPayload, parseVilleDetailPayload } from './api';
+import { formatScore10, parseNearbyPayload, parseVillesPayload, parseVilleDetailPayload } from './api';
+
+describe('parseNearbyPayload', () => {
+  it('format « toutes » : { spots }', () => {
+    const out = parseNearbyPayload({
+      spots: {
+        restaurants: [{ nom: "L'As du Fallafel", lat: 48.85, lng: 2.35, type: 'Libanais', distanceKm: 0.45 }],
+        hotels: [{ nom: 'Hôtel X', lat: 48.86, lng: 2.34 }],
+        activites: [],
+        boucheries: [],
+      },
+    });
+    expect(out.restaurants).toHaveLength(1);
+    expect(out.restaurants[0].nom).toBe("L'As du Fallafel");
+    expect(out.restaurants[0].category).toBe('Libanais');
+    expect(out.restaurants[0].latitude).toBeCloseTo(48.85);
+    expect(out.hotels).toHaveLength(1);
+    expect(out.activites).toEqual([]);
+  });
+  it('format « une catégorie » : { type, items }', () => {
+    const out = parseNearbyPayload({
+      type: 'restaurants',
+      items: [{ nom: 'Resto A', lat: 1, lng: 2 }, { nom: 'Resto B', lat: 3, lng: 4 }],
+    });
+    expect(out.restaurants).toHaveLength(2);
+    expect(out.hotels).toEqual([]);
+  });
+  it('charge vide → listes vides, ne casse pas', () => {
+    const out = parseNearbyPayload({});
+    expect(out).toEqual({ restaurants: [], hotels: [], activites: [], boucheries: [] });
+  });
+});
 
 describe('formatScore10 — échelle /10 alignée sur le web', () => {
   it('score /5 × 2, sans décimale superflue', () => {

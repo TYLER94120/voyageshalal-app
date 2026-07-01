@@ -396,3 +396,52 @@ export async function getVille(slug: string): Promise<VilleDetail> {
   }
   return detail;
 }
+
+// ─── /api/nearby : lieux autour d'une position GPS (toutes villes) ────────────
+
+export interface NearbySpots {
+  restaurants: Lieu[];
+  hotels: Lieu[];
+  activites: Lieu[];
+  boucheries: Lieu[];
+}
+
+/**
+ * Parseur pur de /api/nearby. Tolère les 2 formats du contrat :
+ *   • une catégorie → { type, items: [...] }
+ *   • toutes        → { spots: { restaurants, hotels, activites, boucheries } }
+ * Chaque item = objet POI brut (comme une fiche ville) → normalizeLieu marche tel quel.
+ */
+export function parseNearbyPayload(payload: unknown): NearbySpots {
+  const p = asRecord(payload);
+  const mapList = (arr: unknown, prefix: string): Lieu[] =>
+    Array.isArray(arr) ? arr.map((r, i) => normalizeLieu(asRecord(r), i, prefix)) : [];
+
+  // Format « une catégorie » : { type, items }
+  const type = pickString(p, 'type');
+  if (type && Array.isArray(p.items)) {
+    return {
+      restaurants: type === 'restaurants' ? mapList(p.items, 'nr') : [],
+      hotels: type === 'hotels' ? mapList(p.items, 'nh') : [],
+      activites: type === 'activites' ? mapList(p.items, 'na') : [],
+      boucheries: type === 'boucheries' ? mapList(p.items, 'nb') : [],
+    };
+  }
+
+  // Format « toutes » : { spots: {...} }
+  const spots = asRecord(p.spots);
+  return {
+    restaurants: mapList(spots.restaurants, 'nr'),
+    hotels: mapList(spots.hotels, 'nh'),
+    activites: mapList(spots.activites, 'na'),
+    boucheries: mapList(spots.boucheries, 'nb'),
+  };
+}
+
+/** Lieux réels autour d'une position (toutes catégories curées). Mosquées = OSM. */
+export async function getNearbySpots(lat: number, lng: number, radiusKm = 8): Promise<NearbySpots> {
+  const payload = await fetchJson(
+    `${API_BASE}/nearby?lat=${lat}&lng=${lng}&type=all&radius=${radiusKm}`,
+  );
+  return parseNearbyPayload(payload);
+}

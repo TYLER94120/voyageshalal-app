@@ -19,8 +19,8 @@ import { openDirections, openDirectionsQuery, openMapsUrl } from '@/lib/maps';
 import { fetchNearbyMosques } from '@/lib/overpass';
 import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPlaces';
 import { CitySearchModal } from '@/components/CitySearchModal';
-import { halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
-import { getVilleCached, getVillesCached } from '@/lib/cityCache';
+import { getNearbySpots, halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
+import { getVilleCached } from '@/lib/cityCache';
 import { priceRank, recommendedScore } from '@/lib/lieuSort';
 import { CuisineSheet } from '@/components/CuisineSheet';
 import { dedupeHotels, hotelLocationStats } from '@/lib/hotelLocation';
@@ -91,24 +91,8 @@ const DEFAULT_REGION: Region = { ...PARIS, latitudeDelta: 0.06, longitudeDelta: 
 // ville (mégapoles étalées comme Tokyo → couvrir toute l'agglomération).
 const ME_RADIUS_M = 6000;
 const CITY_RADIUS_M = 25000;
-// À l'ouverture, on charge automatiquement la ville de la base la plus proche si
-// l'utilisateur est à moins de ce rayon (→ filtres dispo direct, centrés sur lui).
-const AUTO_CITY_MAX_KM = 40;
-
-/** Ville de la base la plus proche d'un point, dans la limite AUTO_CITY_MAX_KM. */
-function nearestCity(villes: VilleSummary[], lat: number, lng: number): VilleSummary | null {
-  let best: VilleSummary | null = null;
-  let bestD = Infinity;
-  for (const v of villes) {
-    if (v.latitude == null || v.longitude == null) continue;
-    const d = distanceKm(lat, lng, v.latitude, v.longitude);
-    if (d < bestD) {
-      bestD = d;
-      best = v;
-    }
-  }
-  return best && bestD <= AUTO_CITY_MAX_KM ? best : null;
-}
+// Rayon des lieux « autour de moi » (restos/hôtels/activités via /api/nearby).
+const NEARBY_RADIUS_KM = 8;
 
 // Dimensions des cartes du bas (pour le défilement lié à la carte).
 const CARD_W = 190;
@@ -166,14 +150,11 @@ export default function HomeScreen() {
   // Hôtel dont on regarde « autour » (mini-carte mosquées + restos).
   const [aroundHotelId, setAroundHotelId] = useState<string | null>(null);
 
-  // Liste des villes (pour auto-détecter la plus proche à l'ouverture).
-  const [villes, setVilles] = useState<VilleSummary[]>([]);
-  // « Mode autour de moi » : la ville est chargée pour ses données réelles, mais
-  // on reste centré/étiqueté sur l'utilisateur (pas de projection sur la ville).
+  // « Mode autour de moi » : lieux réels autour de l'utilisateur (via /api/nearby),
+  // sans projeter/étiqueter sur une ville.
   const [aroundMe, setAroundMe] = useState(false);
   const autoTried = useRef(false);
   const userLocRef = useRef<{ latitude: number; longitude: number } | null>(null);
-  const villesRef = useRef<VilleSummary[]>([]);
 
   const activeFilterRef = useRef(activeFilter);
   useEffect(() => {
@@ -182,17 +163,6 @@ export default function HomeScreen() {
   useEffect(() => {
     userLocRef.current = userLoc;
   }, [userLoc]);
-  useEffect(() => {
-    villesRef.current = villes;
-  }, [villes]);
-
-  useEffect(() => {
-    getVillesCached()
-      .then(({ data }) => setVilles(data))
-      .catch(() => {
-        /* liste indisponible : l'auto-sélection sera simplement ignorée */
-      });
-  }, []);
 
   // ── Mosquées réelles (Overpass) ──
   const loadMosques = useCallback(async (lat: number, lng: number, radius: number = ME_RADIUS_M) => {
@@ -332,27 +302,52 @@ export default function HomeScreen() {
     [loadMosques],
   );
 
-  // Charge la ville de la base la plus proche EN MODE « autour de moi » (données
-  // réelles, vue et étiquette gardées sur l'utilisateur). Renvoie true si trouvée.
+  // Mode « autour de moi » : lieux RÉELS autour de l'utilisateur via /api/nearby
+  // (toutes villes confondues). On garde la vue/étiquette sur l'utilisateur et on
+  // range les résultats dans un « détail » synthétique → cartes/tris/filtres
+  // marchent tels quels. Mosquées : OSM autour de moi.
   const autoLoadNearMe = useCallback((): boolean => {
     const u = userLocRef.current;
     if (!u) return false;
-    const c = nearestCity(villesRef.current, u.latitude, u.longitude);
-    if (c) {
-      selectCity(c, { keepUserView: true });
-      return true;
-    }
-    return false;
-  }, [selectCity]);
+    setAroundMe(true);
+    setSelectedCity({ nom: 'Autour de moi', latitude: u.latitude, longitude: u.longitude });
+    setSelectedId(null);
+    setQuickCat(null);
+    setQuickSort(defaultQuickSort(activeFilterRef.current));
+    mapCenter.current = u;
+    mapRef.current?.animateToRegion({ ...u, latitudeDelta: 0.05, longitudeDelta: 0.05 }, 700);
+    loadMosques(u.latitude, u.longitude, ME_RADIUS_M);
 
-  // À l'ouverture : dès qu'on connaît la position ET la liste des villes, on
-  // charge (une seule fois) la ville la plus proche en mode « autour de moi » →
-  // filtres dispo direct, sans quitter sa position. Loin de tout → démo.
+    setCityDetail(null);
+    setCityDetailState('loading');
+    getNearbySpots(u.latitude, u.longitude, NEARBY_RADIUS_KM)
+      .then((spots) => {
+        const detail: VilleDetail = {
+          slug: '__autour__',
+          nom: 'Autour de moi',
+          latitude: u.latitude,
+          longitude: u.longitude,
+          restaurants: spots.restaurants,
+          hotels: spots.hotels,
+          activites: spots.activites,
+          mosquees: [],
+          pratiqueInfos: [],
+          selections: [],
+        };
+        setCityDetail(detail);
+        setCityDetailState('ready');
+      })
+      .catch(() => setCityDetailState('error'));
+    return true;
+  }, [loadMosques]);
+
+  // À l'ouverture : dès qu'on connaît la position, on charge (une seule fois) les
+  // lieux autour de soi → filtres dispo direct, sans quitter sa position.
   useEffect(() => {
-    if (autoTried.current || selectedCity || !userLoc || villes.length === 0) return;
+    if (autoTried.current || selectedCity || !userLoc) return;
     autoTried.current = true;
     autoLoadNearMe();
-  }, [userLoc, villes, selectedCity, autoLoadNearMe]);
+  }, [userLoc, selectedCity, autoLoadNearMe]);
 
   const goToMe = useCallback(() => {
     setSelectedId(null);
@@ -361,19 +356,11 @@ export default function HomeScreen() {
     if (userLoc) {
       mapCenter.current = userLoc;
       mapRef.current?.animateToRegion({ ...userLoc, latitudeDelta: 0.05, longitudeDelta: 0.05 }, 700);
-      // Revenir « autour de moi » : recharger la ville la plus proche en mode
-      // autour de moi (garde les filtres). Sinon repli démo pur.
-      if (!autoLoadNearMe()) {
-        setSelectedCity(null);
-        setAroundMe(false);
-        setCityDetail(null);
-        setCityDetailState('idle');
-        if (activeFilterRef.current === 'mosquees') loadMosques(userLoc.latitude, userLoc.longitude);
-      }
+      autoLoadNearMe(); // revenir « autour de moi » (garde les filtres)
     } else {
       locate();
     }
-  }, [userLoc, autoLoadNearMe, loadMosques, locate]);
+  }, [userLoc, autoLoadNearMe, locate]);
 
   // Projection demandée depuis la fiche ville (« Voir sur la carte »).
   useFocusEffect(
@@ -386,15 +373,13 @@ export default function HomeScreen() {
   // ── Lieux affichés ──
   const activeCfg = FILTERS.find((f) => f.key === activeFilter)!;
 
-  // Origine des distances : la position de l'utilisateur s'il est physiquement
-  // près de la ville sélectionnée (≤ AUTO_CITY_MAX_KM), sinon le centre-ville.
+  // Origine des distances : l'utilisateur en mode « autour de moi », sinon la
+  // ville sélectionnée (ou l'utilisateur / centre de carte en repli).
   const distOrigin = useMemo(() => {
-    if (userLoc && selectedCity) {
-      const d = distanceKm(userLoc.latitude, userLoc.longitude, selectedCity.latitude, selectedCity.longitude);
-      if (d <= AUTO_CITY_MAX_KM) return userLoc;
-    }
+    // « Autour de moi » : distances depuis la position réelle de l'utilisateur.
+    if (aroundMe && userLoc) return userLoc;
     return selectedCity ?? userLoc ?? mapCenter.current;
-  }, [userLoc, selectedCity]);
+  }, [aroundMe, userLoc, selectedCity]);
 
   // Mosquées de référence de la ville : principales (API) + exhaustives (OSM),
   // dédupliquées → score hôtel fiable.
