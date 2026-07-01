@@ -168,8 +168,12 @@ export default function HomeScreen() {
 
   // Liste des villes (pour auto-détecter la plus proche à l'ouverture).
   const [villes, setVilles] = useState<VilleSummary[]>([]);
+  // « Mode autour de moi » : la ville est chargée pour ses données réelles, mais
+  // on reste centré/étiqueté sur l'utilisateur (pas de projection sur la ville).
+  const [aroundMe, setAroundMe] = useState(false);
   const autoTried = useRef(false);
   const userLocRef = useRef<{ latitude: number; longitude: number } | null>(null);
+  const villesRef = useRef<VilleSummary[]>([]);
 
   const activeFilterRef = useRef(activeFilter);
   useEffect(() => {
@@ -178,6 +182,9 @@ export default function HomeScreen() {
   useEffect(() => {
     userLocRef.current = userLoc;
   }, [userLoc]);
+  useEffect(() => {
+    villesRef.current = villes;
+  }, [villes]);
 
   useEffect(() => {
     getVillesCached()
@@ -291,6 +298,9 @@ export default function HomeScreen() {
       setSelectedId(null);
       setQuickCat(null);
       setQuickSort(defaultQuickSort(activeFilterRef.current));
+      // Mode « autour de moi » : données réelles de la ville, mais on reste
+      // centré et étiqueté sur l'utilisateur (aucune projection sur la ville).
+      setAroundMe(!!opts?.keepUserView);
 
       // Auto-sélection à l'ouverture : on garde la vue centrée sur l'utilisateur
       // et les mosquées autour de LUI (et non du centre-ville).
@@ -322,31 +332,48 @@ export default function HomeScreen() {
     [loadMosques],
   );
 
+  // Charge la ville de la base la plus proche EN MODE « autour de moi » (données
+  // réelles, vue et étiquette gardées sur l'utilisateur). Renvoie true si trouvée.
+  const autoLoadNearMe = useCallback((): boolean => {
+    const u = userLocRef.current;
+    if (!u) return false;
+    const c = nearestCity(villesRef.current, u.latitude, u.longitude);
+    if (c) {
+      selectCity(c, { keepUserView: true });
+      return true;
+    }
+    return false;
+  }, [selectCity]);
+
   // À l'ouverture : dès qu'on connaît la position ET la liste des villes, on
-  // charge automatiquement la ville la plus proche (une seule fois) → filtres
-  // dispo direct, centrés sur l'utilisateur. Loin de toute ville → « autour de moi ».
+  // charge (une seule fois) la ville la plus proche en mode « autour de moi » →
+  // filtres dispo direct, sans quitter sa position. Loin de tout → démo.
   useEffect(() => {
     if (autoTried.current || selectedCity || !userLoc || villes.length === 0) return;
     autoTried.current = true;
-    const c = nearestCity(villes, userLoc.latitude, userLoc.longitude);
-    if (c) selectCity(c, { keepUserView: true });
-  }, [userLoc, villes, selectedCity, selectCity]);
+    autoLoadNearMe();
+  }, [userLoc, villes, selectedCity, autoLoadNearMe]);
 
   const goToMe = useCallback(() => {
-    setSelectedCity(null);
-    setCityDetail(null);
-    setCityDetailState('idle');
     setSelectedId(null);
     setQuickCat(null);
     setQuickSort(defaultQuickSort(activeFilterRef.current));
     if (userLoc) {
       mapCenter.current = userLoc;
-      mapRef.current?.animateToRegion({ ...userLoc, latitudeDelta: 0.04, longitudeDelta: 0.04 }, 700);
-      if (activeFilterRef.current === 'mosquees') loadMosques(userLoc.latitude, userLoc.longitude);
+      mapRef.current?.animateToRegion({ ...userLoc, latitudeDelta: 0.05, longitudeDelta: 0.05 }, 700);
+      // Revenir « autour de moi » : recharger la ville la plus proche en mode
+      // autour de moi (garde les filtres). Sinon repli démo pur.
+      if (!autoLoadNearMe()) {
+        setSelectedCity(null);
+        setAroundMe(false);
+        setCityDetail(null);
+        setCityDetailState('idle');
+        if (activeFilterRef.current === 'mosquees') loadMosques(userLoc.latitude, userLoc.longitude);
+      }
     } else {
       locate();
     }
-  }, [userLoc, loadMosques, locate]);
+  }, [userLoc, autoLoadNearMe, loadMosques, locate]);
 
   // Projection demandée depuis la fiche ville (« Voir sur la carte »).
   useFocusEffect(
@@ -493,7 +520,7 @@ export default function HomeScreen() {
     return withDist.slice(0, 40);
   }, [visiblePlaces, distOrigin, sortable, quickSort]);
 
-  const searchRadius = () => (selectedCity ? CITY_RADIUS_M : ME_RADIUS_M);
+  const searchRadius = () => (selectedCity && !aroundMe ? CITY_RADIUS_M : ME_RADIUS_M);
 
   // Fait défiler la liste du bas jusqu'à la carte d'un lieu.
   const scrollCardsTo = (id: string) => {
@@ -620,11 +647,15 @@ export default function HomeScreen() {
         {selectedCity ? (
           <View style={styles.cityActive}>
             <Pressable onPress={() => setCityModal(true)} style={styles.cityActiveMain}>
-              <Text style={styles.cityActiveText} numberOfLines={1}>📍 {selectedCity.nom}</Text>
+              <Text style={styles.cityActiveText} numberOfLines={1}>
+                📍 {aroundMe ? 'Autour de moi' : selectedCity.nom}
+              </Text>
             </Pressable>
-            <Pressable onPress={goToMe} hitSlop={8}>
-              <Text style={styles.cityClear}>✕</Text>
-            </Pressable>
+            {!aroundMe && (
+              <Pressable onPress={goToMe} hitSlop={8}>
+                <Text style={styles.cityClear}>✕</Text>
+              </Pressable>
+            )}
           </View>
         ) : (
           <Pressable style={styles.searchBar} onPress={() => setCityModal(true)}>
@@ -673,7 +704,13 @@ export default function HomeScreen() {
           ) : (
             <Text style={styles.statusText}>
               {visiblePlaces.length} {quickCat ?? activeCfg.label}
-              {selectedCity ? ` · ${selectedCity.nom}` : activeFilter === 'mosquees' ? ' à proximité' : ' (démo)'}
+              {selectedCity
+                ? aroundMe
+                  ? ' · autour de moi'
+                  : ` · ${selectedCity.nom}`
+                : activeFilter === 'mosquees'
+                  ? ' à proximité'
+                  : ' (démo)'}
             </Text>
           )}
         </View>
@@ -698,7 +735,7 @@ export default function HomeScreen() {
       <Pressable style={styles.cityFab} onPress={() => setCityModal(true)}>
         <Text style={styles.cityFabIcon}>🌍</Text>
         <Text style={styles.cityFabLabel} numberOfLines={1}>
-          {selectedCity ? selectedCity.nom : 'Ville'}
+          {selectedCity && !aroundMe ? selectedCity.nom : 'Ville'}
         </Text>
       </Pressable>
 
