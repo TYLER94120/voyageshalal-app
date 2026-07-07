@@ -95,6 +95,20 @@ export default function ProfilScreen() {
         <Text style={styles.tagline}>Voyagez serein, partout dans le monde</Text>
       </View>
 
+      {/* 2 portes d'entrée : sur place / planification */}
+      <View style={styles.portes}>
+        <Pressable style={styles.porte} onPress={() => router.push('/' as Href)}>
+          <Text style={styles.porteEmoji}>📍</Text>
+          <Text style={styles.porteTitle}>Localise-moi</Text>
+          <Text style={styles.porteSub}>Autour de moi, maintenant</Text>
+        </Pressable>
+        <Pressable style={styles.porte} onPress={() => router.push('/destinations' as Href)}>
+          <Text style={styles.porteEmoji}>🧭</Text>
+          <Text style={styles.porteTitle}>Organise ton voyage</Text>
+          <Text style={styles.porteSub}>Explore les destinations</Text>
+        </Pressable>
+      </View>
+
       <View style={styles.captureWrap}>
         <CaptureCard />
       </View>
@@ -197,7 +211,20 @@ const styles = StyleSheet.create({
   name: { color: Brand.cream, fontSize: 22, fontWeight: '800', marginTop: Spacing.sm },
   tagline: { color: Brand.creamMuted, fontSize: 14, marginTop: 4 },
 
-  captureWrap: { paddingHorizontal: Spacing.lg, marginTop: Spacing.sm, marginBottom: Spacing.xs },
+  portes: { flexDirection: 'row', gap: Spacing.sm, paddingHorizontal: Spacing.lg, marginTop: Spacing.sm },
+  porte: {
+    flex: 1,
+    backgroundColor: Brand.forest,
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: Brand.gold,
+    padding: Spacing.md,
+    gap: 2,
+  },
+  porteEmoji: { fontSize: 24 },
+  porteTitle: { color: Brand.cream, fontSize: 15, fontWeight: '800', marginTop: 4 },
+  porteSub: { color: Brand.creamMuted, fontSize: 12 },
+  captureWrap: { paddingHorizontal: Spacing.lg, marginTop: Spacing.md, marginBottom: Spacing.xs },
   section: { paddingHorizontal: Spacing.lg, marginTop: Spacing.md },
   sectionTitle: { color: Brand.gold, fontSize: 12, fontWeight: '800', letterSpacing: 1.5, marginBottom: Spacing.sm, textTransform: 'uppercase' },
   card: { backgroundColor: Brand.forest, borderRadius: Radius.md, borderWidth: 1, borderColor: Brand.border, overflow: 'hidden' },
