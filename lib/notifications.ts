@@ -21,12 +21,12 @@ export { buildSchedule } from './adhanSchedule';
 
 // Les canaux Android sont IMMUABLES une fois créés → on versionne les ids pour
 // appliquer les nouveaux réglages (son, écran verrouillé) sur les téléphones
-// où l'ancienne version existait déjà.
-export const ADHAN_CHANNEL = 'adhan-v2';
+// où l'ancienne version existait déjà. v3 = vrai son d'adhan embarqué.
+export const ADHAN_CHANNEL = 'adhan-v3';
 // Notification « horaires épinglés » : canal silencieux + id fixe (remplaçable).
 export const PERSISTENT_CHANNEL = 'prayer-persistent-v2';
 export const PERSISTENT_ID = 'prayer-persistent';
-const OLD_CHANNELS = ['adhan', 'prayer-persistent'];
+const OLD_CHANNELS = ['adhan', 'adhan-v2', 'prayer-persistent'];
 
 async function dropOldChannels(): Promise<void> {
   if (Platform.OS !== 'android') return;
@@ -38,8 +38,10 @@ async function dropOldChannels(): Promise<void> {
     }
   }
 }
-// Son par défaut tant qu'aucun asset adhan n'est fourni (cf. en-tête).
-const ADHAN_SOUND: string | boolean = 'default';
+// Vrai adhan embarqué : assets/sounds/adhan.mp3, déclaré dans le plugin
+// expo-notifications (app.json). Nécessite un build complet (pas OTA) — le
+// fichier doit exister dans assets/sounds/ au moment du build.
+const ADHAN_SOUND: string | boolean = 'adhan.mp3';
 
 let handlerConfigured = false;
 
