@@ -19,10 +19,25 @@ import { buildPersistentContent } from './persistentNotif';
 
 export { buildSchedule } from './adhanSchedule';
 
-export const ADHAN_CHANNEL = 'adhan';
+// Les canaux Android sont IMMUABLES une fois créés → on versionne les ids pour
+// appliquer les nouveaux réglages (son, écran verrouillé) sur les téléphones
+// où l'ancienne version existait déjà.
+export const ADHAN_CHANNEL = 'adhan-v2';
 // Notification « horaires épinglés » : canal silencieux + id fixe (remplaçable).
-export const PERSISTENT_CHANNEL = 'prayer-persistent';
+export const PERSISTENT_CHANNEL = 'prayer-persistent-v2';
 export const PERSISTENT_ID = 'prayer-persistent';
+const OLD_CHANNELS = ['adhan', 'prayer-persistent'];
+
+async function dropOldChannels(): Promise<void> {
+  if (Platform.OS !== 'android') return;
+  for (const id of OLD_CHANNELS) {
+    try {
+      await Notifications.deleteNotificationChannelAsync(id);
+    } catch {
+      // canal absent
+    }
+  }
+}
 // Son par défaut tant qu'aucun asset adhan n'est fourni (cf. en-tête).
 const ADHAN_SOUND: string | boolean = 'default';
 
@@ -52,12 +67,16 @@ export async function requestNotificationPermission(): Promise<boolean> {
 
 async function ensureAndroidChannel(): Promise<void> {
   if (Platform.OS !== 'android') return;
+  await dropOldChannels();
   await Notifications.setNotificationChannelAsync(ADHAN_CHANNEL, {
     name: 'Adhan — appels à la prière',
-    importance: Notifications.AndroidImportance.HIGH,
+    // MAX + son + vibration : l'appel doit s'entendre, même écran verrouillé.
+    importance: Notifications.AndroidImportance.MAX,
     sound: typeof ADHAN_SOUND === 'string' ? ADHAN_SOUND : 'default',
-    vibrationPattern: [0, 250, 250, 250],
+    vibrationPattern: [0, 400, 250, 400, 250, 400],
+    enableVibrate: true,
     lightColor: '#c9a84c',
+    lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
   });
 }
 
@@ -121,11 +140,16 @@ export async function rescheduleAdhan(params: RescheduleParams): Promise<Resched
 
 async function ensurePersistentChannel(): Promise<void> {
   if (Platform.OS !== 'android') return;
+  await dropOldChannels();
   await Notifications.setNotificationChannelAsync(PERSISTENT_CHANNEL, {
     name: 'Horaires de prière (épinglés)',
-    // LOW = visible dans la barre, sans son ni intrusion (c'est un affichage).
-    importance: Notifications.AndroidImportance.LOW,
+    // DEFAULT (sans son) : reste visible sur l'ÉCRAN VERROUILLÉ, contrairement
+    // à LOW qui peut être replié/masqué selon les constructeurs.
+    importance: Notifications.AndroidImportance.DEFAULT,
+    sound: null,
+    enableVibrate: false,
     showBadge: false,
+    lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
   });
 }
 

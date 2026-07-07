@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
+import { AppState } from 'react-native';
 import * as Location from 'expo-location';
 
 import {
@@ -80,7 +81,9 @@ export function PrayerProvider({ children }: { children: ReactNode }) {
       }
 
       // 1) Position connue (rapide) pour afficher quelque chose tout de suite.
-      const last = await Location.getLastKnownPositionAsync();
+      // maxAge : on IGNORE une position trop vieille (> 15 min) — sinon, en
+      // voyage (France → Maroc), les horaires restent calés sur l'ancien pays.
+      const last = await Location.getLastKnownPositionAsync({ maxAge: 15 * 60 * 1000 });
       if (last) {
         setLocation((prev) => ({
           latitude: last.coords.latitude,
@@ -116,8 +119,15 @@ export function PrayerProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  // Résout au lancement ET à chaque retour au premier plan : indispensable en
+  // voyage (l'app reste en mémoire pendant le vol → la position doit se
+  // rafraîchir, sinon horaires/adhan restent sur l'ancien pays).
   useEffect(() => {
     resolveLocation();
+    const sub = AppState.addEventListener('change', (state) => {
+      if (state === 'active') resolveLocation();
+    });
+    return () => sub.remove();
   }, [resolveLocation]);
 
   // Ref vers les réglages courants : permet de calculer `next` purement, hors
