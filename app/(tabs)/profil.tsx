@@ -6,6 +6,7 @@ import { Brand, Radius, Spacing } from '@/constants/theme';
 import { useFavorites } from '@/context/FavoritesContext';
 import { loadSettings } from '@/lib/prayerSettings';
 import { METHODS } from '@/lib/prayer';
+import { CaptureCard } from '@/components/CaptureCard';
 
 type Row = { icon: string; label: string; sub?: string; route?: Href; url?: string };
 
@@ -62,6 +63,10 @@ export default function ProfilScreen() {
         <Text style={styles.tagline}>Voyagez serein, partout dans le monde</Text>
       </View>
 
+      <View style={styles.captureWrap}>
+        <CaptureCard />
+      </View>
+
       {sections.map((section) => (
         <View key={section.title} style={styles.section}>
           <Text style={styles.sectionTitle}>{section.title}</Text>
@@ -112,6 +117,7 @@ const styles = StyleSheet.create({
   name: { color: Brand.cream, fontSize: 22, fontWeight: '800', marginTop: Spacing.sm },
   tagline: { color: Brand.creamMuted, fontSize: 14, marginTop: 4 },
 
+  captureWrap: { paddingHorizontal: Spacing.lg, marginTop: Spacing.sm, marginBottom: Spacing.xs },
   section: { paddingHorizontal: Spacing.lg, marginTop: Spacing.md },
   sectionTitle: { color: Brand.gold, fontSize: 12, fontWeight: '800', letterSpacing: 1.5, marginBottom: Spacing.sm, textTransform: 'uppercase' },
   card: { backgroundColor: Brand.forest, borderRadius: Radius.md, borderWidth: 1, borderColor: Brand.border, overflow: 'hidden' },
