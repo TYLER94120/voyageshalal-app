@@ -17,6 +17,7 @@ import { Brand, Radius, Spacing } from '@/constants/theme';
 import { distanceKm, formatDistance } from '@/lib/geo';
 import { openDirections, openDirectionsQuery, openMapsUrl } from '@/lib/maps';
 import { fetchNearbyButchers, fetchNearbyMosques } from '@/lib/overpass';
+import { getSharedSpots, type SharedSpot } from '@/lib/spots';
 import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPlaces';
 import { CitySearchModal } from '@/components/CitySearchModal';
 import { getNearbySpots, halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
@@ -67,7 +68,7 @@ function catAllLabel(filter: FilterKey): string {
 
 // ─── Filtres ────────────────────────────────────────────────────────────────
 
-type FilterKey = 'mosquees' | DemoCategory;
+type FilterKey = 'mosquees' | 'spots' | DemoCategory;
 
 interface FilterConfig {
   key: FilterKey;
@@ -83,6 +84,8 @@ const FILTERS: FilterConfig[] = [
   { key: 'hotels', emoji: '🏨', label: 'Hôtels', color: '#1d4e89', marker: '#2b6cb0' },
   { key: 'commerces', emoji: '🥩', label: 'Boucheries halal', color: '#702459', marker: '#97266d' },
   { key: 'activites', emoji: '🗺️', label: 'À faire', color: '#215f52', marker: '#2f8f7a' },
+  // Couche DISTINCTE (violet) : spots de prière partagés, signalés et NON vérifiés.
+  { key: 'spots', emoji: '🧎', label: 'Spots partagés', color: '#5b21b6', marker: '#7c3aed' },
 ];
 
 const PARIS = { latitude: 48.8566, longitude: 2.3522 };
@@ -115,6 +118,9 @@ interface PinItem {
   mapsUrl?: string;
   halalConfidence?: string;
   demo?: boolean;
+  // Spot de prière partagé (signalé, non vérifié).
+  spot?: boolean;
+  spotNote?: string;
   // Hôtels : emplacement stratégique (proximité mosquée + restos halal).
   locScore?: number | null;
   nearestMosqueKm?: number | null;
@@ -140,6 +146,9 @@ export default function HomeScreen() {
   // Boucheries halal réelles (OpenStreetMap), chargées quand l'onglet est actif.
   const [butchers, setButchers] = useState<MapPlace[]>([]);
   const [butcherState, setButcherState] = useState<MosqueState>('idle');
+  // Spots de prière partagés (couche distincte, non vérifiée).
+  const [spots, setSpots] = useState<SharedSpot[]>([]);
+  const [spotState, setSpotState] = useState<MosqueState>('idle');
   const [userTracks, setUserTracks] = useState(true);
   const [selectedCity, setSelectedCity] = useState<{ nom: string; latitude: number; longitude: number } | null>(null);
   const [cityModal, setCityModal] = useState(false);
@@ -202,6 +211,14 @@ export default function HomeScreen() {
       console.warn('[home] Overpass boucheries échec', err);
       setButcherState('error');
     }
+  }, []);
+
+  // ── Spots de prière partagés (API), à la demande ──
+  const loadSpots = useCallback(async (lat: number, lng: number, radiusKm = 12) => {
+    setSpotState('loading');
+    const res = await getSharedSpots(lat, lng, radiusKm);
+    setSpots(res);
+    setSpotState('ready');
   }, []);
 
   // ── Géolocalisation ──
@@ -414,6 +431,17 @@ export default function HomeScreen() {
     if (activeFilter === 'commerces') {
       return butchers.map((b) => ({ id: b.id, name: b.name, latitude: b.latitude, longitude: b.longitude }));
     }
+    // Spots de prière partagés (couche distincte, non vérifiée).
+    if (activeFilter === 'spots') {
+      return spots.map((s) => ({
+        id: s.id,
+        name: s.nom,
+        latitude: s.latitude,
+        longitude: s.longitude,
+        spotNote: s.note,
+        spot: true,
+      }));
+    }
     // Restaurants / hôtels / activités : vraies données de la ville si disponibles.
     if (
       selectedCity &&
@@ -459,7 +487,7 @@ export default function HomeScreen() {
       longitude: p.longitude,
       demo: true,
     }));
-  }, [activeFilter, mosques, butchers, selectedCity, cityDetail, distOrigin, cityMosquees]);
+  }, [activeFilter, mosques, butchers, spots, selectedCity, cityDetail, distOrigin, cityMosquees]);
 
   // Sélection fine (cuisine/tri) : restaurants, hôtels (gammes/budgets) et activités (thèmes).
   const sortable =
@@ -555,6 +583,10 @@ export default function HomeScreen() {
     if (key === 'commerces' && (butcherState === 'idle' || butcherState === 'error')) {
       loadButchers(mapCenter.current.latitude, mapCenter.current.longitude, searchRadius());
     }
+    // Spots de prière partagés : charge à l'affichage de l'onglet.
+    if (key === 'spots') {
+      loadSpots(mapCenter.current.latitude, mapCenter.current.longitude);
+    }
   };
 
   const goPlace = (p: PinItem) => {
@@ -638,6 +670,10 @@ export default function HomeScreen() {
                     {place.restosNear ? ` · 🍽️ ${place.restosNear} restos` : ''}
                   </Text>
                 )}
+                {place.spot && (
+                  <Text style={styles.calloutSpot}>🧎 Spot partagé · signalé, à vérifier</Text>
+                )}
+                {place.spot && place.spotNote && <Text style={styles.calloutDist}>{place.spotNote}</Text>}
                 {place.demo && <Text style={styles.calloutDemo}>exemple (démo)</Text>}
                 <View style={styles.calloutCta}>
                   <Text style={styles.calloutCtaText}>🧭 Y aller (itinéraire)</Text>
@@ -835,6 +871,7 @@ export default function HomeScreen() {
                   {i === 0 && quickSort === 'situe' && p.locScore != null && (
                     <Text style={styles.nearestTag}>🕌 top emplacement</Text>
                   )}
+                  {p.spot && <Text style={styles.spotTag}>signalé · à vérifier</Text>}
                   {p.demo && <Text style={styles.demoTag}>démo</Text>}
                 </View>
                 <Text style={styles.placeName} numberOfLines={2}>
@@ -1154,6 +1191,16 @@ const styles = StyleSheet.create({
     borderRadius: Radius.pill,
     overflow: 'hidden',
   },
+  spotTag: {
+    backgroundColor: '#ede9fe',
+    color: '#6d28d9',
+    fontSize: 10,
+    fontWeight: '800',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: Radius.pill,
+    overflow: 'hidden',
+  },
   halalTag: {
     fontSize: 10,
     fontWeight: '800',
@@ -1259,6 +1306,7 @@ const styles = StyleSheet.create({
   calloutDist: { fontSize: 12, color: '#666' },
   calloutLoc: { fontSize: 12, fontWeight: '700', color: '#1b4332' },
   calloutDemo: { fontSize: 11, color: '#999', fontStyle: 'italic' },
+  calloutSpot: { fontSize: 12, fontWeight: '800', color: '#6d28d9' },
   calloutCta: { marginTop: 6, backgroundColor: Brand.forest, borderRadius: Radius.sm, paddingVertical: 8, alignItems: 'center' },
   calloutCtaText: { color: '#fff', fontWeight: '800', fontSize: 12 },
 });
