@@ -1,15 +1,22 @@
+import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { usePrayerClock, usePrayerContext } from '@/context/PrayerContext';
 import {
   METHODS,
+  computeDay,
+  countdownTo,
+  findCurrentPrayer,
+  findNextPrayer,
   formatFrenchDate,
   formatTime,
   methodByKey,
   type MadhabKey,
   type PrayerSlot,
 } from '@/lib/prayer';
+import { CitySearchModal } from '@/components/CitySearchModal';
+import { type VilleSummary } from '@/lib/api';
 import { Brand, Radius, Spacing } from '@/constants/theme';
 
 export default function HorairesScreen() {
@@ -17,15 +24,57 @@ export default function HorairesScreen() {
   const { settings, updateSettings } = usePrayerContext();
   const { ready, slots, next, current, countdown, now, location } = usePrayerClock();
 
+  // Horaires d'une VILLE choisie (planif) — même moteur LOCAL, hors-ligne.
+  const [cityModal, setCityModal] = useState(false);
+  const [cityOverride, setCityOverride] = useState<{ nom: string; lat: number; lng: number } | null>(null);
+  const usingCity = cityOverride != null;
+  const citySlots = usingCity
+    ? computeDay(cityOverride.lat, cityOverride.lng, now, settings.methodKey, settings.madhab)
+    : null;
+  const cityNext = usingCity
+    ? findNextPrayer(cityOverride.lat, cityOverride.lng, now, settings.methodKey, settings.madhab)
+    : null;
+  const effReady = usingCity ? true : ready;
+  const effSlots = citySlots ?? slots;
+  const effNext = usingCity ? cityNext : next;
+  const effCurrent = usingCity && citySlots ? findCurrentPrayer(citySlots, now) : current;
+  const effCountdown = usingCity && cityNext ? countdownTo(cityNext.time, now) : countdown;
+
+  const pickCity = (v: VilleSummary) => {
+    setCityModal(false);
+    if (typeof v.latitude === 'number' && typeof v.longitude === 'number') {
+      setCityOverride({ nom: v.nom, lat: v.latitude, lng: v.longitude });
+    }
+  };
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {/* En-tête */}
       <Text style={styles.kicker}>HORAIRES DE PRIÈRE</Text>
       <Text style={styles.city}>
-        📍 {location.city ?? (location.usingDefault ? 'Paris' : 'Ma position')}
-        {location.usingDefault ? ' · par défaut' : ''}
+        {usingCity
+          ? `🏙️ ${cityOverride.nom}`
+          : `📍 ${location.city ?? (location.usingDefault ? 'Paris' : 'Ma position')}${location.usingDefault ? ' · par défaut' : ''}`}
       </Text>
       <Text style={styles.date}>{formatFrenchDate(now)}</Text>
+
+      {/* Choisir : ma position / une ville (planif) */}
+      <View style={styles.srcRow}>
+        <Pressable
+          style={[styles.srcBtn, !usingCity && styles.srcBtnOn]}
+          onPress={() => setCityOverride(null)}
+        >
+          <Text style={[styles.srcText, !usingCity && styles.srcTextOn]}>📍 Ma position</Text>
+        </Pressable>
+        <Pressable
+          style={[styles.srcBtn, usingCity && styles.srcBtnOn]}
+          onPress={() => setCityModal(true)}
+        >
+          <Text style={[styles.srcText, usingCity && styles.srcTextOn]}>
+            🏙️ {usingCity ? cityOverride.nom : 'Une ville'}
+          </Text>
+        </Pressable>
+      </View>
 
       {/* Accès rapide : Qibla & Adhan */}
       <View style={styles.quickRow}>
@@ -50,17 +99,17 @@ export default function HorairesScreen() {
       </View>
 
       {/* Carte prochaine prière */}
-      {ready && next && countdown ? (
+      {effReady && effNext && effCountdown ? (
         <View style={styles.heroCard}>
           <Text style={styles.heroKicker}>
-            PROCHAINE PRIÈRE{next.isTomorrow ? ' · DEMAIN' : ''}
+            PROCHAINE PRIÈRE{effNext.isTomorrow ? ' · DEMAIN' : ''}
           </Text>
-          <Text style={styles.heroPrayer}>{next.label}</Text>
-          <Text style={styles.heroTime}>{formatTime(next.time)}</Text>
+          <Text style={styles.heroPrayer}>{effNext.label}</Text>
+          <Text style={styles.heroTime}>{formatTime(effNext.time)}</Text>
           <View style={styles.heroCountdownRow}>
-            <CountUnit value={countdown.hours} label="h" />
-            <CountUnit value={countdown.minutes} label="min" />
-            <CountUnit value={countdown.seconds} label="s" />
+            <CountUnit value={effCountdown.hours} label="h" />
+            <CountUnit value={effCountdown.minutes} label="min" />
+            <CountUnit value={effCountdown.seconds} label="s" />
           </View>
         </View>
       ) : (
@@ -72,9 +121,9 @@ export default function HorairesScreen() {
 
       {/* Timeline du jour */}
       <View style={styles.section}>
-        {slots.map((slot) => {
-          const isNext = ready && next?.name === slot.name && !next.isTomorrow;
-          const isCurrent = current === slot.name;
+        {effSlots.map((slot) => {
+          const isNext = effReady && effNext?.name === slot.name && !effNext.isTomorrow;
+          const isCurrent = effCurrent === slot.name;
           const isPast = slot.time.getTime() <= now.getTime() && !isNext && !isCurrent;
           return (
             <PrayerRow
@@ -146,9 +195,11 @@ export default function HorairesScreen() {
       </View>
 
       <Text style={styles.footnote}>
-        Méthode actuelle : {methodByKey(settings.methodKey).label}. Calcul local basé sur votre
-        position — aucune connexion requise.
+        Méthode actuelle : {methodByKey(settings.methodKey).label}. Calcul local
+        {usingCity ? ` pour ${cityOverride.nom}` : ' basé sur votre position'} — aucune connexion requise.
       </Text>
+
+      <CitySearchModal visible={cityModal} onClose={() => setCityModal(false)} onSelect={pickCity} />
     </ScrollView>
   );
 }
@@ -193,6 +244,20 @@ const styles = StyleSheet.create({
   kicker: { color: Brand.gold, fontSize: 12, fontWeight: '800', letterSpacing: 2 },
   city: { color: Brand.cream, fontSize: 15, fontWeight: '700', marginTop: 6 },
   date: { color: Brand.creamMuted, fontSize: 13, marginTop: 2, textTransform: 'capitalize' },
+
+  srcRow: { flexDirection: 'row', gap: Spacing.sm, marginTop: Spacing.md },
+  srcBtn: {
+    flex: 1,
+    paddingVertical: 9,
+    borderRadius: Radius.pill,
+    borderWidth: 1,
+    borderColor: Brand.border,
+    backgroundColor: Brand.forest,
+    alignItems: 'center',
+  },
+  srcBtnOn: { backgroundColor: Brand.gold, borderColor: Brand.gold },
+  srcText: { color: Brand.cream, fontSize: 13, fontWeight: '700' },
+  srcTextOn: { color: Brand.night, fontWeight: '800' },
 
   quickRow: { flexDirection: 'row', gap: Spacing.sm, marginTop: Spacing.md },
   quickBtn: {
