@@ -65,15 +65,18 @@ export interface Lieu {
   services?: string[];
 }
 
-/** Niveau de confiance halal → badge à afficher (vert certifié / ambre à vérifier). */
+/**
+ * Niveau de confiance halal → badge à afficher. Vocabulaire HONNÊTE : on ne
+ * certifie jamais. « Halal signalé » (indiqué par la source) / « À vérifier ».
+ */
 export function halalBadge(conf?: string): { label: string; tone: 'green' | 'amber' } | null {
   if (!conf) return null;
   const c = conf.toLowerCase();
   if (c === 'only' || c === 'yes' || c === 'certified' || c === 'certifie') {
-    return { label: '✓ Halal', tone: 'green' };
+    return { label: 'Halal signalé', tone: 'green' };
   }
   if (c === 'likely' || c === 'maybe' || c === 'probable') {
-    return { label: '≈ à vérifier', tone: 'amber' };
+    return { label: 'À vérifier', tone: 'amber' };
   }
   return null;
 }

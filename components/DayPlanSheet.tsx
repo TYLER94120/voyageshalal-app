@@ -57,7 +57,7 @@ export function DayPlanSheet({ ville, onClose }: { ville: VilleDetail; onClose: 
       ) : (
         <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
           <Text style={styles.note}>
-            Sélection basée sur les lieux les mieux notés, certifiés halal et bien situés. Adaptez à
+            Sélection basée sur les lieux les mieux notés, halal signalés et bien situés. Adaptez à
             votre rythme 🙂
           </Text>
           {sections.map((s) => (

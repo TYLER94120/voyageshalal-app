@@ -389,7 +389,7 @@ export default function VilleScreen() {
                   >
                     {tab === 'restaurants' && (
                       <FilterChip
-                        label="✓ Certifié"
+                        label="Halal signalé"
                         on={filters.certifOnly}
                         tone="green"
                         onPress={() => setFilters((f) => ({ ...f, certifOnly: !f.certifOnly }))}
