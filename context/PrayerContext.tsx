@@ -73,7 +73,14 @@ export function PrayerProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  // Anti-rafale : le dialogue de permission (notifications…) fait passer l'app
+  // inactive→active, ce qui re-déclenchait une résolution → le nom de ville
+  // « clignotait ». On espace les résolutions d'au moins 45 s.
+  const lastResolveAt = useRef(0);
+
   const resolveLocation = useCallback(async () => {
+    if (Date.now() - lastResolveAt.current < 45_000) return;
+    lastResolveAt.current = Date.now();
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -81,19 +88,28 @@ export function PrayerProvider({ children }: { children: ReactNode }) {
         return;
       }
 
+      // On GARDE le nom de ville affiché si on n'a pas bougé (> ~2 km) : évite
+      // le clignotement « Ouartass → votre position → Ouartass » à chaque refresh.
+      const applyCoords = (latitude: number, longitude: number) => {
+        setLocation((prev) => {
+          const moved =
+            prev.usingDefault ||
+            Math.hypot(prev.latitude - latitude, prev.longitude - longitude) > 0.02;
+          return {
+            latitude,
+            longitude,
+            city: moved ? undefined : prev.city,
+            usingDefault: false,
+            ready: true,
+          };
+        });
+      };
+
       // 1) Position connue (rapide) pour afficher quelque chose tout de suite.
       // maxAge : on IGNORE une position trop vieille (> 15 min) — sinon, en
       // voyage (France → Maroc), les horaires restent calés sur l'ancien pays.
       const last = await Location.getLastKnownPositionAsync({ maxAge: 15 * 60 * 1000 });
-      if (last) {
-        setLocation((prev) => ({
-          latitude: last.coords.latitude,
-          longitude: last.coords.longitude,
-          city: prev.usingDefault ? undefined : prev.city,
-          usingDefault: false,
-          ready: true,
-        }));
-      }
+      if (last) applyCoords(last.coords.latitude, last.coords.longitude);
 
       // 2) Position précise.
       const current = await Location.getCurrentPositionAsync({
@@ -103,7 +119,7 @@ export function PrayerProvider({ children }: { children: ReactNode }) {
         latitude: current.coords.latitude,
         longitude: current.coords.longitude,
       };
-      setLocation({ ...coords, usingDefault: false, ready: true });
+      applyCoords(coords.latitude, coords.longitude);
       // Persistée pour les usages hors app (widget headless).
       saveLastLocation(coords);
 
@@ -119,7 +135,11 @@ export function PrayerProvider({ children }: { children: ReactNode }) {
         // pas de nom de ville : on garde les coordonnées
       }
     } catch {
-      setLocation({ ...DEFAULT_LOCATION, usingDefault: true, ready: true });
+      setLocation((prev) =>
+        prev.ready && !prev.usingDefault
+          ? prev // on garde la dernière bonne position plutôt que de retomber sur Paris
+          : { ...DEFAULT_LOCATION, usingDefault: true, ready: true },
+      );
     }
   }, []);
 

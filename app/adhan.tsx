@@ -12,7 +12,12 @@ import {
   type AdhanPrayer,
   type AdhanSettings,
 } from '@/lib/notificationSettings';
-import { rescheduleAdhan, updatePersistentNotification, type RescheduleResult } from '@/lib/notifications';
+import {
+  rescheduleAdhan,
+  updatePersistentNotification,
+  type PersistentResult,
+  type RescheduleResult,
+} from '@/lib/notifications';
 import { Brand, Radius, Spacing } from '@/constants/theme';
 
 export default function AdhanScreen() {
@@ -20,6 +25,7 @@ export default function AdhanScreen() {
   const [adhan, setAdhan] = useState<AdhanSettings>(DEFAULT_ADHAN_SETTINGS);
   const [loaded, setLoaded] = useState(false);
   const [result, setResult] = useState<RescheduleResult | null>(null);
+  const [persistResult, setPersistResult] = useState<PersistentResult | null>(null);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -54,7 +60,7 @@ export default function AdhanScreen() {
           prayers: next.prayers,
         });
         // Épingle des horaires (indépendante des rappels sonores).
-        const persistOk = await updatePersistentNotification({
+        const persist = await updatePersistentNotification({
           enabled: next.persistent,
           latitude: location.latitude,
           longitude: location.longitude,
@@ -62,10 +68,11 @@ export default function AdhanScreen() {
           madhab: prayerSettings.madhab,
         });
         setResult(res);
+        setPersistResult(next.persistent ? persist : null);
         // Corrige l'état si une permission a été refusée (évite de re-solliciter).
         let corrected = next;
         if (res.status === 'denied') corrected = { ...corrected, enabled: false };
-        if (next.persistent && !persistOk) corrected = { ...corrected, persistent: false };
+        if (next.persistent && persist === 'denied') corrected = { ...corrected, persistent: false };
         if (corrected !== next) setAdhan(corrected);
         saveAdhanSettings(corrected);
       } finally {
@@ -152,6 +159,22 @@ export default function AdhanScreen() {
           thumbColor={Brand.cream}
         />
       </View>
+      {persistResult === 'ok' && (
+        <Text style={[styles.status, styles.statusOk]}>
+          ✓ Horaires épinglés — visibles dans les notifications, même écran verrouillé.
+        </Text>
+      )}
+      {persistResult === 'denied' && (
+        <Text style={[styles.status, styles.statusWarn]}>
+          ⚠️ Notifications refusées pour l’app. Autorise-les : Réglages du téléphone → Applications →
+          VoyagesHalal → Notifications.
+        </Text>
+      )}
+      {persistResult === 'error' && (
+        <Text style={[styles.status, styles.statusWarn]}>
+          ⚠️ Impossible d’afficher l’épingle — réessaie (et dis-le-nous si ça persiste).
+        </Text>
+      )}
       {adhan.persistent && Platform.OS === 'ios' && (
         <Text style={[styles.status, styles.statusWarn]}>
           ℹ️ Sur iPhone, la notification n’est pas permanente (limite iOS) — elle reste affichée mais peut être balayée.

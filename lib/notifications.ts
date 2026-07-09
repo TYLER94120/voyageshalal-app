@@ -164,13 +164,16 @@ export interface PersistentParams {
   now?: Date;
 }
 
+export type PersistentResult = 'ok' | 'off' | 'denied' | 'error';
+
 /**
  * Met à jour (ou retire) la notification permanente des horaires. Sticky sur
  * Android (non balayable). Se rafraîchit à chaque appel (mêmes id → remplace) :
  * l'app la reposte à l'ouverture pour rester à jour. iOS n'a pas de permanent →
- * on affiche une notification simple (best-effort).
+ * on affiche une notification simple (best-effort). Ne lève jamais : retourne
+ * un statut pour que l'UI puisse EXPLIQUER un échec (permission, erreur).
  */
-export async function updatePersistentNotification(params: PersistentParams): Promise<boolean> {
+export async function updatePersistentNotification(params: PersistentParams): Promise<PersistentResult> {
   // Toujours retirer l'épingle précédente (affichée et/ou programmée).
   try {
     await Notifications.dismissNotificationAsync(PERSISTENT_ID);
@@ -182,33 +185,38 @@ export async function updatePersistentNotification(params: PersistentParams): Pr
   } catch {
     // rien à annuler
   }
-  if (!params.enabled) return false;
+  if (!params.enabled) return 'off';
 
-  const granted = await requestNotificationPermission();
-  if (!granted) return false;
-  await ensurePersistentChannel();
+  try {
+    const granted = await requestNotificationPermission();
+    if (!granted) return 'denied';
+    await ensurePersistentChannel();
 
-  const { title, subtitle, body } = buildPersistentContent(
-    params.latitude,
-    params.longitude,
-    params.now ?? new Date(),
-    params.methodKey,
-    params.madhab,
-  );
+    const { title, subtitle, body } = buildPersistentContent(
+      params.latitude,
+      params.longitude,
+      params.now ?? new Date(),
+      params.methodKey,
+      params.madhab,
+    );
 
-  await Notifications.scheduleNotificationAsync({
-    identifier: PERSISTENT_ID,
-    content: {
-      title,
-      subtitle,
-      body,
-      color: '#c9a84c',
-      sound: false,
-      sticky: Platform.OS === 'android', // ongoing : non balayable
-      autoDismiss: false,
-    },
-    // { channelId } = livraison immédiate sur le canal silencieux (Android).
-    trigger: Platform.OS === 'android' ? { channelId: PERSISTENT_CHANNEL } : null,
-  });
-  return true;
+    await Notifications.scheduleNotificationAsync({
+      identifier: PERSISTENT_ID,
+      content: {
+        title,
+        subtitle,
+        body,
+        color: '#c9a84c',
+        sound: false,
+        sticky: Platform.OS === 'android', // ongoing : non balayable
+        autoDismiss: false,
+      },
+      // { channelId } = livraison immédiate sur le canal silencieux (Android).
+      trigger: Platform.OS === 'android' ? { channelId: PERSISTENT_CHANNEL } : null,
+    });
+    return 'ok';
+  } catch (err) {
+    console.warn('[notif] épingle échec', err);
+    return 'error';
+  }
 }
