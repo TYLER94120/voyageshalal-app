@@ -54,6 +54,16 @@ export function AdhanScheduler() {
           madhab: s.madhab,
         });
       }
+      // Rafraîchit le widget d'écran d'accueil (position/jour à jour). Garde-fou :
+      // module natif absent (ancien binaire / iOS) → ignorer.
+      if (Platform.OS === 'android') {
+        try {
+          const { refreshPrayerWidget } = require('@/widgets/refreshWidget');
+          await refreshPrayerWidget();
+        } catch {
+          // widget indisponible sur ce binaire
+        }
+      }
     };
 
     run();

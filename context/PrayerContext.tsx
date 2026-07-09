@@ -28,6 +28,7 @@ import {
   saveSettings,
   type PrayerSettings,
 } from '@/lib/prayerSettings';
+import { saveLastLocation } from '@/lib/locationStore';
 
 // Position de repli (Paris) si la géoloc est refusée/indisponible.
 const DEFAULT_LOCATION = { latitude: 48.8566, longitude: 2.3522, city: 'Paris' };
@@ -103,6 +104,8 @@ export function PrayerProvider({ children }: { children: ReactNode }) {
         longitude: current.coords.longitude,
       };
       setLocation({ ...coords, usingDefault: false, ready: true });
+      // Persistée pour les usages hors app (widget headless).
+      saveLastLocation(coords);
 
       // 3) Nom de ville (best-effort, nécessite le réseau).
       try {
@@ -110,6 +113,7 @@ export function PrayerProvider({ children }: { children: ReactNode }) {
         const city = places[0]?.city ?? places[0]?.subregion ?? undefined;
         if (city) {
           setLocation((prev) => ({ ...prev, city }));
+          saveLastLocation({ ...coords, city });
         }
       } catch {
         // pas de nom de ville : on garde les coordonnées

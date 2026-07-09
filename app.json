@@ -2,7 +2,7 @@
   "expo": {
     "name": "VoyagesHalal",
     "slug": "voyageshalal-app",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "voyageshalal",
@@ -63,6 +63,23 @@
         {
           "color": "#0b1a0f",
           "sounds": ["./assets/sounds/adhan.mp3"]
+        }
+      ],
+      [
+        "react-native-android-widget",
+        {
+          "widgets": [
+            {
+              "name": "PrayerWidget",
+              "label": "Horaires de prière",
+              "description": "Les 5 prières du jour, toujours visibles",
+              "minWidth": "250dp",
+              "minHeight": "80dp",
+              "targetCellWidth": 4,
+              "targetCellHeight": 2,
+              "updatePeriodMillis": 1800000
+            }
+          ]
         }
       ]
     ],
