@@ -1,5 +1,14 @@
-import { parseSpotsPayload } from './spots';
+import { parseSpotsPayload, spotTypeLabel } from './spots';
 import { isValidAdminCode } from './admin';
+
+describe('spotTypeLabel', () => {
+  it('libellé pour un type connu, repli sinon', () => {
+    expect(spotTypeLabel('salle')).toContain('Salle de prière');
+    expect(spotTypeLabel('mosquee')).toContain('Mosquée');
+    expect(spotTypeLabel(undefined)).toContain('Spot de prière');
+    expect(spotTypeLabel('inconnu')).toContain('Spot de prière');
+  });
+});
 
 describe('parseSpotsPayload', () => {
   it('accepte { spots: [...] } et normalise', () => {
@@ -14,6 +23,14 @@ describe('parseSpotsPayload', () => {
     const out = parseSpotsPayload([{ coords: { lat: 1, lng: 2 } }]);
     expect(out).toHaveLength(1);
     expect(out[0].nom).toBe('Spot de prière'); // repli
+  });
+  it('lit le type de lieu (plusieurs clés acceptées)', () => {
+    const out = parseSpotsPayload([
+      { lat: 1, lng: 2, type: 'salle' },
+      { lat: 3, lng: 4, type_lieu: 'coin' },
+    ]);
+    expect(out[0].type).toBe('salle');
+    expect(out[1].type).toBe('coin');
   });
   it('ignore les entrées sans coordonnées ; tolère le vide', () => {
     expect(parseSpotsPayload({ spots: [{ nom: 'X' }] })).toEqual([]);

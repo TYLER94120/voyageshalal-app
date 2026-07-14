@@ -5,7 +5,7 @@ import * as Location from 'expo-location';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
 import { loadAdmin } from '@/lib/admin';
-import { addSpot, type AddSpotResult } from '@/lib/spots';
+import { addSpot, SPOT_TYPES, type AddSpotResult } from '@/lib/spots';
 
 /**
  * Écran ADMIN « + Ajouter un spot » : réservé au propriétaire (clé admin) pour
@@ -19,6 +19,7 @@ export default function AdminSpotScreen() {
   const [adminKey, setAdminKey] = useState('');
   const [coords, setCoords] = useState<{ latitude: number; longitude: number } | null>(null);
   const [locating, setLocating] = useState(false);
+  const [spotType, setSpotType] = useState<string>('salle');
   const [note, setNote] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
   const [busy, setBusy] = useState(false);
@@ -54,7 +55,13 @@ export default function AdminSpotScreen() {
     setBusy(true);
     setResult(null);
     const res = await addSpot(
-      { latitude: coords.latitude, longitude: coords.longitude, note: note.trim() || undefined, photoUrl: photoUrl.trim() || undefined },
+      {
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+        type: spotType,
+        note: note.trim() || undefined,
+        photoUrl: photoUrl.trim() || undefined,
+      },
       adminKey,
     );
     setResult(res);
@@ -114,6 +121,24 @@ export default function AdminSpotScreen() {
         </Pressable>
       </View>
 
+      <Text style={styles.section}>🏷️ Type de lieu</Text>
+      <View style={styles.typeWrap}>
+        {SPOT_TYPES.map((t) => {
+          const on = spotType === t.key;
+          return (
+            <Pressable
+              key={t.key}
+              onPress={() => setSpotType(t.key)}
+              style={[styles.typeChip, on && styles.typeChipOn]}
+            >
+              <Text style={[styles.typeChipText, on && styles.typeChipTextOn]}>
+                {t.emoji} {t.label}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+
       <Text style={styles.section}>📝 Note (facultatif)</Text>
       <TextInput
         value={note}
@@ -167,6 +192,19 @@ const styles = StyleSheet.create({
   coordsMuted: { color: Brand.creamMuted, fontSize: 15 },
   locBtn: { backgroundColor: Brand.gold, borderRadius: Radius.pill, paddingVertical: 12, alignItems: 'center' },
   locBtnText: { color: Brand.night, fontWeight: '800', fontSize: 14 },
+
+  typeWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm },
+  typeChip: {
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 9,
+    borderRadius: Radius.pill,
+    backgroundColor: Brand.forest,
+    borderWidth: 1,
+    borderColor: Brand.border,
+  },
+  typeChipOn: { backgroundColor: Brand.gold, borderColor: Brand.gold },
+  typeChipText: { color: Brand.cream, fontSize: 13, fontWeight: '700' },
+  typeChipTextOn: { color: Brand.night, fontWeight: '800' },
 
   input: { backgroundColor: Brand.forest, borderRadius: Radius.md, borderWidth: 1, borderColor: Brand.border, padding: Spacing.md, color: Brand.cream, fontSize: 15 },
   multiline: { minHeight: 80, textAlignVertical: 'top' },

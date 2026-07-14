@@ -13,8 +13,22 @@ export interface SharedSpot {
   nom: string;
   latitude: number;
   longitude: number;
+  type?: string; // clé de SPOT_TYPES (mosquee / salle / coin / autre)
   note?: string;
   photoUrl?: string;
+}
+
+// Types de lieux proposés à l'admin et affichés sur la carte.
+export const SPOT_TYPES: { key: string; emoji: string; label: string }[] = [
+  { key: 'mosquee', emoji: '🕌', label: 'Mosquée' },
+  { key: 'salle', emoji: '🧎', label: 'Salle de prière' },
+  { key: 'coin', emoji: '📍', label: 'Coin prière (commerce, aéroport…)' },
+  { key: 'autre', emoji: '🤲', label: 'Autre' },
+];
+
+export function spotTypeLabel(type?: string): string {
+  const t = SPOT_TYPES.find((x) => x.key === type);
+  return t ? `${t.emoji} ${t.label}` : '🧎 Spot de prière';
 }
 
 function num(v: unknown): number | undefined {
@@ -46,6 +60,7 @@ export function parseSpotsPayload(payload: unknown): SharedSpot[] {
       nom: str(o.nom) ?? str(o.name) ?? str(o.title) ?? 'Spot de prière',
       latitude,
       longitude,
+      type: str(o.type) ?? str(o.typeLieu) ?? str(o.type_lieu) ?? str(o.category),
       note: str(o.note) ?? str(o.description) ?? str(o.commentaire),
       photoUrl: str(o.photoUrl) ?? str(o.photo) ?? str(o.image),
     });
@@ -69,6 +84,7 @@ export async function getSharedSpots(lat: number, lng: number, radiusKm = 12): P
 export interface NewSpot {
   latitude: number;
   longitude: number;
+  type?: string; // clé de SPOT_TYPES
   note?: string;
   photoUrl?: string;
 }

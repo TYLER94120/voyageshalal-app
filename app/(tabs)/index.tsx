@@ -17,7 +17,7 @@ import { Brand, Radius, Spacing } from '@/constants/theme';
 import { distanceKm, formatDistance } from '@/lib/geo';
 import { openDirections, openDirectionsQuery, openMapsUrl } from '@/lib/maps';
 import { fetchNearbyButchers, fetchNearbyMosques } from '@/lib/overpass';
-import { getSharedSpots, type SharedSpot } from '@/lib/spots';
+import { getSharedSpots, spotTypeLabel, type SharedSpot } from '@/lib/spots';
 import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPlaces';
 import { CitySearchModal } from '@/components/CitySearchModal';
 import { getNearbySpots, halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
@@ -121,6 +121,7 @@ interface PinItem {
   // Spot de prière partagé (signalé, non vérifié).
   spot?: boolean;
   spotNote?: string;
+  spotType?: string;
   // Hôtels : emplacement stratégique (proximité mosquée + restos halal).
   locScore?: number | null;
   nearestMosqueKm?: number | null;
@@ -439,6 +440,7 @@ export default function HomeScreen() {
         latitude: s.latitude,
         longitude: s.longitude,
         spotNote: s.note,
+        spotType: s.type,
         spot: true,
       }));
     }
@@ -671,7 +673,9 @@ export default function HomeScreen() {
                   </Text>
                 )}
                 {place.spot && (
-                  <Text style={styles.calloutSpot}>🧎 Spot partagé · signalé, à vérifier</Text>
+                  <Text style={styles.calloutSpot}>
+                    {spotTypeLabel(place.spotType)} · signalé, à vérifier
+                  </Text>
                 )}
                 {place.spot && place.spotNote && <Text style={styles.calloutDist}>{place.spotNote}</Text>}
                 {place.demo && <Text style={styles.calloutDemo}>exemple (démo)</Text>}
