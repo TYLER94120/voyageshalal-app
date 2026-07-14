@@ -19,10 +19,16 @@ export interface SharedSpot {
 }
 
 // Types de lieux proposés à l'admin et affichés sur la carte.
+// Vocabulaire CANONIQUE de l'API (défini côté web) — ne pas inventer d'autres clés.
 export const SPOT_TYPES: { key: string; emoji: string; label: string }[] = [
-  { key: 'mosquee', emoji: '🕌', label: 'Mosquée' },
-  { key: 'salle', emoji: '🧎', label: 'Salle de prière' },
-  { key: 'coin', emoji: '📍', label: 'Coin prière (commerce, aéroport…)' },
+  { key: 'centre_commercial', emoji: '🛍️', label: 'Centre commercial' },
+  { key: 'restaurant', emoji: '🍽️', label: 'Restaurant' },
+  { key: 'aeroport', emoji: '✈️', label: 'Aéroport' },
+  { key: 'gare', emoji: '🚉', label: 'Gare' },
+  { key: 'hotel', emoji: '🏨', label: 'Hôtel' },
+  { key: 'parc', emoji: '🌳', label: 'Parc' },
+  { key: 'universite', emoji: '🎓', label: 'Université' },
+  { key: 'bureau', emoji: '🏢', label: 'Bureau' },
   { key: 'autre', emoji: '🤲', label: 'Autre' },
 ];
 

@@ -2,9 +2,10 @@ import { parseSpotsPayload, spotTypeLabel } from './spots';
 import { isValidAdminCode } from './admin';
 
 describe('spotTypeLabel', () => {
-  it('libellé pour un type connu, repli sinon', () => {
-    expect(spotTypeLabel('salle')).toContain('Salle de prière');
-    expect(spotTypeLabel('mosquee')).toContain('Mosquée');
+  it('libellé pour un type canonique de l’API, repli sinon', () => {
+    expect(spotTypeLabel('centre_commercial')).toContain('Centre commercial');
+    expect(spotTypeLabel('aeroport')).toContain('Aéroport');
+    expect(spotTypeLabel('restaurant')).toContain('Restaurant');
     expect(spotTypeLabel(undefined)).toContain('Spot de prière');
     expect(spotTypeLabel('inconnu')).toContain('Spot de prière');
   });
@@ -26,11 +27,11 @@ describe('parseSpotsPayload', () => {
   });
   it('lit le type de lieu (plusieurs clés acceptées)', () => {
     const out = parseSpotsPayload([
-      { lat: 1, lng: 2, type: 'salle' },
-      { lat: 3, lng: 4, type_lieu: 'coin' },
+      { lat: 1, lng: 2, type: 'centre_commercial' },
+      { lat: 3, lng: 4, type_lieu: 'gare' },
     ]);
-    expect(out[0].type).toBe('salle');
-    expect(out[1].type).toBe('coin');
+    expect(out[0].type).toBe('centre_commercial');
+    expect(out[1].type).toBe('gare');
   });
   it('ignore les entrées sans coordonnées ; tolère le vide', () => {
     expect(parseSpotsPayload({ spots: [{ nom: 'X' }] })).toEqual([]);

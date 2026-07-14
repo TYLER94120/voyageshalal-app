@@ -19,7 +19,7 @@ export default function AdminSpotScreen() {
   const [adminKey, setAdminKey] = useState('');
   const [coords, setCoords] = useState<{ latitude: number; longitude: number } | null>(null);
   const [locating, setLocating] = useState(false);
-  const [spotType, setSpotType] = useState<string>('salle');
+  const [spotType, setSpotType] = useState<string>('autre');
   const [note, setNote] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
   const [busy, setBusy] = useState(false);
