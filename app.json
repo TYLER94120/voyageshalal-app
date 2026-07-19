@@ -66,6 +66,12 @@
         }
       ],
       [
+        "expo-image-picker",
+        {
+          "cameraPermission": "VoyagesHalal utilise l’appareil photo pour ajouter une photo à un spot de prière."
+        }
+      ],
+      [
         "react-native-android-widget",
         {
           "widgets": [

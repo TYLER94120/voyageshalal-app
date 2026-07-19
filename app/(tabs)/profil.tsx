@@ -7,6 +7,7 @@ import { useFavorites } from '@/context/FavoritesContext';
 import { loadSettings } from '@/lib/prayerSettings';
 import { METHODS } from '@/lib/prayer';
 import { CaptureCard } from '@/components/CaptureCard';
+import { ContributionCard } from '@/components/ContributionCard';
 import { loadAdmin, lockAdmin, unlockAdmin } from '@/lib/admin';
 
 type Row = { icon: string; label: string; sub?: string; route?: Href; url?: string };
@@ -107,6 +108,10 @@ export default function ProfilScreen() {
           <Text style={styles.porteTitle}>Organise ton voyage</Text>
           <Text style={styles.porteSub}>Explore les destinations</Text>
         </Pressable>
+      </View>
+
+      <View style={styles.captureWrap}>
+        <ContributionCard />
       </View>
 
       <View style={styles.captureWrap}>

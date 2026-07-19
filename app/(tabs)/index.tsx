@@ -17,7 +17,9 @@ import { Brand, Radius, Spacing } from '@/constants/theme';
 import { distanceKm, formatDistance } from '@/lib/geo';
 import { openDirections, openDirectionsQuery, openMapsUrl } from '@/lib/maps';
 import { fetchNearbyButchers, fetchNearbyMosques } from '@/lib/overpass';
-import { getSharedSpots, spotTypeLabel, type SharedSpot } from '@/lib/spots';
+import { confirmSpot, getSharedSpots, spotTypeLabel, type SharedSpot } from '@/lib/spots';
+import { loadContrib, recordConfirmation } from '@/lib/contrib';
+import { SpotWizard } from '@/components/SpotWizard';
 import { demoPlacesAround, type DemoCategory, type MapPlace } from '@/lib/demoPlaces';
 import { CitySearchModal } from '@/components/CitySearchModal';
 import { getNearbySpots, halalBadge, type VilleDetail, type VilleSummary } from '@/lib/api';
@@ -42,6 +44,10 @@ function quickSortsFor(filter: FilterKey): { key: QuickSort; label: string }[] {
       { key: 'note', label: '⭐ Noté' },
     ];
   }
+  // Spots partagés : pas de note/prix — seule la proximité a du sens.
+  if (filter === 'spots') {
+    return [{ key: 'proche', label: '📍 Proche' }];
+  }
   return [
     { key: 'reco', label: '✨ Recommandé' },
     { key: 'proche', label: '📍 Proche' },
@@ -51,19 +57,32 @@ function quickSortsFor(filter: FilterKey): { key: QuickSort; label: string }[] {
 }
 
 function defaultQuickSort(filter: FilterKey): QuickSort {
-  return filter === 'hotels' ? 'situe' : 'reco';
+  return filter === 'hotels' ? 'situe' : filter === 'spots' ? 'proche' : 'reco';
 }
 
 function quickSortLabel(filter: FilterKey, key: QuickSort): string {
   return quickSortsFor(filter).find((s) => s.key === key)?.label ?? '';
 }
 
-// Nom de la catégorie selon l'onglet : cuisine (restos), gamme (hôtels), thème (activités).
+// Nom de la catégorie selon l'onglet : cuisine (restos), gamme (hôtels), thème
+// (activités), type (spots partagés).
 function catNoun(filter: FilterKey): string {
-  return filter === 'hotels' ? 'Gamme' : filter === 'activites' ? 'Thème' : 'Cuisine';
+  return filter === 'hotels'
+    ? 'Gamme'
+    : filter === 'activites'
+      ? 'Thème'
+      : filter === 'spots'
+        ? 'Type'
+        : 'Cuisine';
 }
 function catAllLabel(filter: FilterKey): string {
-  return filter === 'hotels' ? 'Toutes gammes' : filter === 'activites' ? 'Tous thèmes' : 'Toutes cuisines';
+  return filter === 'hotels'
+    ? 'Toutes gammes'
+    : filter === 'activites'
+      ? 'Tous thèmes'
+      : filter === 'spots'
+        ? 'Tous types'
+        : 'Toutes cuisines';
 }
 
 // ─── Filtres ────────────────────────────────────────────────────────────────
@@ -150,6 +169,20 @@ export default function HomeScreen() {
   // Spots de prière partagés (couche distincte, non vérifiée).
   const [spots, setSpots] = useState<SharedSpot[]>([]);
   const [spotState, setSpotState] = useState<MosqueState>('idle');
+  // Contribution : assistant « + Ajouter un spot » + confirmations (1 tap).
+  const [wizard, setWizard] = useState(false);
+  const [confirmedIds, setConfirmedIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    loadContrib().then((c) => setConfirmedIds(c.confirmedIds));
+  }, []);
+
+  const onConfirmSpot = useCallback((id: string) => {
+    // Optimiste : merci immédiat, envoi best-effort, anti-doublon local.
+    setConfirmedIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
+    recordConfirmation(id);
+    confirmSpot(id);
+  }, []);
   const [userTracks, setUserTracks] = useState(true);
   const [selectedCity, setSelectedCity] = useState<{ nom: string; latitude: number; longitude: number } | null>(null);
   const [cityModal, setCityModal] = useState(false);
@@ -432,13 +465,15 @@ export default function HomeScreen() {
     if (activeFilter === 'commerces') {
       return butchers.map((b) => ({ id: b.id, name: b.name, latitude: b.latitude, longitude: b.longitude }));
     }
-    // Spots de prière partagés (couche distincte, non vérifiée).
+    // Spots de prière partagés (couche distincte, non vérifiée). La catégorie
+    // (= type de lieu) alimente le filtre « Type » du bouton de sélection.
     if (activeFilter === 'spots') {
       return spots.map((s) => ({
         id: s.id,
         name: s.nom,
         latitude: s.latitude,
         longitude: s.longitude,
+        category: s.type ? spotTypeLabel(s.type) : undefined,
         spotNote: s.note,
         spotType: s.type,
         spot: true,
@@ -491,9 +526,13 @@ export default function HomeScreen() {
     }));
   }, [activeFilter, mosques, butchers, spots, selectedCity, cityDetail, distOrigin, cityMosquees]);
 
-  // Sélection fine (cuisine/tri) : restaurants, hôtels (gammes/budgets) et activités (thèmes).
+  // Sélection fine (cuisine/tri) : restaurants, hôtels (gammes/budgets),
+  // activités (thèmes) et spots partagés (types de lieux).
   const sortable =
-    activeFilter === 'restaurants' || activeFilter === 'hotels' || activeFilter === 'activites';
+    activeFilter === 'restaurants' ||
+    activeFilter === 'hotels' ||
+    activeFilter === 'activites' ||
+    activeFilter === 'spots';
 
   // Catégories disponibles : cuisines (restos) ou gammes (hôtels : Luxe, Budget, Capsule…).
   const categoryOptions = useMemo(() => {
@@ -811,6 +850,12 @@ export default function HomeScreen() {
         </Text>
       </Pressable>
 
+      {/* Contribuer sur place : « + Ajouter un spot » (zone atteignable, bas-gauche) */}
+      <Pressable style={styles.spotFab} onPress={() => setWizard(true)}>
+        <Text style={styles.spotFabIcon}>➕</Text>
+        <Text style={styles.spotFabLabel}>Spot</Text>
+      </Pressable>
+
       {/* Liste des lieux proches */}
       {nearbyList.length > 0 && (
         <View style={styles.cardsWrapper}>
@@ -894,6 +939,14 @@ export default function HomeScreen() {
                     </Text>
                   </Pressable>
                 )}
+                {p.spot &&
+                  (confirmedIds.includes(p.id) ? (
+                    <Text style={styles.spotConfirmed}>✅ Merci, confirmé !</Text>
+                  ) : (
+                    <Pressable style={styles.spotConfirmBtn} onPress={() => onConfirmSpot(p.id)} hitSlop={6}>
+                      <Text style={styles.spotConfirmText}>👍 Toujours là ? Confirmer</Text>
+                    </Pressable>
+                  ))}
                 <View style={styles.placeCardBottom}>
                   <Text style={styles.placeDist}>
                     {p.note != null
@@ -934,6 +987,15 @@ export default function HomeScreen() {
       </View>
 
       <CitySearchModal visible={cityModal} onClose={() => setCityModal(false)} onSelect={selectCity} />
+
+      <SpotWizard
+        visible={wizard}
+        onClose={() => setWizard(false)}
+        onPublished={() => {
+          // Recharge la couche pour voir son spot immédiatement.
+          loadSpots(mapCenter.current.latitude, mapCenter.current.longitude);
+        }}
+      />
 
       {showQuickBar && (
         <CuisineSheet
@@ -1129,6 +1191,39 @@ const styles = StyleSheet.create({
   },
   cityFabIcon: { fontSize: 20 },
   cityFabLabel: { color: Brand.night, fontSize: 13, fontWeight: '800', flexShrink: 1 },
+
+  // « + Spot » : violet communauté, distinct des données vérifiées.
+  spotFab: {
+    position: 'absolute',
+    left: 16,
+    bottom: Platform.OS === 'ios' ? 250 : 220,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    height: 48,
+    paddingHorizontal: 14,
+    borderRadius: 24,
+    backgroundColor: '#5b21b6',
+    borderWidth: 1.5,
+    borderColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.28,
+    shadowRadius: 6,
+    elevation: 7,
+  },
+  spotFabIcon: { fontSize: 16, color: '#fff' },
+  spotFabLabel: { color: '#fff', fontSize: 13, fontWeight: '800' },
+
+  spotConfirmBtn: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#ede9fe',
+    borderRadius: Radius.pill,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
+  spotConfirmText: { color: '#5b21b6', fontSize: 11, fontWeight: '800' },
+  spotConfirmed: { color: '#2d6a4f', fontSize: 11, fontWeight: '800' },
 
   cardsWrapper: { position: 'absolute', left: 0, right: 0, bottom: Platform.OS === 'ios' ? 124 : 98 },
   cardsScroll: { paddingHorizontal: 16, gap: 10 },

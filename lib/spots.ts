@@ -93,6 +93,7 @@ export interface NewSpot {
   type?: string; // clé de SPOT_TYPES
   note?: string;
   photoUrl?: string;
+  photoBase64?: string; // photo prise sur place (le serveur peut l'ignorer tant que non géré)
 }
 
 export type AddSpotResult = 'ok' | 'forbidden' | 'error';
@@ -107,6 +108,49 @@ export async function addSpot(spot: NewSpot, adminKey: string): Promise<AddSpotR
     });
     if (res.status === 401 || res.status === 403) return 'forbidden';
     return res.ok ? 'ok' : 'error';
+  } catch {
+    return 'error';
+  }
+}
+
+export type SubmitSpotResult = 'ok' | 'closed' | 'error';
+
+/**
+ * Soumission d'un spot depuis le flux communautaire. Avec la clé admin si
+ * débloquée ; sinon tentative publique — si le serveur exige encore la clé
+ * (401/403), on répond « closed » : les contributions publiques ne sont pas
+ * encore ouvertes côté API (stub propre, aucune donnée perdue côté UX).
+ */
+export async function submitSpot(spot: NewSpot, adminKey?: string): Promise<SubmitSpotResult> {
+  try {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (adminKey) headers['x-admin-key'] = adminKey;
+    const res = await fetch(`${API_BASE}/spots`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ ...spot, source: adminKey ? 'app-admin' : 'app-public' }),
+    });
+    if (res.status === 401 || res.status === 403) return 'closed';
+    return res.ok ? 'ok' : 'error';
+  } catch {
+    return 'error';
+  }
+}
+
+/**
+ * « Toujours là ? » : confirme un spot en 1 tap. Best-effort — si l'endpoint
+ * n'existe pas encore (404/405), on renvoie quand même « ok » côté UX (le
+ * remerciement reste vrai localement, la persistance serveur viendra).
+ */
+export async function confirmSpot(spotId: string): Promise<'ok' | 'error'> {
+  try {
+    const res = await fetch(`${API_BASE}/spots/${encodeURIComponent(spotId)}/confirm`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ source: 'app' }),
+    });
+    if (res.ok || res.status === 404 || res.status === 405) return 'ok';
+    return 'error';
   } catch {
     return 'error';
   }
