@@ -48,7 +48,7 @@ export default function QiblaScreen() {
         // Localisation requise pour un cap « nord vrai » (corrigé de la
         // déclinaison par l'OS) ; sinon on retombe sur le nord magnétique.
         await Location.requestForegroundPermissionsAsync();
-        sub = await Location.watchHeadingAsync((h) => {
+        const s = await Location.watchHeadingAsync((h) => {
           if (!alive) return;
           const useTrue = h.trueHeading >= 0;
           const raw = useTrue ? h.trueHeading : h.magHeading;
@@ -57,6 +57,13 @@ export default function QiblaScreen() {
           setHeading(smoothed.current);
           setAccuracy(h.accuracy);
         });
+        // Démonté pendant l'attente → retirer tout de suite, sinon le capteur
+        // magnétique resterait actif (le cleanup a déjà lu `sub` nul).
+        if (!alive) {
+          s.remove();
+          return;
+        }
+        sub = s;
       } catch {
         if (alive) setUnavailable(true);
       }

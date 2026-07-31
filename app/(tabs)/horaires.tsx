@@ -16,6 +16,7 @@ import {
   type PrayerSlot,
 } from '@/lib/prayer';
 import { CitySearchModal } from '@/components/CitySearchModal';
+import { cityCivilDate, formatTimeInTz, timezoneFor } from '@/lib/cityTime';
 import { type VilleSummary } from '@/lib/api';
 import { Brand, Radius, Spacing } from '@/constants/theme';
 
@@ -25,11 +26,20 @@ export default function HorairesScreen() {
   const { ready, slots, next, current, countdown, now, location } = usePrayerClock();
 
   // Horaires d'une VILLE choisie (planif) — même moteur LOCAL, hors-ligne.
+  // Les horaires sont AFFICHÉS dans le fuseau de la ville (sinon le Fajr de
+  // Tokyo apparaîtrait « 20:30 » vu de France) et calculés pour SON jour civil.
   const [cityModal, setCityModal] = useState(false);
   const [cityOverride, setCityOverride] = useState<{ nom: string; lat: number; lng: number } | null>(null);
   const usingCity = cityOverride != null;
+  const cityTz = usingCity ? timezoneFor(cityOverride.lat, cityOverride.lng) : null;
   const citySlots = usingCity
-    ? computeDay(cityOverride.lat, cityOverride.lng, now, settings.methodKey, settings.madhab)
+    ? computeDay(
+        cityOverride.lat,
+        cityOverride.lng,
+        cityCivilDate(now, cityTz),
+        settings.methodKey,
+        settings.madhab,
+      )
     : null;
   const cityNext = usingCity
     ? findNextPrayer(cityOverride.lat, cityOverride.lng, now, settings.methodKey, settings.madhab)
@@ -39,6 +49,8 @@ export default function HorairesScreen() {
   const effNext = usingCity ? cityNext : next;
   const effCurrent = usingCity && citySlots ? findCurrentPrayer(citySlots, now) : current;
   const effCountdown = usingCity && cityNext ? countdownTo(cityNext.time, now) : countdown;
+  // Formatage : fuseau de la ville en mode ville, heure de l'appareil sinon.
+  const fmt = (d: Date) => (usingCity ? formatTimeInTz(d, cityTz) : formatTime(d));
 
   const pickCity = (v: VilleSummary) => {
     setCityModal(false);
@@ -105,7 +117,8 @@ export default function HorairesScreen() {
             PROCHAINE PRIÈRE{effNext.isTomorrow ? ' · DEMAIN' : ''}
           </Text>
           <Text style={styles.heroPrayer}>{effNext.label}</Text>
-          <Text style={styles.heroTime}>{formatTime(effNext.time)}</Text>
+          <Text style={styles.heroTime}>{fmt(effNext.time)}</Text>
+          {usingCity && <Text style={styles.tzNote}>🕐 heure locale de {cityOverride.nom}</Text>}
           <View style={styles.heroCountdownRow}>
             <CountUnit value={effCountdown.hours} label="h" />
             <CountUnit value={effCountdown.minutes} label="min" />
@@ -129,6 +142,7 @@ export default function HorairesScreen() {
             <PrayerRow
               key={slot.name}
               slot={slot}
+              time={fmt(slot.time)}
               isNext={isNext}
               isCurrent={isCurrent}
               isPast={isPast}
@@ -215,11 +229,13 @@ function CountUnit({ value, label }: { value: number; label: string }) {
 
 function PrayerRow({
   slot,
+  time,
   isNext,
   isCurrent,
   isPast,
 }: {
   slot: PrayerSlot;
+  time: string;
   isNext: boolean;
   isCurrent: boolean;
   isPast: boolean;
@@ -232,7 +248,7 @@ function PrayerRow({
         {isNext && <Text style={styles.badgeNext}>PROCHAINE</Text>}
         {isCurrent && !isNext && <Text style={styles.badgeCurrent}>EN COURS</Text>}
       </View>
-      <Text style={[styles.rowTime, isNext && styles.rowTimeNext]}>{formatTime(slot.time)}</Text>
+      <Text style={[styles.rowTime, isNext && styles.rowTimeNext]}>{time}</Text>
     </View>
   );
 }
@@ -287,6 +303,7 @@ const styles = StyleSheet.create({
   heroKicker: { color: Brand.gold, fontSize: 11, fontWeight: '800', letterSpacing: 1.5 },
   heroPrayer: { color: Brand.cream, fontSize: 28, fontWeight: '800', marginTop: 4 },
   heroTime: { color: Brand.gold, fontSize: 40, fontWeight: '800', marginTop: 2 },
+  tzNote: { color: Brand.creamMuted, fontSize: 12, fontWeight: '600', marginTop: 2 },
   heroCountdownRow: { flexDirection: 'row', gap: Spacing.lg, marginTop: Spacing.md },
   countUnit: { alignItems: 'center', minWidth: 48 },
   countValue: { color: Brand.cream, fontSize: 24, fontWeight: '800' },

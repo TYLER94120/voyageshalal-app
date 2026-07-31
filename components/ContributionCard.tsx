@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useFocusEffect } from 'expo-router';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
 import {
@@ -25,9 +26,13 @@ export function ContributionCard() {
     loadContrib().then(setState);
   }, []);
 
-  useEffect(() => {
-    refresh();
-  }, [refresh]);
+  // Au focus de l'onglet (pas seulement au montage) : les confirmations faites
+  // sur la carte incrémentent le compteur dès qu'on revient sur le profil.
+  useFocusEffect(
+    useCallback(() => {
+      refresh();
+    }, [refresh]),
+  );
 
   const level = levelFor(state.spotsAdded);
   const next = nextLevel(state.spotsAdded);

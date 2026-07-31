@@ -10,7 +10,8 @@ import {
   View,
 } from 'react-native';
 
-import { getVilles, type VilleSummary } from '@/lib/api';
+import { type VilleSummary } from '@/lib/api';
+import { getVillesCached } from '@/lib/cityCache';
 import { Brand, Radius, Spacing } from '@/constants/theme';
 
 type LoadState = 'loading' | 'ready' | 'error';
@@ -31,14 +32,17 @@ export function CitySearchModal({
   const [villes, setVilles] = useState<VilleSummary[]>([]);
   const [state, setState] = useState<LoadState>('loading');
   const [query, setQuery] = useState('');
+  // Compteur de tentatives : « Réessayer » l'incrémente pour relancer l'effet
+  // (dépendre de villes.length ne marchait pas — 0 avant ET après l'échec).
+  const [attempt, setAttempt] = useState(0);
 
-  // Charge la liste à l'ouverture.
+  // Charge la liste à l'ouverture (avec cache hors-ligne, comme Destinations).
   useEffect(() => {
     if (!visible || villes.length > 0) return;
     let alive = true;
     setState('loading');
-    getVilles()
-      .then((data) => {
+    getVillesCached()
+      .then(({ data }) => {
         if (!alive) return;
         setVilles(data);
         setState('ready');
@@ -49,7 +53,8 @@ export function CitySearchModal({
     return () => {
       alive = false;
     };
-  }, [visible, villes.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible, attempt]);
 
   // Bouton retour Android → ferme le panneau.
   useEffect(() => {
@@ -113,7 +118,7 @@ export function CitySearchModal({
         <View style={styles.center}>
           <Text style={styles.errEmoji}>📡</Text>
           <Text style={styles.muted}>Impossible de charger les villes. Vérifie ta connexion.</Text>
-          <Pressable style={styles.retry} onPress={() => setVilles([])}>
+          <Pressable style={styles.retry} onPress={() => setAttempt((a) => a + 1)}>
             <Text style={styles.retryText}>Réessayer</Text>
           </Pressable>
         </View>

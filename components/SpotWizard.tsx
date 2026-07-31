@@ -58,6 +58,9 @@ export function SpotWizard({
   const reset = useCallback(() => {
     setStep('type');
     setSpotType(null);
+    // La position aussi : « ➕ Un autre » après avoir marché 800 m republiait
+    // sinon aux coordonnées du spot PRÉCÉDENT (donnée corrompue).
+    setCoords(null);
     setNote('');
     setPhotoBase64(null);
     setPhotoTaken(false);
@@ -216,7 +219,14 @@ export function SpotWizard({
           )}
 
           {step === 'done' && result === 'ok' && (
-            <Celebration newLevel={newLevel} onMore={reset} onClose={onClose} />
+            <Celebration
+              newLevel={newLevel}
+              onMore={() => {
+                reset();
+                locate(); // nouvelle position pour le nouveau spot
+              }}
+              onClose={onClose}
+            />
           )}
           {step === 'done' && result === 'closed' && (
             <>

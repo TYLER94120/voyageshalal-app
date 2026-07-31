@@ -101,8 +101,20 @@ export type RescheduleResult =
   | { status: 'denied'; count: 0 }
   | { status: 'scheduled'; count: number };
 
+// Verrou : deux appelants (écran Adhan + AdhanScheduler au premier plan) peuvent
+// reprogrammer en même temps → sans sérialisation, les « annuler tout » et les
+// programmations s'entrelacent et l'adhan sonne en double. On met les appels en
+// file ; chaque reprogrammation (annulation + planification) est donc atomique.
+let rescheduleQueue: Promise<unknown> = Promise.resolve();
+
 /** Reprogramme toutes les notifications adhan selon les réglages courants. */
-export async function rescheduleAdhan(params: RescheduleParams): Promise<RescheduleResult> {
+export function rescheduleAdhan(params: RescheduleParams): Promise<RescheduleResult> {
+  const run = rescheduleQueue.then(() => doReschedule(params));
+  rescheduleQueue = run.catch(() => undefined); // la file survit aux échecs
+  return run;
+}
+
+async function doReschedule(params: RescheduleParams): Promise<RescheduleResult> {
   await cancelAdhan();
   if (!params.enabled) return { status: 'off', count: 0 };
 

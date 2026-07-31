@@ -77,6 +77,11 @@ export function PrayerProvider({ children }: { children: ReactNode }) {
   // inactive→active, ce qui re-déclenchait une résolution → le nom de ville
   // « clignotait ». On espace les résolutions d'au moins 45 s.
   const lastResolveAt = useRef(0);
+  // Instantané de l'état localisation, lisible dans les callbacks async.
+  const locSnapshot = useRef(location);
+  useEffect(() => {
+    locSnapshot.current = location;
+  }, [location]);
 
   const resolveLocation = useCallback(async () => {
     if (Date.now() - lastResolveAt.current < 45_000) return;
@@ -84,6 +89,9 @@ export function PrayerProvider({ children }: { children: ReactNode }) {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
+        // Refus → PAS de throttle : si l'utilisateur autorise dans les Réglages
+        // et revient, le prochain passage au premier plan doit résoudre direct.
+        lastResolveAt.current = 0;
         setLocation({ ...DEFAULT_LOCATION, usingDefault: true, ready: true });
         return;
       }
@@ -120,8 +128,14 @@ export function PrayerProvider({ children }: { children: ReactNode }) {
         longitude: current.coords.longitude,
       };
       applyCoords(coords.latitude, coords.longitude);
-      // Persistée pour les usages hors app (widget headless).
-      saveLastLocation(coords);
+      // Persistée pour les usages hors app (widget headless). On CONSERVE le
+      // nom de ville déjà connu si on n'a pas bougé : hors-ligne, le
+      // géocodage inverse échoue et le widget perdait « Berkane » → « Prière ».
+      const prevLoc = locSnapshot.current;
+      const movedFar =
+        prevLoc.usingDefault ||
+        Math.hypot(prevLoc.latitude - coords.latitude, prevLoc.longitude - coords.longitude) > 0.02;
+      saveLastLocation({ ...coords, city: movedFar ? undefined : prevLoc.city });
 
       // 3) Nom de ville (best-effort, nécessite le réseau).
       try {

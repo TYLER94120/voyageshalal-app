@@ -46,7 +46,7 @@
         "expo-location",
         {
           "locationWhenInUsePermission": "VoyagesHalal utilise votre position pour afficher les mosquées, restaurants halal et hôtels près de vous.",
-          "locationAlwaysAndWhenInUsePermission": "VoyagesHalal utilise votre position pour afficher les lieux halal près de vous."
+          "isAndroidBackgroundLocationEnabled": false
         }
       ],
       [

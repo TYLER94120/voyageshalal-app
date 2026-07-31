@@ -4,7 +4,7 @@ import { useRouter, type Href } from 'expo-router';
 
 import { Brand, Radius, Spacing } from '@/constants/theme';
 import { useFavorites } from '@/context/FavoritesContext';
-import { loadSettings } from '@/lib/prayerSettings';
+import { usePrayerContext } from '@/context/PrayerContext';
 import { METHODS } from '@/lib/prayer';
 import { CaptureCard } from '@/components/CaptureCard';
 import { ContributionCard } from '@/components/ContributionCard';
@@ -15,7 +15,11 @@ type Row = { icon: string; label: string; sub?: string; route?: Href; url?: stri
 export default function ProfilScreen() {
   const router = useRouter();
   const { favorites } = useFavorites();
-  const [methodLabel, setMethodLabel] = useState<string>('—');
+  // Méthode de calcul lue EN DIRECT depuis le contexte : un changement fait
+  // dans l'écran Horaires se reflète ici immédiatement (l'onglet ne se
+  // démonte jamais, un chargement unique restait figé toute la session).
+  const { settings } = usePrayerContext();
+  const methodLabel = METHODS.find((x) => x.key === settings.methodKey)?.label ?? settings.methodKey;
   const [admin, setAdmin] = useState(false);
   const [codeModal, setCodeModal] = useState(false);
   const [code, setCode] = useState('');
@@ -23,10 +27,6 @@ export default function ProfilScreen() {
   const tapsRef = useRef(0);
 
   useEffect(() => {
-    loadSettings().then((s) => {
-      const m = METHODS.find((x) => x.key === s.methodKey);
-      setMethodLabel(m ? m.label : s.methodKey);
-    });
     loadAdmin().then((a) => setAdmin(a.isAdmin));
   }, []);
 

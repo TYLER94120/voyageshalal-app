@@ -40,19 +40,33 @@ async function save(state: ContribState): Promise<void> {
   }
 }
 
-export async function recordSpotAdded(): Promise<ContribState> {
-  const s = await loadContrib();
-  const next = { ...s, spotsAdded: s.spotsAdded + 1 };
-  await save(next);
-  return next;
+// Les mutations sont mises en file : trois « Confirmer » rapides font trois
+// lecture-modification-écriture — sans sérialisation, la dernière écrasait les
+// autres et des confirmations disparaissaient au redémarrage.
+let writeQueue: Promise<unknown> = Promise.resolve();
+function enqueue<T>(op: () => Promise<T>): Promise<T> {
+  const run = writeQueue.then(op);
+  writeQueue = run.catch(() => undefined);
+  return run;
 }
 
-export async function recordConfirmation(spotId: string): Promise<ContribState> {
-  const s = await loadContrib();
-  if (s.confirmedIds.includes(spotId)) return s;
-  const next = { ...s, confirmedIds: [...s.confirmedIds, spotId] };
-  await save(next);
-  return next;
+export function recordSpotAdded(): Promise<ContribState> {
+  return enqueue(async () => {
+    const s = await loadContrib();
+    const next = { ...s, spotsAdded: s.spotsAdded + 1 };
+    await save(next);
+    return next;
+  });
+}
+
+export function recordConfirmation(spotId: string): Promise<ContribState> {
+  return enqueue(async () => {
+    const s = await loadContrib();
+    if (s.confirmedIds.includes(spotId)) return s;
+    const next = { ...s, confirmedIds: [...s.confirmedIds, spotId] };
+    await save(next);
+    return next;
+  });
 }
 
 // ─── Niveaux & badges ────────────────────────────────────────────────────────

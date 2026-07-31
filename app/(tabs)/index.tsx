@@ -156,6 +156,8 @@ export default function HomeScreen() {
   const watchRef = useRef<Location.LocationSubscription | null>(null);
   const mosquesKicked = useRef(false);
   const cardsRef = useRef<ScrollView>(null);
+  // Jeton de la dernière demande de « détail ville » (anti-course réseau).
+  const cityReqSeq = useRef(0);
 
   const [userLoc, setUserLoc] = useState<{ latitude: number; longitude: number } | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterKey>('mosquees');
@@ -264,12 +266,22 @@ export default function HomeScreen() {
     }
   }, []);
 
+  // `watchPositionAsync` est asynchrone : si l'écran est démonté pendant
+  // l'attente, le cleanup lit un ref encore nul et l'abonnement GPS resterait
+  // actif pour toujours (batterie). D'où le drapeau `mountedRef` : on retire
+  // immédiatement l'abonnement s'il arrive après le démontage.
+  const mountedRef = useRef(true);
   const startWatching = useCallback(async () => {
     if (watchRef.current) return;
-    watchRef.current = await Location.watchPositionAsync(
+    const sub = await Location.watchPositionAsync(
       { accuracy: Location.Accuracy.Balanced, distanceInterval: 20 },
       (loc) => setUserLoc({ latitude: loc.coords.latitude, longitude: loc.coords.longitude }),
     );
+    if (!mountedRef.current || watchRef.current) {
+      sub.remove(); // arrivé trop tard (démonté) ou en double
+      return;
+    }
+    watchRef.current = sub;
   }, []);
 
   const locate = useCallback(async (): Promise<{ latitude: number; longitude: number } | null> => {
@@ -299,11 +311,13 @@ export default function HomeScreen() {
   }, [applyUser, startWatching, kickMosques]);
 
   useEffect(() => {
+    mountedRef.current = true;
     locate().then((coords) => {
       const c = coords ?? PARIS;
       kickMosques(c.latitude, c.longitude);
     });
     return () => {
+      mountedRef.current = false;
       watchRef.current?.remove();
       watchRef.current = null;
     };
@@ -357,15 +371,19 @@ export default function HomeScreen() {
         loadMosques(coords.latitude, coords.longitude, CITY_RADIUS_M);
       }
 
-      // Détail de la ville (restaurants / hôtels réels)
+      // Détail de la ville (restaurants / hôtels réels). Jeton de séquence :
+      // une réponse lente (ex. « autour de moi » parti avant) ne doit pas
+      // écraser la ville choisie ensuite — on n'applique que la DERNIÈRE demande.
+      const seq = ++cityReqSeq.current;
       setCityDetail(null);
       setCityDetailState('loading');
       try {
         const { data } = await getVilleCached(ville.slug);
+        if (seq !== cityReqSeq.current) return; // demande obsolète
         setCityDetail(data);
         setCityDetailState('ready');
       } catch {
-        setCityDetailState('error');
+        if (seq === cityReqSeq.current) setCityDetailState('error');
       }
     },
     [loadMosques],
@@ -387,10 +405,14 @@ export default function HomeScreen() {
     mapRef.current?.animateToRegion({ ...u, latitudeDelta: 0.05, longitudeDelta: 0.05 }, 700);
     loadMosques(u.latitude, u.longitude, ME_RADIUS_M);
 
+    // Jeton de séquence : si l'utilisateur choisit une ville pendant que ce
+    // chargement est en vol, la réponse tardive est simplement ignorée.
+    const seq = ++cityReqSeq.current;
     setCityDetail(null);
     setCityDetailState('loading');
     getNearbySpots(u.latitude, u.longitude, NEARBY_RADIUS_KM)
       .then((spots) => {
+        if (seq !== cityReqSeq.current) return; // demande obsolète
         const detail: VilleDetail = {
           slug: '__autour__',
           nom: 'Autour de moi',
@@ -406,7 +428,9 @@ export default function HomeScreen() {
         setCityDetail(detail);
         setCityDetailState('ready');
       })
-      .catch(() => setCityDetailState('error'));
+      .catch(() => {
+        if (seq === cityReqSeq.current) setCityDetailState('error');
+      });
     return true;
   }, [loadMosques]);
 
@@ -552,29 +576,6 @@ export default function HomeScreen() {
 
   const showQuickBar = sortable && !!selectedCity && places.length > 1;
 
-  // On plafonne les repères de la carte : rendre des centaines de marqueurs
-  // personnalisés fige la carte. ~60 suffisent largement à l'écran.
-  const MAX_MARKERS = 60;
-  const markers = useMemo(
-    () =>
-      visiblePlaces
-        .filter(
-          (p): p is PinItem & { latitude: number; longitude: number } =>
-            typeof p.latitude === 'number' && typeof p.longitude === 'number',
-        )
-        .slice(0, MAX_MARKERS),
-    [visiblePlaces],
-  );
-
-  // tracksViewChanges : true brièvement pour dessiner les marqueurs, puis false
-  // (sinon react-native-maps les redessine à chaque frame → gros lag).
-  const [markersTrack, setMarkersTrack] = useState(true);
-  useEffect(() => {
-    setMarkersTrack(true);
-    const t = setTimeout(() => setMarkersTrack(false), 900);
-    return () => clearTimeout(t);
-  }, [markers, selectedId]);
-
   const nearbyList: PinWithDist[] = useMemo(() => {
     const origin = distOrigin;
     const withDist = visiblePlaces.map((p) => ({
@@ -595,6 +596,28 @@ export default function HomeScreen() {
     });
     return withDist.slice(0, 40);
   }, [visiblePlaces, distOrigin, sortable, quickSort]);
+
+  // Repères de la carte = EXACTEMENT les lieux de la liste du bas (même tri,
+  // même plafond) : taper n'importe quel repère retrouve sa carte, et en tri
+  // « Proche » la carte montre bien les plus proches (pas l'ordre brut de
+  // l'API). Le plafond évite aussi de figer la carte avec trop de marqueurs.
+  const markers = useMemo(
+    () =>
+      nearbyList.filter(
+        (p): p is PinWithDist & { latitude: number; longitude: number } =>
+          typeof p.latitude === 'number' && typeof p.longitude === 'number',
+      ),
+    [nearbyList],
+  );
+
+  // tracksViewChanges : true brièvement pour dessiner les marqueurs, puis false
+  // (sinon react-native-maps les redessine à chaque frame → gros lag).
+  const [markersTrack, setMarkersTrack] = useState(true);
+  useEffect(() => {
+    setMarkersTrack(true);
+    const t = setTimeout(() => setMarkersTrack(false), 900);
+    return () => clearTimeout(t);
+  }, [markers, selectedId]);
 
   const searchRadius = () => (selectedCity && !aroundMe ? CITY_RADIUS_M : ME_RADIUS_M);
 
@@ -911,10 +934,10 @@ export default function HomeScreen() {
                       </Text>
                     ) : null;
                   })()}
-                  {i === 0 && quickSort === 'reco' && (p.note != null || p.dist != null) && (
+                  {i === 0 && sortable && quickSort === 'reco' && (p.note != null || p.dist != null) && (
                     <Text style={styles.nearestTag}>✨ Reco</Text>
                   )}
-                  {i === 0 && p.dist != null && quickSort === 'proche' && (
+                  {i === 0 && p.dist != null && (quickSort === 'proche' || !sortable) && (
                     <Text style={styles.nearestTag}>la + proche</Text>
                   )}
                   {i === 0 && quickSort === 'situe' && p.locScore != null && (
