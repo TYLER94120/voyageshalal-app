@@ -64,6 +64,7 @@ export function SpotWizard({
     setNote('');
     setPhotoBase64(null);
     setPhotoTaken(false);
+    setPhotoTooBig(false);
     setResult(null);
     setNewLevel(null);
   }, []);
@@ -90,14 +91,24 @@ export function SpotWizard({
     }
   }, [visible, reset, locate]);
 
+  // Plafond d'envoi (~2 Mo décodés) : au-delà, le JSON devient énorme pour le
+  // réseau mobile et le serveur. quality 0.3 suffit largement pour un spot.
+  const PHOTO_MAX_B64 = 2_800_000;
+  const [photoTooBig, setPhotoTooBig] = useState(false);
+
   const takePhoto = async () => {
     if (!picker) return;
+    setPhotoTooBig(false);
     try {
       const perm = await picker.requestCameraPermissionsAsync();
       if (!perm.granted) return;
       const res = await picker.launchCameraAsync({ quality: 0.3, base64: true, allowsEditing: false });
       const asset = res.assets?.[0];
       if (asset?.base64) {
+        if (asset.base64.length > PHOTO_MAX_B64) {
+          setPhotoTooBig(true);
+          return;
+        }
         setPhotoBase64(asset.base64);
         setPhotoTaken(true);
       }
@@ -192,6 +203,11 @@ export function SpotWizard({
               ) : (
                 <Text style={styles.photoHint}>
                   📷 La photo arrive à la prochaine mise à jour complète de l’app.
+                </Text>
+              )}
+              {photoTooBig && (
+                <Text style={styles.photoHint}>
+                  ⚠️ Photo trop lourde — reprends-la (elle sera plus légère), ou publie sans photo.
                 </Text>
               )}
 
