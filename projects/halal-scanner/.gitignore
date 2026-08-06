@@ -1,0 +1,8 @@
+node_modules/
+.expo/
+dist/
+npm-debug.*
+web-build/
+.env
+.env.local
+expo-env.d.ts
