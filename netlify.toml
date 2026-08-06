@@ -1,0 +1,6 @@
+# Alternative de déploiement : connecter ce repo sur app.netlify.com
+# (utile surtout pour brancher le domaine halalcheck.fr en 2 clics).
+# Aucune étape de build : le site est statique, prêt à servir.
+[build]
+  publish = "projects/halal-scanner/site"
+  command = ""
