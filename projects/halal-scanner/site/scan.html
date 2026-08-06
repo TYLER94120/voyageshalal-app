@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scanner — HalalCheck</title>
+  <meta name="description" content="Scanne le code-barres d'un produit : verdict halal, douteux ou haram, avec les ingrédients expliqués." />
+  <meta name="theme-color" content="#0B1A0F" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" href="./icon-192.png" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --nuit: #0B1A0F;
+      --foret: #1B4332;
+      --or: #C9A84C;
+      --creme: #FDFAF3;
+      --halal: #3E9B4F;
+      --douteux: #E08E3C;
+      --haram: #D64545;
+      --inconnu: #6B7370;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "DM Sans", system-ui, sans-serif;
+      background: var(--nuit);
+      color: var(--creme);
+      font-size: 16px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    button, input { font-family: inherit; font-size: 16px; }
+    button { cursor: pointer; border: none; }
+
+    .entete {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 16px;
+      max-width: 560px; margin: 0 auto;
+    }
+    .retour {
+      min-width: 56px; min-height: 56px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 16px;
+      color: var(--creme); text-decoration: none; font-size: 24px;
+      background: rgba(253, 250, 243, 0.08);
+    }
+    .titre-entete { font-size: 20px; font-weight: 800; }
+    .titre-entete .coche { color: var(--or); }
+
+    main { max-width: 560px; margin: 0 auto; padding: 8px 20px 56px; }
+    section[hidden] { display: none !important; }
+
+    /* ---- Écran scan ---- */
+    .cadre-video {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #050d08;
+      aspect-ratio: 3 / 4;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .viseur {
+      position: relative; z-index: 2;
+      width: 72%; max-width: 300px; height: 150px;
+      border: 3px solid var(--or);
+      border-radius: 20px;
+    }
+    .etat-camera {
+      position: absolute; z-index: 3; left: 16px; right: 16px; bottom: 16px;
+      background: rgba(11, 26, 15, 0.85);
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 15px; font-weight: 600;
+      text-align: center;
+    }
+    .consigne { text-align: center; font-size: 16px; font-weight: 600; margin: 16px 0 20px; color: rgba(253,250,243,0.8); }
+    .ligne-saisie { display: flex; gap: 10px; }
+    #saisie {
+      flex: 1; min-height: 56px;
+      background: var(--foret); color: var(--creme);
+      border: none; border-radius: 14px;
+      padding: 0 16px;
+    }
+    #saisie::placeholder { color: rgba(253, 250, 243, 0.45); }
+    .secondaire {
+      min-height: 56px; padding: 0 18px;
+      border-radius: 14px;
+      background: var(--foret); color: var(--or);
+      border: 1.5px solid var(--or);
+      font-weight: 700;
+    }
+    .secondaire:disabled { opacity: 0.4; }
+
+    /* ---- Chargement ---- */
+    .centre { text-align: center; padding: 80px 16px; }
+    .spinner {
+      width: 48px; height: 48px;
+      border: 5px solid rgba(201, 168, 76, 0.25);
+      border-top-color: var(--or);
+      border-radius: 50%;
+      margin: 0 auto 18px;
+      animation: tourner 0.8s linear infinite;
+    }
+    @keyframes tourner { to { transform: rotate(360deg); } }
+
+    /* ---- Résultat ---- */
+    #produit-image {
+      display: block;
+      width: 100%; height: 190px;
+      object-fit: contain;
+      background: var(--creme);
+      border-radius: 16px;
+      margin-bottom: 18px;
+    }
+    .image-absente {
+      height: 150px;
+      background: var(--foret);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 44px;
+      margin-bottom: 18px;
+    }
+    #produit-nom { font-size: 23px; font-weight: 800; }
+    #produit-marque { color: rgba(253, 250, 243, 0.65); margin-top: 2px; }
+    .verdict {
+      border-radius: 20px;
+      text-align: center;
+      padding: 24px 16px;
+      margin-top: 18px;
+    }
+    #verdict-emoji { font-size: 38px; }
+    #verdict-label { font-size: 30px; font-weight: 900; letter-spacing: 1px; }
+    #verdict-detail { font-size: 15px; font-weight: 600; margin-top: 4px; opacity: 0.95; }
+    #alertes { margin-top: 22px; display: grid; gap: 10px; }
+    .alerte {
+      background: var(--foret);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+    .alerte b { display: block; font-size: 16px; margin-bottom: 3px; }
+    .alerte span { font-size: 14px; color: rgba(253, 250, 243, 0.78); }
+    #ingredients-bloc h2, .bloc-historique h2 { font-size: 19px; margin: 26px 0 10px; }
+    #ingredients { font-size: 14px; color: rgba(253, 250, 243, 0.75); }
+    .avertissement { font-size: 13px; color: rgba(253, 250, 243, 0.5); margin: 24px 0 18px; }
+    .principal {
+      width: 100%;
+      min-height: 64px;
+      border-radius: 20px;
+      background: var(--or); color: var(--nuit);
+      font-size: 18px; font-weight: 800;
+    }
+
+    /* ---- Erreur ---- */
+    #erreur-emoji { font-size: 46px; }
+    #erreur-titre { font-size: 22px; font-weight: 800; margin: 10px 0 6px; }
+    #erreur-texte { color: rgba(253, 250, 243, 0.7); margin-bottom: 26px; }
+
+    /* ---- Historique ---- */
+    .bloc-historique { margin-top: 34px; }
+    .scan-ligne {
+      width: 100%;
+      display: flex; align-items: center; gap: 12px;
+      min-height: 60px;
+      background: var(--foret);
+      border-radius: 16px;
+      padding: 8px 16px;
+      margin-bottom: 8px;
+      color: var(--creme);
+      text-align: left;
+    }
+    .scan-ligne .emo { font-size: 20px; }
+    .scan-ligne .nom { flex: 1; font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .scan-ligne .pastille { width: 13px; height: 13px; border-radius: 999px; flex: 0 0 auto; }
+    .vide { color: rgba(253, 250, 243, 0.45); font-size: 15px; }
+  </style>
+</head>
+<body>
+
+  <header class="entete">
+    <a class="retour" href="./index.html" aria-label="Retour à l'accueil">←</a>
+    <div class="titre-entete">HalalCheck <span class="coche">✓</span></div>
+  </header>
+
+  <main>
+    <section id="ecran-scan">
+      <div class="cadre-video">
+        <video id="video" playsinline muted></video>
+        <div class="viseur" aria-hidden="true"></div>
+        <p class="etat-camera" id="etat-camera">Démarrage de la caméra…</p>
+      </div>
+      <p class="consigne">Vise le code-barres du produit</p>
+      <div class="ligne-saisie">
+        <input id="saisie" inputmode="numeric" autocomplete="off" placeholder="ou saisis le code-barres" aria-label="Code-barres" />
+        <button id="verifier" class="secondaire" disabled>Vérifier</button>
+      </div>
+      <div class="bloc-historique">
+        <h2>Derniers scans</h2>
+        <div id="historique"><p class="vide">Tes scans apparaîtront ici.</p></div>
+      </div>
+    </section>
+
+    <section id="ecran-chargement" class="centre" hidden>
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Analyse en cours…</p>
+    </section>
+
+    <section id="ecran-resultat" hidden>
+      <img id="produit-image" alt="" hidden />
+      <div id="produit-image-absente" class="image-absente" hidden>🛒</div>
+      <h1 id="produit-nom"></h1>
+      <p id="produit-marque"></p>
+      <div class="verdict" id="verdict">
+        <div id="verdict-emoji"></div>
+        <div id="verdict-label"></div>
+        <div id="verdict-detail"></div>
+      </div>
+      <div id="alertes"></div>
+      <div id="ingredients-bloc" hidden>
+        <h2>Ingrédients</h2>
+        <p id="ingredients"></p>
+      </div>
+      <p class="avertissement">
+        Analyse automatique à titre indicatif, basée sur les données Open Food Facts.
+        En cas de doute, réfère-toi à la certification (AVS, ARGML…) sur l'emballage.
+      </p>
+      <button id="rescanner" class="principal">📷  Scanner un autre produit</button>
+    </section>
+
+    <section id="ecran-erreur" class="centre" hidden>
+      <div id="erreur-emoji"></div>
+      <h1 id="erreur-titre"></h1>
+      <p id="erreur-texte"></p>
+      <button id="reessayer" class="principal"></button>
+    </section>
+  </main>
+
+  <script type="module">
+    import { analyserProduit } from "./halal.js";
+
+    const $ = (id) => document.getElementById(id);
+    const ECRANS = ["ecran-scan", "ecran-chargement", "ecran-resultat", "ecran-erreur"];
+    const COULEURS = { halal: "var(--halal)", douteux: "var(--douteux)", haram: "var(--haram)", inconnu: "var(--inconnu)" };
+    const EMOJIS = { halal: "✅", douteux: "⚠️", haram: "❌", inconnu: "❓" };
+    const LABELS = { halal: "HALAL", douteux: "DOUTEUX", haram: "HARAM", inconnu: "INCONNU" };
+    const CLE_SCANS = "halalcheck.scans";
+    const FORMATS = ["ean_13", "ean_8", "upc_a", "upc_e", "code_128"];
+
+    let flux = null;
+    let detectionActive = false;
+    let lecteurZxing = null;
+    let codeEnCours = null;
+
+    function montrer(ecran) {
+      for (const id of ECRANS) $(id).hidden = id !== ecran;
+      if (ecran === "ecran-scan") afficherHistorique();
+    }
+
+    /* ---------- Caméra + détection ---------- */
+    async function demarrerScanner() {
+      $("etat-camera").hidden = false;
+      $("etat-camera").textContent = "Démarrage de la caméra…";
+      if ("BarcodeDetector" in window) {
+        try {
+          flux = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+          $("video").srcObject = flux;
+          await $("video").play();
+          $("etat-camera").hidden = true;
+          const detecteur = new BarcodeDetector({ formats: FORMATS });
+          detectionActive = true;
+          const boucle = async () => {
+            if (!detectionActive || !flux) return;
+            try {
+              const codes = await detecteur.detect($("video"));
+              if (codes.length > 0) { surCode(codes[0].rawValue); return; }
+            } catch (e) { /* frame pas prête — on réessaie */ }
+            setTimeout(boucle, 250);
+          };
+          boucle();
+          return;
+        } catch (e) {
+          montrerCameraIndisponible(e);
+          return;
+        }
+      }
+      // Pas de BarcodeDetector (iPhone/Safari notamment) → bibliothèque ZXing
+      try {
+        await chargerScript("https://unpkg.com/@zxing/library@0.21.3/umd/index.min.js");
+        lecteurZxing = new window.ZXing.BrowserMultiFormatReader();
+        detectionActive = true;
+        await lecteurZxing.decodeFromVideoDevice(undefined, $("video"), (resultat) => {
+          if (resultat && detectionActive) surCode(resultat.getText());
+        });
+        $("etat-camera").hidden = true;
+      } catch (e) {
+        montrerCameraIndisponible(e);
+      }
+    }
+
+    function montrerCameraIndisponible(e) {
+      const refus = e && (e.name === "NotAllowedError" || e.name === "SecurityError");
+      $("etat-camera").hidden = false;
+      $("etat-camera").textContent = refus
+        ? "Caméra refusée — autorise-la dans ton navigateur, ou saisis le code ci-dessous."
+        : "Caméra indisponible ici — saisis le code-barres ci-dessous.";
+    }
+
+    function arreterScanner() {
+      detectionActive = false;
+      if (flux) { flux.getTracks().forEach((t) => t.stop()); flux = null; }
+      if (lecteurZxing) { try { lecteurZxing.reset(); } catch (e) {} }
+    }
+
+    function chargerScript(src) {
+      return new Promise((ok, ko) => {
+        const s = document.createElement("script");
+        s.src = src;
+        s.onload = ok;
+        s.onerror = () => ko(new Error("chargement impossible"));
+        document.head.appendChild(s);
+      });
+    }
+
+    /* ---------- Open Food Facts + verdict ---------- */
+    const CHAMPS = "product_name,brands,image_front_url,image_url,ingredients_text_fr,ingredients_text,additives_tags,labels_tags";
+
+    async function chercherProduit(code) {
+      const url = `https://world.openfoodfacts.org/api/v2/product/${encodeURIComponent(code)}.json?fields=${CHAMPS}`;
+      const reponse = await fetch(url);
+      if (reponse.status === 404) return null;
+      if (!reponse.ok) throw new Error("réseau");
+      const json = await reponse.json();
+      if (json.status !== 1 || !json.product) return null;
+      const p = json.product;
+      return {
+        code,
+        nom: p.product_name || null,
+        marque: p.brands || null,
+        imageUrl: p.image_front_url || p.image_url || null,
+        ingredientsTexte: p.ingredients_text_fr || p.ingredients_text || null,
+        additifs: Array.isArray(p.additives_tags) ? p.additives_tags : [],
+        labels: Array.isArray(p.labels_tags) ? p.labels_tags : [],
+      };
+    }
+
+    function surCode(code) {
+      arreterScanner();
+      traiterCode(String(code).trim());
+    }
+
+    async function traiterCode(code) {
+      codeEnCours = code;
+      montrer("ecran-chargement");
+      try {
+        const produit = await chercherProduit(code);
+        if (!produit) {
+          montrerErreur("🔍", "Produit introuvable", "Ce produit n'est pas encore dans la base Open Food Facts.", "📷  Scanner un autre produit", relancerScan);
+          return;
+        }
+        afficherResultat(produit);
+      } catch (e) {
+        montrerErreur("📡", "Pas de connexion", "Vérifie ton réseau et réessaie.", "Réessayer", () => traiterCode(codeEnCours));
+      }
+    }
+
+    function sousTitre(verdict) {
+      if (verdict.statut === "halal" && verdict.certifieHalal) return "Produit certifié halal ✓";
+      if (verdict.statut === "halal" && verdict.vegan) return "Produit végane — aucun risque détecté";
+      if (verdict.statut === "halal") return "Aucun ingrédient à risque détecté";
+      if (verdict.statut === "douteux")
+        return `${verdict.alertes.length} ingrédient${verdict.alertes.length > 1 ? "s" : ""} à vérifier`;
+      if (verdict.statut === "haram") return "Ingrédient interdit détecté";
+      return "Pas assez d'informations sur ce produit";
+    }
+
+    function afficherResultat(produit) {
+      const verdict = analyserProduit({
+        ingredientsTexte: produit.ingredientsTexte,
+        additifs: produit.additifs,
+        labels: produit.labels,
+      });
+
+      $("produit-image").hidden = !produit.imageUrl;
+      $("produit-image-absente").hidden = !!produit.imageUrl;
+      if (produit.imageUrl) $("produit-image").src = produit.imageUrl;
+      $("produit-nom").textContent = produit.nom || `Produit ${produit.code}`;
+      $("produit-marque").textContent = produit.marque || "";
+
+      $("verdict").style.background = COULEURS[verdict.statut];
+      $("verdict-emoji").textContent = EMOJIS[verdict.statut];
+      $("verdict-label").textContent = LABELS[verdict.statut];
+      $("verdict-detail").textContent = sousTitre(verdict);
+
+      const alertes = $("alertes");
+      alertes.innerHTML = "";
+      for (const a of verdict.alertes) {
+        const div = document.createElement("div");
+        div.className = "alerte";
+        const b = document.createElement("b");
+        b.textContent = `${a.niveau === "haram" ? "❌" : "⚠️"}  ${a.element}`;
+        const span = document.createElement("span");
+        span.textContent = a.raison;
+        div.append(b, span);
+        alertes.appendChild(div);
+      }
+
+      $("ingredients-bloc").hidden = !produit.ingredientsTexte;
+      $("ingredients").textContent = produit.ingredientsTexte || "";
+
+      enregistrerScan({
+        code: produit.code,
+        nom: produit.nom || `Produit ${produit.code}`,
+        statut: verdict.statut,
+        date: new Date().toISOString(),
+      });
+      montrer("ecran-resultat");
+    }
+
+    function montrerErreur(emoji, titre, texte, libelleBouton, action) {
+      $("erreur-emoji").textContent = emoji;
+      $("erreur-titre").textContent = titre;
+      $("erreur-texte").textContent = texte;
+      $("reessayer").textContent = libelleBouton;
+      $("reessayer").onclick = action;
+      montrer("ecran-erreur");
+    }
+
+    function relancerScan() {
+      montrer("ecran-scan");
+      demarrerScanner();
+    }
+
+    /* ---------- Historique ---------- */
+    function listerScans() {
+      try {
+        const brut = localStorage.getItem(CLE_SCANS);
+        const donnees = brut ? JSON.parse(brut) : [];
+        return Array.isArray(donnees) ? donnees : [];
+      } catch (e) { return []; }
+    }
+
+    function enregistrerScan(scan) {
+      try {
+        const nouveaux = [scan, ...listerScans().filter((s) => s.code !== scan.code)].slice(0, 20);
+        localStorage.setItem(CLE_SCANS, JSON.stringify(nouveaux));
+      } catch (e) { /* confort uniquement */ }
+    }
+
+    function afficherHistorique() {
+      const scans = listerScans();
+      const conteneur = $("historique");
+      conteneur.innerHTML = "";
+      if (scans.length === 0) {
+        conteneur.innerHTML = '<p class="vide">Tes scans apparaîtront ici.</p>';
+        return;
+      }
+      for (const s of scans) {
+        const bouton = document.createElement("button");
+        bouton.className = "scan-ligne";
+        const emo = document.createElement("span");
+        emo.className = "emo";
+        emo.textContent = EMOJIS[s.statut] || "❓";
+        const nom = document.createElement("span");
+        nom.className = "nom";
+        nom.textContent = s.nom;
+        const pastille = document.createElement("span");
+        pastille.className = "pastille";
+        pastille.style.background = COULEURS[s.statut] || "var(--inconnu)";
+        bouton.append(emo, nom, pastille);
+        bouton.onclick = () => { arreterScanner(); traiterCode(s.code); };
+        conteneur.appendChild(bouton);
+      }
+    }
+
+    /* ---------- Saisie manuelle ---------- */
+    $("saisie").addEventListener("input", () => {
+      $("verifier").disabled = $("saisie").value.trim().length < 8;
+    });
+    $("saisie").addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !$("verifier").disabled) $("verifier").click();
+    });
+    $("verifier").addEventListener("click", () => {
+      arreterScanner();
+      traiterCode($("saisie").value.trim());
+    });
+    $("rescanner").addEventListener("click", relancerScan);
+
+    /* ---------- Démarrage ---------- */
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js").catch(() => {});
+    }
+    afficherHistorique();
+    demarrerScanner();
+  </script>
+</body>
+</html>

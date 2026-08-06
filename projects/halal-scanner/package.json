@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
-    "test:moteur": "node scripts/test-moteur.cjs"
+    "test:moteur": "node scripts/test-moteur.cjs",
+    "build:site": "tsc lib/halal.ts --outDir site --module es2015 --target es2019 --moduleResolution node --skipLibCheck"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",

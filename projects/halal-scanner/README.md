@@ -14,7 +14,24 @@ Pousse n°2 de l'écosystème halal (stratégie arrosoir — voir `docs/PORTFOLI
    - raccourcis : label **halal** → certifié · label **végane** → risques d'origine animale écartés.
 4. Verdict affiché en badge géant coloré + historique local des 20 derniers scans.
 
-## Lancer l'app
+## Produit v0 : la web app (`site/`) — SITE-FIRST
+
+Décision : on lance d'abord **halalcheck.fr en web app** (pas de stores à convaincre,
+mises à jour instantanées, partage par lien). Le dossier `site/` contient :
+
+- `index.html` — la page d'accueil / argumentaire
+- `scan.html` — **le scanner** : caméra dans le navigateur (API BarcodeDetector,
+  repli ZXing pour Safari/iPhone), saisie manuelle, verdict, historique
+- `halal.js` — le moteur compilé depuis `lib/halal.ts` (**ne pas éditer à la main** :
+  modifier `lib/halal.ts` puis `npm run build:site`)
+- `manifest.json` + `sw.js` + icônes — installable sur l'écran d'accueil comme une app
+
+**Tester en local** : `python3 -m http.server 8000 --directory site` puis ouvrir
+http://localhost:8000 (la caméra exige HTTPS ou localhost).
+**Déployer** : glisser le dossier `site/` sur Netlify Drop (ou `vercel site/`),
+puis pointer le domaine halalcheck.fr dessus.
+
+## Lancer l'app mobile (phase 2 — même moteur)
 
 ```bash
 cd projects/halal-scanner

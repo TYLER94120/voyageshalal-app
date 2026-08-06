@@ -1,0 +1,14 @@
+{
+  "name": "HalalCheck",
+  "short_name": "HalalCheck",
+  "description": "Scanne un produit, sache s'il est halal.",
+  "lang": "fr",
+  "start_url": "./scan.html",
+  "display": "standalone",
+  "background_color": "#0B1A0F",
+  "theme_color": "#0B1A0F",
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

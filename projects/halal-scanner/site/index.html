@@ -9,6 +9,9 @@
   <meta property="og:description" content="Verdict immédiat en scannant le code-barres : halal, douteux ou haram, avec les ingrédients expliqués." />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#0B1A0F" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" href="./icon-192.png" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@800;900&display=swap" rel="stylesheet" />
@@ -41,6 +44,7 @@
     .logo .coche { color: var(--or); }
     .pill {
       display: inline-flex; align-items: center;
+      text-decoration: none;
       min-height: 44px; padding: 8px 18px;
       border-radius: 999px;
       border: 1.5px solid rgba(201, 168, 76, 0.6);
@@ -190,7 +194,7 @@
 
   <header>
     <div class="logo">HalalCheck <span class="coche">✓</span></div>
-    <span class="pill">Bientôt sur les stores</span>
+    <a class="pill" href="./scan.html">📷 Scanner</a>
   </header>
 
   <section class="hero">
@@ -201,10 +205,12 @@
         Avec l'explication claire de chaque ingrédient à risque, pas juste une couleur.
       </p>
       <div class="stores">
-        <a class="store" href="#faq"> App Store<br /><small>bientôt disponible</small></a>
-        <a class="store" href="#faq">▶ Google Play<br /><small>bientôt disponible</small></a>
+        <a class="cta" href="./scan.html">📷  Scanner un produit</a>
       </div>
-      <p class="note-bientot">Gratuit, sans compte, sans pub au lancement.</p>
+      <p class="note-bientot">
+        Gratuit, sans compte, directement dans ton navigateur.<br />
+        Astuce : « Ajouter à l'écran d'accueil » pour l'utiliser comme une app.
+      </p>
     </div>
 
     <div class="telephone" aria-hidden="true">
@@ -290,6 +296,10 @@
       <summary>Qui décide de ce qui est halal ou haram ?</summary>
       <p>Personne chez nous ne « décide » : l'app applique des règles documentées (porc, alcool, gélatine, additifs d'origine animale…) et cite l'ingrédient exact pour que tu puisses juger en connaissance de cause, selon ton école et ton exigence.</p>
     </details>
+    <details>
+      <summary>Et l'application mobile ?</summary>
+      <p>Elle arrive. On lance d'abord la version web pour l'améliorer chaque jour sans attendre les validations des stores. En attendant, ajoute cette page à ton écran d'accueil : elle s'utilise exactement comme une app.</p>
+    </details>
   </section>
 
   <footer>
@@ -299,5 +309,8 @@
     <p class="bismillah">بِسْمِ اللَّهِ</p>
   </footer>
 
+  <script>
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(function () {});
+  </script>
 </body>
 </html>

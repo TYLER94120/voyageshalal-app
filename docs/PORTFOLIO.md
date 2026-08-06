@@ -11,7 +11,12 @@ Décision fondateur : **100 % de l'eau va à HalalCheck** (le scanner halal).
 - Boutique Malika Paris : **gelée** — le code est conservé dans `projects/boutique-modeste/`
   et redeployable en 2 minutes, mais aucun temps n'y est investi.
 - ⚠️ Naming : ne jamais utiliser « Yuka » dans le nom public (marque déposée).
-  Le nom officiel est **HalalCheck** — domaine halalcheck.fr à enregistrer.
+  Le nom officiel est **HalalCheck** — domaine **halalcheck.fr acheté ✓**.
+- **Site-first (décision du 6 août)** : lancement en web app sur halalcheck.fr —
+  scan caméra dans le navigateur + « Ajouter à l'écran d'accueil » — pour valider
+  sans passer par les stores (99 $/an Apple, 25 $ Google, délais de review).
+  L'app native Expo reste dans le repo et partage le même moteur : build stores
+  dès que la traction web le justifie.
 
 ## Les 3 pousses actuelles
 
