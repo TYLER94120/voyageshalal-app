@@ -21,6 +21,23 @@ const CHAMPS = [
   "labels_tags",
 ].join(",");
 
+/**
+ * Étiquettes bilingues (Maroc, Algérie, Tunisie…) : extrait la partie
+ * française/latine. Si le texte est presque entièrement en arabe, on garde
+ * l'original plutôt que d'afficher du vide.
+ */
+export function nettoyerIngredients(texte: string | null): string | null {
+  if (!texte) return texte;
+  const sansArabe = texte
+    .replace(/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]+/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([,;:.)\]])/g, "$1")
+    .replace(/\(\s*\)/g, "")
+    .trim();
+  const lettresLatines = (sansArabe.match(/[a-zà-öø-ÿ]/gi) || []).length;
+  return lettresLatines >= 12 ? sansArabe : texte;
+}
+
 // Un même produit peut être stocké en 12 chiffres (UPC) ou 13 (EAN).
 function candidatsCode(code: string): string[] {
   const c = code.replace(/\D/g, "");

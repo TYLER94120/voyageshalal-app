@@ -408,6 +408,21 @@
       }
     }
 
+    // Étiquettes bilingues (Maroc, Algérie, Tunisie…) : on affiche la partie
+    // française/latine. Si le texte est presque entièrement en arabe, on garde
+    // l'original plutôt que d'afficher du vide.
+    function nettoyerIngredients(texte) {
+      if (!texte) return texte;
+      const sansArabe = texte
+        .replace(/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]+/g, " ")
+        .replace(/\s{2,}/g, " ")
+        .replace(/\s+([,;:.)\]])/g, "$1")
+        .replace(/\(\s*\)/g, "")
+        .trim();
+      const lettresLatines = (sansArabe.match(/[a-zà-öø-ÿ]/gi) || []).length;
+      return lettresLatines >= 12 ? sansArabe : texte;
+    }
+
     function sousTitre(verdict) {
       if (verdict.statut === "halal" && verdict.certifieHalal) return "Produit certifié halal ✓";
       if (verdict.statut === "halal" && verdict.vegan) return "Produit végane — aucun risque détecté";
@@ -453,7 +468,7 @@
       }
 
       $("ingredients-bloc").hidden = !produit.ingredientsTexte;
-      $("ingredients").textContent = produit.ingredientsTexte || "";
+      $("ingredients").textContent = nettoyerIngredients(produit.ingredientsTexte) || "";
 
       enregistrerScan({
         code: produit.code,
