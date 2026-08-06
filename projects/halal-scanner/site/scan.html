@@ -235,6 +235,7 @@
       <h1 id="erreur-titre"></h1>
       <p id="erreur-texte"></p>
       <button id="reessayer" class="principal"></button>
+      <button id="erreur-secondaire" class="secondaire" style="width: 100%; margin-top: 10px" hidden></button>
     </section>
   </main>
 
@@ -388,7 +389,17 @@
       try {
         const produit = await chercherProduit(code);
         if (!produit) {
-          montrerErreur("🔍", "Produit introuvable", "Ce produit n'est pas encore dans la base Open Food Facts.", "📷  Scanner un autre produit", relancerScan);
+          montrerErreur(
+            "🔍",
+            "Produit pas encore référencé",
+            "La base Open Food Facts est collaborative : les produits locaux (Maroc, Algérie, Tunisie…) y manquent souvent, et chaque format d'un même produit a son propre code-barres. Aide la communauté en l'ajoutant — 2 minutes avec une photo.",
+            "📷  Scanner un autre produit",
+            relancerScan,
+            {
+              libelle: "➕  Ajouter ce produit à la base",
+              action: () => window.open(`https://world.openfoodfacts.org/cgi/product.pl?type=add&code=${encodeURIComponent(code)}`, "_blank"),
+            }
+          );
           return;
         }
         afficherResultat(produit);
@@ -450,12 +461,18 @@
       montrer("ecran-resultat");
     }
 
-    function montrerErreur(emoji, titre, texte, libelleBouton, action) {
+    function montrerErreur(emoji, titre, texte, libelleBouton, action, secondaire) {
       $("erreur-emoji").textContent = emoji;
       $("erreur-titre").textContent = titre;
       $("erreur-texte").textContent = texte;
       $("reessayer").textContent = libelleBouton;
       $("reessayer").onclick = action;
+      const boutonSecondaire = $("erreur-secondaire");
+      boutonSecondaire.hidden = !secondaire;
+      if (secondaire) {
+        boutonSecondaire.textContent = secondaire.libelle;
+        boutonSecondaire.onclick = secondaire.action;
+      }
       montrer("ecran-erreur");
     }
 
