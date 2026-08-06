@@ -101,6 +101,11 @@ export default function Accueil() {
           </TouchableOpacity>
         )}
         ListEmptyComponent={<Text style={styles.vide}>Tes scans apparaîtront ici.</Text>}
+        ListFooterComponent={
+          <TouchableOpacity style={styles.lienAPropos} onPress={() => router.push("/a-propos")}>
+            <Text style={styles.lienAProposTexte}>ℹ️  Comment ça marche ?</Text>
+          </TouchableOpacity>
+        }
       />
     </SafeAreaView>
   );
@@ -219,5 +224,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
     marginTop: 32,
+  },
+  lienAPropos: {
+    minHeight: 56,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 24,
+  },
+  lienAProposTexte: {
+    color: "rgba(253, 250, 243, 0.7)",
+    fontSize: 16,
+    fontWeight: "600",
   },
 });

@@ -8,6 +8,8 @@ export interface Alerte {
   element: string;
   niveau: "haram" | "douteux";
   raison: string;
+  /** Clé de regroupement quand un additif et un mot du texte désignent la même substance. */
+  famille?: string;
 }
 
 export interface Verdict {
@@ -21,6 +23,7 @@ interface InfosAdditif {
   niveau: "haram" | "douteux";
   nom: string;
   raison: string;
+  famille?: string;
 }
 
 // Additifs à risque les plus fréquents (codes sans le préfixe "en:").
@@ -29,6 +32,7 @@ const ADDITIFS_A_RISQUE: Record<string, InfosAdditif> = {
     niveau: "douteux",
     nom: "E120 — Carmin (cochenille)",
     raison: "Colorant extrait d'insectes broyés, considéré non halal par la majorité des avis.",
+    famille: "carmin",
   },
   e153: {
     niveau: "douteux",
@@ -44,11 +48,13 @@ const ADDITIFS_A_RISQUE: Record<string, InfosAdditif> = {
     niveau: "haram",
     nom: "E441 — Gélatine",
     raison: "Gélatine le plus souvent porcine. Interdite sauf gélatine certifiée halal.",
+    famille: "gelatine",
   },
   e471: {
     niveau: "douteux",
     nom: "E471 — Mono- et diglycérides",
     raison: "Émulsifiant d'origine végétale ou animale non précisée.",
+    famille: "monoglycerides",
   },
   e472a: { niveau: "douteux", nom: "E472a", raison: "Ester d'acides gras — origine animale possible." },
   e472b: { niveau: "douteux", nom: "E472b", raison: "Ester d'acides gras — origine animale possible." },
@@ -88,14 +94,16 @@ const ADDITIFS_A_RISQUE: Record<string, InfosAdditif> = {
     niveau: "douteux",
     nom: "E920 — L-cystéine",
     raison: "Parfois extraite de plumes ou de soies animales.",
+    famille: "cysteine",
   },
-  e921: { niveau: "douteux", nom: "E921 — L-cystine", raison: "Origine animale possible." },
+  e921: { niveau: "douteux", nom: "E921 — L-cystine", raison: "Origine animale possible.", famille: "cysteine" },
 };
 
 interface RegleTexte {
   motif: RegExp;
   element: string;
   raison: string;
+  famille?: string;
 }
 
 // Les textes sont normalisés (minuscules, sans accents) avant le test.
@@ -122,6 +130,7 @@ const REGLES_DOUTEUX: RegleTexte[] = [
     motif: /gelatine/,
     element: "Gélatine",
     raison: "Origine non précisée — souvent porcine, sauf mention halal.",
+    famille: "gelatine",
   },
   {
     motif: /presure/,
@@ -142,16 +151,19 @@ const REGLES_DOUTEUX: RegleTexte[] = [
     motif: /mono[- ]?et diglycerides|monoglycerides|diglycerides/,
     element: "Mono/diglycérides",
     raison: "Émulsifiant d'origine possiblement animale.",
+    famille: "monoglycerides",
   },
   {
     motif: /\bcarmin\b|cochenille/,
     element: "Carmin (cochenille)",
     raison: "Colorant issu d'insectes — majoritairement considéré non halal.",
+    famille: "carmin",
   },
   {
     motif: /l[- ]?cysteine/,
     element: "L-cystéine",
     raison: "Parfois extraite de plumes ou de soies animales.",
+    famille: "cysteine",
   },
   {
     motif: /arome de viande|bouillon de (poulet|bœuf|boeuf|viande|volaille)|fond de (veau|volaille)/,
@@ -192,7 +204,12 @@ export function analyserProduit(entree: {
     const code = tag.replace(/^[a-z]{2,3}:/i, "").toLowerCase();
     const infos = ADDITIFS_A_RISQUE[code];
     if (infos) {
-      alertes.push({ element: infos.nom, niveau: infos.niveau, raison: infos.raison });
+      alertes.push({
+        element: infos.nom,
+        niveau: infos.niveau,
+        raison: infos.raison,
+        famille: infos.famille,
+      });
     }
   }
 
@@ -200,19 +217,29 @@ export function analyserProduit(entree: {
   if (texte.trim().length > 0) {
     for (const regle of [...REGLES_HARAM.map((r) => ({ ...r, niveau: "haram" as const })), ...REGLES_DOUTEUX.map((r) => ({ ...r, niveau: "douteux" as const }))]) {
       if (regle.motif.test(texte)) {
-        alertes.push({ element: regle.element, niveau: regle.niveau, raison: regle.raison });
+        alertes.push({
+          element: regle.element,
+          niveau: regle.niveau,
+          raison: regle.raison,
+          famille: regle.famille,
+        });
       }
     }
   }
 
-  // Dédoublonnage par élément (un additif peut aussi apparaître dans le texte).
-  const vues = new Set<string>();
-  const alertesUniques = alertes.filter((a) => {
-    const cle = a.element.toLowerCase();
-    if (vues.has(cle)) return false;
-    vues.add(cle);
-    return true;
-  });
+  // Dédoublonnage : un additif et un mot du texte peuvent désigner la même substance
+  // (ex : E441 + "gélatine"). On regroupe par famille et on garde la plus sévère.
+  const parCle = new Map<string, Alerte>();
+  for (const a of alertes) {
+    const cle = (a.famille ?? a.element).toLowerCase();
+    const existante = parCle.get(cle);
+    if (!existante) {
+      parCle.set(cle, a);
+    } else if (a.niveau === "haram" && existante.niveau !== "haram") {
+      parCle.set(cle, a);
+    }
+  }
+  const alertesUniques = [...parCle.values()];
 
   const aHaram = alertesUniques.some((a) => a.niveau === "haram");
   const aDouteux = alertesUniques.some((a) => a.niveau === "douteux");

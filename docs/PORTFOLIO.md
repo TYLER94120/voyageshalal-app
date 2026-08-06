@@ -4,6 +4,15 @@
 > Toutes partagent le même terreau : audience musulmane francophone, palette
 > visuelle commune, et à terme un compte utilisateur + une base de données uniques.
 
+## 🎯 DÉCISION (6 août 2026) : focus total sur HalalCheck
+
+Décision fondateur : **100 % de l'eau va à HalalCheck** (le scanner halal).
+- VoyagesHalal : reste en ligne, zéro développement actif (hub à réactiver plus tard).
+- Boutique Malika Paris : **gelée** — le code est conservé dans `projects/boutique-modeste/`
+  et redeployable en 2 minutes, mais aucun temps n'y est investi.
+- ⚠️ Naming : ne jamais utiliser « Yuka » dans le nom public (marque déposée).
+  Le nom officiel est **HalalCheck** — domaine halalcheck.fr à enregistrer.
+
 ## Les 3 pousses actuelles
 
 | # | Projet | Dossier | C'est quoi | Usage visé |
