@@ -327,23 +327,54 @@
     /* ---------- Open Food Facts + verdict ---------- */
     const CHAMPS = "product_name,brands,image_front_url,image_url,ingredients_text_fr,ingredients_text,additives_tags,labels_tags";
 
-    async function chercherProduit(code) {
-      const url = `https://world.openfoodfacts.org/api/v2/product/${encodeURIComponent(code)}.json?fields=${CHAMPS}`;
-      const reponse = await fetch(url);
+    // Un même produit peut être stocké en 12 chiffres (UPC) ou 13 (EAN) : on tente les variantes.
+    function candidatsCode(code) {
+      const c = String(code).replace(/\D/g, "");
+      const liste = [c];
+      if (c.length === 12) liste.push("0" + c);
+      if (c.length === 13 && c.startsWith("0")) liste.push(c.slice(1));
+      return [...new Set(liste)].filter((x) => x.length >= 6);
+    }
+
+    // On ne se fie pas au champ "status" (son format varie selon les versions
+    // de l'API) : un produit est trouvé si l'objet product est présent et rempli.
+    async function requeteProduit(url) {
+      const reponse = await fetch(url, { headers: { Accept: "application/json" } });
       if (reponse.status === 404) return null;
-      if (!reponse.ok) throw new Error("réseau");
+      if (!reponse.ok) throw new Error("HTTP " + reponse.status);
       const json = await reponse.json();
-      if (json.status !== 1 || !json.product) return null;
-      const p = json.product;
-      return {
-        code,
-        nom: p.product_name || null,
-        marque: p.brands || null,
-        imageUrl: p.image_front_url || p.image_url || null,
-        ingredientsTexte: p.ingredients_text_fr || p.ingredients_text || null,
-        additifs: Array.isArray(p.additives_tags) ? p.additives_tags : [],
-        labels: Array.isArray(p.labels_tags) ? p.labels_tags : [],
-      };
+      const p = json && json.product;
+      return p && typeof p === "object" && Object.keys(p).length > 0 ? p : null;
+    }
+
+    async function chercherProduit(code) {
+      let erreurReseau = null;
+      for (const c of candidatsCode(code)) {
+        const urls = [
+          `https://world.openfoodfacts.org/api/v2/product/${c}.json?fields=${CHAMPS}`,
+          `https://world.openfoodfacts.org/api/v0/product/${c}.json`,
+        ];
+        for (const url of urls) {
+          try {
+            const p = await requeteProduit(url);
+            if (p) {
+              return {
+                code: c,
+                nom: p.product_name || null,
+                marque: p.brands || null,
+                imageUrl: p.image_front_url || p.image_url || null,
+                ingredientsTexte: p.ingredients_text_fr || p.ingredients_text || null,
+                additifs: Array.isArray(p.additives_tags) ? p.additives_tags : [],
+                labels: Array.isArray(p.labels_tags) ? p.labels_tags : [],
+              };
+            }
+          } catch (e) {
+            erreurReseau = e;
+          }
+        }
+      }
+      if (erreurReseau) throw erreurReseau;
+      return null;
     }
 
     function surCode(code) {
