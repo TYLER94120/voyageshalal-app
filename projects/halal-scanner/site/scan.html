@@ -428,8 +428,11 @@
       $("produit-image").hidden = !produit.imageUrl;
       $("produit-image-absente").hidden = !!produit.imageUrl;
       if (produit.imageUrl) $("produit-image").src = produit.imageUrl;
-      $("produit-nom").textContent = produit.nom || `Produit ${produit.code}`;
-      $("produit-marque").textContent = produit.marque || "";
+      const nomAffiche = produit.nom || `Produit ${produit.code}`;
+      $("produit-nom").textContent = nomAffiche;
+      const marqueUtile =
+        produit.marque && produit.marque.trim().toLowerCase() !== nomAffiche.trim().toLowerCase();
+      $("produit-marque").textContent = marqueUtile ? produit.marque : "";
 
       $("verdict").style.background = COULEURS[verdict.statut];
       $("verdict-emoji").textContent = EMOJIS[verdict.statut];
