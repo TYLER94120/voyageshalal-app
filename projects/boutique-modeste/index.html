@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Malika Paris — Mode modeste élégante</title>
+  <meta name="description" content="Abayas, hijabs, robes et ensembles modestes. Coupes amples, tissus premium, livraison 48h en France." />
+  <meta property="og:title" content="Malika Paris — Mode modeste élégante" />
+  <meta property="og:description" content="L'élégance, en toute pudeur. Abayas, hijabs, robes et ensembles modestes." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#FDFAF3" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --nuit: #0B1A0F;
+      --foret: #1B4332;
+      --or: #C9A84C;
+      --creme: #FDFAF3;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "DM Sans", system-ui, sans-serif;
+      background: var(--creme);
+      color: var(--nuit);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    h1, h2, .logo { font-family: "Playfair Display", Georgia, serif; }
+    button { font-family: inherit; cursor: pointer; border: none; font-size: 16px; }
+
+    /* ---------- Header ---------- */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px;
+      background: rgba(253, 250, 243, 0.94);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(11, 26, 15, 0.08);
+    }
+    .logo { font-size: 22px; font-weight: 800; letter-spacing: 0.5px; }
+    .logo .etoile { color: var(--or); }
+    .bouton-panier {
+      position: relative;
+      min-height: 56px; min-width: 56px;
+      border-radius: 18px;
+      background: var(--nuit); color: var(--creme);
+      font-size: 22px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .compteur {
+      position: absolute; top: 6px; right: 6px;
+      min-width: 20px; height: 20px; padding: 0 5px;
+      border-radius: 999px;
+      background: var(--or); color: var(--nuit);
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      text-align: center;
+      padding: 56px 24px 40px;
+      background:
+        radial-gradient(ellipse at top, rgba(201, 168, 76, 0.14), transparent 60%),
+        var(--creme);
+    }
+    .sur-titre {
+      display: inline-block;
+      background: var(--foret); color: var(--creme);
+      font-size: 13px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 8px 16px; border-radius: 999px;
+      margin-bottom: 18px;
+    }
+    .hero h1 { font-size: clamp(32px, 7vw, 52px); font-weight: 900; line-height: 1.12; }
+    .hero p { margin: 14px auto 26px; max-width: 420px; font-size: 17px; color: rgba(11, 26, 15, 0.7); }
+    .cta {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 60px; padding: 0 34px;
+      background: var(--or); color: var(--nuit);
+      font-size: 18px; font-weight: 700;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: transform 150ms ease;
+    }
+    .cta:active { transform: scale(0.97); }
+
+    /* ---------- Réassurance ---------- */
+    .reassurance {
+      display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+      padding: 18px 16px;
+      background: var(--nuit); color: var(--creme);
+      font-size: 14px; font-weight: 500;
+    }
+    .reassurance span { padding: 4px 10px; }
+
+    /* ---------- Boutique ---------- */
+    main { max-width: 1080px; margin: 0 auto; padding: 40px 20px 80px; }
+    main h2 { font-size: 30px; font-weight: 800; margin-bottom: 18px; }
+    .filtres {
+      display: flex; gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 14px; margin-bottom: 18px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filtre {
+      flex: 0 0 auto;
+      min-height: 56px; padding: 0 22px;
+      border-radius: 999px;
+      background: transparent;
+      border: 1.5px solid rgba(11, 26, 15, 0.25);
+      color: var(--nuit);
+      font-size: 16px; font-weight: 600;
+    }
+    .filtre.actif { background: var(--foret); border-color: var(--foret); color: var(--creme); }
+
+    .grille {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+      gap: 16px;
+    }
+    .carte {
+      background: #fff;
+      border: 1px solid rgba(11, 26, 15, 0.07);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .visuel {
+      position: relative;
+      height: 185px;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(253, 250, 243, 0.9);
+      font-size: 34px;
+    }
+    .badge {
+      position: absolute; top: 10px; left: 10px;
+      background: var(--or); color: var(--nuit);
+      font-size: 12px; font-weight: 700;
+      padding: 5px 10px; border-radius: 999px;
+    }
+    .infos { padding: 12px 14px 16px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .nom-produit { font-size: 16px; font-weight: 700; }
+    .teinte { font-size: 14px; color: rgba(11, 26, 15, 0.55); }
+    .prix { font-size: 18px; font-weight: 700; margin-top: 2px; }
+    .ajouter {
+      margin-top: 10px;
+      min-height: 56px;
+      border-radius: 16px;
+      background: var(--nuit); color: var(--creme);
+      font-size: 16px; font-weight: 600;
+      transition: transform 120ms ease;
+    }
+    .ajouter:active { transform: scale(0.97); }
+
+    /* ---------- Panier (tiroir) ---------- */
+    .voile {
+      position: fixed; inset: 0; z-index: 50;
+      background: rgba(11, 26, 15, 0.5);
+      opacity: 0; pointer-events: none;
+      transition: opacity 180ms ease;
+    }
+    .voile.ouvert { opacity: 1; pointer-events: auto; }
+    .panier {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+      max-height: 86vh;
+      background: var(--creme);
+      border-radius: 24px 24px 0 0;
+      padding: 20px 20px 28px;
+      transform: translateY(105%);
+      transition: transform 200ms ease;
+      display: flex; flex-direction: column;
+      box-shadow: 0 -12px 40px rgba(11, 26, 15, 0.25);
+    }
+    .panier.ouvert { transform: translateY(0); }
+    .panier-entete { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .panier-entete h3 { font-size: 22px; font-weight: 800; }
+    .fermer {
+      min-height: 56px; min-width: 56px;
+      border-radius: 16px;
+      background: rgba(11, 26, 15, 0.06);
+      font-size: 20px;
+    }
+    .lignes { overflow-y: auto; flex: 1; }
+    .ligne {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(11, 26, 15, 0.08);
+    }
+    .ligne-pastille { width: 44px; height: 44px; border-radius: 12px; flex: 0 0 auto; }
+    .ligne-infos { flex: 1; min-width: 0; }
+    .ligne-nom { font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ligne-prix { font-size: 14px; color: rgba(11, 26, 15, 0.6); }
+    .qte { display: flex; align-items: center; gap: 6px; }
+    .qte button {
+      min-width: 48px; min-height: 56px;
+      border-radius: 14px;
+      background: rgba(11, 26, 15, 0.06);
+      font-size: 20px; font-weight: 700;
+    }
+    .qte span { min-width: 24px; text-align: center; font-weight: 700; font-size: 16px; }
+    .panier-vide { text-align: center; color: rgba(11, 26, 15, 0.55); padding: 36px 0; font-size: 16px; }
+    .total {
+      display: flex; justify-content: space-between;
+      font-size: 19px; font-weight: 800;
+      padding: 16px 0 12px;
+    }
+    .commander {
+      min-height: 64px;
+      border-radius: 20px;
+      background: var(--or); color: var(--nuit);
+      font-size: 18px; font-weight: 800;
+      width: 100%;
+    }
+    .note-paiement {
+      text-align: center; font-size: 13px;
+      color: rgba(11, 26, 15, 0.55);
+      margin-top: 10px;
+    }
+
+    /* ---------- Toast ---------- */
+    .toast {
+      position: fixed; left: 50%; bottom: 28px; z-index: 70;
+      transform: translate(-50%, 20px);
+      background: var(--foret); color: var(--creme);
+      padding: 14px 24px; border-radius: 999px;
+      font-size: 16px; font-weight: 600;
+      opacity: 0; pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+    .toast.visible { opacity: 1; transform: translate(-50%, 0); }
+
+    /* ---------- Footer ---------- */
+    footer {
+      background: var(--nuit); color: var(--creme);
+      text-align: center;
+      padding: 44px 24px 36px;
+    }
+    footer .logo { font-size: 24px; margin-bottom: 8px; }
+    footer p { font-size: 14px; color: rgba(253, 250, 243, 0.65); margin-top: 6px; }
+    .bismillah { font-size: 18px; color: var(--or); margin-top: 20px; }
+
+    @media (min-width: 720px) {
+      .grille { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+      .visuel { height: 230px; }
+      .panier { left: auto; right: 24px; bottom: 24px; width: 420px; border-radius: 24px; max-height: 80vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Malika <span class="etoile">✦</span> Paris</div>
+    <button class="bouton-panier" id="bouton-panier" aria-label="Ouvrir le panier">
+      🛒
+      <span class="compteur" id="compteur" hidden>0</span>
+    </button>
+  </header>
+
+  <section class="hero">
+    <span class="sur-titre">Nouvelle collection</span>
+    <h1>L'élégance,<br />en toute pudeur.</h1>
+    <p>Abayas, hijabs et ensembles aux coupes amples, pensés pour durer et taillés dans des tissus premium.</p>
+    <a class="cta" href="#boutique">Découvrir la collection</a>
+  </section>
+
+  <div class="reassurance">
+    <span>🚚 Livraison 48h</span>
+    <span>🔄 Retours 14 jours</span>
+    <span>✦ Coupes amples vérifiées</span>
+  </div>
+
+  <main id="boutique">
+    <h2>La collection</h2>
+    <nav class="filtres" id="filtres" aria-label="Filtrer par catégorie"></nav>
+    <div class="grille" id="grille"></div>
+  </main>
+
+  <footer>
+    <div class="logo">Malika <span class="etoile">✦</span> Paris</div>
+    <p>Instagram : @malika.paris — contact@malika-paris.fr</p>
+    <p>Boutique en version de lancement — paiement en ligne et CGV bientôt disponibles.</p>
+    <p class="bismillah">بِسْمِ اللَّهِ</p>
+  </footer>
+
+  <div class="voile" id="voile"></div>
+
+  <aside class="panier" id="panier" aria-label="Panier">
+    <div class="panier-entete">
+      <h3>Ton panier</h3>
+      <button class="fermer" id="fermer-panier" aria-label="Fermer le panier">✕</button>
+    </div>
+    <div class="lignes" id="lignes"></div>
+    <div class="total"><span>Total</span><span id="total">0,00 €</span></div>
+    <button class="commander" id="commander">💬  Commander sur WhatsApp</button>
+    <p class="note-paiement">Tu confirmes ta commande par message — paiement par lien sécurisé ensuite.</p>
+  </aside>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    // ══════════════════════════════════════════════════════════
+    //  CONFIGURATION — à personnaliser avant la mise en ligne
+    // ══════════════════════════════════════════════════════════
+    const CONFIG = {
+      nom: "Malika Paris",
+      // ⚠️ Remplace par TON numéro WhatsApp, format international sans "+" ni espaces :
+      whatsapp: "33600000000",
+    };
+
+    // Catalogue de démonstration : remplace les produits, prix et
+    // dégradés (ou ajoute "image": "url") avec tes vraies références.
+    const PRODUITS = [
+      { id: "abaya-medina", nom: "Abaya Médina", prix: 54.9, cat: "Abayas", teinte: "Noir profond", degrade: ["#1c1c1e", "#3a3a3f"], badge: "Best-seller" },
+      { id: "abaya-ambre", nom: "Abaya Ambre satinée", prix: 64.9, cat: "Abayas", teinte: "Caramel doré", degrade: ["#8a5a2b", "#c9a84c"], badge: "Nouveau" },
+      { id: "hijab-soie", nom: "Hijab soie de Médine", prix: 12.9, cat: "Hijabs", teinte: "Vert forêt", degrade: ["#1B4332", "#2d6a4f"] },
+      { id: "hijab-jersey", nom: "Hijab jersey premium", prix: 9.9, cat: "Hijabs", teinte: "Beige sable", degrade: ["#c9b592", "#e6d9bd"] },
+      { id: "chale-nour", nom: "Châle Nour", prix: 14.9, cat: "Hijabs", teinte: "Or pâle", degrade: ["#C9A84C", "#e3cd8b"] },
+      { id: "robe-yasmine", nom: "Robe Yasmine", prix: 49.9, cat: "Robes", teinte: "Bleu nuit", degrade: ["#1b2a4a", "#31456e"] },
+      { id: "ensemble-salma", nom: "Ensemble Salma", prix: 59.9, cat: "Ensembles", teinte: "Vieux rose", degrade: ["#9c6b70", "#c39298"] },
+      { id: "kimono-layla", nom: "Kimono Layla", prix: 39.9, cat: "Ensembles", teinte: "Écru", degrade: ["#b3a78e", "#d8cdb4"], badge: "Nouveau" },
+    ];
+
+    const CATEGORIES = ["Tout", "Abayas", "Hijabs", "Robes", "Ensembles"];
+    const CLE_PANIER = "malika.panier";
+
+    let panier = {};
+    try { panier = JSON.parse(localStorage.getItem(CLE_PANIER) || "{}"); } catch (e) { panier = {}; }
+    let categorieActive = "Tout";
+
+    const euros = (n) => n.toFixed(2).replace(".", ",") + " €";
+    const sauver = () => localStorage.setItem(CLE_PANIER, JSON.stringify(panier));
+    const nbArticles = () => Object.values(panier).reduce((a, b) => a + b, 0);
+
+    function afficherFiltres() {
+      const nav = document.getElementById("filtres");
+      nav.innerHTML = "";
+      for (const cat of CATEGORIES) {
+        const b = document.createElement("button");
+        b.className = "filtre" + (cat === categorieActive ? " actif" : "");
+        b.textContent = cat;
+        b.onclick = () => { categorieActive = cat; afficherFiltres(); afficherGrille(); };
+        nav.appendChild(b);
+      }
+    }
+
+    function afficherGrille() {
+      const grille = document.getElementById("grille");
+      grille.innerHTML = "";
+      const visibles = PRODUITS.filter((p) => categorieActive === "Tout" || p.cat === categorieActive);
+      for (const p of visibles) {
+        const carte = document.createElement("article");
+        carte.className = "carte";
+        carte.innerHTML = `
+          <div class="visuel" style="background: linear-gradient(135deg, ${p.degrade[0]}, ${p.degrade[1]})">
+            <span aria-hidden="true">✦</span>
+            ${p.badge ? `<span class="badge">${p.badge}</span>` : ""}
+          </div>
+          <div class="infos">
+            <span class="nom-produit">${p.nom}</span>
+            <span class="teinte">${p.teinte}</span>
+            <span class="prix">${euros(p.prix)}</span>
+            <button class="ajouter" data-id="${p.id}">Ajouter au panier</button>
+          </div>`;
+        carte.querySelector(".ajouter").onclick = () => ajouter(p.id);
+        grille.appendChild(carte);
+      }
+    }
+
+    function ajouter(id) {
+      panier[id] = (panier[id] || 0) + 1;
+      sauver();
+      majCompteur();
+      toast("Ajouté au panier ✓");
+    }
+
+    function changerQte(id, delta) {
+      panier[id] = (panier[id] || 0) + delta;
+      if (panier[id] <= 0) delete panier[id];
+      sauver();
+      majCompteur();
+      afficherPanier();
+    }
+
+    function majCompteur() {
+      const c = document.getElementById("compteur");
+      const n = nbArticles();
+      c.hidden = n === 0;
+      c.textContent = n;
+    }
+
+    function afficherPanier() {
+      const conteneur = document.getElementById("lignes");
+      conteneur.innerHTML = "";
+      const ids = Object.keys(panier);
+      let total = 0;
+      if (ids.length === 0) {
+        conteneur.innerHTML = '<p class="panier-vide">Ton panier est vide pour l\'instant.</p>';
+      }
+      for (const id of ids) {
+        const p = PRODUITS.find((x) => x.id === id);
+        if (!p) continue;
+        const qte = panier[id];
+        total += p.prix * qte;
+        const ligne = document.createElement("div");
+        ligne.className = "ligne";
+        ligne.innerHTML = `
+          <div class="ligne-pastille" style="background: linear-gradient(135deg, ${p.degrade[0]}, ${p.degrade[1]})"></div>
+          <div class="ligne-infos">
+            <div class="ligne-nom">${p.nom}</div>
+            <div class="ligne-prix">${euros(p.prix)}</div>
+          </div>
+          <div class="qte">
+            <button aria-label="Retirer un exemplaire">−</button>
+            <span>${qte}</span>
+            <button aria-label="Ajouter un exemplaire">+</button>
+          </div>`;
+        const [moins, plus] = ligne.querySelectorAll(".qte button");
+        moins.onclick = () => changerQte(id, -1);
+        plus.onclick = () => changerQte(id, 1);
+        conteneur.appendChild(ligne);
+      }
+      document.getElementById("total").textContent = euros(total);
+      document.getElementById("commander").disabled = ids.length === 0;
+    }
+
+    function commanderWhatsApp() {
+      const ids = Object.keys(panier);
+      if (ids.length === 0) return;
+      let total = 0;
+      const lignes = ids.map((id) => {
+        const p = PRODUITS.find((x) => x.id === id);
+        const qte = panier[id];
+        total += p.prix * qte;
+        return `- ${qte}× ${p.nom} (${euros(p.prix)})`;
+      });
+      const message =
+        `Salam aleykoum 🌙\nJe souhaite commander sur ${CONFIG.nom} :\n` +
+        lignes.join("\n") +
+        `\nTotal : ${euros(total)}`;
+      window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message)}`, "_blank");
+    }
+
+    function ouvrirPanier() {
+      afficherPanier();
+      document.getElementById("panier").classList.add("ouvert");
+      document.getElementById("voile").classList.add("ouvert");
+    }
+    function fermerPanier() {
+      document.getElementById("panier").classList.remove("ouvert");
+      document.getElementById("voile").classList.remove("ouvert");
+    }
+
+    let minuteurToast = null;
+    function toast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("visible");
+      clearTimeout(minuteurToast);
+      minuteurToast = setTimeout(() => t.classList.remove("visible"), 1600);
+    }
+
+    document.getElementById("bouton-panier").onclick = ouvrirPanier;
+    document.getElementById("fermer-panier").onclick = fermerPanier;
+    document.getElementById("voile").onclick = fermerPanier;
+    document.getElementById("commander").onclick = commanderWhatsApp;
+
+    afficherFiltres();
+    afficherGrille();
+    majCompteur();
+  </script>
+</body>
+</html>

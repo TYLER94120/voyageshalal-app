@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HalalCheck — Scanne un produit, sache s'il est halal</title>
+  <meta name="description" content="Scanne le code-barres d'un produit et obtiens un verdict immédiat : halal, douteux ou haram — avec l'explication de chaque ingrédient à risque. Gratuit." />
+  <meta property="og:title" content="HalalCheck — Scanne un produit, sache s'il est halal" />
+  <meta property="og:description" content="Verdict immédiat en scannant le code-barres : halal, douteux ou haram, avec les ingrédients expliqués." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0B1A0F" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" href="./icon-192.png" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --nuit: #0B1A0F;
+      --foret: #1B4332;
+      --or: #C9A84C;
+      --creme: #FDFAF3;
+      --douteux: #E08E3C;
+      --halal: #3E9B4F;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "DM Sans", system-ui, sans-serif;
+      background: var(--nuit);
+      color: var(--creme);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    h1, h2 { font-family: "Playfair Display", Georgia, serif; }
+
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px;
+      max-width: 1080px; margin: 0 auto;
+    }
+    .logo { font-size: 22px; font-weight: 800; }
+    .logo .coche { color: var(--or); }
+    .pill {
+      display: inline-flex; align-items: center;
+      text-decoration: none;
+      min-height: 44px; padding: 8px 18px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(201, 168, 76, 0.6);
+      color: var(--or);
+      font-size: 14px; font-weight: 700;
+    }
+
+    .hero {
+      max-width: 1080px; margin: 0 auto;
+      padding: 40px 24px 64px;
+      display: grid; gap: 48px;
+      align-items: center;
+    }
+    @media (min-width: 880px) { .hero { grid-template-columns: 1.1fr 0.9fr; padding-top: 64px; } }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 58px);
+      font-weight: 900; line-height: 1.1;
+    }
+    .hero h1 .or { color: var(--or); }
+    .hero .sous-titre {
+      margin: 18px 0 30px;
+      font-size: 18px;
+      color: rgba(253, 250, 243, 0.75);
+      max-width: 460px;
+    }
+    .stores { display: flex; gap: 12px; flex-wrap: wrap; }
+    .store {
+      display: inline-flex; align-items: center; gap: 10px;
+      min-height: 60px; padding: 10px 22px;
+      border-radius: 18px;
+      background: var(--creme); color: var(--nuit);
+      font-weight: 700; font-size: 16px;
+      text-decoration: none;
+    }
+    .store small { display: block; font-size: 12px; font-weight: 500; color: rgba(11,26,15,0.6); }
+    .note-bientot { margin-top: 12px; font-size: 14px; color: rgba(253, 250, 243, 0.55); }
+
+    /* ---- Mockup téléphone ---- */
+    .telephone {
+      width: min(310px, 86vw);
+      margin: 0 auto;
+      background: #050d08;
+      border: 3px solid rgba(253, 250, 243, 0.18);
+      border-radius: 44px;
+      padding: 14px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+    }
+    .encoche { width: 110px; height: 22px; background: #050d08; border-radius: 999px; margin: 0 auto 10px; }
+    .ecran-app {
+      background: var(--nuit);
+      border-radius: 30px;
+      padding: 18px 16px 22px;
+    }
+    .ecran-app .entete { font-size: 13px; color: rgba(253,250,243,0.55); margin-bottom: 10px; }
+    .produit-nom { font-size: 17px; font-weight: 800; }
+    .produit-marque { font-size: 13px; color: rgba(253,250,243,0.6); margin-bottom: 12px; }
+    .verdict {
+      background: var(--douteux);
+      border-radius: 18px;
+      text-align: center;
+      padding: 18px 12px;
+      margin-bottom: 12px;
+    }
+    .verdict .emoji { font-size: 30px; }
+    .verdict .label { font-size: 26px; font-weight: 900; letter-spacing: 1px; }
+    .verdict .detail { font-size: 12.5px; font-weight: 600; opacity: 0.95; margin-top: 4px; }
+    .alerte {
+      background: var(--foret);
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+    .alerte b { display: block; font-size: 13.5px; margin-bottom: 2px; }
+    .bouton-mock {
+      margin-top: 14px;
+      background: var(--or); color: var(--nuit);
+      border-radius: 16px;
+      text-align: center;
+      padding: 15px 10px;
+      font-weight: 800; font-size: 14.5px;
+    }
+
+    .bande {
+      background: var(--foret);
+      padding: 20px 16px;
+      display: flex; gap: 10px 28px; justify-content: center; flex-wrap: wrap;
+      font-size: 15px; font-weight: 600;
+    }
+
+    section.bloc { max-width: 1080px; margin: 0 auto; padding: 64px 24px; }
+    .bloc h2 { font-size: clamp(28px, 4.5vw, 38px); font-weight: 800; margin-bottom: 28px; }
+    .cartes { display: grid; gap: 16px; }
+    @media (min-width: 720px) { .cartes { grid-template-columns: repeat(3, 1fr); } }
+    .carte {
+      background: rgba(27, 67, 50, 0.55);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-radius: 20px;
+      padding: 24px;
+    }
+    .carte .emoji { font-size: 30px; }
+    .carte h3 { font-size: 19px; margin: 12px 0 8px; }
+    .carte p { font-size: 15.5px; color: rgba(253, 250, 243, 0.75); }
+
+    .etapes { display: grid; gap: 14px; counter-reset: etape; }
+    .etape {
+      display: flex; gap: 16px; align-items: flex-start;
+      background: rgba(27, 67, 50, 0.35);
+      border-radius: 18px; padding: 20px;
+    }
+    .num {
+      flex: 0 0 auto;
+      width: 44px; height: 44px; border-radius: 999px;
+      background: var(--or); color: var(--nuit);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 18px;
+    }
+    .etape h3 { font-size: 18px; margin-bottom: 4px; }
+    .etape p { font-size: 15.5px; color: rgba(253, 250, 243, 0.75); }
+
+    details {
+      border-bottom: 1px solid rgba(253, 250, 243, 0.12);
+      padding: 4px 0;
+    }
+    summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex; align-items: center; justify-content: space-between;
+      min-height: 56px;
+      font-size: 17px; font-weight: 700;
+    }
+    summary::after { content: "+"; color: var(--or); font-size: 24px; font-weight: 700; }
+    details[open] summary::after { content: "−"; }
+    details p { padding: 0 0 18px; color: rgba(253, 250, 243, 0.75); font-size: 15.5px; max-width: 640px; }
+
+    footer {
+      text-align: center;
+      padding: 48px 24px 40px;
+      border-top: 1px solid rgba(253, 250, 243, 0.1);
+    }
+    footer .logo { font-size: 24px; margin-bottom: 10px; }
+    footer p { font-size: 14px; color: rgba(253, 250, 243, 0.55); margin-top: 4px; }
+    .bismillah { font-size: 18px; color: var(--or); margin-top: 18px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">HalalCheck <span class="coche">✓</span></div>
+    <a class="pill" href="./scan.html">📷 Scanner</a>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Scanne un produit.<br /><span class="or">Sache s'il est halal.</span></h1>
+      <p class="sous-titre">
+        Un scan du code-barres → verdict immédiat : halal, douteux ou haram.
+        Avec l'explication claire de chaque ingrédient à risque, pas juste une couleur.
+      </p>
+      <div class="stores">
+        <a class="cta" href="./scan.html">📷  Scanner un produit</a>
+      </div>
+      <p class="note-bientot">
+        Gratuit, sans compte, directement dans ton navigateur.<br />
+        Astuce : « Ajouter à l'écran d'accueil » pour l'utiliser comme une app.
+      </p>
+    </div>
+
+    <div class="telephone" aria-hidden="true">
+      <div class="encoche"></div>
+      <div class="ecran-app">
+        <div class="entete">← Résultat</div>
+        <div class="produit-nom">Brioche tranchée</div>
+        <div class="produit-marque">Marque exemple</div>
+        <div class="verdict">
+          <div class="emoji">⚠️</div>
+          <div class="label">DOUTEUX</div>
+          <div class="detail">1 ingrédient à vérifier</div>
+        </div>
+        <div class="alerte">
+          <b>⚠️ E471 — Mono- et diglycérides</b>
+          Émulsifiant d'origine végétale ou animale non précisée.
+        </div>
+        <div class="bouton-mock">📷  Scanner un autre produit</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="bande">
+    <span>📖 Données Open Food Facts</span>
+    <span>🔬 30+ additifs expliqués</span>
+    <span>🆓 100 % gratuit</span>
+  </div>
+
+  <section class="bloc">
+    <h2>Pourquoi HalalCheck ?</h2>
+    <div class="cartes">
+      <div class="carte">
+        <div class="emoji">⚡</div>
+        <h3>Verdict en 2 secondes</h3>
+        <p>Au supermarché, pas le temps de lire 40 lignes d'ingrédients en petit. Tu scannes, tu sais.</p>
+      </div>
+      <div class="carte">
+        <div class="emoji">🔬</div>
+        <h3>Expliqué, pas juste coloré</h3>
+        <p>Chaque alerte dit quel ingrédient pose question et pourquoi : gélatine, E120, E471, présure…</p>
+      </div>
+      <div class="carte">
+        <div class="emoji">🕌</div>
+        <h3>Pensé pour nous</h3>
+        <p>Labels halal reconnus (AVS, ARGML…) mis en avant, produits véganes identifiés, et transparence totale sur la méthode.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloc">
+    <h2>Comment ça marche</h2>
+    <div class="etapes">
+      <div class="etape">
+        <div class="num">1</div>
+        <div><h3>Scanne le code-barres</h3><p>Ou saisis-le à la main si l'emballage est abîmé.</p></div>
+      </div>
+      <div class="etape">
+        <div class="num">2</div>
+        <div><h3>L'app analyse la composition</h3><p>Ingrédients, additifs et labels sont passés au crible du moteur HalalCheck.</p></div>
+      </div>
+      <div class="etape">
+        <div class="num">3</div>
+        <div><h3>Verdict clair + explications</h3><p>HALAL, DOUTEUX, HARAM ou INCONNU — et tu gardes l'historique de tes scans.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloc" id="faq">
+    <h2>Questions fréquentes</h2>
+    <details>
+      <summary>C'est fiable à 100 % ?</summary>
+      <p>Non, et on te le dit franchement : l'analyse est automatique et indicative. Les recettes changent et certains avis divergent entre savants. En cas de doute, la certification imprimée sur l'emballage prime toujours. Quand on ne sait pas, on affiche INCONNU — on ne devine jamais.</p>
+    </details>
+    <details>
+      <summary>D'où viennent les données ?</summary>
+      <p>D'Open Food Facts, la plus grande base alimentaire au monde — collaborative, ouverte et gratuite. Des millions de produits, enrichis chaque jour par la communauté.</p>
+    </details>
+    <details>
+      <summary>C'est gratuit ?</summary>
+      <p>Oui. Gratuit, sans compte obligatoire et sans publicité au lancement.</p>
+    </details>
+    <details>
+      <summary>Qui décide de ce qui est halal ou haram ?</summary>
+      <p>Personne chez nous ne « décide » : l'app applique des règles documentées (porc, alcool, gélatine, additifs d'origine animale…) et cite l'ingrédient exact pour que tu puisses juger en connaissance de cause, selon ton école et ton exigence.</p>
+    </details>
+    <details>
+      <summary>Et l'application mobile ?</summary>
+      <p>Elle arrive. On lance d'abord la version web pour l'améliorer chaque jour sans attendre les validations des stores. En attendant, ajoute cette page à ton écran d'accueil : elle s'utilise exactement comme une app.</p>
+    </details>
+  </section>
+
+  <footer>
+    <div class="logo">HalalCheck <span class="coche">✓</span></div>
+    <p>contact@halalcheck.fr</p>
+    <p>Une application de l'écosystème VoyagesHalal.</p>
+    <p class="bismillah">بِسْمِ اللَّهِ</p>
+  </footer>
+
+  <script>
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(function () {});
+  </script>
+</body>
+</html>

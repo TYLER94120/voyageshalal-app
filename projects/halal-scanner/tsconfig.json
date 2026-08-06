@@ -12,11 +12,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.d.ts",
-    "expo-env.d.ts",
-    ".expo/types/**/*.ts"
+    "expo-env.d.ts"
   ],
   "exclude": [
-    "node_modules",
-    "projects"
+    "node_modules"
   ]
 }
