@@ -1,0 +1,12 @@
+{
+  "_doc": "Base locale HalalCheck — produits absents d'Open Food Facts (Maghreb surtout), transcrits depuis les photos d'étiquettes envoyées par les utilisateurs. Ce fichier fournit les DONNÉES (nom, marque, ingrédients tels qu'imprimés) ; l'analyse reste indicative et est calculée par le moteur. Pour un statut certifié/confirmé, utiliser verifications.json. Toujours transcrire fidèlement l'étiquette, sans interprétation. Champs : nom, marque, ingredientsTexte, labels (ex: [\"en:halal\"] si le logo halal figure sur l'emballage), date.",
+  "produits": {
+    "0000000000001": {
+      "nom": "Produit local de démonstration",
+      "marque": "HalalCheck",
+      "ingredientsTexte": "eau, sucre, arôme naturel",
+      "date": "2026-08",
+      "_note": "Exemple à supprimer avant l'ouverture publique — tape 0000000000001 dans l'app pour voir une fiche locale."
+    }
+  }
+}

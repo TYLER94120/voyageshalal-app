@@ -1,12 +1,13 @@
-// Service worker HalalCheck v0.3 — cache l'app web pour un démarrage instantané.
+// Service worker HalalCheck v0.4 — cache l'app web pour un démarrage instantané.
 // Déploiement : GitHub Pages via .github/workflows/deploy-halalcheck.yml
-const CACHE = "halalcheck-v3";
+const CACHE = "halalcheck-v4";
 const FICHIERS = [
   "./",
   "./index.html",
   "./scan.html",
   "./halal.js",
   "./verifications.json",
+  "./produits-locaux.json",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
@@ -33,7 +34,8 @@ self.addEventListener("fetch", (evt) => {
   const estPage =
     requete.mode === "navigate" ||
     (requete.headers.get("accept") || "").includes("text/html") ||
-    url.pathname.endsWith("verifications.json");
+    url.pathname.endsWith("verifications.json") ||
+    url.pathname.endsWith("produits-locaux.json");
   if (estPage) {
     // Pages HTML + base de vérifications : réseau d'abord (toujours la dernière
     // version, pour que les nouvelles vérifications arrivent vite), cache en secours.

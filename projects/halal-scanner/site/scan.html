@@ -355,6 +355,7 @@
         <h2 id="titre-ingredients">Ingrédients</h2>
         <p id="ingredients"></p>
       </div>
+      <p id="note-locale" class="avertissement" hidden></p>
       <a id="cta-verifier" class="cta-verifier" target="_blank" rel="noopener" hidden></a>
       <p class="avertissement">
         Analyse automatique à titre indicatif, basée sur les données Open Food Facts.
@@ -523,27 +524,70 @@
     // dès que la redirection e-mail OVH est créée.
     const CONTACT = "oulali.mohamed@gmail.com";
     let VERIFS = {};
+    let LOCAUX = {};
     const verifsPretes = (async () => {
       try {
-        const r = await fetch("./verifications.json", { cache: "no-store" });
-        if (r.ok) {
-          const j = await r.json();
+        const [rv, rl] = await Promise.all([
+          fetch("./verifications.json", { cache: "no-store" }),
+          fetch("./produits-locaux.json", { cache: "no-store" }),
+        ]);
+        if (rv.ok) {
+          const j = await rv.json();
           VERIFS = (j && j.produits) || {};
         }
+        if (rl.ok) {
+          const j = await rl.json();
+          LOCAUX = (j && j.produits) || {};
+        }
       } catch (e) {
-        /* base indisponible : on retombe simplement sur l'analyse auto */
+        /* bases indisponibles : on retombe simplement sur l'analyse auto */
       }
     })();
 
-    function chercherVerification(code) {
+    function variantesCode(code) {
       const c = String(code).replace(/\D/g, "");
-      const variantes = [c];
-      if (c.length === 12) variantes.push("0" + c);
-      if (c.length === 13 && c.startsWith("0")) variantes.push(c.slice(1));
-      for (const v of variantes) {
+      const liste = [c];
+      if (c.length === 12) liste.push("0" + c);
+      if (c.length === 13 && c.startsWith("0")) liste.push(c.slice(1));
+      return liste;
+    }
+
+    function chercherVerification(code) {
+      for (const v of variantesCode(code)) {
         if (VERIFS[v]) return Object.assign({ code: v }, VERIFS[v]);
       }
       return null;
+    }
+
+    // Base locale HalalCheck : produits transcrits depuis les photos des
+    // utilisateurs — le scanner fonctionne même là où les bases mondiales
+    // ignorent le produit (Maghreb notamment).
+    function produitLocal(code) {
+      for (const v of variantesCode(code)) {
+        const p = LOCAUX[v];
+        if (p) {
+          return {
+            code: v,
+            nom: p.nom || null,
+            marque: p.marque || null,
+            imageUrl: null,
+            ingredientsTexte: p.ingredientsTexte || null,
+            additifs: [],
+            labels: Array.isArray(p.labels) ? p.labels : [],
+            sourceLocale: true,
+            dateLocale: p.date || "",
+          };
+        }
+      }
+      return null;
+    }
+
+    function lienPhotos(code) {
+      const objet = `Produit introuvable — ${code}`;
+      const corps =
+        `Assalamu alaykum,\n\nCe produit n'est pas encore dans HalalCheck :\nCode-barres : ${code}\n\n` +
+        `J'attache 2 photos :\n1) le produit (face avant)\n2) la liste des ingrédients\n\n(Envoyé depuis halalcheck.fr)`;
+      return `mailto:${CONTACT}?subject=${encodeURIComponent(objet)}&body=${encodeURIComponent(corps)}`;
     }
 
     function lienAide(code, nom, aClarifier) {
@@ -573,6 +617,8 @@
       } catch (e) {
         erreurReseau = true;
       }
+      // Repli sur notre base locale (fonctionne aussi hors-ligne).
+      if (!produit) produit = produitLocal(code);
       // Une vérification suffit à afficher un résultat, même si Open Food Facts
       // ne connaît pas le produit (utile pour les produits locaux non référencés).
       if (!produit && !verif) {
@@ -582,12 +628,12 @@
           montrerErreur(
             "🔍",
             "Produit pas encore référencé",
-            "La base Open Food Facts est collaborative : les produits locaux (Maroc, Algérie, Tunisie…) y manquent souvent, et chaque format d'un même produit a son propre code-barres. Aide la communauté en l'ajoutant — 2 minutes avec une photo.",
+            "Les produits du Maghreb manquent souvent des bases mondiales. Envoie-nous 2 photos — le produit et sa liste d'ingrédients — on l'ajoute à la base HalalCheck : ton prochain scan le trouvera, et il servira à toute la communauté.",
             "📷  Scanner un autre produit",
             relancerScan,
             {
-              libelle: "➕  Ajouter ce produit à la base",
-              action: () => window.open(`https://world.openfoodfacts.org/cgi/product.pl?type=add&code=${encodeURIComponent(code)}`, "_blank"),
+              libelle: "📸  Envoyer les 2 photos",
+              action: () => { location.href = lienPhotos(code); },
             }
           );
         }
@@ -732,6 +778,14 @@
       if (blocIngredients) {
         $("titre-ingredients").textContent = blocIngredients.titre;
         $("ingredients").textContent = blocIngredients.texte;
+      }
+
+      const estLocal = !!(produit && produit.sourceLocale);
+      $("note-locale").hidden = !estLocal;
+      if (estLocal) {
+        $("note-locale").textContent =
+          "Fiche HalalCheck — étiquette transcrite depuis les photos envoyées par la communauté" +
+          (produit.dateLocale ? " (" + produit.dateLocale + ")" : "") + ".";
       }
 
       dernierResultat = { code, nom: nomAffiche, statut: statutFinal, verifie: !!verif };
