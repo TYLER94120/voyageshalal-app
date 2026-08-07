@@ -1,0 +1,13 @@
+{
+  "_doc": "Base de vérifications HalalCheck. Chaque clé sous 'produits' est un code-barres. Une vérification affichée ici PRIME sur l'analyse automatique : elle apparaît comme une CERTITUDE, avec sa source. N'ajouter QUE des informations réellement confirmées — certification officielle (AVS, ARGML, HMC…) ou réponse écrite du fabricant. Toujours renseigner 'source' et 'date'. 'statut' : 'halal' ou 'haram'.",
+  "produits": {
+    "0000000000000": {
+      "nom": "Produit de démonstration",
+      "statut": "halal",
+      "titre": "Confirmé halal par le fabricant",
+      "detail": "Exemple d'affichage d'une vérification (tape ce code 0000000000000 pour le voir). À supprimer avant l'ouverture publique. Ici, le fabricant aurait confirmé par écrit que l'émulsifiant E471 est d'origine 100% végétale.",
+      "source": "Exemple — à supprimer",
+      "date": "2026-08"
+    }
+  }
+}

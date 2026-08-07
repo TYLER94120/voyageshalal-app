@@ -212,6 +212,52 @@
     }
     .principal:active { transform: scale(0.97); }
 
+    /* ---- Verdict vérifié (certitude) vs analyse indicative ---- */
+    #label-indicatif {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: rgba(253, 250, 243, 0.45);
+      text-align: center;
+      margin: 16px 0 -4px;
+    }
+    .verdict.verifie {
+      border: 2px solid var(--or);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4), 0 0 0 4px rgba(201, 168, 76, 0.16);
+    }
+    .sceau {
+      display: inline-block;
+      background: linear-gradient(150deg, #dcc27a, var(--or));
+      color: var(--nuit);
+      font-size: 12px; font-weight: 800; letter-spacing: 1px;
+      padding: 6px 16px; border-radius: 999px;
+      margin-bottom: 14px;
+    }
+    #verif-detail {
+      font-size: 14.5px; line-height: 1.5;
+      color: rgba(253, 250, 243, 0.92);
+      margin-top: 12px;
+    }
+    #verif-source {
+      font-size: 13px; color: rgba(253, 250, 243, 0.85);
+      margin-top: 14px; padding-top: 12px;
+      border-top: 1px solid rgba(253, 250, 243, 0.28);
+    }
+    .cta-verifier {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2px;
+      width: 100%; min-height: 62px; margin-top: 18px;
+      padding: 10px 14px;
+      border-radius: 18px;
+      background: transparent;
+      border: 1.5px solid var(--or);
+      color: var(--or);
+      font-size: 16px; font-weight: 700;
+      text-decoration: none; text-align: center;
+      transition: transform 150ms ease;
+    }
+    .cta-verifier:active { transform: scale(0.98); }
+    .cta-verifier small { font-weight: 500; font-size: 12.5px; color: rgba(253, 250, 243, 0.55); }
+
     /* ---- Erreur ---- */
     #erreur-emoji { font-size: 46px; }
     #erreur-titre { font-size: 22px; font-weight: 800; margin: 10px 0 6px; }
@@ -279,16 +325,21 @@
       <div id="produit-image-absente" class="image-absente" hidden><span class="monogramme">✦</span></div>
       <h1 id="produit-nom"></h1>
       <p id="produit-marque"></p>
+      <div id="label-indicatif" hidden>Analyse automatique · à titre indicatif</div>
       <div class="verdict" id="verdict">
+        <div class="sceau" id="sceau" hidden>✓ INFORMATION VÉRIFIÉE</div>
         <div id="verdict-emoji"></div>
         <div id="verdict-label"></div>
         <div id="verdict-detail"></div>
+        <div id="verif-detail" hidden></div>
+        <div id="verif-source" hidden></div>
       </div>
       <div id="alertes"></div>
       <div id="ingredients-bloc" hidden>
         <h2 id="titre-ingredients">Ingrédients</h2>
         <p id="ingredients"></p>
       </div>
+      <a id="cta-verifier" class="cta-verifier" target="_blank" rel="noopener" hidden></a>
       <p class="avertissement">
         Analyse automatique à titre indicatif, basée sur les données Open Food Facts.
         En cas de doute, réfère-toi à la certification (AVS, ARGML…) sur l'emballage.
@@ -446,6 +497,45 @@
       return null;
     }
 
+    /* ---------- Vérifications communautaires (la certitude) ----------
+       Une vérification PRIME sur l'analyse automatique : elle vient d'une
+       certification officielle ou d'une réponse écrite du fabricant, et
+       s'affiche comme une certitude sourcée. Base : verifications.json. */
+    const CONTACT = "contact@halalcheck.fr";
+    let VERIFS = {};
+    const verifsPretes = (async () => {
+      try {
+        const r = await fetch("./verifications.json", { cache: "no-store" });
+        if (r.ok) {
+          const j = await r.json();
+          VERIFS = (j && j.produits) || {};
+        }
+      } catch (e) {
+        /* base indisponible : on retombe simplement sur l'analyse auto */
+      }
+    })();
+
+    function chercherVerification(code) {
+      const c = String(code).replace(/\D/g, "");
+      const variantes = [c];
+      if (c.length === 12) variantes.push("0" + c);
+      if (c.length === 13 && c.startsWith("0")) variantes.push(c.slice(1));
+      for (const v of variantes) {
+        if (VERIFS[v]) return Object.assign({ code: v }, VERIFS[v]);
+      }
+      return null;
+    }
+
+    function lienAide(code, nom, aClarifier) {
+      const objet = `Vérification halal — ${nom} (${code})`;
+      const corps =
+        `Assalamu alaykum,\n\n` +
+        `Produit : ${nom}\nCode-barres : ${code}\n` +
+        (aClarifier ? `À clarifier : ${aClarifier}\n` : "") +
+        `\nSi j'ai une réponse écrite du fabricant (ou une certification), je la copie ici :\n\n`;
+      return `mailto:${CONTACT}?subject=${encodeURIComponent(objet)}&body=${encodeURIComponent(corps)}`;
+    }
+
     function surCode(code) {
       arreterScanner();
       traiterCode(String(code).trim());
@@ -454,9 +544,21 @@
     async function traiterCode(code) {
       codeEnCours = code;
       montrer("ecran-chargement");
+      await verifsPretes;
+      const verif = chercherVerification(code);
+      let produit = null;
+      let erreurReseau = false;
       try {
-        const produit = await chercherProduit(code);
-        if (!produit) {
+        produit = await chercherProduit(code);
+      } catch (e) {
+        erreurReseau = true;
+      }
+      // Une vérification suffit à afficher un résultat, même si Open Food Facts
+      // ne connaît pas le produit (utile pour les produits locaux non référencés).
+      if (!produit && !verif) {
+        if (erreurReseau) {
+          montrerErreur("📡", "Pas de connexion", "Vérifie ton réseau et réessaie.", "Réessayer", () => traiterCode(codeEnCours));
+        } else {
           montrerErreur(
             "🔍",
             "Produit pas encore référencé",
@@ -468,12 +570,10 @@
               action: () => window.open(`https://world.openfoodfacts.org/cgi/product.pl?type=add&code=${encodeURIComponent(code)}`, "_blank"),
             }
           );
-          return;
         }
-        afficherResultat(produit);
-      } catch (e) {
-        montrerErreur("📡", "Pas de connexion", "Vérifie ton réseau et réessaie.", "Réessayer", () => traiterCode(codeEnCours));
+        return;
       }
+      afficherResultat(produit, verif);
     }
 
     // Étiquettes bilingues (Maroc, Algérie, Tunisie…) : on affiche la partie
@@ -532,41 +632,82 @@
       return "Pas assez d'informations sur ce produit";
     }
 
-    function afficherResultat(produit) {
-      const verdict = analyserProduit({
-        ingredientsTexte: produit.ingredientsTexte,
-        additifs: produit.additifs,
-        labels: produit.labels,
-      });
+    function afficherResultat(produit, verif) {
+      const code = (produit && produit.code) || (verif && verif.code) || codeEnCours;
+      const nomAffiche = (produit && produit.nom) || (verif && verif.nom) || `Produit ${code}`;
 
-      $("produit-image").hidden = !produit.imageUrl;
-      $("produit-image-absente").hidden = !!produit.imageUrl;
-      if (produit.imageUrl) $("produit-image").src = produit.imageUrl;
-      const nomAffiche = produit.nom || `Produit ${produit.code}`;
+      const imageUrl = produit && produit.imageUrl;
+      $("produit-image").hidden = !imageUrl;
+      $("produit-image-absente").hidden = !!imageUrl;
+      if (imageUrl) $("produit-image").src = imageUrl;
+
       $("produit-nom").textContent = nomAffiche;
+      const marque = produit && produit.marque;
       const marqueUtile =
-        produit.marque && produit.marque.trim().toLowerCase() !== nomAffiche.trim().toLowerCase();
-      $("produit-marque").textContent = marqueUtile ? produit.marque : "";
+        marque && marque.trim().toLowerCase() !== nomAffiche.trim().toLowerCase();
+      $("produit-marque").textContent = marqueUtile ? marque : "";
 
-      $("verdict").className = "verdict verdict-" + verdict.statut;
-      $("verdict-emoji").textContent = EMOJIS[verdict.statut];
-      $("verdict-label").textContent = LABELS[verdict.statut];
-      $("verdict-detail").textContent = sousTitre(verdict);
+      let statutFinal;
 
-      const alertes = $("alertes");
-      alertes.innerHTML = "";
-      for (const a of verdict.alertes) {
-        const div = document.createElement("div");
-        div.className = "alerte";
-        const b = document.createElement("b");
-        b.textContent = `${a.niveau === "haram" ? "❌" : "⚠️"}  ${a.element}`;
-        const span = document.createElement("span");
-        span.textContent = a.raison;
-        div.append(b, span);
-        alertes.appendChild(div);
+      if (verif) {
+        // ---- CERTITUDE : information vérifiée (prime sur l'analyse auto) ----
+        statutFinal = verif.statut;
+        $("label-indicatif").hidden = true;
+        $("sceau").hidden = false;
+        $("verdict").className = "verdict verifie verdict-" + verif.statut;
+        $("verdict-emoji").textContent = EMOJIS[verif.statut] || "✅";
+        $("verdict-label").textContent = LABELS[verif.statut] || "";
+        $("verdict-detail").textContent = verif.titre || "";
+        $("verif-detail").hidden = !verif.detail;
+        $("verif-detail").textContent = verif.detail || "";
+        $("verif-source").hidden = false;
+        $("verif-source").textContent =
+          "Source : " + (verif.source || "—") + (verif.date ? " · " + verif.date : "");
+        $("alertes").innerHTML = "";
+        $("cta-verifier").hidden = true;
+      } else {
+        // ---- ANALYSE INDICATIVE : déduction automatique des ingrédients ----
+        const verdict = analyserProduit({
+          ingredientsTexte: produit.ingredientsTexte,
+          additifs: produit.additifs,
+          labels: produit.labels,
+        });
+        statutFinal = verdict.statut;
+        $("label-indicatif").hidden = false;
+        $("sceau").hidden = true;
+        $("verif-detail").hidden = true;
+        $("verif-source").hidden = true;
+        $("verdict").className = "verdict verdict-" + verdict.statut;
+        $("verdict-emoji").textContent = EMOJIS[verdict.statut];
+        $("verdict-label").textContent = LABELS[verdict.statut];
+        $("verdict-detail").textContent = sousTitre(verdict);
+
+        const alertes = $("alertes");
+        alertes.innerHTML = "";
+        for (const a of verdict.alertes) {
+          const div = document.createElement("div");
+          div.className = "alerte";
+          const b = document.createElement("b");
+          b.textContent = `${a.niveau === "haram" ? "❌" : "⚠️"}  ${a.element}`;
+          const span = document.createElement("span");
+          span.textContent = a.raison;
+          div.append(b, span);
+          alertes.appendChild(div);
+        }
+
+        // Rendre le doute actionnable : transformer l'incertitude en certitude.
+        const cta = $("cta-verifier");
+        cta.hidden = false;
+        const aClarifier =
+          (verdict.alertes[0] && verdict.alertes[0].element) ||
+          (verdict.statut === "inconnu" ? "le statut halal de ce produit" : "");
+        cta.href = lienAide(code, nomAffiche, aClarifier);
+        cta.innerHTML =
+          "<span>✉️ Une info sûre sur ce produit ?</span>" +
+          "<small>Aide-nous à le faire passer en « vérifié »</small>";
       }
 
-      const blocIngredients = presenterIngredients(produit.ingredientsTexte);
+      const blocIngredients = produit ? presenterIngredients(produit.ingredientsTexte) : null;
       $("ingredients-bloc").hidden = !blocIngredients;
       if (blocIngredients) {
         $("titre-ingredients").textContent = blocIngredients.titre;
@@ -574,9 +715,9 @@
       }
 
       enregistrerScan({
-        code: produit.code,
-        nom: produit.nom || `Produit ${produit.code}`,
-        statut: verdict.statut,
+        code,
+        nom: nomAffiche,
+        statut: statutFinal,
         date: new Date().toISOString(),
       });
       montrer("ecran-resultat");
