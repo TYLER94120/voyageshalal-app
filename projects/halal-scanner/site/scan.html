@@ -276,7 +276,7 @@
     /* ---- Erreur ---- */
     #erreur-emoji { font-size: 46px; }
     #erreur-titre { font-size: 22px; font-weight: 800; margin: 10px 0 6px; }
-    #erreur-texte { color: rgba(253, 250, 243, 0.7); margin-bottom: 26px; }
+    #erreur-texte { color: rgba(253, 250, 243, 0.7); margin-bottom: 26px; white-space: pre-line; }
 
     /* ---- Historique ---- */
     .bloc-historique { margin-top: 34px; }
@@ -628,7 +628,7 @@
           montrerErreur(
             "🔍",
             "Produit pas encore référencé",
-            "Les produits du Maghreb manquent souvent des bases mondiales. Envoie-nous 2 photos — le produit et sa liste d'ingrédients — on l'ajoute à la base HalalCheck : ton prochain scan le trouvera, et il servira à toute la communauté.",
+            "Les produits du Maghreb manquent souvent des bases mondiales. Envoie-nous 2 photos — le produit et sa liste d'ingrédients — on l'ajoute à la base HalalCheck : ton prochain scan le trouvera, et il servira à toute la communauté.\n\nCode scanné : " + code,
             "📷  Scanner un autre produit",
             relancerScan,
             {
