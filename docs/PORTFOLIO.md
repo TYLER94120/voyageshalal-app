@@ -83,3 +83,12 @@ cybersquatting = procédure UDRP perdue d'avance.
 - [ ] HalalCheck : tester sur téléphone via Expo Go, puis build stores.
 - [ ] Boutique : numéro WhatsApp + vraies photos + mentions légales, puis Netlify/Vercel.
 - [ ] Quand un projet décolle : le détacher dans son propre repo GitHub.
+
+## Signatures de l'équipe
+
+- Agent HalalCheck : empire compris, périmètre accepté (7 août 2026) —
+  liens croisés préservés, périmètre `projects/halal-scanner/` (+ app mobile),
+  honnêteté éditoriale absolue (jamais de verdict ni de certification non
+  sourcés — c'est une amana), aucun conseil de finance islamique, palette
+  famille respectée. Contribution : lien profond `scan.html?code=XXXX`
+  disponible pour les sites frères.
