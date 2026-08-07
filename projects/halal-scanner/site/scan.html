@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --nuit: #0B1A0F;
@@ -26,7 +26,10 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: "DM Sans", system-ui, sans-serif;
-      background: var(--nuit);
+      background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23FDFAF3' stroke-opacity='0.04'%3E%3Crect x='18' y='18' width='36' height='36'/%3E%3Crect x='18' y='18' width='36' height='36' transform='rotate(45 36 36)'/%3E%3C/g%3E%3C/svg%3E"),
+        radial-gradient(ellipse 120% 60% at 50% -10%, rgba(27, 67, 50, 0.55), transparent 60%),
+        var(--nuit);
       color: var(--creme);
       font-size: 16px;
       line-height: 1.5;
@@ -47,8 +50,15 @@
       color: var(--creme); text-decoration: none; font-size: 24px;
       background: rgba(253, 250, 243, 0.08);
     }
-    .titre-entete { font-size: 20px; font-weight: 800; }
-    .titre-entete .coche { color: var(--or); }
+    .titre-entete { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+    .titre-entete .coche {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px;
+      background: linear-gradient(150deg, #dcc27a, var(--or));
+      color: var(--nuit);
+      border-radius: 8px;
+      font-size: 15px;
+    }
 
     main { max-width: 560px; margin: 0 auto; padding: 8px 20px 56px; }
     section[hidden] { display: none !important; }
@@ -118,41 +128,88 @@
     }
     .image-absente {
       height: 150px;
-      background: var(--foret);
+      background:
+        radial-gradient(circle at 70% 25%, rgba(201, 168, 76, 0.22), transparent 55%),
+        linear-gradient(150deg, #234f3b, var(--foret));
+      border: 1px solid rgba(201, 168, 76, 0.25);
       border-radius: 16px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 44px;
       margin-bottom: 18px;
     }
-    #produit-nom { font-size: 23px; font-weight: 800; }
+    .image-absente .monogramme { font-size: 40px; color: var(--or); }
+    #produit-nom { font-family: "Playfair Display", Georgia, serif; font-size: 27px; font-weight: 800; }
     #produit-marque { color: rgba(253, 250, 243, 0.65); margin-top: 2px; }
     .verdict {
-      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
       text-align: center;
-      padding: 24px 16px;
+      padding: 26px 16px 24px;
       margin-top: 18px;
+      border: 1px solid rgba(253, 250, 243, 0.25);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
+      animation: apparaitre 180ms ease-out;
+    }
+    .verdict::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-opacity='0.10'%3E%3Crect x='14' y='14' width='28' height='28'/%3E%3Crect x='14' y='14' width='28' height='28' transform='rotate(45 28 28)'/%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .verdict > * { position: relative; z-index: 1; }
+    .verdict-halal { background: linear-gradient(160deg, #2e7d3f, #45a854); }
+    .verdict-douteux { background: linear-gradient(160deg, #c47a2c, #e59a48); }
+    .verdict-haram { background: linear-gradient(160deg, #b23a3a, #dd5252); }
+    .verdict-inconnu { background: linear-gradient(160deg, #565d5a, #75807c); }
+    @keyframes apparaitre {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
     }
     #verdict-emoji { font-size: 38px; }
-    #verdict-label { font-size: 30px; font-weight: 900; letter-spacing: 1px; }
-    #verdict-detail { font-size: 15px; font-weight: 600; margin-top: 4px; opacity: 0.95; }
+    #verdict-label { font-size: 32px; font-weight: 900; letter-spacing: 2px; }
+    #verdict-label::after {
+      content: "";
+      display: block;
+      width: 54px; height: 2px;
+      margin: 10px auto 0;
+      border-radius: 2px;
+      background: rgba(253, 250, 243, 0.55);
+    }
+    #verdict-detail { font-size: 15px; font-weight: 600; margin-top: 8px; opacity: 0.95; }
     #alertes { margin-top: 22px; display: grid; gap: 10px; }
     .alerte {
-      background: var(--foret);
+      background: linear-gradient(150deg, rgba(27, 67, 50, 0.9), rgba(27, 67, 50, 0.55));
+      border-left: 3px solid var(--or);
       border-radius: 16px;
       padding: 14px 16px;
     }
     .alerte b { display: block; font-size: 16px; margin-bottom: 3px; }
     .alerte span { font-size: 14px; color: rgba(253, 250, 243, 0.78); }
-    #ingredients-bloc h2, .bloc-historique h2 { font-size: 19px; margin: 26px 0 10px; }
+    #ingredients-bloc h2, .bloc-historique h2 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 20px;
+      margin: 28px 0 10px;
+    }
+    #ingredients-bloc h2::before, .bloc-historique h2::before {
+      content: "✦";
+      color: var(--or);
+      font-size: 13px;
+      margin-right: 8px;
+      vertical-align: 3px;
+    }
     #ingredients { font-size: 14px; color: rgba(253, 250, 243, 0.75); }
     .avertissement { font-size: 13px; color: rgba(253, 250, 243, 0.5); margin: 24px 0 18px; }
     .principal {
       width: 100%;
       min-height: 64px;
       border-radius: 20px;
-      background: var(--or); color: var(--nuit);
+      background: linear-gradient(150deg, #dcc27a, var(--or));
+      color: var(--nuit);
       font-size: 18px; font-weight: 800;
+      box-shadow: 0 10px 28px rgba(201, 168, 76, 0.28);
+      transition: transform 150ms ease;
     }
+    .principal:active { transform: scale(0.97); }
 
     /* ---- Erreur ---- */
     #erreur-emoji { font-size: 46px; }
@@ -172,10 +229,18 @@
       color: var(--creme);
       text-align: left;
     }
+    .scan-ligne { border: 1px solid rgba(253, 250, 243, 0.06); transition: transform 150ms ease; }
+    .scan-ligne:active { transform: scale(0.98); }
     .scan-ligne .emo { font-size: 20px; }
     .scan-ligne .nom { flex: 1; font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
     .scan-ligne .pastille { width: 13px; height: 13px; border-radius: 999px; flex: 0 0 auto; }
     .vide { color: rgba(253, 250, 243, 0.45); font-size: 15px; }
+    .bismillah-pied {
+      text-align: center;
+      color: rgba(201, 168, 76, 0.55);
+      font-size: 16px;
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
@@ -210,7 +275,7 @@
 
     <section id="ecran-resultat" hidden>
       <img id="produit-image" alt="" hidden />
-      <div id="produit-image-absente" class="image-absente" hidden>🛒</div>
+      <div id="produit-image-absente" class="image-absente" hidden><span class="monogramme">✦</span></div>
       <h1 id="produit-nom"></h1>
       <p id="produit-marque"></p>
       <div class="verdict" id="verdict">
@@ -237,6 +302,8 @@
       <button id="reessayer" class="principal"></button>
       <button id="erreur-secondaire" class="secondaire" style="width: 100%; margin-top: 10px" hidden></button>
     </section>
+
+    <p class="bismillah-pied">بِسْمِ اللَّهِ</p>
   </main>
 
   <script type="module">
@@ -480,7 +547,7 @@
         produit.marque && produit.marque.trim().toLowerCase() !== nomAffiche.trim().toLowerCase();
       $("produit-marque").textContent = marqueUtile ? produit.marque : "";
 
-      $("verdict").style.background = COULEURS[verdict.statut];
+      $("verdict").className = "verdict verdict-" + verdict.statut;
       $("verdict-emoji").textContent = EMOJIS[verdict.statut];
       $("verdict-label").textContent = LABELS[verdict.statut];
       $("verdict-detail").textContent = sousTitre(verdict);
