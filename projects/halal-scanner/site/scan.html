@@ -65,7 +65,9 @@
     }
 
     main { max-width: 560px; margin: 0 auto; padding: 8px 20px 56px; }
-    section[hidden] { display: none !important; }
+    /* L'attribut hidden doit TOUJOURS gagner, même sur les éléments dont la
+       classe définit un display (sceau, image-absente, cta…). */
+    [hidden] { display: none !important; }
 
     /* ---- Écran scan ---- */
     .cadre-video {
