@@ -220,7 +220,7 @@
       </div>
       <div id="alertes"></div>
       <div id="ingredients-bloc" hidden>
-        <h2>Ingrédients</h2>
+        <h2 id="titre-ingredients">Ingrédients</h2>
         <p id="ingredients"></p>
       </div>
       <p class="avertissement">
@@ -423,6 +423,37 @@
       return lettresLatines >= 12 ? sansArabe : texte;
     }
 
+    // Beaucoup de fiches d'eaux listent une analyse minérale, pas des ingrédients.
+    // On la reconnaît et on l'affiche proprement plutôt qu'en vrac.
+    const MINERAUX = [
+      ["magnesium", "Magnésium"], ["potassium", "Potassium"], ["sodium", "Sodium"],
+      ["calcium", "Calcium"], ["sulfate", "Sulfates"], ["bicarbonate", "Bicarbonates"],
+      ["chlorure", "Chlorures"], ["nitrate", "Nitrates"], ["fluor", "Fluorures"],
+      ["silice", "Silice"], ["residu sec", "Résidu sec"],
+    ];
+
+    function minusculesSansAccents(t) {
+      return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function presenterIngredients(texte) {
+      if (!texte) return null;
+      let propre = nettoyerIngredients(texte) || "";
+      propre = propre.replace(/^[\s/\\\-–—·.,;:]+/, "").replace(/[\s/\\\-–—·,;:]+$/, "").trim();
+      if (!propre) return null;
+      const simple = minusculesSansAccents(propre);
+      const trouves = MINERAUX.filter(([cle]) => simple.includes(cle));
+      // Virgules de liste uniquement — pas les décimales à la française (6,5).
+      const peuDeVirgules = (propre.replace(/(\d),(\d)/g, "$1.$2").match(/,/g) || []).length <= 1;
+      if (trouves.length >= 3 && peuDeVirgules) {
+        const ph = propre.match(/ph\s*:?\s*([0-9.,]+(?:\s*[–-]\s*[0-9.,]+)?)/i);
+        const elements = trouves.map(([, nom]) => nom);
+        if (ph) elements.push("pH " + ph[1].replace(/\s/g, ""));
+        return { titre: "Composition minérale (étiquette)", texte: elements.join("  ·  ") };
+      }
+      return { titre: "Ingrédients", texte: propre };
+    }
+
     function sousTitre(verdict) {
       if (verdict.statut === "halal" && verdict.certifieHalal) return "Produit certifié halal ✓";
       if (verdict.statut === "halal" && verdict.vegan) return "Produit végane — aucun risque détecté";
@@ -467,8 +498,12 @@
         alertes.appendChild(div);
       }
 
-      $("ingredients-bloc").hidden = !produit.ingredientsTexte;
-      $("ingredients").textContent = nettoyerIngredients(produit.ingredientsTexte) || "";
+      const blocIngredients = presenterIngredients(produit.ingredientsTexte);
+      $("ingredients-bloc").hidden = !blocIngredients;
+      if (blocIngredients) {
+        $("titre-ingredients").textContent = blocIngredients.titre;
+        $("ingredients").textContent = blocIngredients.texte;
+      }
 
       enregistrerScan({
         code: produit.code,
