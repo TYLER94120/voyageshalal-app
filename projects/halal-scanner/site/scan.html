@@ -6,6 +6,9 @@
   <title>Scanner — HalalCheck</title>
   <meta name="description" content="Scanne le code-barres d'un produit : verdict halal, douteux ou haram, avec les ingrédients expliqués." />
   <meta name="theme-color" content="#0B1A0F" />
+  <meta property="og:title" content="HalalCheck — verdict halal en un scan" />
+  <meta property="og:description" content="Scanne le code-barres d'un produit : halal, douteux ou haram, avec les ingrédients expliqués." />
+  <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
@@ -257,6 +260,18 @@
     }
     .cta-verifier:active { transform: scale(0.98); }
     .cta-verifier small { font-weight: 500; font-size: 12.5px; color: rgba(253, 250, 243, 0.55); }
+    .cta-partager {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; min-height: 58px;
+      margin-top: 14px;
+      border-radius: 18px;
+      background: rgba(253, 250, 243, 0.08);
+      border: 1.5px solid rgba(253, 250, 243, 0.35);
+      color: var(--creme);
+      font-size: 16.5px; font-weight: 700;
+      transition: transform 150ms ease;
+    }
+    .cta-partager:active { transform: scale(0.98); }
 
     /* ---- Erreur ---- */
     #erreur-emoji { font-size: 46px; }
@@ -334,6 +349,7 @@
         <div id="verif-detail" hidden></div>
         <div id="verif-source" hidden></div>
       </div>
+      <button id="partager" class="cta-partager">📤  Partager ce verdict</button>
       <div id="alertes"></div>
       <div id="ingredients-bloc" hidden>
         <h2 id="titre-ingredients">Ingrédients</h2>
@@ -373,6 +389,7 @@
     let detectionActive = false;
     let lecteurZxing = null;
     let codeEnCours = null;
+    let dernierResultat = null;
 
     function montrer(ecran) {
       for (const id of ECRANS) $(id).hidden = id !== ecran;
@@ -717,6 +734,7 @@
         $("ingredients").textContent = blocIngredients.texte;
       }
 
+      dernierResultat = { code, nom: nomAffiche, statut: statutFinal, verifie: !!verif };
       enregistrerScan({
         code,
         nom: nomAffiche,
@@ -725,6 +743,33 @@
       });
       montrer("ecran-resultat");
     }
+
+    /* ---------- Partage du verdict (boucle virale) ---------- */
+    $("partager").addEventListener("click", async () => {
+      if (!dernierResultat) return;
+      const r = dernierResultat;
+      const texte =
+        `${EMOJIS[r.statut] || ""} ${LABELS[r.statut] || ""}${r.verifie ? " (vérifié)" : ""} — ${r.nom}\n` +
+        "Scanné avec HalalCheck";
+      const url = `https://halalcheck.fr/scan.html?code=${encodeURIComponent(r.code)}`;
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: "HalalCheck", text: texte, url });
+        } catch (e) {
+          /* partage annulé par l'utilisateur : ne rien faire */
+        }
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(texte + "\n" + url);
+        const bouton = $("partager");
+        const libelle = bouton.textContent;
+        bouton.textContent = "Lien copié ✓";
+        setTimeout(() => { bouton.textContent = libelle; }, 1600);
+      } catch (e) {
+        location.href = `https://wa.me/?text=${encodeURIComponent(texte + "\n" + url)}`;
+      }
+    });
 
     function montrerErreur(emoji, titre, texte, libelleBouton, action, secondaire) {
       $("erreur-emoji").textContent = emoji;
