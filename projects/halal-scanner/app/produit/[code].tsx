@@ -12,7 +12,7 @@ import {
 import { Couleurs, CouleursVerdict } from "@/constants/couleurs";
 import { analyserProduit, type Verdict } from "@/lib/halal";
 import { enregistrerScan } from "@/lib/historique";
-import { chercherProduit, nettoyerIngredients, type ProduitOFF } from "@/lib/openfoodfacts";
+import { chercherProduit, presenterIngredients, type ProduitOFF } from "@/lib/openfoodfacts";
 
 type Etat = "chargement" | "reseau" | "introuvable" | "ok";
 
@@ -114,6 +114,7 @@ export default function EcranProduit() {
   if (!produit || !verdict) return null;
 
   const titre = TITRES[verdict.statut];
+  const blocIngredients = presenterIngredients(produit.ingredientsTexte);
 
   return (
     <ScrollView style={styles.ecran} contentContainerStyle={styles.contenu}>
@@ -148,10 +149,10 @@ export default function EcranProduit() {
         </View>
       )}
 
-      {produit.ingredientsTexte ? (
+      {blocIngredients ? (
         <View style={styles.section}>
-          <Text style={styles.titreSection}>Ingrédients</Text>
-          <Text style={styles.ingredients}>{nettoyerIngredients(produit.ingredientsTexte)}</Text>
+          <Text style={styles.titreSection}>{blocIngredients.titre}</Text>
+          <Text style={styles.ingredients}>{blocIngredients.texte}</Text>
         </View>
       ) : null}
 

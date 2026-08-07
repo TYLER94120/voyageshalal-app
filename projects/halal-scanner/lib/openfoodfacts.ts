@@ -38,6 +38,43 @@ export function nettoyerIngredients(texte: string | null): string | null {
   return lettresLatines >= 12 ? sansArabe : texte;
 }
 
+// Beaucoup de fiches d'eaux listent une analyse minérale, pas des ingrédients.
+const MINERAUX: Array<[string, string]> = [
+  ["magnesium", "Magnésium"], ["potassium", "Potassium"], ["sodium", "Sodium"],
+  ["calcium", "Calcium"], ["sulfate", "Sulfates"], ["bicarbonate", "Bicarbonates"],
+  ["chlorure", "Chlorures"], ["nitrate", "Nitrates"], ["fluor", "Fluorures"],
+  ["silice", "Silice"], ["residu sec", "Résidu sec"],
+];
+
+function minusculesSansAccents(t: string): string {
+  return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+/**
+ * Prépare le bloc ingrédients pour l'affichage : nettoyage, et si le texte est
+ * une analyse minérale (eaux), présentation structurée avec titre adapté.
+ */
+export function presenterIngredients(
+  texte: string | null
+): { titre: string; texte: string } | null {
+  if (!texte) return null;
+  let propre = nettoyerIngredients(texte) || "";
+  propre = propre.replace(/^[\s/\\\-–—·.,;:]+/, "").replace(/[\s/\\\-–—·,;:]+$/, "").trim();
+  if (!propre) return null;
+  const simple = minusculesSansAccents(propre);
+  const trouves = MINERAUX.filter(([cle]) => simple.includes(cle));
+  // Virgules de liste uniquement — pas les décimales à la française (6,5).
+  const peuDeVirgules =
+    (propre.replace(/(\d),(\d)/g, "$1.$2").match(/,/g) || []).length <= 1;
+  if (trouves.length >= 3 && peuDeVirgules) {
+    const ph = propre.match(/ph\s*:?\s*([0-9.,]+(?:\s*[–-]\s*[0-9.,]+)?)/i);
+    const elements = trouves.map(([, nom]) => nom);
+    if (ph) elements.push("pH " + ph[1].replace(/\s/g, ""));
+    return { titre: "Composition minérale (étiquette)", texte: elements.join("  ·  ") };
+  }
+  return { titre: "Ingrédients", texte: propre };
+}
+
 // Un même produit peut être stocké en 12 chiffres (UPC) ou 13 (EAN).
 function candidatsCode(code: string): string[] {
   const c = code.replace(/\D/g, "");
