@@ -806,7 +806,14 @@
       navigator.serviceWorker.register("./sw.js").catch(() => {});
     }
     afficherHistorique();
-    demarrerScanner();
+    // Lien profond inter-sites : scan.html?code=XXXX affiche directement le
+    // verdict du produit (utilisé par HalalGPT et les partages de l'écosystème).
+    const codeUrl = new URLSearchParams(location.search).get("code");
+    if (codeUrl && codeUrl.replace(/\D/g, "").length >= 6) {
+      traiterCode(codeUrl.trim());
+    } else {
+      demarrerScanner();
+    }
   </script>
 
   <footer style="text-align: center; padding: 26px 16px calc(30px + env(safe-area-inset-bottom, 0px)); font-size: 14px; color: rgba(253, 250, 243, 0.55); line-height: 2.2;">
