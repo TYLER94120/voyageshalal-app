@@ -218,17 +218,41 @@
     }
     #ingredients { font-size: 14px; color: rgba(253, 250, 243, 0.75); }
     .avertissement { font-size: 13px; color: rgba(253, 250, 243, 0.5); margin: 24px 0 18px; }
+    /* Même famille que le bouton d'accueil : relief physique et reflet,
+       sans respiration continue (l'utilisateur est déjà dans l'action). */
     .principal {
+      position: relative;
+      overflow: hidden;
       width: 100%;
-      min-height: 64px;
+      min-height: 66px;
       border-radius: 20px;
-      background: linear-gradient(150deg, #dcc27a, var(--or));
+      background: linear-gradient(150deg, #e9d49f 0%, var(--or) 55%, #b8963c 100%);
       color: var(--nuit);
       font-size: 18px; font-weight: 800;
-      box-shadow: 0 10px 28px rgba(201, 168, 76, 0.28);
-      transition: transform 150ms ease;
+      box-shadow: 0 12px 30px rgba(201, 168, 76, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+      -webkit-tap-highlight-color: transparent;
     }
-    .principal:active { transform: scale(0.97); }
+    .principal::after {
+      content: "";
+      position: absolute; top: 0; left: -60%;
+      width: 45%; height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+      transform: skewX(-20deg);
+      animation: brillance 4.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .principal:active {
+      transform: translateY(2px) scale(0.99);
+      box-shadow: 0 4px 14px rgba(201, 168, 76, 0.3), inset 0 2px 6px rgba(120, 90, 20, 0.35);
+    }
+    @keyframes brillance {
+      0%, 68% { left: -60%; }
+      100%    { left: 130%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .principal::after { animation: none; }
+    }
 
     /* ---- Verdict vérifié (certitude) vs analyse indicative ---- */
     #label-indicatif {
