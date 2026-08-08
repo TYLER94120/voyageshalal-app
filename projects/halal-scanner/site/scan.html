@@ -1142,6 +1142,70 @@
       return null;
     }
 
+    // Le préfixe d'un code-barres indique le pays où il a été ENREGISTRÉ
+    // (pas forcément celui de fabrication). Utile pour expliquer honnêtement
+    // pourquoi un produit manque : les bases mondiales couvrent très bien
+    // l'Europe de l'Ouest et beaucoup moins le reste.
+    const PREFIXES_PAYS = [
+      [[611], "le Maroc", true],
+      [[613], "l'Algérie", true],
+      [[619], "la Tunisie", true],
+      [[622], "l'Égypte", true],
+      [[624], "la Libye", true],
+      [[625], "la Jordanie", true],
+      [[626], "l'Iran", true],
+      [[627], "le Koweït", true],
+      [[628], "l'Arabie saoudite", true],
+      [[629], "les Émirats arabes unis", true],
+      [[621], "la Syrie", true],
+      [[603], "le Ghana", true],
+      [[615], "le Nigeria", true],
+      [[616], "le Kenya", true],
+      [[618], "la Côte d'Ivoire", true],
+      [[890], "l'Inde", true],
+      [[896], "le Pakistan", true],
+      [[899], "l'Indonésie", true],
+      [[955], "la Malaisie", true],
+      [[885], "la Thaïlande", true],
+      [[893], "le Vietnam", true],
+      [[690, 691, 692, 693, 694, 695, 696, 697, 698, 699], "la Chine", true],
+      [[868, 869], "la Turquie", true],
+      [[729], "Israël", true],
+    ];
+
+    function paysDuCode(code) {
+      const c = String(code).replace(/\D/g, "");
+      if (c.length < 8) return null;
+      const p3 = parseInt(c.slice(0, 3), 10);
+      const p2 = parseInt(c.slice(0, 2), 10);
+      for (const [prefixes, nom, lointain] of PREFIXES_PAYS) {
+        if (prefixes.includes(p3)) return { nom, lointain };
+      }
+      if (p3 >= 300 && p3 <= 379) return { nom: "la France", lointain: false };
+      if (p2 >= 40 && p2 <= 44) return { nom: "l'Allemagne", lointain: false };
+      if (p3 >= 500 && p3 <= 509) return { nom: "le Royaume-Uni", lointain: false };
+      if (p3 >= 800 && p3 <= 839) return { nom: "l'Italie", lointain: false };
+      if (p3 >= 840 && p3 <= 849) return { nom: "l'Espagne", lointain: false };
+      if (p3 >= 540 && p3 <= 549) return { nom: "la Belgique", lointain: false };
+      if (p3 >= 870 && p3 <= 879) return { nom: "les Pays-Bas", lointain: false };
+      if (p3 >= 760 && p3 <= 769) return { nom: "la Suisse", lointain: false };
+      return null;
+    }
+
+    // Le texte doit correspondre au produit qu'on a réellement dans la main :
+    // parler du Maghreb devant un code français décrédibilise tout le reste.
+    function texteNonReference(code) {
+      const pays = paysDuCode(code);
+      if (pays && pays.lointain) {
+        return "Les produits enregistrés dans " + pays.nom.replace(/^(le |la |les |l')/, "$1") +
+          " manquent souvent des bases mondiales. Mais tu peux avoir ton verdict quand même : photographie sa liste d'ingrédients.";
+      }
+      if (pays) {
+        return "Ce produit n'est pas encore dans la base — c'est fréquent pour les marques de distributeur et les nouveautés. Photographie sa liste d'ingrédients : tu auras ton verdict quand même.";
+      }
+      return "Ce produit n'est pas encore référencé. Photographie sa liste d'ingrédients : tu auras ton verdict quand même.";
+    }
+
     // Base locale HalalCheck : produits transcrits depuis les photos des
     // utilisateurs — le scanner fonctionne même là où les bases mondiales
     // ignorent le produit (Maghreb notamment).
@@ -1259,7 +1323,7 @@
           montrerErreur(
             "🔍",
             "Produit pas encore référencé",
-            "Les produits du Maghreb manquent souvent des bases mondiales. Mais tu peux avoir ton verdict quand même : photographie sa liste d'ingrédients.\n\nCode scanné : " + code,
+            texteNonReference(code) + "\n\nCode scanné : " + code,
             "📷  Lire l'étiquette en photo",
             demarrerLectureEtiquette,
             { libelle: "Scanner un autre produit", action: relancerScan }
