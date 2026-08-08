@@ -299,6 +299,66 @@
     .scan-ligne .nom { flex: 1; font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
     .scan-ligne .pastille { width: 13px; height: 13px; border-radius: 999px; flex: 0 0 auto; }
     .vide { color: rgba(253, 250, 243, 0.45); font-size: 15px; }
+
+    /* ---- Résultats de recherche par nom ---- */
+    .entete-recherche {
+      display: flex; align-items: center; gap: 10px;
+      margin: 4px 0 16px;
+    }
+    .entete-recherche h2 {
+      flex: 1;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 20px; font-weight: 800;
+    }
+    .carte-resultat {
+      width: 100%;
+      display: flex; align-items: center; gap: 12px;
+      min-height: 76px;
+      background: linear-gradient(150deg, rgba(27, 67, 50, 0.92), rgba(27, 67, 50, 0.6));
+      border: 1px solid rgba(253, 250, 243, 0.07);
+      border-radius: 16px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      color: var(--creme);
+      text-align: left;
+      transition: transform 150ms ease;
+    }
+    .carte-resultat:active { transform: scale(0.98); }
+    .vignette {
+      width: 54px; height: 54px; flex: 0 0 auto;
+      border-radius: 12px;
+      object-fit: contain;
+      background: var(--creme);
+    }
+    .vignette-absente {
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(201, 168, 76, 0.14);
+      color: var(--or); font-size: 22px;
+    }
+    .infos-resultat { flex: 1; min-width: 0; }
+    .infos-resultat .nom-produit {
+      font-size: 16px; font-weight: 700;
+      overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+    }
+    .infos-resultat .marque-produit {
+      font-size: 13.5px; color: rgba(253, 250, 243, 0.6);
+      overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+    }
+    .jeton {
+      flex: 0 0 auto;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      min-width: 62px;
+    }
+    .jeton .rond {
+      width: 30px; height: 30px; border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+    }
+    .jeton .mot {
+      font-size: 10.5px; font-weight: 800; letter-spacing: 0.4px;
+      color: rgba(253, 250, 243, 0.75);
+    }
+    .jeton .sceau-mini { color: var(--or); font-size: 10px; font-weight: 800; }
     .bismillah-pied {
       text-align: center;
       color: rgba(201, 168, 76, 0.55);
@@ -323,8 +383,8 @@
       </div>
       <p class="consigne">Vise le code-barres du produit</p>
       <div class="ligne-saisie">
-        <input id="saisie" inputmode="numeric" autocomplete="off" placeholder="ou saisis le code-barres" aria-label="Code-barres" />
-        <button id="verifier" class="secondaire" disabled>Vérifier</button>
+        <input id="saisie" type="search" autocomplete="off" placeholder="ou cherche : nom ou code-barres" aria-label="Nom du produit ou code-barres" />
+        <button id="verifier" class="secondaire" disabled>Chercher</button>
       </div>
       <div class="bloc-historique">
         <h2>Derniers scans</h2>
@@ -334,7 +394,16 @@
 
     <section id="ecran-chargement" class="centre" hidden>
       <div class="spinner" aria-hidden="true"></div>
-      <p>Analyse en cours…</p>
+      <p id="texte-chargement">Analyse en cours…</p>
+    </section>
+
+    <section id="ecran-recherche" hidden>
+      <div class="entete-recherche">
+        <button class="retour" id="retour-recherche" aria-label="Retour au scanner">←</button>
+        <h2 id="titre-recherche"></h2>
+      </div>
+      <div id="liste-resultats"></div>
+      <p id="aide-recherche" class="avertissement"></p>
     </section>
 
     <section id="ecran-resultat" hidden>
@@ -381,7 +450,7 @@
     import { analyserProduit } from "./halal.js";
 
     const $ = (id) => document.getElementById(id);
-    const ECRANS = ["ecran-scan", "ecran-chargement", "ecran-resultat", "ecran-erreur"];
+    const ECRANS = ["ecran-scan", "ecran-chargement", "ecran-resultat", "ecran-erreur", "ecran-recherche"];
     const COULEURS = { halal: "var(--halal)", douteux: "var(--douteux)", haram: "var(--haram)", inconnu: "var(--inconnu)" };
     const EMOJIS = { halal: "✅", douteux: "⚠️", haram: "❌", inconnu: "❓" };
     const LABELS = { halal: "HALAL", douteux: "DOUTEUX", haram: "HARAM", inconnu: "INCONNU" };
@@ -609,6 +678,7 @@
 
     async function traiterCode(code) {
       codeEnCours = code;
+      $("texte-chargement").textContent = "Analyse en cours…";
       montrer("ecran-chargement");
       await verifsPretes;
       const verif = chercherVerification(code);
@@ -847,6 +917,171 @@
       demarrerScanner();
     }
 
+    /* ---------- Recherche par nom de produit ----------
+       Un seul champ comprend les deux entrées : une suite de chiffres est
+       traitée comme un code-barres, tout le reste comme un nom de produit. */
+    const CHAMPS_RECHERCHE =
+      "code,product_name,brands,image_small_url,image_front_small_url,image_front_url," +
+      "ingredients_text_fr,ingredients_text,additives_tags,labels_tags";
+
+    function normaliserTexte(t) {
+      return minusculesSansAccents(String(t || ""));
+    }
+
+    // Les fiches de notre base locale sont proposées en premier : ce sont les
+    // produits que la communauté a fait entrer dans HalalCheck.
+    function chercherLocauxParNom(terme) {
+      const t = normaliserTexte(terme);
+      const trouves = [];
+      for (const code of Object.keys(LOCAUX)) {
+        const p = LOCAUX[code];
+        const cible = normaliserTexte((p.nom || "") + " " + (p.marque || ""));
+        if (t && cible.includes(t)) {
+          const local = produitLocal(code);
+          if (local) trouves.push(local);
+        }
+      }
+      return trouves;
+    }
+
+    async function rechercherParNom(terme) {
+      montrer("ecran-chargement");
+      $("texte-chargement").textContent = "Recherche de « " + terme + " »…";
+      await verifsPretes;
+
+      const locaux = chercherLocauxParNom(terme);
+      // Deux points d'accès tentés dans l'ordre : si l'un est indisponible,
+      // la recherche fonctionne quand même (même logique défensive que le scan).
+      const urls = [
+        "https://world.openfoodfacts.org/cgi/search.pl?search_simple=1&action=process&json=1" +
+          "&page_size=24&sort_by=unique_scans_n&fields=" + CHAMPS_RECHERCHE +
+          "&search_terms=" + encodeURIComponent(terme),
+        "https://world.openfoodfacts.org/api/v2/search?page_size=24&fields=" + CHAMPS_RECHERCHE +
+          "&search_terms=" + encodeURIComponent(terme),
+      ];
+      let distants = [];
+      let erreurReseau = false;
+      for (const url of urls) {
+        try {
+          const reponse = await fetch(url, { headers: { Accept: "application/json" } });
+          if (!reponse.ok) throw new Error("HTTP " + reponse.status);
+          const json = await reponse.json();
+          const bruts = Array.isArray(json.products) ? json.products : [];
+          distants = bruts
+            .filter((p) => p && p.code && (p.product_name || "").trim())
+            .map((p) => ({
+              code: String(p.code),
+              nom: p.product_name,
+              marque: p.brands || null,
+              imageUrl: p.image_small_url || p.image_front_small_url || p.image_front_url || null,
+              ingredientsTexte: p.ingredients_text_fr || p.ingredients_text || null,
+              additifs: Array.isArray(p.additives_tags) ? p.additives_tags : [],
+              labels: Array.isArray(p.labels_tags) ? p.labels_tags : [],
+            }));
+          erreurReseau = false;
+          if (distants.length > 0) break;
+        } catch (e) {
+          erreurReseau = true;
+        }
+      }
+
+      const vus = new Set(locaux.map((p) => p.code));
+      const produits = locaux.concat(distants.filter((p) => !vus.has(p.code)));
+
+      if (produits.length === 0 && erreurReseau) {
+        montrerErreur("📡", "Pas de connexion", "Vérifie ton réseau et réessaie.", "Réessayer", () =>
+          rechercherParNom(terme)
+        );
+        return;
+      }
+      afficherRecherche(terme, produits);
+    }
+
+    function afficherRecherche(terme, produits) {
+      $("titre-recherche").textContent = "« " + terme + " »";
+      const liste = $("liste-resultats");
+      liste.innerHTML = "";
+
+      if (produits.length === 0) {
+        const vide = document.createElement("p");
+        vide.className = "vide";
+        vide.textContent = "Aucun produit trouvé. Essaie un autre mot, ou scanne le code-barres.";
+        liste.appendChild(vide);
+        $("aide-recherche").textContent = "";
+        montrer("ecran-recherche");
+        return;
+      }
+
+      for (const produit of produits) {
+        const verif = chercherVerification(produit.code);
+        const statut = verif
+          ? verif.statut
+          : analyserProduit({
+              ingredientsTexte: produit.ingredientsTexte,
+              additifs: produit.additifs,
+              labels: produit.labels,
+            }).statut;
+
+        const carte = document.createElement("button");
+        carte.className = "carte-resultat";
+
+        if (produit.imageUrl) {
+          const img = document.createElement("img");
+          img.className = "vignette";
+          img.src = produit.imageUrl;
+          img.alt = "";
+          img.loading = "lazy";
+          carte.appendChild(img);
+        } else {
+          const bloc = document.createElement("span");
+          bloc.className = "vignette vignette-absente";
+          bloc.textContent = "✦";
+          carte.appendChild(bloc);
+        }
+
+        const infos = document.createElement("span");
+        infos.className = "infos-resultat";
+        const nom = document.createElement("span");
+        nom.className = "nom-produit";
+        nom.textContent = produit.nom || ("Produit " + produit.code);
+        infos.appendChild(nom);
+        const sousTexte = produit.sourceLocale
+          ? "Fiche HalalCheck" + (produit.marque ? " · " + produit.marque : "")
+          : produit.marque || "";
+        if (sousTexte) {
+          const marque = document.createElement("span");
+          marque.className = "marque-produit";
+          marque.textContent = sousTexte;
+          infos.appendChild(marque);
+        }
+        carte.appendChild(infos);
+
+        const jeton = document.createElement("span");
+        jeton.className = "jeton";
+        const rond = document.createElement("span");
+        rond.className = "rond";
+        rond.style.background = COULEURS[statut] || "var(--inconnu)";
+        rond.textContent = EMOJIS[statut] || "❓";
+        jeton.appendChild(rond);
+        const mot = document.createElement("span");
+        mot.className = verif ? "sceau-mini" : "mot";
+        mot.textContent = verif ? "✓ VÉRIFIÉ" : LABELS[statut] || "";
+        jeton.appendChild(mot);
+        carte.appendChild(jeton);
+
+        carte.onclick = () => {
+          codeEnCours = produit.code;
+          afficherResultat(produit, verif);
+        };
+        liste.appendChild(carte);
+      }
+
+      $("aide-recherche").textContent =
+        "Pastilles calculées par l'analyse automatique (indicative) — sauf mention « vérifié ». " +
+        "Touche un produit pour le détail des ingrédients.";
+      montrer("ecran-recherche");
+    }
+
     /* ---------- Historique ---------- */
     function listerScans() {
       try {
@@ -889,17 +1124,34 @@
       }
     }
 
-    /* ---------- Saisie manuelle ---------- */
+    /* ---------- Saisie : un seul champ pour les deux usages ---------- */
+    // Suite de chiffres (≥ 6) → code-barres ; sinon → recherche par nom.
+    function estCodeBarres(valeur) {
+      const nu = valeur.replace(/[\s-]/g, "");
+      return /^\d+$/.test(nu) && nu.length >= 6;
+    }
+
+    function saisieValide(valeur) {
+      const v = valeur.trim();
+      return estCodeBarres(v) || v.length >= 3;
+    }
+
+    function lancerSaisie() {
+      const valeur = $("saisie").value.trim();
+      if (!saisieValide(valeur)) return;
+      arreterScanner();
+      if (estCodeBarres(valeur)) traiterCode(valeur);
+      else rechercherParNom(valeur);
+    }
+
     $("saisie").addEventListener("input", () => {
-      $("verifier").disabled = $("saisie").value.trim().length < 8;
+      $("verifier").disabled = !saisieValide($("saisie").value);
     });
     $("saisie").addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && !$("verifier").disabled) $("verifier").click();
+      if (e.key === "Enter" && !$("verifier").disabled) lancerSaisie();
     });
-    $("verifier").addEventListener("click", () => {
-      arreterScanner();
-      traiterCode($("saisie").value.trim());
-    });
+    $("verifier").addEventListener("click", lancerSaisie);
+    $("retour-recherche").addEventListener("click", relancerScan);
     $("rescanner").addEventListener("click", relancerScan);
 
     /* ---------- Démarrage ---------- */
