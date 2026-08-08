@@ -229,6 +229,19 @@
       margin-bottom: 6px;
     }
     .conclusion-texte { font-size: 15px; line-height: 1.55; color: var(--texte); }
+    .note-usage {
+      background: rgba(27, 67, 50, 0.06);
+      border: 1px solid rgba(27, 67, 50, 0.18);
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-top: 12px;
+    }
+    .note-usage-titre {
+      font-size: 12px; font-weight: 800; letter-spacing: 0.6px;
+      text-transform: uppercase; color: var(--foret);
+      margin-bottom: 6px;
+    }
+    .note-usage p { font-size: 14.5px; line-height: 1.55; color: var(--texte-doux); }
     .alerte.faible { border-left-color: rgba(18, 38, 26, 0.22); }
     .alerte.faible .etiquette-gravite { color: var(--texte-doux); }
     .etiquette-gravite {
@@ -632,6 +645,17 @@
         <div class="conclusion-titre"></div>
         <p class="conclusion-texte"></p>
       </div>
+      <div id="note-cosmetique" class="note-usage" hidden>
+        <div class="note-usage-titre">Usage externe : les avis divergent</div>
+        <p>
+          Un cosmétique ne se mange pas. Beaucoup de savants considèrent que la
+          transformation chimique d'un ingrédient (graisse animale devenue
+          glycérine ou savon) lève le problème ; d'autres recommandent d'éviter
+          tout dérivé animal non certifié. Les deux positions existent —
+          le choix te revient, selon ton école.
+        </p>
+        <a class="lien-additif" href="https://halalgpt.fr" target="_blank" rel="noopener">🌙 En parler avec HalalGPT →</a>
+      </div>
       <div id="alertes"></div>
       <div id="composition-bloc" hidden>
         <h2>Composition</h2>
@@ -684,6 +708,16 @@
       <div id="etiquette-conclusion" class="conclusion" hidden>
         <div class="conclusion-titre"></div>
         <p class="conclusion-texte"></p>
+      </div>
+      <div id="etiquette-note-cosmetique" class="note-usage" hidden>
+        <div class="note-usage-titre">Si c'est un cosmétique</div>
+        <p>
+          Un produit qu'on applique sans l'avaler ne suit pas les mêmes règles que
+          l'alimentaire : beaucoup de savants estiment que la transformation
+          chimique de l'ingrédient lève le problème, d'autres préfèrent l'éviter.
+          Le choix te revient, selon ton école.
+        </p>
+        <a class="lien-additif" href="https://halalgpt.fr" target="_blank" rel="noopener">🌙 En parler avec HalalGPT →</a>
       </div>
       <div id="etiquette-risques"></div>
       <p id="etiquette-texte"></p>
@@ -1628,6 +1662,7 @@
           "Source : " + (verif.source || "—") + (verif.date ? " · " + verif.date : "");
         $("alertes").innerHTML = "";
         $("conclusion").hidden = true;
+        $("note-cosmetique").hidden = true;
         $("cta-verifier").hidden = true;
       } else {
         // ---- ANALYSE INDICATIVE : déduction automatique des ingrédients ----
@@ -1674,6 +1709,9 @@
         }
 
         const conclusion = conclusionPratique(verdict);
+        $("note-cosmetique").hidden = !(
+          produit && produit.cosmetique && verdict.alertes.length > 0
+        );
         $("conclusion").hidden = !conclusion;
         if (conclusion) {
           $("conclusion").querySelector(".conclusion-titre").textContent = conclusion.titre;
@@ -1968,6 +2006,7 @@
           conclusionLecture.texte;
       }
 
+      $("etiquette-note-cosmetique").hidden = alertesEvaluees.length === 0;
       $("etiquette-texte").textContent = lecture.explication || "";
       $("etiquette-conseil").hidden = !lecture.conseil;
       $("etiquette-conseil").textContent = lecture.conseil ? "💡 " + lecture.conseil : "";
