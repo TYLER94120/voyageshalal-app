@@ -97,6 +97,15 @@
       font-size: 15px; font-weight: 600;
       text-align: center;
     }
+    .torche {
+      position: absolute; z-index: 4; top: 14px; right: 14px;
+      min-height: 46px; padding: 0 16px;
+      border-radius: 999px;
+      background: rgba(11, 26, 15, 0.78);
+      border: 1.5px solid rgba(253, 250, 243, 0.4);
+      color: var(--creme);
+      font-size: 14.5px; font-weight: 700;
+    }
     .consigne { text-align: center; font-size: 16px; font-weight: 600; margin: 16px 0 20px; color: rgba(253,250,243,0.8); }
     .ligne-saisie { display: flex; gap: 10px; }
     #saisie {
@@ -465,9 +474,10 @@
       <div class="cadre-video">
         <video id="video" playsinline muted></video>
         <div class="viseur" aria-hidden="true"></div>
+        <button id="torche" class="torche" hidden>🔦 Lampe</button>
         <p class="etat-camera" id="etat-camera">Démarrage de la caméra…</p>
       </div>
-      <p class="consigne">Vise le code-barres du produit</p>
+      <p class="consigne">Vise le code-barres · garde 15–20 cm de distance</p>
       <div class="ligne-saisie">
         <input id="saisie" type="search" autocomplete="off" placeholder="ou cherche : nom ou code-barres" aria-label="Nom du produit ou code-barres" />
         <button id="verifier" class="secondaire" disabled>Chercher</button>
@@ -590,6 +600,8 @@
     let flux = null;
     let detectionActive = false;
     let lecteurZxing = null;
+    let minuteursConseils = [];
+    let torcheAllumee = false;
     let codeEnCours = null;
     let dernierResultat = null;
 
@@ -602,43 +614,154 @@
     }
 
     /* ---------- Caméra + détection ---------- */
+    // Une caméra en 640×480 ne distingue pas les barres fines d'un code-barres :
+    // on demande la meilleure définition possible, avec repli si refusée.
+    async function obtenirFlux() {
+      const essais = [
+        {
+          video: {
+            facingMode: { ideal: "environment" },
+            width: { ideal: 1920 },
+            height: { ideal: 1080 },
+          },
+        },
+        { video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 } } },
+        { video: { facingMode: "environment" } },
+        { video: true },
+      ];
+      let derniereErreur = null;
+      for (const contraintes of essais) {
+        try {
+          return await navigator.mediaDevices.getUserMedia(contraintes);
+        } catch (e) {
+          derniereErreur = e;
+          if (e && (e.name === "NotAllowedError" || e.name === "SecurityError")) throw e;
+        }
+      }
+      throw derniereErreur || new Error("caméra indisponible");
+    }
+
+    // Mise au point continue et lampe : proposées seulement si le téléphone
+    // les expose (« best effort », jamais bloquant).
+    function reglerCamera(flux) {
+      const piste = flux.getVideoTracks()[0];
+      if (!piste || typeof piste.getCapabilities !== "function") return;
+      let capacites = {};
+      try {
+        capacites = piste.getCapabilities() || {};
+      } catch (e) {
+        return;
+      }
+      if (Array.isArray(capacites.focusMode) && capacites.focusMode.includes("continuous")) {
+        piste.applyConstraints({ advanced: [{ focusMode: "continuous" }] }).catch(() => {});
+      }
+      if (capacites.torch) {
+        const bouton = $("torche");
+        bouton.hidden = false;
+        bouton.onclick = () => {
+          torcheAllumee = !torcheAllumee;
+          piste
+            .applyConstraints({ advanced: [{ torch: torcheAllumee }] })
+            .then(() => {
+              bouton.textContent = torcheAllumee ? "🔦 Éteindre" : "🔦 Lampe";
+            })
+            .catch(() => {
+              bouton.hidden = true;
+            });
+        };
+      }
+    }
+
+    // Sans retour à l'écran, l'utilisateur ne sait pas si l'app cherche.
+    function lancerConseils() {
+      arreterConseils();
+      $("etat-camera").hidden = false;
+      $("etat-camera").textContent = "🔎 Recherche du code-barres…";
+      minuteursConseils.push(
+        setTimeout(() => {
+          $("etat-camera").textContent =
+            "Toujours rien ? Tiens le téléphone à 15–20 cm, bien à plat sur le code, sans reflet.";
+        }, 7000),
+        setTimeout(() => {
+          $("etat-camera").textContent =
+            "Code abîmé ou arrondi (bouteille) ? Saisis les chiffres sous le code-barres, juste en dessous ⬇";
+        }, 15000)
+      );
+    }
+
+    function arreterConseils() {
+      for (const m of minuteursConseils) clearTimeout(m);
+      minuteursConseils = [];
+    }
+
     async function demarrerScanner() {
       $("etat-camera").hidden = false;
       $("etat-camera").textContent = "Démarrage de la caméra…";
+      let fluxObtenu;
+      try {
+        fluxObtenu = await obtenirFlux();
+      } catch (e) {
+        montrerCameraIndisponible(e);
+        return;
+      }
+      flux = fluxObtenu;
+      $("video").srcObject = flux;
+      try {
+        await $("video").play();
+      } catch (e) {
+        /* lecture différée par le navigateur : la détection démarre quand même */
+      }
+      reglerCamera(flux);
+      lancerConseils();
+
       if ("BarcodeDetector" in window) {
         try {
-          flux = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-          $("video").srcObject = flux;
-          await $("video").play();
-          $("etat-camera").hidden = true;
           const detecteur = new BarcodeDetector({ formats: FORMATS });
           detectionActive = true;
           const boucle = async () => {
             if (!detectionActive || !flux) return;
             try {
               const codes = await detecteur.detect($("video"));
-              if (codes.length > 0) { surCode(codes[0].rawValue); return; }
-            } catch (e) { /* frame pas prête — on réessaie */ }
-            setTimeout(boucle, 250);
+              if (codes.length > 0 && codes[0].rawValue) {
+                surCode(codes[0].rawValue);
+                return;
+              }
+            } catch (e) {
+              /* image pas prête — on réessaie */
+            }
+            setTimeout(boucle, 180);
           };
           boucle();
           return;
         } catch (e) {
-          montrerCameraIndisponible(e);
-          return;
+          /* détecteur natif inutilisable : on bascule sur ZXing ci-dessous */
         }
       }
-      // Pas de BarcodeDetector (iPhone/Safari notamment) → bibliothèque ZXing
+
+      // Pas de détecteur natif (iPhone/Safari notamment) → bibliothèque ZXing,
+      // branchée sur le flux déjà ouvert pour garder nos réglages caméra.
       try {
         await chargerScript("https://unpkg.com/@zxing/library@0.21.3/umd/index.min.js");
         lecteurZxing = new window.ZXing.BrowserMultiFormatReader();
         detectionActive = true;
-        await lecteurZxing.decodeFromVideoDevice(undefined, $("video"), (resultat) => {
+        const surLecture = (resultat) => {
           if (resultat && detectionActive) surCode(resultat.getText());
-        });
-        $("etat-camera").hidden = true;
+        };
+        if (typeof lecteurZxing.decodeFromStream === "function") {
+          // Réutilise notre flux : on garde la haute définition et la mise au point.
+          lecteurZxing.decodeFromStream($("video").srcObject, $("video"), surLecture);
+        } else {
+          // Version plus ancienne : ZXing ouvre son propre flux, on libère le nôtre.
+          if (flux) flux.getTracks().forEach((t) => t.stop());
+          flux = null;
+          $("torche").hidden = true;
+          lecteurZxing.decodeFromVideoDevice(undefined, $("video"), surLecture);
+        }
       } catch (e) {
-        montrerCameraIndisponible(e);
+        arreterConseils();
+        $("etat-camera").hidden = false;
+        $("etat-camera").textContent =
+          "Lecture automatique indisponible sur ce téléphone — saisis les chiffres du code-barres ci-dessous.";
       }
     }
 
@@ -652,6 +775,9 @@
 
     function arreterScanner() {
       detectionActive = false;
+      arreterConseils();
+      torcheAllumee = false;
+      $("torche").hidden = true;
       if (flux) { flux.getTracks().forEach((t) => t.stop()); flux = null; }
       if (lecteurZxing) { try { lecteurZxing.reset(); } catch (e) {} }
     }
