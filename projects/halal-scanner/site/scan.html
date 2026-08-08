@@ -1053,6 +1053,65 @@
       return { titre: "Ingrédients", texte: propre };
     }
 
+    /* ---------- Nettoyage du nom affiché ----------
+       Les fiches saisies à la main répètent souvent la marque dans le nom
+       (« Bahia, Eau De Table » + marque « Bahia ») et abusent des majuscules. */
+    const PETITS_MOTS = new Set([
+      "de", "du", "des", "la", "le", "les", "au", "aux", "a", "en", "et",
+      "d", "l", "sur", "pour", "avec", "sans", "the", "of",
+    ]);
+
+    function echapperRegex(t) {
+      return String(t).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function nettoyerNomProduit(nom, marque) {
+      let n = String(nom || "").trim();
+      if (!n) return n;
+
+      // « Bahia, Eau De Table » + marque « Bahia » → « Eau De Table »
+      for (const m of String(marque || "").split(",")) {
+        const mm = m.trim();
+        if (mm.length < 2) continue;
+        const prefixe = new RegExp("^" + echapperRegex(mm) + "\\s*[,;:\\-–—]?\\s+", "i");
+        if (prefixe.test(n) && n.replace(prefixe, "").trim().length >= 3) {
+          n = n.replace(prefixe, "").trim();
+          break;
+        }
+      }
+
+      // « EAU DE TABLE » → « eau de table »
+      const lettres = n.replace(/[^A-Za-zÀ-ÿ]/g, "");
+      if (lettres.length > 3 && lettres === lettres.toUpperCase()) n = n.toLowerCase();
+
+      // « Eau De Table » → « Eau de table ». Une description de trois mots ou
+      // plus entièrement en capitales initiales est une saisie approximative ;
+      // à deux mots on ne touche à rien (« Golden Bimo » reste intact).
+      const mots = n.split(/\s+/).filter(Boolean);
+      const significatifs = mots.filter((m) => m.replace(/[^A-Za-zÀ-ÿ]/g, "").length >= 2);
+      const toutEnCapitales =
+        significatifs.length >= 3 &&
+        significatifs.every((m) => {
+          const p = m.replace(/[^A-Za-zÀ-ÿ]/g, "");
+          return p && (p[0] === p[0].toUpperCase() || PETITS_MOTS.has(p.toLowerCase()));
+        });
+
+      n = n
+        .split(/(\s+)/)
+        .map((mot, i) => {
+          const pur = mot.replace(/[^A-Za-zÀ-ÿ']/g, "").replace(/'$/, "");
+          if (!pur) return mot;
+          // Un sigle entièrement en majuscules (BIO, UHT) est conservé tel quel.
+          if (pur.length > 1 && pur === pur.toUpperCase()) return mot;
+          if (i > 0 && PETITS_MOTS.has(pur.toLowerCase())) return mot.toLowerCase();
+          return i > 0 && toutEnCapitales ? mot.toLowerCase() : mot;
+        })
+        .join("");
+
+      n = n.replace(/^[\s,;:\-–—]+/, "").trim();
+      return n.charAt(0).toUpperCase() + n.slice(1);
+    }
+
     function sousTitre(verdict) {
       if (verdict.statut === "halal" && verdict.certifieHalal) return "Produit certifié halal ✓";
       if (verdict.statut === "halal" && verdict.vegan) return "Produit végane — aucun risque détecté";
@@ -1065,7 +1124,8 @@
 
     function afficherResultat(produit, verif) {
       const code = (produit && produit.code) || (verif && verif.code) || codeEnCours;
-      const nomAffiche = (produit && produit.nom) || (verif && verif.nom) || `Produit ${code}`;
+      const nomBrut = (produit && produit.nom) || (verif && verif.nom) || `Produit ${code}`;
+      const nomAffiche = nettoyerNomProduit(nomBrut, produit && produit.marque);
 
       const imageUrl = produit && produit.imageUrl;
       $("produit-image").hidden = !imageUrl;
@@ -1679,7 +1739,7 @@
         infos.className = "infos-resultat";
         const nom = document.createElement("span");
         nom.className = "nom-produit";
-        nom.textContent = produit.nom || ("Produit " + produit.code);
+        nom.textContent = nettoyerNomProduit(produit.nom || ("Produit " + produit.code), produit.marque);
         infos.appendChild(nom);
         const sousTexte = produit.sourceLocale
           ? "Fiche HalalCheck" + (produit.marque ? " · " + produit.marque : "")
