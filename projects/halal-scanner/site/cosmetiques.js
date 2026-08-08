@@ -74,14 +74,16 @@ const REGLES_DOUTEUSES = [
         motif: /stearic acid|acide stéarique|\bstearate\b|stéarate|glyceryl stearate|sodium stearate|magnesium stearate/,
         element: "Acide stéarique / stéarates",
         niveau: "douteux",
-        raison: "Corps gras très courant, d'origine végétale (palme, coco) ou animale selon le fabricant.",
+        raison: "Très majoritairement d'origine végétale (palme, coco) dans les cosmétiques européens. Origine animale rare mais possible.",
+        gravite: "faible",
         famille: "stearique",
     },
     {
         motif: /\bglycerin\b|\bglycerine\b|glycérine|\bglycerol\b/,
         element: "Glycérine",
         niveau: "douteux",
-        raison: "Le plus souvent végétale aujourd'hui, mais une origine animale reste possible sans mention.",
+        raison: "Aujourd'hui presque toujours végétale (palme, coco) ou synthétique en Europe. Le doute est théorique, sauf produit importé sans mention.",
+        gravite: "faible",
         famille: "glycerine",
     },
     {
@@ -102,13 +104,15 @@ const REGLES_DOUTEUSES = [
         motif: /\bcholesterol\b|cholestérol|cholesteryl/,
         element: "Cholestérol",
         niveau: "douteux",
-        raison: "Extrait de graisses animales (souvent lanoline) ou produit par synthèse.",
+        raison: "Le plus souvent extrait de lanoline (laine, animal non abattu) ou produit par synthèse.",
+        gravite: "faible",
     },
     {
         motif: /hyaluronic acid|acide hyaluronique|sodium hyaluronate/,
         element: "Acide hyaluronique",
         niveau: "douteux",
-        raison: "Aujourd'hui obtenu majoritairement par fermentation ; l'ancienne extraction (crêtes de coq) subsiste chez certains fabricants.",
+        raison: "Obtenu par fermentation bactérienne chez la quasi-totalité des fabricants aujourd'hui.",
+        gravite: "faible",
     },
     {
         motif: /\bguanine\b|ci 75170|pearl essence/,
@@ -138,14 +142,16 @@ const REGLES_DOUTEUSES = [
         motif: /oleic acid|acide oléique|\boleyl\b|oleth-/,
         element: "Acide oléique / dérivés",
         niveau: "douteux",
-        raison: "Corps gras d'origine végétale ou animale non précisée.",
+        raison: "Généralement d'origine végétale (olive, colza) dans les cosmétiques modernes.",
+        gravite: "faible",
         famille: "oleique",
     },
     {
         motif: /palmitic acid|myristic acid|lauric acid|palmitate de sodium|sodium palmitate/,
         element: "Acides gras (palmitique, myristique, laurique)",
         niveau: "douteux",
-        raison: "Généralement issus de la palme ou du coco, mais une origine animale est possible.",
+        raison: "Issus de la palme ou du coco dans l'immense majorité des cas.",
+        gravite: "faible",
         famille: "acides-gras",
     },
     {
@@ -170,13 +176,15 @@ const REGLES_DOUTEUSES = [
         motif: /\ballantoin\b|allantoïne/,
         element: "Allantoïne",
         niveau: "douteux",
-        raison: "Aujourd'hui produite par synthèse ou extraite de consoude ; l'origine animale historique est devenue rare.",
+        raison: "Produite par synthèse dans la quasi-totalité des cosmétiques actuels ; l'origine animale historique a disparu.",
+        gravite: "faible",
     },
     {
         motif: /\burea\b(?!.*peroxide)|\burée\b/,
         element: "Urée",
         niveau: "douteux",
-        raison: "Obtenue par synthèse dans la quasi-totalité des cosmétiques ; origine à confirmer.",
+        raison: "Obtenue par synthèse chimique dans les cosmétiques ; l'origine animale n'est plus utilisée.",
+        gravite: "faible",
     },
 ];
 // Alcools : seuls les alcools éthyliques sont relevés. Les alcools gras
@@ -208,7 +216,7 @@ function normaliser(texte) {
  * d'origine animale (mais pas l'alcool éthylique).
  */
 export function analyserCosmetique(entree) {
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
     const labels = ((_a = entree.labels) !== null && _a !== void 0 ? _a : []).map((l) => l.toLowerCase());
     const certifieHalal = labels.some((l) => l.includes("halal"));
     const vegan = labels.some((l) => l.includes("vegan") || l.includes("vegetalien"));
@@ -231,8 +239,13 @@ export function analyserCosmetique(entree) {
             niveau: regle.niveau,
             raison: regle.raison,
             famille: regle.famille,
+            gravite: (_d = regle.gravite) !== null && _d !== void 0 ? _d : "moderee",
         });
     }
+    alertes.sort((a, b) => {
+        const poids = (x) => x.niveau === "haram" ? 0 : x.gravite === "faible" ? 2 : 1;
+        return poids(a) - poids(b);
+    });
     const aHaram = alertes.some((a) => a.niveau === "haram");
     const aDouteux = alertes.some((a) => a.niveau === "douteux");
     const aDesDonnees = texte.trim().length >= 10;

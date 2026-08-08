@@ -19,6 +19,14 @@ interface RegleInci {
   niveau: "haram" | "douteux";
   raison: string;
   famille?: string;
+  /**
+   * « faible » : l'origine animale est théoriquement possible mais devenue
+   * rare dans l'industrie (glycérine, stéarates, sorbitanes…). Signaler ces
+   * ingrédients au même niveau que le collagène rendrait TOUS les cosmétiques
+   * douteux — et l'alerte perdrait tout son sens.
+   * « moderee » : origine animale fréquente et réellement en jeu.
+   */
+  gravite?: "faible" | "moderee";
 }
 
 // Interdits : l'origine est établie, pas seulement possible.
@@ -88,7 +96,8 @@ const REGLES_DOUTEUSES: RegleInci[] = [
     element: "Acide stéarique / stéarates",
     niveau: "douteux",
     raison:
-      "Corps gras très courant, d'origine végétale (palme, coco) ou animale selon le fabricant.",
+      "Très majoritairement d'origine végétale (palme, coco) dans les cosmétiques européens. Origine animale rare mais possible.",
+    gravite: "faible",
     famille: "stearique",
   },
   {
@@ -96,7 +105,8 @@ const REGLES_DOUTEUSES: RegleInci[] = [
     element: "Glycérine",
     niveau: "douteux",
     raison:
-      "Le plus souvent végétale aujourd'hui, mais une origine animale reste possible sans mention.",
+      "Aujourd'hui presque toujours végétale (palme, coco) ou synthétique en Europe. Le doute est théorique, sauf produit importé sans mention.",
+    gravite: "faible",
     famille: "glycerine",
   },
   {
@@ -118,14 +128,16 @@ const REGLES_DOUTEUSES: RegleInci[] = [
     motif: /\bcholesterol\b|cholestérol|cholesteryl/,
     element: "Cholestérol",
     niveau: "douteux",
-    raison: "Extrait de graisses animales (souvent lanoline) ou produit par synthèse.",
+    raison: "Le plus souvent extrait de lanoline (laine, animal non abattu) ou produit par synthèse.",
+    gravite: "faible",
   },
   {
     motif: /hyaluronic acid|acide hyaluronique|sodium hyaluronate/,
     element: "Acide hyaluronique",
     niveau: "douteux",
     raison:
-      "Aujourd'hui obtenu majoritairement par fermentation ; l'ancienne extraction (crêtes de coq) subsiste chez certains fabricants.",
+      "Obtenu par fermentation bactérienne chez la quasi-totalité des fabricants aujourd'hui.",
+    gravite: "faible",
   },
   {
     motif: /\bguanine\b|ci 75170|pearl essence/,
@@ -156,14 +168,16 @@ const REGLES_DOUTEUSES: RegleInci[] = [
     motif: /oleic acid|acide oléique|\boleyl\b|oleth-/,
     element: "Acide oléique / dérivés",
     niveau: "douteux",
-    raison: "Corps gras d'origine végétale ou animale non précisée.",
+    raison: "Généralement d'origine végétale (olive, colza) dans les cosmétiques modernes.",
+    gravite: "faible",
     famille: "oleique",
   },
   {
     motif: /palmitic acid|myristic acid|lauric acid|palmitate de sodium|sodium palmitate/,
     element: "Acides gras (palmitique, myristique, laurique)",
     niveau: "douteux",
-    raison: "Généralement issus de la palme ou du coco, mais une origine animale est possible.",
+    raison: "Issus de la palme ou du coco dans l'immense majorité des cas.",
+    gravite: "faible",
     famille: "acides-gras",
   },
   {
@@ -189,13 +203,15 @@ const REGLES_DOUTEUSES: RegleInci[] = [
     element: "Allantoïne",
     niveau: "douteux",
     raison:
-      "Aujourd'hui produite par synthèse ou extraite de consoude ; l'origine animale historique est devenue rare.",
+      "Produite par synthèse dans la quasi-totalité des cosmétiques actuels ; l'origine animale historique a disparu.",
+    gravite: "faible",
   },
   {
     motif: /\burea\b(?!.*peroxide)|\burée\b/,
     element: "Urée",
     niveau: "douteux",
-    raison: "Obtenue par synthèse dans la quasi-totalité des cosmétiques ; origine à confirmer.",
+    raison: "Obtenue par synthèse chimique dans les cosmétiques ; l'origine animale n'est plus utilisée.",
+    gravite: "faible",
   },
 ];
 
@@ -257,8 +273,15 @@ export function analyserCosmetique(entree: {
       niveau: regle.niveau,
       raison: regle.raison,
       famille: regle.famille,
+      gravite: regle.gravite ?? "moderee",
     });
   }
+
+  alertes.sort((a, b) => {
+    const poids = (x: Alerte) =>
+      x.niveau === "haram" ? 0 : x.gravite === "faible" ? 2 : 1;
+    return poids(a) - poids(b);
+  });
 
   const aHaram = alertes.some((a) => a.niveau === "haram");
   const aDouteux = alertes.some((a) => a.niveau === "douteux");
