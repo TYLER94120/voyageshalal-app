@@ -16,7 +16,10 @@
   <link rel="apple-touch-icon" href="./icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@800;900&display=swap" rel="stylesheet" />
+  <!-- Polices chargées sans bloquer l'affichage : le texte apparaît tout de
+       suite en police système, puis bascule (connexions lentes ménagées). -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800;900&family=Playfair+Display:wght@800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800;900&family=Playfair+Display:wght@800;900&display=swap" /></noscript>
   <style>
     :root {
       --nuit: #0B1A0F;
@@ -83,7 +86,7 @@
       font-weight: 700; font-size: 16px;
       text-decoration: none;
     }
-    .store small { display: block; font-size: 12px; font-weight: 500; color: rgba(11,26,15,0.6); }
+    .store small { display: block; font-size: 12px; font-weight: 600; color: rgba(11,26,15,0.6); }
     .cta {
       display: inline-flex; align-items: center; justify-content: center;
       min-height: 62px; padding: 0 36px;
