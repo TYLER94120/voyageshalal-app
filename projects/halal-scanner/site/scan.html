@@ -270,18 +270,25 @@
     }
     .cta-verifier:active { transform: scale(0.98); }
     .cta-verifier small { font-weight: 500; font-size: 12.5px; color: rgba(253, 250, 243, 0.55); }
+    .ligne-actions { display: flex; gap: 10px; margin-top: 14px; }
     .cta-partager {
+      flex: 1;
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      width: 100%; min-height: 58px;
-      margin-top: 14px;
+      min-height: 58px;
       border-radius: 18px;
       background: rgba(253, 250, 243, 0.08);
       border: 1.5px solid rgba(253, 250, 243, 0.35);
       color: var(--creme);
-      font-size: 16.5px; font-weight: 700;
+      font-size: 16px; font-weight: 700;
       transition: transform 150ms ease;
     }
     .cta-partager:active { transform: scale(0.98); }
+    .cta-partager.actif {
+      background: rgba(201, 168, 76, 0.16);
+      border-color: var(--or);
+      color: var(--or);
+    }
+    .etoile-gardee { color: var(--or); font-size: 15px; flex: 0 0 auto; }
 
     /* ---- Erreur ---- */
     #erreur-emoji { font-size: 46px; }
@@ -394,6 +401,10 @@
         <input id="saisie" type="search" autocomplete="off" placeholder="ou cherche : nom ou code-barres" aria-label="Nom du produit ou code-barres" />
         <button id="verifier" class="secondaire" disabled>Chercher</button>
       </div>
+      <div class="bloc-historique" id="bloc-gardes" hidden>
+        <h2>Mes produits validés</h2>
+        <div id="liste-gardes"></div>
+      </div>
       <div class="bloc-historique">
         <h2>Derniers scans</h2>
         <div id="historique"><p class="vide">Tes scans apparaîtront ici.</p></div>
@@ -428,7 +439,10 @@
         <div id="verif-detail" hidden></div>
         <div id="verif-source" hidden></div>
       </div>
-      <button id="partager" class="cta-partager">📤  Partager ce verdict</button>
+      <div class="ligne-actions">
+        <button id="garder" class="cta-partager">☆  Garder</button>
+        <button id="partager" class="cta-partager">📤  Partager</button>
+      </div>
       <div id="alertes"></div>
       <div id="ingredients-bloc" hidden>
         <h2 id="titre-ingredients">Ingrédients</h2>
@@ -463,6 +477,8 @@
     const EMOJIS = { halal: "✅", douteux: "⚠️", haram: "❌", inconnu: "❓" };
     const LABELS = { halal: "HALAL", douteux: "DOUTEUX", haram: "HARAM", inconnu: "INCONNU" };
     const CLE_SCANS = "halalcheck.scans";
+    const CLE_GARDES = "halalcheck.gardes";
+    const MAX_GARDES = 100;
     const FORMATS = ["ean_13", "ean_8", "upc_a", "upc_e", "code_128"];
 
     let flux = null;
@@ -473,7 +489,10 @@
 
     function montrer(ecran) {
       for (const id of ECRANS) $(id).hidden = id !== ecran;
-      if (ecran === "ecran-scan") afficherHistorique();
+      if (ecran === "ecran-scan") {
+        afficherGardes();
+        afficherHistorique();
+      }
     }
 
     /* ---------- Caméra + détection ---------- */
@@ -926,6 +945,7 @@
       }
 
       dernierResultat = { code, nom: nomAffiche, statut: statutFinal, verifie: !!verif };
+      majBoutonGarder(code);
       enregistrerScan({
         code,
         nom: nomAffiche,
@@ -934,6 +954,94 @@
       });
       montrer("ecran-resultat");
     }
+
+    /* ---------- Mes produits validés (la liste de courses) ----------
+       Ce que l'utilisateur garde lui appartient : tout reste sur son
+       téléphone (aucun compte, aucun envoi), et sa liste se construit
+       scan après scan. */
+    function listerGardes() {
+      try {
+        const brut = localStorage.getItem(CLE_GARDES);
+        const donnees = brut ? JSON.parse(brut) : [];
+        return Array.isArray(donnees) ? donnees : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function estGarde(code) {
+      return listerGardes().some((p) => p.code === code);
+    }
+
+    function basculerGarde(produit) {
+      try {
+        const gardes = listerGardes();
+        const restants = gardes.filter((p) => p.code !== produit.code);
+        const etaitGarde = restants.length !== gardes.length;
+        const nouveaux = etaitGarde
+          ? restants
+          : [{ ...produit, date: new Date().toISOString() }, ...restants].slice(0, MAX_GARDES);
+        localStorage.setItem(CLE_GARDES, JSON.stringify(nouveaux));
+        return !etaitGarde;
+      } catch (e) {
+        return estGarde(produit.code);
+      }
+    }
+
+    function majBoutonGarder(code) {
+      const bouton = $("garder");
+      const garde = estGarde(code);
+      bouton.textContent = garde ? "★  Gardé" : "☆  Garder";
+      bouton.classList.toggle("actif", garde);
+      bouton.setAttribute(
+        "aria-label",
+        garde ? "Retirer de mes produits validés" : "Ajouter à mes produits validés"
+      );
+    }
+
+    function ligneProduit(item, options) {
+      const bouton = document.createElement("button");
+      bouton.className = "scan-ligne";
+      const emo = document.createElement("span");
+      emo.className = "emo";
+      emo.textContent = EMOJIS[item.statut] || "❓";
+      const nom = document.createElement("span");
+      nom.className = "nom";
+      nom.textContent = item.nom;
+      bouton.append(emo, nom);
+      if (options && options.etoile) {
+        const etoile = document.createElement("span");
+        etoile.className = "etoile-gardee";
+        etoile.textContent = "★";
+        bouton.appendChild(etoile);
+      }
+      const pastille = document.createElement("span");
+      pastille.className = "pastille";
+      pastille.style.background = COULEURS[item.statut] || "var(--inconnu)";
+      bouton.appendChild(pastille);
+      bouton.onclick = () => {
+        arreterScanner();
+        traiterCode(item.code);
+      };
+      return bouton;
+    }
+
+    function afficherGardes() {
+      const gardes = listerGardes();
+      $("bloc-gardes").hidden = gardes.length === 0;
+      const conteneur = $("liste-gardes");
+      conteneur.innerHTML = "";
+      for (const item of gardes) {
+        conteneur.appendChild(ligneProduit(item, { etoile: true }));
+      }
+    }
+
+    $("garder").addEventListener("click", () => {
+      if (!dernierResultat) return;
+      const r = dernierResultat;
+      basculerGarde({ code: r.code, nom: r.nom, statut: r.statut });
+      majBoutonGarder(r.code);
+    });
 
     /* ---------- Partage du verdict (boucle virale) ---------- */
     $("partager").addEventListener("click", async () => {
@@ -1172,20 +1280,7 @@
         return;
       }
       for (const s of scans) {
-        const bouton = document.createElement("button");
-        bouton.className = "scan-ligne";
-        const emo = document.createElement("span");
-        emo.className = "emo";
-        emo.textContent = EMOJIS[s.statut] || "❓";
-        const nom = document.createElement("span");
-        nom.className = "nom";
-        nom.textContent = s.nom;
-        const pastille = document.createElement("span");
-        pastille.className = "pastille";
-        pastille.style.background = COULEURS[s.statut] || "var(--inconnu)";
-        bouton.append(emo, nom, pastille);
-        bouton.onclick = () => { arreterScanner(); traiterCode(s.code); };
-        conteneur.appendChild(bouton);
+        conteneur.appendChild(ligneProduit(s, { etoile: estGarde(s.code) }));
       }
     }
 
