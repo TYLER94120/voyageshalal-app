@@ -191,6 +191,14 @@
     }
     .alerte b { display: block; font-size: 16px; margin-bottom: 3px; }
     .alerte span { font-size: 14px; color: rgba(253, 250, 243, 0.78); }
+    .lien-additif {
+      display: inline-flex; align-items: center; gap: 6px;
+      min-height: 44px; margin-top: 2px;
+      color: var(--or);
+      font-size: 14px; font-weight: 700;
+      text-decoration: none;
+    }
+    .lien-additif:active { opacity: 0.7; }
     #ingredients-bloc h2, .bloc-historique h2 {
       font-family: "Playfair Display", Georgia, serif;
       font-size: 20px;
@@ -661,6 +669,51 @@
       return `mailto:${CONTACT}?subject=${encodeURIComponent(objet)}&body=${encodeURIComponent(corps)}`;
     }
 
+    /* ---------- Pont vers HalalGPT : fiches détaillées des additifs ----------
+       Le scanner dit CE QUI est douteux ; HalalGPT explique POURQUOI (origine,
+       avis des écoles, alternatives). L'annuaire est chargé en arrière-plan et
+       n'est jamais bloquant : s'il est indisponible, le lien reste proposé car
+       la redirection halalgpt.fr/e/<code> est tolérante (aucune 404). */
+    let ECODES = null;
+    (async () => {
+      try {
+        const r = await fetch("https://halalgpt.fr/api/ecodes");
+        if (!r.ok) return;
+        const j = await r.json();
+        const liste = (j && (j.additifs || j.ecodes)) || [];
+        if (!Array.isArray(liste) || liste.length === 0) return;
+        const connus = new Set();
+        for (const entree of liste) {
+          const brut = entree && entree.codes;
+          const codes = Array.isArray(brut) ? brut : String(brut || "").split(/[,;\s]+/);
+          for (const c of codes) {
+            const propre = String(c || "").trim().toUpperCase();
+            if (propre) connus.add(propre);
+          }
+        }
+        if (connus.size > 0) ECODES = connus;
+      } catch (e) {
+        /* annuaire indisponible : on garde le comportement tolérant */
+      }
+    })();
+
+    // « E471 — Mono- et diglycérides » → « E471 ». Rien pour les alertes
+    // sans code (porc, alcool, gélatine…) : elles n'ont pas de fiche additif.
+    function codeAdditif(element) {
+      const m = String(element || "").match(/^\s*E\s?(\d{3,4})\s?([a-z])?\b/i);
+      if (!m) return null;
+      // Convention officielle : chiffres puis lettre en minuscule (E472a).
+      return "E" + m[1] + (m[2] ? m[2].toLowerCase() : "");
+    }
+
+    function ficheAdditifDisponible(code) {
+      if (!ECODES) return true; // annuaire non chargé : la redirection gère
+      const majuscule = code.toUpperCase();
+      if (ECODES.has(majuscule)) return true;
+      const sansLettre = majuscule.replace(/[A-Z]$/, "");
+      return sansLettre !== majuscule && ECODES.has(sansLettre);
+    }
+
     function lienAide(code, nom, aClarifier) {
       const objet = `Vérification halal — ${nom} (${code})`;
       const corps =
@@ -830,6 +883,18 @@
           const span = document.createElement("span");
           span.textContent = a.raison;
           div.append(b, span);
+
+          // Pont vers la fiche détaillée de l'additif sur HalalGPT.
+          const codeE = codeAdditif(a.element);
+          if (codeE && ficheAdditifDisponible(codeE)) {
+            const lien = document.createElement("a");
+            lien.className = "lien-additif";
+            lien.href = "https://halalgpt.fr/e/" + encodeURIComponent(codeE);
+            lien.target = "_blank";
+            lien.rel = "noopener";
+            lien.textContent = "📖 Comprendre le " + codeE + " →";
+            div.appendChild(lien);
+          }
           alertes.appendChild(div);
         }
 
