@@ -10,6 +10,12 @@ export interface Alerte {
   raison: string;
   /** Clé de regroupement quand un additif et un mot du texte désignent la même substance. */
   famille?: string;
+  /**
+   * Gravité du doute, pour ne pas mettre sur le même plan un ingrédient
+   * presque toujours végétal aujourd'hui et un ingrédient réellement animal.
+   * Absent = traité comme « moderee ».
+   */
+  gravite?: "faible" | "moderee";
 }
 
 export interface Verdict {

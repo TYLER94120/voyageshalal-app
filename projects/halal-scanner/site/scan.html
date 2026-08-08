@@ -214,6 +214,30 @@
     }
     #verdict-detail { font-size: 15px; font-weight: 600; margin-top: 8px; opacity: 0.95; }
     #alertes { margin-top: 22px; display: grid; gap: 10px; }
+    .conclusion {
+      background: var(--carte);
+      border: 1px solid var(--bordure);
+      border-left: 4px solid var(--foret);
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-top: 18px;
+      box-shadow: var(--ombre-douce);
+    }
+    .conclusion-titre {
+      font-size: 12px; font-weight: 800; letter-spacing: 0.6px;
+      text-transform: uppercase; color: var(--foret);
+      margin-bottom: 6px;
+    }
+    .conclusion-texte { font-size: 15px; line-height: 1.55; color: var(--texte); }
+    .alerte.faible { border-left-color: rgba(18, 38, 26, 0.22); }
+    .alerte.faible .etiquette-gravite { color: var(--texte-doux); }
+    .etiquette-gravite {
+      display: block;
+      font-size: 11.5px; font-weight: 800; letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #9A6416;
+      margin-bottom: 3px;
+    }
     .alerte {
       background: var(--carte);
       border: 1px solid var(--bordure);
@@ -604,6 +628,10 @@
         <button id="garder" class="cta-partager">☆  Garder</button>
         <button id="partager" class="cta-partager">📤  Partager</button>
       </div>
+      <div id="conclusion" class="conclusion" hidden>
+        <div class="conclusion-titre"></div>
+        <p class="conclusion-texte"></p>
+      </div>
       <div id="alertes"></div>
       <div id="composition-bloc" hidden>
         <h2>Composition</h2>
@@ -652,6 +680,10 @@
         <div id="etiquette-emoji"></div>
         <div id="etiquette-label"></div>
         <div id="etiquette-resume"></div>
+      </div>
+      <div id="etiquette-conclusion" class="conclusion" hidden>
+        <div class="conclusion-titre"></div>
+        <p class="conclusion-texte"></p>
       </div>
       <div id="etiquette-risques"></div>
       <p id="etiquette-texte"></p>
@@ -1522,10 +1554,43 @@
       if (verdict.statut === "halal" && verdict.certifieHalal) return "Produit certifié halal ✓";
       if (verdict.statut === "halal" && verdict.vegan) return "Produit végane — aucun risque détecté";
       if (verdict.statut === "halal") return "Aucun ingrédient à risque détecté";
-      if (verdict.statut === "douteux")
-        return `${verdict.alertes.length} ingrédient${verdict.alertes.length > 1 ? "s" : ""} à vérifier`;
+      if (verdict.statut === "douteux") {
+        const n = verdict.alertes.length;
+        return n + " ingrédient" + (n > 1 ? "s" : "") + " à vérifier";
+      }
       if (verdict.statut === "haram") return "Ingrédient interdit détecté";
       return "Pas assez d'informations sur ce produit";
+    }
+
+    // « Douteux » ne dit pas quoi faire. Cette conclusion, si : elle distingue
+    // les doutes mineurs (ingrédients presque toujours végétaux aujourd'hui)
+    // des doutes réels, et donne l'action concrète.
+    function conclusionPratique(verdict) {
+      if (verdict.statut === "haram") {
+        return {
+          titre: "Ce qu'il faut retenir",
+          texte:
+            "Un ingrédient interdit a été identifié. À éviter, sauf si l'emballage porte une certification halal explicite.",
+        };
+      }
+      if (verdict.statut !== "douteux") return null;
+
+      const serieuses = (verdict.alertes || []).filter((a) => a.gravite !== "faible");
+      if (serieuses.length === 0) {
+        return {
+          titre: "Ce qu'il faut retenir",
+          texte:
+            "Aucun ingrédient réellement problématique. Ceux qui sont signalés (glycérine, stéarates…) sont aujourd'hui presque toujours d'origine végétale chez les fabricants européens : le doute est théorique. En cas d'exigence stricte, demande confirmation à la marque.",
+        };
+      }
+      const noms = serieuses.slice(0, 2).map((a) => a.element).join(" et ");
+      return {
+        titre: "Ce qu'il faut retenir",
+        texte:
+          "Le point à vérifier, c'est " + noms +
+          (serieuses.length > 2 ? " (entre autres)" : "") +
+          " : cet ingrédient existe en version végétale comme animale, et l'étiquette ne le précise pas. Seule la marque peut trancher — le bouton ci-dessous prépare le message.",
+      };
     }
 
     function afficherResultat(produit, verif) {
@@ -1562,6 +1627,7 @@
         $("verif-source").textContent =
           "Source : " + (verif.source || "—") + (verif.date ? " · " + verif.date : "");
         $("alertes").innerHTML = "";
+        $("conclusion").hidden = true;
         $("cta-verifier").hidden = true;
       } else {
         // ---- ANALYSE INDICATIVE : déduction automatique des ingrédients ----
@@ -1580,7 +1646,13 @@
         alertes.innerHTML = "";
         for (const a of verdict.alertes) {
           const div = document.createElement("div");
-          div.className = "alerte";
+          div.className = "alerte" + (a.gravite === "faible" ? " faible" : "");
+          if (a.niveau !== "haram") {
+            const grav = document.createElement("span");
+            grav.className = "etiquette-gravite";
+            grav.textContent = a.gravite === "faible" ? "Risque faible" : "À vérifier";
+            div.appendChild(grav);
+          }
           const b = document.createElement("b");
           b.textContent = `${a.niveau === "haram" ? "❌" : "⚠️"}  ${a.element}`;
           const span = document.createElement("span");
@@ -1599,6 +1671,13 @@
             div.appendChild(lien);
           }
           alertes.appendChild(div);
+        }
+
+        const conclusion = conclusionPratique(verdict);
+        $("conclusion").hidden = !conclusion;
+        if (conclusion) {
+          $("conclusion").querySelector(".conclusion-titre").textContent = conclusion.titre;
+          $("conclusion").querySelector(".conclusion-texte").textContent = conclusion.texte;
         }
 
         // Rendre le doute actionnable : transformer l'incertitude en certitude.
@@ -1698,7 +1777,7 @@
       const hauteurSource = source.height || source.naturalHeight;
       if (!largeurSource || !hauteurSource) throw new Error("image illisible");
 
-      let cote = 1024;
+      let cote = 1600;
       let qualite = 0.82;
       for (let essai = 0; essai < 6; essai++) {
         const ratio = Math.min(1, cote / Math.max(largeurSource, hauteurSource));
@@ -1864,6 +1943,29 @@
           div.appendChild(lien);
         }
         risques.appendChild(div);
+      }
+
+      // Les alertes de la lecture n'ont pas de gravité : on la retrouve en
+      // repassant chaque ingrédient dans notre moteur cosmétique.
+      const alertesEvaluees = (lecture.ingredients_a_risque || [])
+        .filter((i) => i && i.nom)
+        .map((i) => {
+          let gravite = "moderee";
+          try {
+            const a = analyserCosmetique({ ingredientsTexte: i.nom, labels: [] }).alertes[0];
+            if (a && a.gravite) gravite = a.gravite;
+          } catch (e) {
+            /* ingrédient inconnu de notre table : on reste prudent */
+          }
+          return { element: i.nom, raison: i.raison || "", niveau: "douteux", gravite };
+        });
+      const conclusionLecture = conclusionPratique({ statut, alertes: alertesEvaluees });
+      $("etiquette-conclusion").hidden = !conclusionLecture;
+      if (conclusionLecture) {
+        $("etiquette-conclusion").querySelector(".conclusion-titre").textContent =
+          conclusionLecture.titre;
+        $("etiquette-conclusion").querySelector(".conclusion-texte").textContent =
+          conclusionLecture.texte;
       }
 
       $("etiquette-texte").textContent = lecture.explication || "";
