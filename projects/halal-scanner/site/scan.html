@@ -15,7 +15,11 @@
   <link rel="apple-touch-icon" href="./icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet" />
+  <!-- Polices chargées sans bloquer l'affichage : le scanner démarre tout de
+       suite, même sur connexion lente. La graisse 900 (mot « HALAL ») est
+       désormais réellement chargée au lieu d'être synthétisée. -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800;900&family=Playfair+Display:wght@800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800;900&family=Playfair+Display:wght@800;900&display=swap" /></noscript>
   <style>
     :root {
       --nuit: #0B1A0F;
@@ -270,7 +274,7 @@
       transition: transform 150ms ease;
     }
     .cta-verifier:active { transform: scale(0.98); }
-    .cta-verifier small { font-weight: 500; font-size: 12.5px; color: rgba(253, 250, 243, 0.55); }
+    .cta-verifier small { font-weight: 600; font-size: 12.5px; color: rgba(253, 250, 243, 0.55); }
     .ligne-actions { display: flex; gap: 10px; margin-top: 14px; }
     .cta-partager {
       flex: 1;

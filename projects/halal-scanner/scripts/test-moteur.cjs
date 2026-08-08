@@ -29,6 +29,12 @@ const cas = [
   ["Végane avec E471", { ingredientsTexte: "farine, émulsifiant : e471", additifs: ["en:e471"], labels: ["en:vegan"] }, "halal", null],
   ["Carmin (E120 + texte → 1 seule alerte)", { ingredientsTexte: "sucre, colorant : carmin", additifs: ["en:e120"] }, "douteux", 1],
   ["Aucune donnée", {}, "inconnu", 0],
+  ["E1000 — acide cholique (bile animale)", { ingredientsTexte: "sucre", additifs: ["en:e1000"] }, "haram", 1],
+  ["E442 — phosphatides d'ammonium", { ingredientsTexte: "sucre, beurre de cacao", additifs: ["en:e442"] }, "douteux", 1],
+  ["E322 — lécithines", { ingredientsTexte: "cacao, lécithine de soja", additifs: ["en:e322"] }, "douteux", 1],
+  ["E433 — polysorbate", { ingredientsTexte: "eau, sucre", additifs: ["en:e433"] }, "douteux", 1],
+  ["Lactates E325+E326 → une seule alerte (même famille)", { ingredientsTexte: "eau", additifs: ["en:e325", "en:e326"] }, "douteux", 1],
+  ["Additif non répertorié (E330) reste halal", { ingredientsTexte: "eau, sucre", additifs: ["en:e330"] }, "halal", 0],
 ];
 
 let echecs = 0;
