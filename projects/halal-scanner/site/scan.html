@@ -213,6 +213,39 @@
       text-decoration: none;
     }
     .lien-additif:active { opacity: 0.7; }
+    /* ---- Composition détaillée, ingrédient par ingrédient ---- */
+    .ligne-ingredient {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 13px 2px;
+      border-bottom: 1px solid rgba(253, 250, 243, 0.09);
+    }
+    .ligne-ingredient:last-child { border-bottom: none; }
+    .puce {
+      width: 11px; height: 11px; border-radius: 999px;
+      flex: 0 0 auto; margin-top: 6px;
+    }
+    .texte-ingredient { flex: 1; min-width: 0; }
+    .texte-ingredient .nom-ing {
+      font-size: 16px; font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+    .texte-ingredient .etat-ing { font-size: 13.5px; margin-top: 2px; }
+    .texte-ingredient .raison-ing {
+      font-size: 13.5px; color: rgba(253, 250, 243, 0.68);
+      margin-top: 4px; line-height: 1.45;
+    }
+    .texte-ingredient .lien-additif { min-height: 40px; font-size: 13.5px; }
+    .replier {
+      width: 100%;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      min-height: 58px; padding: 0 4px;
+      background: transparent; border: none;
+      color: var(--creme);
+      font-size: 15.5px; font-weight: 600;
+      text-align: left;
+      border-top: 1px solid rgba(253, 250, 243, 0.09);
+    }
+    .replier .chevron { color: var(--or); font-size: 14px; }
     #ingredients-bloc h2, .bloc-historique h2 {
       font-family: "Playfair Display", Georgia, serif;
       font-size: 20px;
@@ -525,6 +558,12 @@
         <button id="partager" class="cta-partager">📤  Partager</button>
       </div>
       <div id="alertes"></div>
+      <div id="composition-bloc" hidden>
+        <h2>Composition</h2>
+        <div id="composition"></div>
+        <button id="voir-reste" class="replier" hidden></button>
+        <div id="composition-reste" hidden></div>
+      </div>
       <div id="ingredients-bloc" hidden>
         <h2 id="titre-ingredients">Ingrédients</h2>
         <p id="ingredients"></p>
@@ -1053,6 +1092,159 @@
       return { titre: "Ingrédients", texte: propre };
     }
 
+    /* ---------- Composition détaillée ----------
+       Ne pas montrer que les alertes : montrer TOUTE la liste, chaque
+       ingrédient avec son état. Ce qui est sûr est replié pour rester lisible. */
+    function decouperIngredients(texte) {
+      const morceaux = [];
+      let courant = "";
+      let profondeur = 0;
+      for (const c of String(texte || "")) {
+        if (c === "(" || c === "[") profondeur++;
+        else if (c === ")" || c === "]") profondeur = Math.max(0, profondeur - 1);
+        if ((c === "," || c === ";") && profondeur === 0) {
+          morceaux.push(courant);
+          courant = "";
+        } else {
+          courant += c;
+        }
+      }
+      morceaux.push(courant);
+      return morceaux
+        .map((m) => m.replace(/^[\s.\-–—:*_]+|[\s.\-–—:*_]+$/g, "").trim())
+        .filter((m) => m.length >= 2 && /[a-zà-ÿ]/i.test(m))
+        .slice(0, 60);
+    }
+
+    // Chaque ingrédient est repassé seul dans le moteur : mêmes règles, même
+    // rigueur que pour le produit entier.
+    function analyserUnIngredient(texte) {
+      const codes = (texte.match(/\bE\s?\d{3,4}\s?[a-z]?\b/gi) || []).map(
+        (c) => "en:" + c.replace(/\s+/g, "").toLowerCase()
+      );
+      try {
+        const v = analyserProduit({ ingredientsTexte: texte, additifs: codes });
+        return v.alertes[0] || null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function ligneIngredient(nom, alerte) {
+      const ligne = document.createElement("div");
+      ligne.className = "ligne-ingredient";
+
+      const puce = document.createElement("span");
+      puce.className = "puce";
+      puce.style.background = alerte
+        ? alerte.niveau === "haram"
+          ? "var(--haram)"
+          : "var(--douteux)"
+        : "var(--halal)";
+      ligne.appendChild(puce);
+
+      const bloc = document.createElement("div");
+      bloc.className = "texte-ingredient";
+
+      const titre = document.createElement("div");
+      titre.className = "nom-ing";
+      titre.textContent = nom;
+      bloc.appendChild(titre);
+
+      const etat = document.createElement("div");
+      etat.className = "etat-ing";
+      if (alerte) {
+        etat.textContent = alerte.niveau === "haram" ? "À éviter" : "À vérifier";
+        etat.style.color = alerte.niveau === "haram" ? "#ef8b8b" : "#e8b06a";
+      } else {
+        etat.textContent = "Aucun risque connu";
+        etat.style.color = "rgba(253, 250, 243, 0.5)";
+      }
+      bloc.appendChild(etat);
+
+      if (alerte) {
+        const raison = document.createElement("div");
+        raison.className = "raison-ing";
+        raison.textContent = alerte.raison;
+        bloc.appendChild(raison);
+
+        const codeE = codeAdditif(alerte.element);
+        if (codeE && ficheAdditifDisponible(codeE)) {
+          const lien = document.createElement("a");
+          lien.className = "lien-additif";
+          lien.href = "https://halalgpt.fr/e/" + encodeURIComponent(codeE);
+          lien.target = "_blank";
+          lien.rel = "noopener";
+          lien.textContent = "📖 Comprendre le " + codeE + " →";
+          bloc.appendChild(lien);
+        }
+      }
+
+      ligne.appendChild(bloc);
+      return ligne;
+    }
+
+    function afficherComposition(texteIngredients) {
+      const bloc = $("composition-bloc");
+      const liste = $("composition");
+      const reste = $("composition-reste");
+      const bouton = $("voir-reste");
+      liste.innerHTML = "";
+      reste.innerHTML = "";
+      reste.hidden = true;
+      bouton.hidden = true;
+
+      const morceaux = decouperIngredients(nettoyerIngredients(texteIngredients));
+      // Une liste d'un seul bloc n'est pas une vraie liste d'ingrédients.
+      if (morceaux.length < 2) {
+        bloc.hidden = true;
+        return false;
+      }
+
+      const signales = [];
+      const surs = [];
+      for (const m of morceaux) {
+        const alerte = analyserUnIngredient(m);
+        (alerte ? signales : surs).push({ nom: m, alerte });
+      }
+
+      for (const item of signales) liste.appendChild(ligneIngredient(item.nom, item.alerte));
+
+      if (surs.length > 0) {
+        for (const item of surs) reste.appendChild(ligneIngredient(item.nom, null));
+        if (signales.length === 0) {
+          // Rien à signaler : on montre tout directement, sans repli inutile.
+          reste.hidden = false;
+        } else {
+          bouton.hidden = false;
+          let ouvert = false;
+          const libelle = () =>
+            (ouvert ? "Masquer les " : "Voir les ") +
+            surs.length +
+            " autre" + (surs.length > 1 ? "s" : "") + " ingrédient" + (surs.length > 1 ? "s" : "") +
+            " (aucun risque connu)";
+          const rendre = () => {
+            bouton.innerHTML = "";
+            const t = document.createElement("span");
+            t.textContent = libelle();
+            const ch = document.createElement("span");
+            ch.className = "chevron";
+            ch.textContent = ouvert ? "▲" : "▼";
+            bouton.append(t, ch);
+          };
+          bouton.onclick = () => {
+            ouvert = !ouvert;
+            reste.hidden = !ouvert;
+            rendre();
+          };
+          rendre();
+        }
+      }
+
+      bloc.hidden = false;
+      return true;
+    }
+
     /* ---------- Nettoyage du nom affiché ----------
        Les fiches saisies à la main répètent souvent la marque dans le nom
        (« Bahia, Eau De Table » + marque « Bahia ») et abusent des majuscules. */
@@ -1210,7 +1402,17 @@
           "<small>Aide-nous à le faire passer en « vérifié »</small>";
       }
 
-      const blocIngredients = produit ? presenterIngredients(produit.ingredientsTexte) : null;
+      // Composition détaillée quand la liste s'y prête ; sinon, texte brut
+      // (compositions minérales des eaux, listes d'un seul tenant…).
+      const texteIngredients = produit ? produit.ingredientsTexte : null;
+      const compositionAffichee = texteIngredients ? afficherComposition(texteIngredients) : false;
+      if (!compositionAffichee) $("composition-bloc").hidden = true;
+
+      const blocIngredients = compositionAffichee
+        ? null
+        : produit
+        ? presenterIngredients(texteIngredients)
+        : null;
       $("ingredients-bloc").hidden = !blocIngredients;
       if (blocIngredients) {
         $("titre-ingredients").textContent = blocIngredients.titre;
