@@ -488,6 +488,15 @@
     #erreur-texte { color: var(--texte-doux); margin-bottom: 26px; white-space: pre-line; line-height: 1.55; }
 
     /* ---- Historique ---- */
+    .compteur {
+      text-align: center;
+      font-size: 14px; font-weight: 700;
+      color: var(--foret);
+      background: rgba(27, 67, 50, 0.07);
+      border-radius: 999px;
+      padding: 10px 16px;
+      margin-top: 26px;
+    }
     .bloc-historique { margin-top: 34px; }
     .scan-ligne {
       width: 100%;
@@ -598,6 +607,7 @@
         <input id="saisie" type="search" autocomplete="off" placeholder="ou cherche : nom ou code-barres" aria-label="Nom du produit ou code-barres" />
         <button id="verifier" class="secondaire" disabled>Chercher</button>
       </div>
+      <p id="compteur" class="compteur" hidden></p>
       <div class="bloc-historique" id="bloc-gardes" hidden>
         <h2>Mes produits validés</h2>
         <div id="liste-gardes"></div>
@@ -654,7 +664,7 @@
           tout dérivé animal non certifié. Les deux positions existent —
           le choix te revient, selon ton école.
         </p>
-        <a class="lien-additif" href="https://halalgpt.fr" target="_blank" rel="noopener">🌙 En parler avec HalalGPT →</a>
+        <a class="lien-additif" href="https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=verdict-douteux" target="_blank" rel="noopener">🌙 En parler avec HalalGPT →</a>
       </div>
       <div id="alertes"></div>
       <div id="composition-bloc" hidden>
@@ -665,7 +675,7 @@
       </div>
       <div id="alternatives-bloc" hidden>
         <h2>À la place</h2>
-        <p class="sous-section">Même rayon, aucun ingrédient à risque détecté.</p>
+        <p class="sous-section" id="sous-alternatives"></p>
         <div id="alternatives"></div>
       </div>
       <div id="ingredients-bloc" hidden>
@@ -717,7 +727,7 @@
           chimique de l'ingrédient lève le problème, d'autres préfèrent l'éviter.
           Le choix te revient, selon ton école.
         </p>
-        <a class="lien-additif" href="https://halalgpt.fr" target="_blank" rel="noopener">🌙 En parler avec HalalGPT →</a>
+        <a class="lien-additif" href="https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=verdict-douteux" target="_blank" rel="noopener">🌙 En parler avec HalalGPT →</a>
       </div>
       <div id="etiquette-risques"></div>
       <p id="etiquette-texte"></p>
@@ -751,6 +761,10 @@
     const EMOJIS = { halal: "✅", douteux: "⚠️", haram: "❌", inconnu: "❓" };
     const LABELS = { halal: "HALAL", douteux: "DOUTEUX", haram: "HARAM", inconnu: "INCONNU" };
     const CLE_SCANS = "halalcheck.scans";
+    const CLE_CACHE = "halalcheck.produits";
+    const CLE_CODES_VUS = "halalcheck.codesVus";
+    const MAX_CACHE = 60;
+    const MAX_CODES_VUS = 500;
     const CLE_GARDES = "halalcheck.gardes";
     const MAX_GARDES = 100;
     const FORMATS = ["ean_13", "ean_8", "upc_a", "upc_e", "code_128"];
@@ -766,6 +780,7 @@
     function montrer(ecran) {
       for (const id of ECRANS) $(id).hidden = id !== ecran;
       if (ecran === "ecran-scan") {
+        afficherCompteur();
         afficherGardes();
         afficherHistorique();
       }
@@ -1009,6 +1024,80 @@
       return null;
     }
 
+    /* ---------- Cache local des produits ----------
+       Au supermarché, le réseau est mauvais. Un produit déjà scanné doit
+       s'afficher instantanément, même hors ligne ; la fiche est rafraîchie
+       en arrière-plan pour la prochaine fois. */
+    function lireCacheProduits() {
+      try {
+        const brut = localStorage.getItem(CLE_CACHE);
+        const d = brut ? JSON.parse(brut) : {};
+        return d && typeof d === "object" ? d : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function lireCacheProduit(code) {
+      const cache = lireCacheProduits();
+      for (const v of variantesCode(code)) {
+        if (cache[v] && cache[v].produit) return cache[v].produit;
+      }
+      return null;
+    }
+
+    function ecrireCacheProduit(produit) {
+      if (!produit || !produit.code) return;
+      try {
+        const cache = lireCacheProduits();
+        cache[produit.code] = { produit, date: new Date().toISOString() };
+        const cles = Object.keys(cache);
+        if (cles.length > MAX_CACHE) {
+          cles
+            .sort((a, b) => String(cache[a].date).localeCompare(String(cache[b].date)))
+            .slice(0, cles.length - MAX_CACHE)
+            .forEach((c) => delete cache[c]);
+        }
+        localStorage.setItem(CLE_CACHE, JSON.stringify(cache));
+      } catch (e) {
+        /* espace saturé : le cache est un confort, jamais un prérequis */
+      }
+    }
+
+    /* ---------- Compteur de produits scannés ----------
+       Un compteur est un compteur : il montre ce qui a été fait, il ne juge
+       personne et ne parle jamais de piété. */
+    function codesVus() {
+      try {
+        const brut = localStorage.getItem(CLE_CODES_VUS);
+        const d = brut ? JSON.parse(brut) : [];
+        return Array.isArray(d) ? d : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function noterCodeVu(code) {
+      try {
+        const liste = codesVus();
+        if (liste.includes(code)) return liste.length;
+        const nouveaux = [code, ...liste].slice(0, MAX_CODES_VUS);
+        localStorage.setItem(CLE_CODES_VUS, JSON.stringify(nouveaux));
+        return nouveaux.length;
+      } catch (e) {
+        return codesVus().length;
+      }
+    }
+
+    function afficherCompteur() {
+      const total = codesVus().length;
+      const bloc = $("compteur");
+      bloc.hidden = total < 3;
+      if (total >= 3) {
+        bloc.textContent = "✓ " + total + " produits scannés";
+      }
+    }
+
     /* ---------- Vérifications communautaires (la certitude) ----------
        Une vérification PRIME sur l'analyse automatique : elle vient d'une
        certification officielle ou d'une réponse écrite du fabricant, et
@@ -1138,10 +1227,20 @@
 
     async function traiterCode(code) {
       codeEnCours = code;
-      $("texte-chargement").textContent = "Analyse en cours…";
-      montrer("ecran-chargement");
       await verifsPretes;
       const verif = chercherVerification(code);
+
+      // Déjà scanné : le verdict s'affiche tout de suite, sans attendre le
+      // réseau. La fiche est ensuite rafraîchie en silence pour la suite.
+      const enCache = lireCacheProduit(code);
+      if (enCache) {
+        afficherResultat(enCache, verif);
+        rafraichirEnSilence(code);
+        return;
+      }
+
+      $("texte-chargement").textContent = "Analyse en cours…";
+      montrer("ecran-chargement");
       let produit = null;
       let erreurReseau = false;
       try {
@@ -1169,6 +1268,17 @@
         return;
       }
       afficherResultat(produit, verif);
+    }
+
+    // Met le cache à jour sans toucher à l'écran : aucun saut visuel pendant
+    // que l'utilisateur lit son verdict.
+    async function rafraichirEnSilence(code) {
+      try {
+        const frais = await chercherProduit(code);
+        if (frais) ecrireCacheProduit(frais);
+      } catch (e) {
+        /* hors ligne : le cache reste la meilleure source disponible */
+      }
     }
 
     // Étiquettes bilingues (Maroc, Algérie, Tunisie…) : on affiche la partie
@@ -1349,6 +1459,13 @@
         bloc.hidden = true;
         return;
       }
+      // Une information vérifiée passe toujours devant une analyse automatique.
+      proposees.sort((a, b) => (b.verif ? 1 : 0) - (a.verif ? 1 : 0));
+      const nbVerifies = proposees.filter((x) => x.verif).length;
+      $("sous-alternatives").textContent = nbVerifies
+        ? nbVerifies + " de ces produits " + (nbVerifies > 1 ? "sont vérifiés" : "est vérifié") +
+          " ; les autres n'ont aucun ingrédient à risque détecté."
+        : "Même rayon, aucun ingrédient à risque détecté par l'analyse. Touche un produit pour voir le détail.";
       for (const item of proposees) {
         liste.appendChild(carteProduit(item.produit, item.statut, item.verif));
       }
@@ -1436,7 +1553,7 @@
         if (codeE && ficheAdditifDisponible(codeE)) {
           const lien = document.createElement("a");
           lien.className = "lien-additif";
-          lien.href = "https://halalgpt.fr/e/" + encodeURIComponent(codeE);
+          lien.href = "https://halalgpt.fr/e/" + encodeURIComponent(codeE) + "?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=verdict-douteux";
           lien.target = "_blank";
           lien.rel = "noopener";
           lien.textContent = "📖 Comprendre le " + codeE + " →";
@@ -1699,7 +1816,7 @@
           if (codeE && ficheAdditifDisponible(codeE)) {
             const lien = document.createElement("a");
             lien.className = "lien-additif";
-            lien.href = "https://halalgpt.fr/e/" + encodeURIComponent(codeE);
+            lien.href = "https://halalgpt.fr/e/" + encodeURIComponent(codeE) + "?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=verdict-douteux";
             lien.target = "_blank";
             lien.rel = "noopener";
             lien.textContent = "📖 Comprendre le " + codeE + " →";
@@ -1759,6 +1876,8 @@
       }
 
       dernierResultat = { code, nom: nomAffiche, statut: statutFinal, verifie: !!verif };
+      if (produit) ecrireCacheProduit(produit);
+      noterCodeVu(code);
       majBoutonGarder(code);
       enregistrerScan({
         code,
@@ -1970,7 +2089,8 @@
         }
         // Fiche fournie par HalalGPT, sinon on construit le lien depuis le code.
         const codeE = codeAdditif(item.nom);
-        const url = item.fiche || (codeE ? "https://halalgpt.fr/e/" + encodeURIComponent(codeE) : null);
+        const base = item.fiche || (codeE ? "https://halalgpt.fr/e/" + encodeURIComponent(codeE) : null);
+        const url = base ? base + (base.includes("?") ? "&" : "?") + "utm_source=halalcheck&utm_medium=passerelle&utm_campaign=verdict-douteux" : null;
         if (url) {
           const lien = document.createElement("a");
           lien.className = "lien-additif";
