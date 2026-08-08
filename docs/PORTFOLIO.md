@@ -18,6 +18,41 @@ Décision fondateur : **100 % de l'eau va à HalalCheck** (le scanner halal).
   L'app native Expo reste dans le repo et partage le même moteur : build stores
   dès que la traction web le justifie.
 
+## 🧭 CAP PRODUIT (8 août 2026) : « Yuka version halal »
+
+Décision du fondateur, à respecter dans toutes les sessions :
+
+> « On ne fera pas mieux qu'un site avec des années d'historique et des moyens
+> énormes. Ne réinventons pas la roue : **inspirons-nous d'eux**, donnons autant
+> de détails qu'eux. Faire la même chose, en version halal, serait déjà énorme. »
+
+Concrètement, avant de concevoir quoi que ce soit : **regarder comment le
+leader du secteur traite le problème, puis le transposer au halal.** Ne pas
+inventer une mécanique nouvelle quand une mécanique éprouvée existe.
+
+### Ce qu'ils font — et où on en est
+
+| Leur mécanique | Chez nous | État |
+|---|---|---|
+| Fiche produit claire, photo en grand, interface aérée | Interface claire, cartes blanches | ✅ fait |
+| Chaque ingrédient noté, le reste replié | Composition détaillée 🔴🟠🟢 | ✅ fait |
+| Alternatives meilleures dans le même rayon | Section « À la place » | ✅ fait |
+| Fiche explicative par ingrédient | Lien vers les fiches HalalGPT | 🟡 partiel (additifs seulement) |
+| Historique des scans consultable | Historique + « Mes produits validés » | ✅ fait |
+| Cosmétiques en plus de l'alimentaire | — | ❌ à faire (Open Beauty Facts) |
+| Fonctionne hors-ligne | Cache des pages et des bases | 🟡 partiel |
+| Statistiques personnelles, suivi dans le temps | — | ❌ à faire |
+| Base de produits massive | Open Food Facts + base locale Maghreb | 🟡 en construction |
+
+### La seule chose qu'on ne copie PAS : le score sur 100
+
+Leur note continue convient à la nutrition (un produit peut être « moyennement »
+bon). Le halal ne fonctionne pas ainsi : un produit contenant de la gélatine
+porcine n'est pas « 39/100 », il est **interdit**. Inventer une note serait
+contraire à la règle d'honnêteté n°3 de la charte. Notre échelle à quatre états
+(halal · douteux · haram · inconnu) est le bon équivalent — tout le reste de
+leur savoir-faire est à prendre.
+
 ## Les 3 pousses actuelles
 
 | # | Projet | Dossier | C'est quoi | Usage visé |
