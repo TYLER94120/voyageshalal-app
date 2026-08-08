@@ -325,6 +325,15 @@
     }
 
     /* ---- Verdict vérifié (certitude) vs analyse indicative ---- */
+    .badge-type {
+      display: inline-block;
+      background: rgba(27, 67, 50, 0.10);
+      border: 1px solid rgba(27, 67, 50, 0.25);
+      color: var(--foret);
+      font-size: 12.5px; font-weight: 700;
+      padding: 6px 14px; border-radius: 999px;
+      margin-top: 14px;
+    }
     #label-indicatif {
       font-size: 11.5px; font-weight: 800; letter-spacing: 0.7px;
       text-transform: uppercase;
@@ -581,6 +590,7 @@
       <div id="produit-image-absente" class="image-absente" hidden><span class="monogramme">✦</span></div>
       <h1 id="produit-nom"></h1>
       <p id="produit-marque"></p>
+      <div id="badge-type" class="badge-type" hidden>🧴 Cosmétique · usage externe</div>
       <div id="label-indicatif" hidden>Analyse automatique · à titre indicatif</div>
       <div class="verdict" id="verdict">
         <div class="sceau" id="sceau" hidden>✓ INFORMATION VÉRIFIÉE</div>
@@ -664,6 +674,7 @@
 
   <script type="module">
     import { analyserProduit } from "./halal.js";
+    import { analyserCosmetique } from "./cosmetiques.js";
 
     const $ = (id) => document.getElementById(id);
     const ECRANS = [
@@ -899,9 +910,13 @@
     async function chercherProduit(code) {
       let erreurReseau = null;
       for (const c of candidatsCode(code)) {
+        // Alimentaire d'abord (cas le plus fréquent), puis cosmétique :
+        // shampooings, crèmes et savons vivent dans une base distincte.
         const urls = [
           `https://world.openfoodfacts.org/api/v2/product/${c}.json?fields=${CHAMPS}`,
           `https://world.openfoodfacts.org/api/v0/product/${c}.json`,
+          `https://world.openbeautyfacts.org/api/v2/product/${c}.json?fields=${CHAMPS}`,
+          `https://world.openbeautyfacts.org/api/v0/product/${c}.json`,
         ];
         for (const url of urls) {
           try {
@@ -916,6 +931,7 @@
                 additifs: Array.isArray(p.additives_tags) ? p.additives_tags : [],
                 labels: Array.isArray(p.labels_tags) ? p.labels_tags : [],
                 categories: Array.isArray(p.categories_tags) ? p.categories_tags : [],
+                cosmetique: url.includes("openbeautyfacts"),
               };
             }
           } catch (e) {
@@ -1220,8 +1236,11 @@
 
       let candidats = [];
       try {
+        const base = produit.cosmetique
+          ? "https://world.openbeautyfacts.org"
+          : "https://world.openfoodfacts.org";
         const url =
-          "https://world.openfoodfacts.org/api/v2/search?categories_tags=" +
+          base + "/api/v2/search?categories_tags=" +
           encodeURIComponent(categorie) +
           "&page_size=40&sort_by=unique_scans_n&fields=" + CHAMPS_RECHERCHE;
         const reponse = await fetch(url, { headers: { Accept: "application/json" } });
@@ -1246,17 +1265,14 @@
           additifs: Array.isArray(p.additives_tags) ? p.additives_tags : [],
           labels: Array.isArray(p.labels_tags) ? p.labels_tags : [],
           categories: Array.isArray(p.categories_tags) ? p.categories_tags : [],
+          cosmetique: !!produit.cosmetique,
         };
         // Sans liste d'ingrédients, on ne peut rien affirmer : on écarte.
         if (!candidat.ingredientsTexte) continue;
         const verifCandidat = chercherVerification(candidat.code);
         const statutCandidat = verifCandidat
           ? verifCandidat.statut
-          : analyserProduit({
-              ingredientsTexte: candidat.ingredientsTexte,
-              additifs: candidat.additifs,
-              labels: candidat.labels,
-            }).statut;
+          : analyserSelonType(candidat).statut;
         if (statutCandidat !== "halal") continue;
         proposees.push({ produit: candidat, statut: statutCandidat, verif: verifCandidat });
         if (proposees.length >= 4) break;
@@ -1298,13 +1314,15 @@
 
     // Chaque ingrédient est repassé seul dans le moteur : mêmes règles, même
     // rigueur que pour le produit entier.
-    function analyserUnIngredient(texte) {
-      const codes = (texte.match(/\bE\s?\d{3,4}\s?[a-z]?\b/gi) || []).map(
-        (c) => "en:" + c.replace(/\s+/g, "").toLowerCase()
-      );
+    function analyserUnIngredient(texte, estCosmetique) {
       try {
-        const v = analyserProduit({ ingredientsTexte: texte, additifs: codes });
-        return v.alertes[0] || null;
+        if (estCosmetique) {
+          return analyserCosmetique({ ingredientsTexte: texte, labels: [] }).alertes[0] || null;
+        }
+        const codes = (texte.match(/\bE\s?\d{3,4}\s?[a-z]?\b/gi) || []).map(
+          (c) => "en:" + c.replace(/\s+/g, "").toLowerCase()
+        );
+        return analyserProduit({ ingredientsTexte: texte, additifs: codes }).alertes[0] || null;
       } catch (e) {
         return null;
       }
@@ -1364,7 +1382,7 @@
       return ligne;
     }
 
-    function afficherComposition(texteIngredients) {
+    function afficherComposition(texteIngredients, estCosmetique) {
       const bloc = $("composition-bloc");
       const liste = $("composition");
       const reste = $("composition-reste");
@@ -1384,7 +1402,7 @@
       const signales = [];
       const surs = [];
       for (const m of morceaux) {
-        const alerte = analyserUnIngredient(m);
+        const alerte = analyserUnIngredient(m, estCosmetique);
         (alerte ? signales : surs).push({ nom: m, alerte });
       }
 
@@ -1484,6 +1502,22 @@
       return n.charAt(0).toUpperCase() + n.slice(1);
     }
 
+    // Aiguillage : les cosmétiques ont leur propre nomenclature (INCI) et
+    // leurs propres règles — ils ne passent jamais par le moteur alimentaire.
+    function analyserSelonType(produit) {
+      if (produit && produit.cosmetique) {
+        return analyserCosmetique({
+          ingredientsTexte: produit.ingredientsTexte,
+          labels: produit.labels,
+        });
+      }
+      return analyserProduit({
+        ingredientsTexte: produit.ingredientsTexte,
+        additifs: produit.additifs,
+        labels: produit.labels,
+      });
+    }
+
     function sousTitre(verdict) {
       if (verdict.statut === "halal" && verdict.certifieHalal) return "Produit certifié halal ✓";
       if (verdict.statut === "halal" && verdict.vegan) return "Produit végane — aucun risque détecté";
@@ -1509,6 +1543,7 @@
       const marqueUtile =
         marque && marque.trim().toLowerCase() !== nomAffiche.trim().toLowerCase();
       $("produit-marque").textContent = marqueUtile ? marque : "";
+      $("badge-type").hidden = !(produit && produit.cosmetique);
 
       let statutFinal;
 
@@ -1530,11 +1565,7 @@
         $("cta-verifier").hidden = true;
       } else {
         // ---- ANALYSE INDICATIVE : déduction automatique des ingrédients ----
-        const verdict = analyserProduit({
-          ingredientsTexte: produit.ingredientsTexte,
-          additifs: produit.additifs,
-          labels: produit.labels,
-        });
+        const verdict = analyserSelonType(produit);
         statutFinal = verdict.statut;
         $("label-indicatif").hidden = false;
         $("sceau").hidden = true;
@@ -1585,7 +1616,10 @@
       // Composition détaillée quand la liste s'y prête ; sinon, texte brut
       // (compositions minérales des eaux, listes d'un seul tenant…).
       const texteIngredients = produit ? produit.ingredientsTexte : null;
-      const compositionAffichee = texteIngredients ? afficherComposition(texteIngredients) : false;
+      const estCosmetique = !!(produit && produit.cosmetique);
+      const compositionAffichee = texteIngredients
+        ? afficherComposition(texteIngredients, estCosmetique)
+        : false;
       if (!compositionAffichee) $("composition-bloc").hidden = true;
 
       const blocIngredients = compositionAffichee
@@ -2096,13 +2130,7 @@
 
       for (const produit of produits) {
         const verif = chercherVerification(produit.code);
-        const statut = verif
-          ? verif.statut
-          : analyserProduit({
-              ingredientsTexte: produit.ingredientsTexte,
-              additifs: produit.additifs,
-              labels: produit.labels,
-            }).statut;
+        const statut = verif ? verif.statut : analyserSelonType(produit).statut;
         liste.appendChild(carteProduit(produit, statut, verif));
       }
 
