@@ -10,7 +10,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://halalcheck.fr/" />
   <link rel="canonical" href="https://halalcheck.fr/" />
-  <meta name="theme-color" content="#0B1A0F" />
+  <meta name="theme-color" content="#FDFAF3" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -28,17 +28,24 @@
       --creme: #FDFAF3;
       --douteux: #E08E3C;
       --halal: #3E9B4F;
+      --fond: #FDFAF3;
+      --carte: #FFFFFF;
+      --texte: #12261A;
+      --texte-doux: rgba(18, 38, 26, 0.62);
+      --bordure: rgba(18, 38, 26, 0.10);
+      --or-lisible: #7A5F1C;
+      --ombre-douce: 0 2px 10px rgba(18, 38, 26, 0.06);
+      --ombre-carte: 0 8px 28px rgba(18, 38, 26, 0.09);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       font-family: "DM Sans", system-ui, sans-serif;
-      background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23FDFAF3' stroke-opacity='0.04'%3E%3Crect x='18' y='18' width='36' height='36'/%3E%3Crect x='18' y='18' width='36' height='36' transform='rotate(45 36 36)'/%3E%3C/g%3E%3C/svg%3E"),
-        var(--nuit);
-      color: var(--creme);
+      background: var(--fond);
+      color: var(--texte);
       font-size: 16px;
       line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
     }
     h1, h2 { font-family: "Playfair Display", Georgia, serif; }
 
@@ -48,15 +55,15 @@
       max-width: 1080px; margin: 0 auto;
     }
     .logo { font-size: 22px; font-weight: 800; }
-    .logo .coche { color: var(--or); }
+    .logo .coche { color: var(--or-lisible); }
     .pill {
       display: inline-flex; align-items: center; gap: 6px;
       text-decoration: none;
       min-height: 46px; padding: 8px 20px;
       border-radius: 999px;
       border: 1.5px solid var(--or);
-      background: rgba(201, 168, 76, 0.14);
-      color: var(--or);
+      background: rgba(201, 168, 76, 0.16);
+      color: var(--or-lisible);
       font-size: 15px; font-weight: 800;
       transition: transform 120ms ease, background 120ms ease;
     }
@@ -73,11 +80,11 @@
       font-size: clamp(36px, 6vw, 58px);
       font-weight: 900; line-height: 1.1;
     }
-    .hero h1 .or { color: var(--or); }
+    .hero h1 .or { color: var(--foret); }
     .hero .sous-titre {
-      margin: 18px 0 30px;
+      margin: 18px 0 32px;
       font-size: 18px;
-      color: rgba(253, 250, 243, 0.75);
+      color: var(--texte-doux);
       max-width: 460px;
     }
     .stores { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -85,7 +92,7 @@
       display: inline-flex; align-items: center; gap: 10px;
       min-height: 60px; padding: 10px 22px;
       border-radius: 18px;
-      background: var(--creme); color: var(--nuit);
+      background: var(--carte); color: var(--texte);
       font-weight: 700; font-size: 16px;
       text-decoration: none;
     }
@@ -147,13 +154,13 @@
       .stores { display: block; }
       .cta { width: 100%; padding: 0 20px; }
     }
-    .note-bientot { margin-top: 12px; font-size: 14px; color: rgba(253, 250, 243, 0.55); }
+    .note-bientot { margin-top: 14px; font-size: 14px; color: var(--texte-doux); line-height: 1.6; }
 
     /* ---- Mockup téléphone ---- */
     .telephone {
       width: min(310px, 86vw);
       margin: 0 auto;
-      background: #050d08;
+      background: #0B1A0F;
       border: 3px solid rgba(253, 250, 243, 0.18);
       border-radius: 44px;
       padding: 14px;
@@ -161,13 +168,14 @@
     }
     .encoche { width: 110px; height: 22px; background: #050d08; border-radius: 999px; margin: 0 auto 10px; }
     .ecran-app {
-      background: var(--nuit);
+      background: var(--creme);
+      color: var(--texte);
       border-radius: 30px;
       padding: 18px 16px 22px;
     }
-    .ecran-app .entete { font-size: 13px; color: rgba(253,250,243,0.55); margin-bottom: 10px; }
+    .ecran-app .entete { font-size: 13px; color: var(--texte-doux); margin-bottom: 10px; }
     .produit-nom { font-size: 17px; font-weight: 800; }
-    .produit-marque { font-size: 13px; color: rgba(253,250,243,0.6); margin-bottom: 12px; }
+    .produit-marque { font-size: 13px; color: var(--texte-doux); margin-bottom: 12px; }
     .verdict {
       background: linear-gradient(160deg, #c47a2c, #e59a48);
       border: 1px solid rgba(253, 250, 243, 0.25);
@@ -176,15 +184,19 @@
       padding: 18px 12px;
       margin-bottom: 12px;
     }
+    .verdict { color: #FFFFFF; }
     .verdict .emoji { font-size: 30px; }
     .verdict .label { font-size: 26px; font-weight: 900; letter-spacing: 1px; }
     .verdict .detail { font-size: 12.5px; font-weight: 600; opacity: 0.95; margin-top: 4px; }
     .alerte {
-      background: var(--foret);
+      background: #FFFFFF;
+      border: 1px solid var(--bordure);
+      border-left: 3px solid var(--or);
       border-radius: 14px;
       padding: 12px;
       font-size: 12.5px;
       line-height: 1.45;
+      color: var(--texte);
     }
     .alerte b { display: block; font-size: 13.5px; margin-bottom: 2px; }
     .bouton-mock {
@@ -198,7 +210,8 @@
 
     .bande {
       background: var(--foret);
-      padding: 20px 16px;
+      color: var(--creme);
+      padding: 22px 16px;
       display: flex; gap: 10px 28px; justify-content: center; flex-wrap: wrap;
       font-size: 15px; font-weight: 600;
     }
@@ -208,20 +221,23 @@
     .cartes { display: grid; gap: 16px; }
     @media (min-width: 720px) { .cartes { grid-template-columns: repeat(3, 1fr); } }
     .carte {
-      background: rgba(27, 67, 50, 0.55);
-      border: 1px solid rgba(201, 168, 76, 0.2);
+      background: var(--carte);
+      border: 1px solid var(--bordure);
       border-radius: 20px;
-      padding: 24px;
+      padding: 26px;
+      box-shadow: var(--ombre-carte);
     }
     .carte .emoji { font-size: 30px; }
     .carte h3 { font-size: 19px; margin: 12px 0 8px; }
-    .carte p { font-size: 15.5px; color: rgba(253, 250, 243, 0.75); }
+    .carte p { font-size: 15.5px; color: var(--texte-doux); }
 
     .etapes { display: grid; gap: 14px; counter-reset: etape; }
     .etape {
       display: flex; gap: 16px; align-items: flex-start;
-      background: rgba(27, 67, 50, 0.35);
-      border-radius: 18px; padding: 20px;
+      background: var(--carte);
+      border: 1px solid var(--bordure);
+      border-radius: 18px; padding: 22px;
+      box-shadow: var(--ombre-douce);
     }
     .num {
       flex: 0 0 auto;
@@ -231,10 +247,10 @@
       font-weight: 800; font-size: 18px;
     }
     .etape h3 { font-size: 18px; margin-bottom: 4px; }
-    .etape p { font-size: 15.5px; color: rgba(253, 250, 243, 0.75); }
+    .etape p { font-size: 15.5px; color: var(--texte-doux); }
 
     details {
-      border-bottom: 1px solid rgba(253, 250, 243, 0.12);
+      border-bottom: 1px solid var(--bordure);
       padding: 4px 0;
     }
     summary {
@@ -244,19 +260,22 @@
       min-height: 56px;
       font-size: 17px; font-weight: 700;
     }
-    summary::after { content: "+"; color: var(--or); font-size: 24px; font-weight: 700; }
+    summary::after { content: "+"; color: var(--or-lisible); font-size: 24px; font-weight: 700; }
     details[open] summary::after { content: "−"; }
-    details p { padding: 0 0 18px; color: rgba(253, 250, 243, 0.75); font-size: 15.5px; max-width: 640px; }
+    details p { padding: 0 0 18px; color: var(--texte-doux); font-size: 15.5px; max-width: 640px; line-height: 1.6; }
 
     footer {
       text-align: center;
-      padding: 48px 24px 40px;
-      border-top: 1px solid rgba(253, 250, 243, 0.1);
+      padding: 52px 24px 44px;
+      background: var(--nuit);
+      color: var(--creme);
+      margin-top: 40px;
     }
     footer .logo { font-size: 24px; margin-bottom: 10px; }
-    footer p { font-size: 14px; color: rgba(253, 250, 243, 0.55); margin-top: 4px; }
-    footer .famille { margin-top: 14px; line-height: 2; }
-    footer .famille a { color: var(--or); text-decoration: none; display: inline-block; padding: 4px 8px; }
+    footer .logo .coche { color: var(--or); }
+    footer p { font-size: 14px; color: rgba(253, 250, 243, 0.6); margin-top: 4px; }
+    footer .famille { margin-top: 16px; line-height: 2.1; }
+    footer .famille a { color: var(--or); text-decoration: none; display: inline-block; padding: 6px 8px; font-weight: 600; }
     footer .famille a:hover { text-decoration: underline; }
     .bismillah { font-size: 18px; color: var(--or); margin-top: 18px; }
   </style>
@@ -299,7 +318,7 @@
         <div class="alerte">
           <b>⚠️ E471 — Mono- et diglycérides</b>
           Émulsifiant d'origine végétale ou animale non précisée.<br />
-          <span style="color: var(--or); font-weight: 700; display: inline-block; margin-top: 6px;">📖 Comprendre le E471 →</span>
+          <span style="color: #7A5F1C; font-weight: 700; display: inline-block; margin-top: 6px;">📖 Comprendre le E471 →</span>
         </div>
         <div class="bouton-mock">📷  Scanner un autre produit</div>
       </div>
