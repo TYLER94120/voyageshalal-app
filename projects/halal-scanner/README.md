@@ -50,6 +50,25 @@ base — et le doute devient une certitude **pour toute la communauté**, une fo
 pour toutes. C'est ce capital de vérifications accumulées qui est le moat :
 personne ne peut le copier vite, car c'est du travail humain vérifié.
 
+### 📷 Lecture d'étiquette en photo (pont HalalGPT)
+
+Quand un code-barres est inconnu (fréquent au Maghreb), l'utilisateur
+photographie la **liste d'ingrédients** : la photo est compressée dans le
+navigateur (1024 px, JPEG, < 2 Mo) puis envoyée à `halalgpt.fr/api/etiquette`,
+qui la lit et renvoie une analyse structurée.
+
+Trois garde-fous inscrits dans le produit :
+- **Consentement** : un écran annonce l'envoi de la photo avant qu'il ait lieu.
+- **Nature du résultat** : présenté comme une **lecture d'étiquette** (bandeau
+  dédié + champ `source` affiché), jamais comme une certification. Le sceau doré
+  « ✓ VÉRIFIÉ » reste réservé à `verifications.json`.
+- **Verdict `illisible`** : traité comme un vrai cas (conseils de reprise de
+  photo), jamais un verdict vide. Idem pour les codes 400/429/503.
+
+Le résultat propose « ➕ Ajouter ce produit à la base » : un e-mail pré-rempli
+(code-barres + ce qui a été lu) arrive au responsable du site, qui transcrit la
+fiche dans `produits-locaux.json`. Chaque scan raté enrichit ainsi la couverture.
+
 **Ajouter une vérification** : édite `site/verifications.json`, clé =
 code-barres :
 ```json

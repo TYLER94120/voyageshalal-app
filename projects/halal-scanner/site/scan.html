@@ -171,9 +171,10 @@
       from { opacity: 0; transform: scale(0.96); }
       to { opacity: 1; transform: scale(1); }
     }
-    #verdict-emoji { font-size: 38px; }
-    #verdict-label { font-size: 32px; font-weight: 900; letter-spacing: 2px; }
-    #verdict-label::after {
+    #verdict-emoji, #etiquette-emoji { font-size: 38px; }
+    #verdict-label, #etiquette-label { font-size: 32px; font-weight: 900; letter-spacing: 2px; }
+    #etiquette-resume { font-size: 15px; font-weight: 600; margin-top: 8px; opacity: 0.95; }
+    #verdict-label::after, #etiquette-label::after {
       content: "";
       display: block;
       width: 54px; height: 2px;
@@ -289,6 +290,48 @@
       color: var(--or);
     }
     .etoile-gardee { color: var(--or); font-size: 15px; flex: 0 0 auto; }
+
+    /* ---- Lecture d'étiquette en photo ---- */
+    .bandeau-lecture {
+      display: inline-block;
+      background: rgba(253, 250, 243, 0.1);
+      border: 1px solid rgba(253, 250, 243, 0.3);
+      color: rgba(253, 250, 243, 0.85);
+      font-size: 11.5px; font-weight: 800; letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 6px 14px; border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .bloc-photo { text-align: left; }
+    .bloc-photo h1 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 24px; font-weight: 800; margin-bottom: 10px;
+    }
+    .bloc-photo p.explique {
+      font-size: 15.5px; line-height: 1.55;
+      color: rgba(253, 250, 243, 0.78);
+      margin-bottom: 10px;
+    }
+    .encadre-info {
+      background: rgba(27, 67, 50, 0.55);
+      border-left: 3px solid var(--or);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 14px; line-height: 1.55;
+      color: rgba(253, 250, 243, 0.8);
+      margin: 14px 0 20px;
+    }
+    #etiquette-texte { font-size: 15.5px; line-height: 1.6; color: rgba(253, 250, 243, 0.85); margin-top: 18px; }
+    #etiquette-conseil {
+      background: rgba(27, 67, 50, 0.55);
+      border-radius: 14px; padding: 14px 16px;
+      font-size: 15px; line-height: 1.55;
+      margin-top: 16px;
+    }
+    #etiquette-source {
+      font-size: 12.5px; color: rgba(253, 250, 243, 0.5);
+      line-height: 1.5; margin-top: 18px;
+    }
 
     /* ---- Erreur ---- */
     #erreur-emoji { font-size: 46px; }
@@ -457,6 +500,38 @@
       <button id="rescanner" class="principal">📷  Scanner un autre produit</button>
     </section>
 
+    <section id="ecran-photo" class="bloc-photo" hidden>
+      <h1>Lire l'étiquette en photo</h1>
+      <p class="explique">
+        Ce produit n'est pas dans les bases. Photographie sa <strong>liste
+        d'ingrédients</strong> : elle sera lue et analysée, et tu auras ton verdict.
+      </p>
+      <div class="encadre-info">
+        📤 Ta photo est envoyée à HalalGPT (notre IA) pour être lue. Elle n'est pas
+        publiée et ne sert qu'à cette analyse.<br /><br />
+        ⚠️ Le résultat sera une <strong>lecture de l'étiquette</strong> — pas une
+        certification halal.
+      </div>
+      <input id="fichier-photo" type="file" accept="image/*" capture="environment" hidden />
+      <button id="prendre-photo" class="principal">📷&nbsp; Prendre la photo</button>
+      <button id="annuler-photo" class="cta-partager" style="width: 100%; margin-top: 10px">Annuler</button>
+    </section>
+
+    <section id="ecran-etiquette" hidden>
+      <div class="bandeau-lecture">📷 Lecture d'étiquette</div>
+      <div class="verdict" id="etiquette-verdict">
+        <div id="etiquette-emoji"></div>
+        <div id="etiquette-label"></div>
+        <div id="etiquette-resume"></div>
+      </div>
+      <div id="etiquette-risques"></div>
+      <p id="etiquette-texte"></p>
+      <p id="etiquette-conseil" hidden></p>
+      <p id="etiquette-source"></p>
+      <button id="ajouter-base" class="cta-verifier" style="margin-bottom: 12px"></button>
+      <button id="etiquette-rescan" class="principal">📷&nbsp; Scanner un autre produit</button>
+    </section>
+
     <section id="ecran-erreur" class="centre" hidden>
       <div id="erreur-emoji"></div>
       <h1 id="erreur-titre"></h1>
@@ -472,7 +547,10 @@
     import { analyserProduit } from "./halal.js";
 
     const $ = (id) => document.getElementById(id);
-    const ECRANS = ["ecran-scan", "ecran-chargement", "ecran-resultat", "ecran-erreur", "ecran-recherche"];
+    const ECRANS = [
+      "ecran-scan", "ecran-chargement", "ecran-resultat", "ecran-erreur",
+      "ecran-recherche", "ecran-photo", "ecran-etiquette",
+    ];
     const COULEURS = { halal: "var(--halal)", douteux: "var(--douteux)", haram: "var(--haram)", inconnu: "var(--inconnu)" };
     const EMOJIS = { halal: "✅", douteux: "⚠️", haram: "❌", inconnu: "❓" };
     const LABELS = { halal: "HALAL", douteux: "DOUTEUX", haram: "HARAM", inconnu: "INCONNU" };
@@ -680,14 +758,6 @@
       return null;
     }
 
-    function lienPhotos(code) {
-      const objet = `Produit introuvable — ${code}`;
-      const corps =
-        `Assalamu alaykum,\n\nCe produit n'est pas encore dans HalalCheck :\nCode-barres : ${code}\n\n` +
-        `J'attache 2 photos :\n1) le produit (face avant)\n2) la liste des ingrédients\n\n(Envoyé depuis halalcheck.fr)`;
-      return `mailto:${CONTACT}?subject=${encodeURIComponent(objet)}&body=${encodeURIComponent(corps)}`;
-    }
-
     /* ---------- Pont vers HalalGPT : fiches détaillées des additifs ----------
        Le scanner dit CE QUI est douteux ; HalalGPT explique POURQUOI (origine,
        avis des écoles, alternatives). L'annuaire est chargé en arrière-plan et
@@ -772,13 +842,10 @@
           montrerErreur(
             "🔍",
             "Produit pas encore référencé",
-            "Les produits du Maghreb manquent souvent des bases mondiales. Envoie-nous 2 photos — le produit et sa liste d'ingrédients — on l'ajoute à la base HalalCheck : ton prochain scan le trouvera, et il servira à toute la communauté.\n\nCode scanné : " + code,
-            "📷  Scanner un autre produit",
-            relancerScan,
-            {
-              libelle: "📸  Envoyer les 2 photos",
-              action: () => { location.href = lienPhotos(code); },
-            }
+            "Les produits du Maghreb manquent souvent des bases mondiales. Mais tu peux avoir ton verdict quand même : photographie sa liste d'ingrédients.\n\nCode scanné : " + code,
+            "📷  Lire l'étiquette en photo",
+            demarrerLectureEtiquette,
+            { libelle: "Scanner un autre produit", action: relancerScan }
           );
         }
         return;
@@ -954,6 +1021,248 @@
       });
       montrer("ecran-resultat");
     }
+
+    /* ---------- Lecture d'étiquette en photo (pont HalalGPT) ----------
+       Quand le code-barres est inconnu, l'utilisateur photographie la liste
+       d'ingrédients : HalalGPT la lit, et le verdict est présenté comme une
+       LECTURE D'ÉTIQUETTE — jamais comme une certification. */
+    const API_ETIQUETTE = "https://halalgpt.fr/api/etiquette";
+    const LIMITE_DATAURL = 2 * 1024 * 1024; // 2 Mo, limite du service
+
+    async function chargerImage(fichier) {
+      if (typeof createImageBitmap === "function") {
+        try {
+          return await createImageBitmap(fichier, { imageOrientation: "from-image" });
+        } catch (e) {
+          try {
+            return await createImageBitmap(fichier);
+          } catch (e2) {
+            /* repli ci-dessous */
+          }
+        }
+      }
+      return await new Promise((ok, ko) => {
+        const url = URL.createObjectURL(fichier);
+        const img = new Image();
+        img.onload = () => {
+          URL.revokeObjectURL(url);
+          ok(img);
+        };
+        img.onerror = () => {
+          URL.revokeObjectURL(url);
+          ko(new Error("image illisible"));
+        };
+        img.src = url;
+      });
+    }
+
+    // Les photos de téléphone pèsent 3 à 5 Mo : on redimensionne et on
+    // compresse jusqu'à passer sous la limite du service.
+    async function compresserPhoto(fichier) {
+      const source = await chargerImage(fichier);
+      const largeurSource = source.width || source.naturalWidth;
+      const hauteurSource = source.height || source.naturalHeight;
+      if (!largeurSource || !hauteurSource) throw new Error("image illisible");
+
+      let cote = 1024;
+      let qualite = 0.82;
+      for (let essai = 0; essai < 6; essai++) {
+        const ratio = Math.min(1, cote / Math.max(largeurSource, hauteurSource));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(largeurSource * ratio));
+        canvas.height = Math.max(1, Math.round(hauteurSource * ratio));
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(source, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL("image/jpeg", qualite);
+        if (dataUrl.length <= LIMITE_DATAURL) return dataUrl;
+        if (qualite > 0.5) qualite -= 0.14;
+        else cote = Math.round(cote * 0.8);
+      }
+      throw new Error("photo trop lourde");
+    }
+
+    function lienAjoutBase(code, lecture) {
+      const risques = (lecture.ingredients_a_risque || [])
+        .map((i) => "- " + (i && i.nom ? i.nom : "?") + (i && i.raison ? " : " + i.raison : ""))
+        .join("\n");
+      const objet = "Ajout base HalalCheck — " + code;
+      const corps =
+        "Assalamu alaykum,\n\nProduit lu par photo d'étiquette :\n" +
+        "Code-barres : " + code + "\n" +
+        "Verdict de la lecture : " + (lecture.verdict || "?") + "\n" +
+        (lecture.resume ? "Résumé : " + lecture.resume + "\n" : "") +
+        (risques ? "\nIngrédients signalés :\n" + risques + "\n" : "") +
+        "\nMerci d'ajouter le nom exact du produit et sa marque, et de joindre la " +
+        "photo de la liste d'ingrédients pour la transcription.\n";
+      return "mailto:" + CONTACT + "?subject=" + encodeURIComponent(objet) +
+        "&body=" + encodeURIComponent(corps);
+    }
+
+    function demarrerLectureEtiquette() {
+      arreterScanner();
+      montrer("ecran-photo");
+    }
+
+    async function envoyerPhoto(fichier) {
+      const code = codeEnCours || "";
+      $("texte-chargement").textContent = "Lecture de l'étiquette…";
+      montrer("ecran-chargement");
+
+      let image;
+      try {
+        image = await compresserPhoto(fichier);
+      } catch (e) {
+        montrerErreur(
+          "🖼",
+          "Photo inutilisable",
+          "Cette image n'a pas pu être préparée. Reprends une photo nette de la liste d'ingrédients.",
+          "📷  Reprendre la photo",
+          demarrerLectureEtiquette
+        );
+        return;
+      }
+
+      let reponse;
+      try {
+        reponse = await fetch(API_ETIQUETTE, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({ image }),
+        });
+      } catch (e) {
+        montrerErreur(
+          "📡",
+          "Envoi impossible",
+          "Vérifie ta connexion, puis reprends la photo.",
+          "📷  Reprendre la photo",
+          demarrerLectureEtiquette
+        );
+        return;
+      }
+
+      if (reponse.status === 429) {
+        montrerErreur(
+          "⏳",
+          "Trop de lectures pour l'instant",
+          "Le service de lecture est limité pour rester gratuit. Réessaie dans quelques minutes.",
+          "📷  Scanner un autre produit",
+          relancerScan
+        );
+        return;
+      }
+      if (!reponse.ok) {
+        montrerErreur(
+          "🛠",
+          "Lecture indisponible",
+          "Le service n'a pas pu lire l'étiquette (erreur " + reponse.status + "). Réessaie dans un moment.",
+          "📷  Reprendre la photo",
+          demarrerLectureEtiquette
+        );
+        return;
+      }
+
+      let lecture;
+      try {
+        lecture = await reponse.json();
+      } catch (e) {
+        lecture = null;
+      }
+      if (!lecture || typeof lecture !== "object" || !lecture.verdict) {
+        montrerErreur(
+          "🛠",
+          "Réponse inattendue",
+          "La lecture n'a pas abouti. Reprends une photo nette de la liste d'ingrédients.",
+          "📷  Reprendre la photo",
+          demarrerLectureEtiquette
+        );
+        return;
+      }
+
+      lecture.verdict = String(lecture.verdict).toLowerCase().trim();
+      if (lecture.verdict === "illisible") {
+        montrerErreur(
+          "🔎",
+          "Étiquette illisible",
+          (lecture.resume || "La liste d'ingrédients n'a pas pu être lue.") +
+            "\n\nApproche-toi de la liste, évite les reflets, et cadre uniquement le texte des ingrédients.",
+          "📷  Reprendre la photo",
+          demarrerLectureEtiquette
+        );
+        return;
+      }
+
+      afficherLecture(code, lecture);
+    }
+
+    function afficherLecture(code, lecture) {
+      const brut = String(lecture.verdict || "").toLowerCase().trim();
+      const statut = ["halal", "douteux", "haram"].includes(brut) ? brut : "inconnu";
+
+      $("etiquette-verdict").className = "verdict verdict-" + statut;
+      $("etiquette-emoji").textContent = EMOJIS[statut] || "❓";
+      $("etiquette-label").textContent = LABELS[statut] || "";
+      $("etiquette-resume").textContent = lecture.resume || "";
+
+      const risques = $("etiquette-risques");
+      risques.innerHTML = "";
+      for (const item of lecture.ingredients_a_risque || []) {
+        if (!item || !item.nom) continue;
+        const div = document.createElement("div");
+        div.className = "alerte";
+        const titre = document.createElement("b");
+        titre.textContent = "⚠️  " + item.nom;
+        div.appendChild(titre);
+        if (item.raison) {
+          const raison = document.createElement("span");
+          raison.textContent = item.raison;
+          div.appendChild(raison);
+        }
+        // Fiche fournie par HalalGPT, sinon on construit le lien depuis le code.
+        const codeE = codeAdditif(item.nom);
+        const url = item.fiche || (codeE ? "https://halalgpt.fr/e/" + encodeURIComponent(codeE) : null);
+        if (url) {
+          const lien = document.createElement("a");
+          lien.className = "lien-additif";
+          lien.href = url;
+          lien.target = "_blank";
+          lien.rel = "noopener";
+          lien.textContent = "📖 Comprendre " + (codeE || item.nom) + " →";
+          div.appendChild(lien);
+        }
+        risques.appendChild(div);
+      }
+
+      $("etiquette-texte").textContent = lecture.explication || "";
+      $("etiquette-conseil").hidden = !lecture.conseil;
+      $("etiquette-conseil").textContent = lecture.conseil ? "💡 " + lecture.conseil : "";
+      $("etiquette-source").textContent =
+        lecture.source ||
+        "HalalGPT — lecture de la liste d'ingrédients photographiée, pas une certification";
+
+      const bouton = $("ajouter-base");
+      if (code) {
+        bouton.hidden = false;
+        bouton.innerHTML =
+          "<span>➕ Ajouter ce produit à la base</span>" +
+          "<small>Pour que le prochain scan le trouve</small>";
+        bouton.onclick = () => {
+          location.href = lienAjoutBase(code, lecture);
+        };
+      } else {
+        bouton.hidden = true;
+      }
+
+      montrer("ecran-etiquette");
+    }
+
+    $("prendre-photo").addEventListener("click", () => $("fichier-photo").click());
+    $("annuler-photo").addEventListener("click", relancerScan);
+    $("etiquette-rescan").addEventListener("click", relancerScan);
+    $("fichier-photo").addEventListener("change", (e) => {
+      const fichier = e.target.files && e.target.files[0];
+      e.target.value = ""; // permet de reprendre la même photo après un échec
+      if (fichier) envoyerPhoto(fichier);
+    });
 
     /* ---------- Mes produits validés (la liste de courses) ----------
        Ce que l'utilisateur garde lui appartient : tout reste sur son
