@@ -265,6 +265,15 @@
       border-top: 1px solid var(--bordure);
     }
     .replier .chevron { color: var(--or-lisible); font-size: 14px; }
+    .sous-section {
+      font-size: 14px; color: var(--texte-doux);
+      margin: -2px 0 14px;
+    }
+    #alternatives .carte-resultat { margin-bottom: 10px; }
+    .chargement-alt {
+      font-size: 14.5px; color: var(--texte-tres-doux);
+      padding: 8px 2px;
+    }
     #composition-bloc h2, #ingredients-bloc h2, .bloc-historique h2 {
       font-family: "Playfair Display", Georgia, serif;
       font-size: 21px;
@@ -592,6 +601,11 @@
         <button id="voir-reste" class="replier" hidden></button>
         <div id="composition-reste" hidden></div>
       </div>
+      <div id="alternatives-bloc" hidden>
+        <h2>À la place</h2>
+        <p class="sous-section">Même rayon, aucun ingrédient à risque détecté.</p>
+        <div id="alternatives"></div>
+      </div>
       <div id="ingredients-bloc" hidden>
         <h2 id="titre-ingredients">Ingrédients</h2>
         <p id="ingredients"></p>
@@ -860,7 +874,7 @@
     }
 
     /* ---------- Open Food Facts + verdict ---------- */
-    const CHAMPS = "product_name,brands,image_front_url,image_url,ingredients_text_fr,ingredients_text,additives_tags,labels_tags";
+    const CHAMPS = "product_name,brands,image_front_url,image_url,ingredients_text_fr,ingredients_text,additives_tags,labels_tags,categories_tags";
 
     // Un même produit peut être stocké en 12 chiffres (UPC) ou 13 (EAN) : on tente les variantes.
     function candidatsCode(code) {
@@ -901,6 +915,7 @@
                 ingredientsTexte: p.ingredients_text_fr || p.ingredients_text || null,
                 additifs: Array.isArray(p.additives_tags) ? p.additives_tags : [],
                 labels: Array.isArray(p.labels_tags) ? p.labels_tags : [],
+                categories: Array.isArray(p.categories_tags) ? p.categories_tags : [],
               };
             }
           } catch (e) {
@@ -1118,6 +1133,143 @@
         return { titre: "Composition minérale (étiquette)", texte: elements.join("  ·  ") };
       }
       return { titre: "Ingrédients", texte: propre };
+    }
+
+    /* ---------- Alternatives ----------
+       Un « douteux » sans solution laisse l'utilisateur devant un rayon sans
+       réponse. On propose des produits du même rayon dont l'analyse ne
+       signale rien — présentés comme des pistes, jamais comme des garanties. */
+    function carteProduit(produit, statut, verif) {
+      const carte = document.createElement("button");
+      carte.className = "carte-resultat";
+
+      if (produit.imageUrl) {
+        const img = document.createElement("img");
+        img.className = "vignette";
+        img.src = produit.imageUrl;
+        img.alt = "";
+        img.loading = "lazy";
+        carte.appendChild(img);
+      } else {
+        const bloc = document.createElement("span");
+        bloc.className = "vignette vignette-absente";
+        bloc.textContent = "✦";
+        carte.appendChild(bloc);
+      }
+
+      const infos = document.createElement("span");
+      infos.className = "infos-resultat";
+      const nom = document.createElement("span");
+      nom.className = "nom-produit";
+      nom.textContent = nettoyerNomProduit(produit.nom || "Produit " + produit.code, produit.marque);
+      infos.appendChild(nom);
+      const sousTexte = produit.sourceLocale
+        ? "Fiche HalalCheck" + (produit.marque ? " · " + produit.marque : "")
+        : produit.marque || "";
+      if (sousTexte) {
+        const marque = document.createElement("span");
+        marque.className = "marque-produit";
+        marque.textContent = sousTexte;
+        infos.appendChild(marque);
+      }
+      carte.appendChild(infos);
+
+      const jeton = document.createElement("span");
+      jeton.className = "jeton";
+      const rond = document.createElement("span");
+      rond.className = "rond";
+      rond.style.background = COULEURS[statut] || "var(--inconnu)";
+      rond.textContent = EMOJIS[statut] || "❓";
+      jeton.appendChild(rond);
+      const mot = document.createElement("span");
+      mot.className = verif ? "sceau-mini" : "mot";
+      mot.textContent = verif ? "✓ VÉRIFIÉ" : LABELS[statut] || "";
+      jeton.appendChild(mot);
+      carte.appendChild(jeton);
+
+      carte.onclick = () => {
+        codeEnCours = produit.code;
+        afficherResultat(produit, verif);
+      };
+      return carte;
+    }
+
+    // On part de la catégorie la plus précise (la dernière de la liste OFF).
+    function categoriePertinente(categories) {
+      const utiles = (categories || []).filter(
+        (c) => typeof c === "string" && c.startsWith("en:") && c.length > 6
+      );
+      return utiles.length ? utiles[utiles.length - 1] : null;
+    }
+
+    async function chargerAlternatives(produit, statut) {
+      const bloc = $("alternatives-bloc");
+      const liste = $("alternatives");
+      bloc.hidden = true;
+      liste.innerHTML = "";
+      if (statut !== "douteux" && statut !== "haram") return;
+
+      const categorie = categoriePertinente(produit.categories);
+      if (!categorie) return;
+
+      bloc.hidden = false;
+      const attente = document.createElement("p");
+      attente.className = "chargement-alt";
+      attente.textContent = "Recherche d'alternatives…";
+      liste.appendChild(attente);
+
+      let candidats = [];
+      try {
+        const url =
+          "https://world.openfoodfacts.org/api/v2/search?categories_tags=" +
+          encodeURIComponent(categorie) +
+          "&page_size=40&sort_by=unique_scans_n&fields=" + CHAMPS_RECHERCHE;
+        const reponse = await fetch(url, { headers: { Accept: "application/json" } });
+        if (!reponse.ok) throw new Error("HTTP " + reponse.status);
+        const json = await reponse.json();
+        candidats = Array.isArray(json.products) ? json.products : [];
+      } catch (e) {
+        bloc.hidden = true;
+        return;
+      }
+
+      const proposees = [];
+      for (const p of candidats) {
+        if (!p || !p.code || String(p.code) === String(produit.code)) continue;
+        if (!(p.product_name || "").trim()) continue;
+        const candidat = {
+          code: String(p.code),
+          nom: p.product_name,
+          marque: p.brands || null,
+          imageUrl: p.image_small_url || p.image_front_small_url || p.image_front_url || null,
+          ingredientsTexte: p.ingredients_text_fr || p.ingredients_text || null,
+          additifs: Array.isArray(p.additives_tags) ? p.additives_tags : [],
+          labels: Array.isArray(p.labels_tags) ? p.labels_tags : [],
+          categories: Array.isArray(p.categories_tags) ? p.categories_tags : [],
+        };
+        // Sans liste d'ingrédients, on ne peut rien affirmer : on écarte.
+        if (!candidat.ingredientsTexte) continue;
+        const verifCandidat = chercherVerification(candidat.code);
+        const statutCandidat = verifCandidat
+          ? verifCandidat.statut
+          : analyserProduit({
+              ingredientsTexte: candidat.ingredientsTexte,
+              additifs: candidat.additifs,
+              labels: candidat.labels,
+            }).statut;
+        if (statutCandidat !== "halal") continue;
+        proposees.push({ produit: candidat, statut: statutCandidat, verif: verifCandidat });
+        if (proposees.length >= 4) break;
+      }
+
+      liste.innerHTML = "";
+      if (proposees.length === 0) {
+        bloc.hidden = true;
+        return;
+      }
+      for (const item of proposees) {
+        liste.appendChild(carteProduit(item.produit, item.statut, item.verif));
+      }
     }
 
     /* ---------- Composition détaillée ----------
@@ -1464,6 +1616,10 @@
         date: new Date().toISOString(),
       });
       montrer("ecran-resultat");
+
+      // Le verdict s'affiche tout de suite ; les alternatives arrivent après.
+      $("alternatives-bloc").hidden = true;
+      if (produit) chargerAlternatives(produit, statutFinal);
     }
 
     /* ---------- Lecture d'étiquette en photo (pont HalalGPT) ----------
@@ -1848,7 +2004,7 @@
        traitée comme un code-barres, tout le reste comme un nom de produit. */
     const CHAMPS_RECHERCHE =
       "code,product_name,brands,image_small_url,image_front_small_url,image_front_url," +
-      "ingredients_text_fr,ingredients_text,additives_tags,labels_tags";
+      "ingredients_text_fr,ingredients_text,additives_tags,labels_tags,categories_tags";
 
     function normaliserTexte(t) {
       return minusculesSansAccents(String(t || ""));
@@ -1947,59 +2103,7 @@
               additifs: produit.additifs,
               labels: produit.labels,
             }).statut;
-
-        const carte = document.createElement("button");
-        carte.className = "carte-resultat";
-
-        if (produit.imageUrl) {
-          const img = document.createElement("img");
-          img.className = "vignette";
-          img.src = produit.imageUrl;
-          img.alt = "";
-          img.loading = "lazy";
-          carte.appendChild(img);
-        } else {
-          const bloc = document.createElement("span");
-          bloc.className = "vignette vignette-absente";
-          bloc.textContent = "✦";
-          carte.appendChild(bloc);
-        }
-
-        const infos = document.createElement("span");
-        infos.className = "infos-resultat";
-        const nom = document.createElement("span");
-        nom.className = "nom-produit";
-        nom.textContent = nettoyerNomProduit(produit.nom || ("Produit " + produit.code), produit.marque);
-        infos.appendChild(nom);
-        const sousTexte = produit.sourceLocale
-          ? "Fiche HalalCheck" + (produit.marque ? " · " + produit.marque : "")
-          : produit.marque || "";
-        if (sousTexte) {
-          const marque = document.createElement("span");
-          marque.className = "marque-produit";
-          marque.textContent = sousTexte;
-          infos.appendChild(marque);
-        }
-        carte.appendChild(infos);
-
-        const jeton = document.createElement("span");
-        jeton.className = "jeton";
-        const rond = document.createElement("span");
-        rond.className = "rond";
-        rond.style.background = COULEURS[statut] || "var(--inconnu)";
-        rond.textContent = EMOJIS[statut] || "❓";
-        jeton.appendChild(rond);
-        const mot = document.createElement("span");
-        mot.className = verif ? "sceau-mini" : "mot";
-        mot.textContent = verif ? "✓ VÉRIFIÉ" : LABELS[statut] || "";
-        jeton.appendChild(mot);
-        carte.appendChild(jeton);
-
-        carte.onclick = () => {
-          codeEnCours = produit.code;
-          afficherResultat(produit, verif);
-        };
-        liste.appendChild(carte);
+        liste.appendChild(carteProduit(produit, statut, verif));
       }
 
       $("aide-recherche").textContent =
