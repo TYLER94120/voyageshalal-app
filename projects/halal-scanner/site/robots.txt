@@ -1,0 +1,5 @@
+# HalalCheck — https://halalcheck.fr
+User-agent: *
+Allow: /
+
+Sitemap: https://halalcheck.fr/sitemap.xml

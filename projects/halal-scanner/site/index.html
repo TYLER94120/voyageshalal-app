@@ -10,6 +10,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://halalcheck.fr/" />
   <link rel="canonical" href="https://halalcheck.fr/" />
+  <meta name="last-modified" content="2026-08-08T18:02:32+00:00" />
   <meta name="theme-color" content="#FDFAF3" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
@@ -279,6 +280,141 @@
     footer .famille a:hover { text-decoration: underline; }
     .bismillah { font-size: 18px; color: var(--or); margin-top: 18px; }
   </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://halalcheck.fr/#editeur",
+      "name": "HalalCheck",
+      "url": "https://halalcheck.fr/",
+      "logo": "https://halalcheck.fr/icon-512.png",
+      "email": "oulali.mohamed@gmail.com",
+      "description": "Scanner halal : analyse des ingrédients et additifs des produits alimentaires et cosmétiques."
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://halalcheck.fr/#application",
+      "name": "HalalCheck",
+      "url": "https://halalcheck.fr/",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "Tout navigateur web",
+      "inLanguage": "fr",
+      "browserRequirements": "Navigateur avec accès caméra pour le scan",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "publisher": {
+        "@id": "https://halalcheck.fr/#editeur"
+      },
+      "description": "Scanne le code-barres d'un produit alimentaire ou cosmétique et obtiens un verdict halal, douteux ou haram, avec l'explication de chaque ingrédient à risque.",
+      "featureList": [
+        "Scan de code-barres avec la caméra",
+        "Recherche par nom de produit",
+        "Composition détaillée ingrédient par ingrédient",
+        "Analyse des cosmétiques selon la nomenclature INCI",
+        "Lecture d'une étiquette par photo",
+        "Alternatives sans ingrédient à risque"
+      ],
+      "isAccessibleForFree": true,
+      "dateModified": "2026-08-08T18:02:32+00:00"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://halalcheck.fr/#fil",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://halalcheck.fr/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://halalcheck.fr/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "C'est fiable à 100 % ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non, et on te le dit franchement : l'analyse est automatique et indicative. Les recettes changent et certains avis divergent entre savants. En cas de doute, la certification imprimée sur l'emballage prime toujours. Quand on ne sait pas, on affiche INCONNU — on ne devine jamais."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Un cosmétique, on ne le mange pas : pourquoi le signaler ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Parce que la question ne porte pas sur la consommation, mais sur la pureté rituelle : un dérivé de porc resté sur la peau soulève la question de la validité de la prière. Cela dit, beaucoup de savants considèrent qu'un ingrédient ayant subi une transformation chimique complète (une graisse devenue glycérine ou savon) ne pose plus problème, et que l'usage externe se distingue de l'ingestion. D'autres préfèrent éviter tout dérivé animal non certifié. Les deux positions existent chez des savants respectés : nous signalons l'information et son degré d'incertitude, le choix te revient — et pour la question religieuse elle-même, adresse-toi à un savant."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Les shampooings et crèmes aussi ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. Scanne un cosmétique et il est analysé selon ses propres règles : collagène, kératine, suif, carmin, lanoline… Attention à une confusion fréquente — « Cetyl Alcohol » ou « Cetearyl Alcohol » ne sont pas de l'alcool mais des cires grasses : nous ne les signalons pas, contrairement à d'autres applications. Seul l'alcool éthylique (Alcohol Denat.) est relevé, avec la mention que beaucoup de savants l'autorisent en usage externe."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Et si mon produit n'est pas trouvé ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ça arrive, surtout pour les produits du Maghreb et des épiceries : les bases mondiales ne les référencent pas encore. Dans ce cas, photographie la liste d'ingrédients — elle est lue et analysée, et tu obtiens ton verdict. Le produit peut ensuite rejoindre la base HalalCheck pour que le prochain scan le trouve."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "D'où viennent les données ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "D'Open Food Facts, la plus grande base alimentaire au monde — collaborative, ouverte et gratuite. S'y ajoute la base HalalCheck, que nous remplissons avec les produits locaux que la communauté nous fait remonter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Mes données sont-elles envoyées quelque part ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non. Tes scans et tes produits gardés restent sur ton téléphone, sans compte ni inscription. Seule exception, annoncée à l'écran avant que ça arrive : quand tu choisis de faire lire une étiquette, cette photo-là est envoyée pour être analysée."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "C'est gratuit ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. Gratuit, sans compte obligatoire et sans publicité au lancement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qui décide de ce qui est halal ou haram ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Personne chez nous ne « décide » : l'app applique des règles documentées (porc, alcool, gélatine, additifs d'origine animale…) et cite l'ingrédient exact pour que tu puisses juger en connaissance de cause, selon ton école et ton exigence."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Et l'application mobile ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Elle arrive. On lance d'abord la version web pour l'améliorer chaque jour sans attendre les validations des stores. En attendant, ajoute cette page à ton écran d'accueil : elle s'utilise exactement comme une app."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 
@@ -419,6 +555,7 @@
   <footer>
     <div class="logo">HalalCheck <span class="coche">✓</span></div>
     <p>oulali.mohamed@gmail.com</p>
+    <p>Mis à jour le <span class="date-maj">8 août 2026</span> · <a href="./mentions-legales.html" style="color:var(--or)">Mentions légales et méthode</a></p>
     <p>Une application de l'écosystème halal :</p>
     <p class="famille">
       <a href="https://halalgpt.fr">🌙 HalalGPT — l'IA musulmane</a>
