@@ -1,10 +1,11 @@
-// Service worker HalalCheck v0.6 — cache l'app web pour un démarrage instantané.
+// Service worker HalalCheck v0.7 — cache l'app web pour un démarrage instantané.
 // Déploiement : GitHub Pages via .github/workflows/deploy-halalcheck.yml
-const CACHE = "halalcheck-v6";
+const CACHE = "halalcheck-v7";
 const FICHIERS = [
   "./",
   "./index.html",
   "./scan.html",
+  "./mentions-legales.html",
   "./halal.js",
   "./cosmetiques.js",
   "./verifications.json",
