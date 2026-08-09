@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Scanner — HalalCheck</title>
-  <meta name="description" content="Scanne le code-barres d'un produit : verdict halal, douteux ou haram, avec les ingrédients expliqués." />
+  <title>Scanner un code-barres halal — sans compte, hors ligne</title>
+  <meta name="description" content="Visez le code-barres ou tapez le nom du produit : composition détaillée, ingrédients à risque expliqués, alternatives du même rayon et lecture d'étiquette en photo." />
   <meta name="theme-color" content="#FDFAF3" />
-  <meta property="og:title" content="HalalCheck — verdict halal en un scan" />
-  <meta property="og:description" content="Scanne le code-barres d'un produit : halal, douteux ou haram, avec les ingrédients expliqués." />
+  <meta property="og:title" content="Scanner un code-barres halal — sans compte" />
+  <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-09T01:10:38+00:00" />
+  <meta name="last-modified" content="2026-08-09T01:11:13+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -370,6 +370,16 @@
     }
 
     /* ---- Verdict vérifié (certitude) vs analyse indicative ---- */
+    .badge-hors-ligne {
+      display: block;
+      background: rgba(27, 67, 50, 0.08);
+      border: 1px solid rgba(27, 67, 50, 0.2);
+      color: var(--foret);
+      font-size: 13px; font-weight: 700;
+      padding: 10px 14px; border-radius: 14px;
+      margin-top: 16px;
+      text-align: center;
+    }
     .badge-type {
       display: inline-block;
       background: rgba(27, 67, 50, 0.10);
@@ -611,7 +621,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-09T01:10:38+00:00"
+      "dateModified": "2026-08-09T01:11:13+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -690,6 +700,7 @@
       <div id="produit-image-absente" class="image-absente" hidden><span class="monogramme">✦</span></div>
       <h1 id="produit-nom"></h1>
       <p id="produit-marque"></p>
+      <div id="badge-hors-ligne" class="badge-hors-ligne" hidden>📴 Hors connexion — fiche gardée en mémoire sur cet appareil</div>
       <div id="badge-type" class="badge-type" hidden>🧴 Cosmétique · usage externe</div>
       <div id="label-indicatif" hidden>Analyse automatique · à titre indicatif</div>
       <div class="verdict" id="verdict">
@@ -829,6 +840,7 @@
     let torcheAllumee = false;
     let codeEnCours = null;
     let dernierResultat = null;
+    let servieDeMemoire = false;
 
     function montrer(ecran) {
       for (const id of ECRANS) $(id).hidden = id !== ecran;
@@ -1032,8 +1044,27 @@
 
     // On ne se fie pas au champ "status" (son format varie selon les versions
     // de l'API) : un produit est trouvé si l'objet product est présent et rempli.
+    // En rayon, le réseau n'est pas absent : il est lent. Une requête qui
+    // traîne dix secondes est pire qu'un échec immédiat — on coupe court et
+    // on répond avec ce qu'on sait déjà.
+    const DELAI_RESEAU = 4000;
+
+    function horsLigne() {
+      return typeof navigator !== "undefined" && navigator.onLine === false;
+    }
+
+    async function fetchCourt(url, options) {
+      const controleur = new AbortController();
+      const minuteur = setTimeout(() => controleur.abort(), DELAI_RESEAU);
+      try {
+        return await fetch(url, Object.assign({}, options, { signal: controleur.signal }));
+      } finally {
+        clearTimeout(minuteur);
+      }
+    }
+
     async function requeteProduit(url) {
-      const reponse = await fetch(url, { headers: { Accept: "application/json" } });
+      const reponse = await fetchCourt(url, { headers: { Accept: "application/json" } });
       if (reponse.status === 404) return null;
       if (!reponse.ok) throw new Error("HTTP " + reponse.status);
       const json = await reponse.json();
@@ -1351,19 +1382,25 @@
       // réseau. La fiche est ensuite rafraîchie en silence pour la suite.
       const enCache = lireCacheProduit(code);
       if (enCache) {
+        servieDeMemoire = horsLigne();
         afficherResultat(enCache, verif);
-        rafraichirEnSilence(code);
+        if (!horsLigne()) rafraichirEnSilence(code);
         return;
       }
+      servieDeMemoire = false;
 
       $("texte-chargement").textContent = "Analyse en cours…";
       montrer("ecran-chargement");
       let produit = null;
       let erreurReseau = false;
-      try {
-        produit = await chercherProduit(code);
-      } catch (e) {
-        erreurReseau = true;
+      if (horsLigne()) {
+        erreurReseau = true; // inutile d'attendre : on passe à nos propres bases
+      } else {
+        try {
+          produit = await chercherProduit(code);
+        } catch (e) {
+          erreurReseau = true;
+        }
       }
       // Repli sur notre base locale (fonctionne aussi hors-ligne).
       if (!produit) produit = produitLocal(code);
@@ -1371,7 +1408,14 @@
       // ne connaît pas le produit (utile pour les produits locaux non référencés).
       if (!produit && !verif) {
         if (erreurReseau) {
-          montrerErreur("📡", "Pas de connexion", "Vérifie ton réseau et réessaie.", "Réessayer", () => traiterCode(codeEnCours));
+          montrerErreur(
+            "📡",
+            horsLigne() ? "Hors connexion" : "Réseau indisponible",
+            "Ce produit n'a jamais été scanné sur cet appareil, il n'y a donc rien en mémoire à te montrer.\n\nLes produits déjà scannés, eux, restent consultables sans réseau.\n\nCode scanné : " + code,
+            "Réessayer",
+            () => traiterCode(codeEnCours),
+            { libelle: "Voir mes produits déjà scannés", action: relancerScan }
+          );
         } else {
           montrerErreur(
             "🔍",
@@ -1503,6 +1547,29 @@
       return carte;
     }
 
+    // Hors connexion, les seules alternatives honnêtes sont les produits déjà
+    // vus sur cet appareil : on ne suggère jamais un produit qu'on n'a pas
+    // réellement analysé.
+    function alternativesDepuisCache(produit, categorie) {
+      const cache = lireCacheProduits();
+      const propositions = [];
+      for (const cle of Object.keys(cache)) {
+        const candidat = cache[cle] && cache[cle].produit;
+        if (!candidat || !candidat.ingredientsTexte) continue;
+        if (String(candidat.code) === String(produit.code)) continue;
+        if (!!candidat.cosmetique !== !!produit.cosmetique) continue;
+        const cats = candidat.categories || [];
+        if (categorie && !cats.includes(categorie)) continue;
+        const verif = chercherVerification(candidat.code);
+        const statut = verif ? verif.statut : analyserSelonType(candidat).statut;
+        if (statut !== "halal") continue;
+        propositions.push({ produit: candidat, statut, verif });
+        if (propositions.length >= 4) break;
+      }
+      propositions.sort((a, b) => (b.verif ? 1 : 0) - (a.verif ? 1 : 0));
+      return propositions;
+    }
+
     // On part de la catégorie la plus précise (la dernière de la liste OFF).
     function categoriePertinente(categories) {
       const utiles = (categories || []).filter(
@@ -1528,6 +1595,21 @@
       liste.appendChild(attente);
 
       let candidats = [];
+      // Sans réseau, on puise dans les produits déjà scannés sur l'appareil.
+      if (horsLigne()) {
+        const propositions = alternativesDepuisCache(produit, categorie);
+        liste.innerHTML = "";
+        if (propositions.length === 0) {
+          bloc.hidden = true;
+          return;
+        }
+        $("sous-alternatives").textContent =
+          "Hors connexion : proposés parmi les produits que tu as déjà scannés.";
+        for (const item of propositions) {
+          liste.appendChild(carteProduit(item.produit, item.statut, item.verif));
+        }
+        return;
+      }
       try {
         const base = produit.cosmetique
           ? "https://world.openbeautyfacts.org"
@@ -1536,7 +1618,7 @@
           base + "/api/v2/search?categories_tags=" +
           encodeURIComponent(categorie) +
           "&page_size=40&sort_by=unique_scans_n&fields=" + CHAMPS_RECHERCHE;
-        const reponse = await fetch(url, { headers: { Accept: "application/json" } });
+        const reponse = await fetchCourt(url, { headers: { Accept: "application/json" } });
         if (!reponse.ok) throw new Error("HTTP " + reponse.status);
         const json = await reponse.json();
         candidats = Array.isArray(json.products) ? json.products : [];
@@ -1877,6 +1959,7 @@
         marque && marque.trim().toLowerCase() !== nomAffiche.trim().toLowerCase();
       $("produit-marque").textContent = marqueUtile ? marque : "";
       $("badge-type").hidden = !(produit && produit.cosmetique);
+      $("badge-hors-ligne").hidden = !servieDeMemoire;
 
       let statutFinal;
 
@@ -2457,7 +2540,7 @@
       let erreurReseau = false;
       for (const url of urls) {
         try {
-          const reponse = await fetch(url, { headers: { Accept: "application/json" } });
+          const reponse = await fetchCourt(url, { headers: { Accept: "application/json" } });
           if (!reponse.ok) throw new Error("HTTP " + reponse.status);
           const json = await reponse.json();
           const bruts = Array.isArray(json.products) ? json.products : [];
