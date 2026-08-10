@@ -11,7 +11,9 @@
     "test:moteur": "node scripts/test-moteur.cjs",
     "build:site": "tsc lib/halal.ts lib/cosmetiques.ts --outDir site --module es2015 --target es2019 --moduleResolution node --skipLibCheck",
     "build:additifs": "node scripts/page-additifs.mjs",
-    "seo:dates": "node scripts/dates-seo.mjs"
+    "seo:dates": "node scripts/dates-seo.mjs",
+    "sonde:faux-negatifs": "node scripts/sonde-faux-negatifs.mjs",
+    "sonde:faux-positifs": "node scripts/sonde-faux-positifs.mjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",

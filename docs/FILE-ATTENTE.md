@@ -39,14 +39,62 @@ une explication honnête, jamais un verdict inventé.
    *Preuve :* `curl` vers `world.openfoodfacts.org` rend le code 000 en 0,45 s —
    bloqué par le proxy réseau. Conséquence : **aucun agent ne peut tester le
    moteur sur des produits réels.** Les 56 additifs et 26 règles cosmétiques ne
-   sont validés que par 17 tests écrits à la main. On ne sait pas quel
+   sont validés que par 33 tests écrits à la main. On ne sait toujours pas quel
    pourcentage des produits réels tombe en « inconnu ».
    *Piste :* constituer un jeu de fiches réelles figées dans le dépôt, capturées
    une fois depuis le navigateur de Mohamed, pour tester hors ligne.
 
+4. **Le moteur cosmétique n'a jamais été sondé pour ses faux négatifs.**
+   *Preuve :* le même exercice mené le 10 août sur le moteur alimentaire a
+   trouvé **22 mentions d'étiquette sur 22 non détectées** — dont tous les
+   codes E écrits en toutes lettres. Les 26 règles INCI n'ont subi aucun test
+   équivalent ; rien ne dit qu'elles s'en tirent mieux.
+   *Méthode, déjà écrite :* `sonde2.mjs` du bloc-notes — une liste de mentions
+   réellement imprimées sur des flacons, passées au moteur, et on compte celles
+   qui ressortent sans alerte. Puis la sonde inverse, sur des compositions
+   banales, pour vérifier qu'on n'a pas introduit de faux positifs.
+
 ---
 
 ## Fait
+
+- **Le moteur laissait passer des étiquettes entières** *(10 août)* — sonde de
+  faux négatifs sur des mentions réellement imprimées sur des emballages. C'est
+  le seul défaut qui détruit ce produit : un « douteux » de trop agace, un
+  « halal » de trop fait manger du haram.
+
+  | Sonde | Avant | Après |
+  |---|---|---|
+  | Codes E écrits dans le **texte** de la composition | **0 / 8** détectés | **8 / 8** |
+  | Mots d'étiquette hors codes E | **0 / 14** | **14 / 14** |
+  | Compositions banales devant rester halal | — | **15 / 15**, 0 faux positif |
+
+  Le cas grave était le premier. Les codes E n'arrivaient que par le champ
+  `additives_tags` d'Open Food Facts — souvent vide sur les produits du Maghreb,
+  et **inexistant quand l'étiquette est lue en photo**. Un produit marocain
+  transcrit depuis une photo dont l'étiquette dit « émulsifiant E471 »
+  ressortait donc **halal**. Exactement le public pour lequel le produit a été
+  construit.
+
+  Ajouté ensuite : porto, sherry, xérès, madère, vermouth, saké, cidre
+  (la règle alcool ne connaissait que vin, bière, rhum, whisky) ; `rennet`,
+  `tallow`, `carmine`, `shortening` (mots anglais des étiquettes importées) ;
+  pepsine, pancréatine, lipase, trypsine ; gomme laque ; collagène et élastine,
+  déjà couverts côté cosmétiques mais pas côté alimentaire ; glycérine.
+
+  **Garde-fous, car un faux positif use la confiance lui aussi :**
+  « Vitamine E 400 UI » ne doit pas se lire comme l'additif E400 ; « glycérine
+  végétale », « lipase microbienne » et « présure microbienne » annoncent leur
+  origine et restent halal. Les trois sont testés.
+
+  Tests du moteur : **17 → 33**, tous verts. Règles publiées : 94 → 98.
+  Vérifié aussi qu'un code présent à la fois dans le texte et dans les additifs
+  ne produit qu'une seule alerte.
+
+  *Note de méthode :* ma première sonde annonçait 23 défauts sur 42. Elle était
+  fausse — elle passait les codes E par le mauvais canal. Refaite proprement,
+  elle a séparé 8 vrais défauts d'artefacts de mesure. **Quand une mesure rend
+  un chiffre spectaculaire, on la refait avant d'y croire.**
 
 - **Les liens d'action étaient trop petits au doigt** *(10 août)* — mesuré sur
   un écran de 320 px, sur les liens d'action autonomes uniquement (boutons et

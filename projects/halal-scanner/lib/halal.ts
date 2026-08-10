@@ -78,6 +78,7 @@ export const ADDITIFS_A_RISQUE: Record<string, InfosAdditif> = {
     niveau: "douteux",
     nom: "E422 — Glycérol",
     raison: "Origine végétale ou animale (parfois porcine) non précisée.",
+    famille: "glycerol",
   },
   e441: {
     niveau: "haram",
@@ -150,6 +151,7 @@ export const ADDITIFS_A_RISQUE: Record<string, InfosAdditif> = {
   e635: { niveau: "douteux", nom: "E635 — Ribonucléotides", raison: "Exhausteur — origine animale possible." },
   e640: { niveau: "douteux", nom: "E640 — Glycine", raison: "Origine animale possible." },
   e904: {
+    famille: "shellac",
     niveau: "douteux",
     nom: "E904 — Gomme-laque (shellac)",
     raison: "Résine sécrétée par un insecte — avis divergents.",
@@ -198,7 +200,7 @@ export const REGLES_HARAM: RegleTexte[] = [
     raison: "Présence d'alcool dans la composition.",
   },
   {
-    motif: /\bvins?\b|\bbieres?\b|\brhum\b|\bwhisky\b|liqueur|cognac|marsala|calvados|kirsch|grand marnier/,
+    motif: /\bvins?\b|\bbieres?\b|\brhum\b|\bwhisky\b|liqueur|cognac|marsala|calvados|kirsch|grand marnier|\bporto\b|\bsherry\b|\bxeres\b|\bmadere\b|vermouth|\bsake\b|\bcidre\b/,
     element: "Alcool (vin / spiritueux)",
     raison: "Boisson alcoolisée utilisée comme ingrédient.",
   },
@@ -212,7 +214,7 @@ export const REGLES_DOUTEUX: RegleTexte[] = [
     famille: "gelatine",
   },
   {
-    motif: /presure/,
+    motif: /presure|\brennet\b/,
     element: "Présure",
     raison: "Coagulant souvent d'origine animale (fromages) — origine à vérifier.",
   },
@@ -222,7 +224,7 @@ export const REGLES_DOUTEUX: RegleTexte[] = [
     raison: "Origine de la viande et abattage à vérifier (souvent porc).",
   },
   {
-    motif: /graisses? animales?|gras animal|\bsuif\b|graisses? d'origine animale/,
+    motif: /graisses? animales?|gras animal|\bsuif\b|graisses? d'origine animale|\btallow\b|\bshortening\b/,
     element: "Graisse animale",
     raison: "Origine et abattage non vérifiables.",
   },
@@ -233,10 +235,35 @@ export const REGLES_DOUTEUX: RegleTexte[] = [
     famille: "monoglycerides",
   },
   {
-    motif: /\bcarmin\b|cochenille/,
+    motif: /\bcarmins?\b|\bcarmine\b|cochenille|carminic/,
     element: "Carmin (cochenille)",
     raison: "Colorant issu d'insectes — majoritairement considéré non halal.",
     famille: "carmin",
+  },
+  {
+    motif: /\bpepsine\b|\bpancreatine\b|\blipases?\b|\btrypsine\b/,
+    element: "Enzyme d'origine possiblement animale",
+    raison:
+      "Pepsine, pancréatine et lipase sont souvent extraites d'estomac ou de pancréas ; il en existe aussi des versions microbiennes. L'étiquette ne le précise pas.",
+    famille: "enzymes-animales",
+  },
+  {
+    motif: /gomme[- ]laque|\bshellac\b/,
+    element: "Gomme laque (shellac)",
+    raison: "Résine sécrétée par un insecte, utilisée pour lustrer. Même substance que l'additif E904.",
+    famille: "shellac",
+  },
+  {
+    motif: /\bcollagene\b|\belastine\b/,
+    element: "Collagène / élastine",
+    raison: "Protéines extraites de peau, d'os ou de tissus animaux — espèce et abattage non précisés.",
+    famille: "collagene",
+  },
+  {
+    motif: /\bglycerines?\b/,
+    element: "Glycérine",
+    raison: "Origine végétale ou animale (parfois porcine) non précisée. Même substance que l'additif E422.",
+    famille: "glycerol",
   },
   {
     motif: /l[- ]?cysteine/,
@@ -265,7 +292,36 @@ function normaliser(texte: string): string {
   t = t.replace(/vinaigre de vin/g, "vinaigre");
   t = t.replace(/sans alcool/g, "");
   t = t.replace(/sans porc/g, "");
+  // Origine explicitement annoncee : le doute n'a plus lieu d'etre.
+  // Le texte de remplacement ne doit surtout pas contenir « glycerine », sinon
+  // la regle qui suit le retrouve et le garde-fou ne sert a rien.
+  t = t.replace(/glycerines? vegetales?|glycerols? vegetals?|glycerine d'origine vegetale/g, " corps gras vegetal ");
+  t = t.replace(/lipase microbienne|enzyme microbienne|presure microbienne/g, " enzyme microbienne ");
   return t;
+}
+
+/**
+ * Récupère les codes E écrits en toutes lettres dans la composition.
+ *
+ * Pourquoi c'est indispensable : les codes ne nous arrivent normalement que par
+ * le champ `additives_tags` d'Open Food Facts. Or il est souvent vide sur les
+ * produits du Maghreb et des épiceries — précisément notre public — et il
+ * n'existe pas du tout quand l'étiquette est lue en photo : on n'a alors que du
+ * texte. Sans cette lecture, « émulsifiant E471 » ressortait **halal**.
+ *
+ * Le garde-fou « vitamine » n'est pas décoratif : « Vitamine E 400 UI » se lit
+ * sinon comme l'additif E400.
+ */
+function codesEDuTexte(texte: string): string[] {
+  const trouves = new Set<string>();
+  const motif = /\be\s?(\d{3,4})\s?([a-z])?\b/gi;
+  let m: RegExpExecArray | null;
+  while ((m = motif.exec(texte)) !== null) {
+    const avant = texte.slice(Math.max(0, m.index - 10), m.index);
+    if (/vitamine\s*$/i.test(avant)) continue;
+    trouves.add("e" + m[1] + (m[2] ? m[2].toLowerCase() : ""));
+  }
+  return [...trouves];
 }
 
 export function analyserProduit(entree: {
@@ -279,7 +335,14 @@ export function analyserProduit(entree: {
 
   const alertes: Alerte[] = [];
 
-  for (const tag of entree.additifs ?? []) {
+  const texte = normaliser(entree.ingredientsTexte ?? "");
+
+  // Les codes déclarés par la base ET ceux écrits dans la composition. Le
+  // dédoublonnage par famille, plus bas, empêche la double alerte quand les
+  // deux sources désignent la même substance.
+  const codes = [...(entree.additifs ?? []), ...codesEDuTexte(texte)];
+
+  for (const tag of codes) {
     const code = tag.replace(/^[a-z]{2,3}:/i, "").toLowerCase();
     const infos = ADDITIFS_A_RISQUE[code];
     if (infos) {
@@ -292,7 +355,6 @@ export function analyserProduit(entree: {
     }
   }
 
-  const texte = normaliser(entree.ingredientsTexte ?? "");
   if (texte.trim().length > 0) {
     for (const regle of [...REGLES_HARAM.map((r) => ({ ...r, niveau: "haram" as const })), ...REGLES_DOUTEUX.map((r) => ({ ...r, niveau: "douteux" as const }))]) {
       if (regle.motif.test(texte)) {

@@ -35,6 +35,30 @@ const cas = [
   ["E433 — polysorbate", { ingredientsTexte: "eau, sucre", additifs: ["en:e433"] }, "douteux", 1],
   ["Lactates E325+E326 → une seule alerte (même famille)", { ingredientsTexte: "eau", additifs: ["en:e325", "en:e326"] }, "douteux", 1],
   ["Additif non répertorié (E330) reste halal", { ingredientsTexte: "eau, sucre", additifs: ["en:e330"] }, "halal", 0],
+
+  // --- Codes E ECRITS DANS LE TEXTE (10 août) ---------------------------------
+  // Sans cette lecture, un produit du Maghreb transcrit depuis une photo — donc
+  // sans champ « additifs » — ressortait halal alors que son étiquette dit E471.
+  ["E471 écrit dans le texte", { ingredientsTexte: "farine, sucre, émulsifiant E471", additifs: [] }, "douteux", 1],
+  ["E441 écrit dans le texte", { ingredientsTexte: "eau, sucre, gélifiant E441", additifs: [] }, "haram", 1],
+  ["E 471 avec une espace", { ingredientsTexte: "farine, émulsifiant E 471", additifs: [] }, "douteux", 1],
+  ["E472e avec sa lettre", { ingredientsTexte: "farine, E472e, sel", additifs: [] }, "douteux", 1],
+  ["Code dans le texte ET dans les additifs : une seule alerte", { ingredientsTexte: "sucre, E471", additifs: ["en:e471"] }, "douteux", 1],
+  ["« Vitamine E 400 » n'est pas l'additif E400", { ingredientsTexte: "huile, Vitamine E 400 UI", additifs: [] }, "halal", 0],
+
+  // --- MOTS D'ETIQUETTE ajoutés le 10 août ------------------------------------
+  ["Porto (vin muté)", { ingredientsTexte: "sauce, porto, échalotes", additifs: [] }, "haram", 1],
+  ["Rennet (présure en anglais)", { ingredientsTexte: "milk, salt, rennet", additifs: [] }, "douteux", 1],
+  ["Tallow (suif en anglais)", { ingredientsTexte: "flour, tallow, salt", additifs: [] }, "douteux", 1],
+  ["Carmine (orthographe anglaise)", { ingredientsTexte: "sugar, carmine, water", additifs: [] }, "douteux", 1],
+  ["Pepsine (enzyme animale)", { ingredientsTexte: "lait, pepsine, sel", additifs: [] }, "douteux", 1],
+  ["Gomme laque et E904 : une seule alerte", { ingredientsTexte: "sucre, gomme laque", additifs: ["en:e904"] }, "douteux", 1],
+  ["Glycérine et E422 : une seule alerte", { ingredientsTexte: "eau, glycérine", additifs: ["en:e422"] }, "douteux", 1],
+
+  // --- GARDE-FOUS : une origine annoncée lève le doute ------------------------
+  ["Glycérine végétale reste halal", { ingredientsTexte: "eau, glycérine végétale, parfum", additifs: [] }, "halal", 0],
+  ["Lipase microbienne reste halal", { ingredientsTexte: "lait, lipase microbienne, sel", additifs: [] }, "halal", 0],
+  ["Présure microbienne reste halal", { ingredientsTexte: "lait, présure microbienne", additifs: [] }, "halal", 0],
 ];
 
 let echecs = 0;
