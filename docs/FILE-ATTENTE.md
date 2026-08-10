@@ -38,25 +38,47 @@ une explication honnête, jamais un verdict inventé.
 3. **Open Food Facts est injoignable depuis l'atelier.**
    *Preuve :* `curl` vers `world.openfoodfacts.org` rend le code 000 en 0,45 s —
    bloqué par le proxy réseau. Conséquence : **aucun agent ne peut tester le
-   moteur sur des produits réels.** Les 56 additifs et 26 règles cosmétiques ne
-   sont validés que par 33 tests écrits à la main. On ne sait toujours pas quel
+   moteur sur des produits réels.** Les 56 additifs et 29 règles cosmétiques ne
+   sont validés que par 51 tests écrits à la main — écrits par nous, donc ils ne
+   couvrent que ce à quoi nous avons pensé. On ne sait toujours pas quel
    pourcentage des produits réels tombe en « inconnu ».
    *Piste :* constituer un jeu de fiches réelles figées dans le dépôt, capturées
    une fois depuis le navigateur de Mohamed, pour tester hors ligne.
 
-4. **Le moteur cosmétique n'a jamais été sondé pour ses faux négatifs.**
-   *Preuve :* le même exercice mené le 10 août sur le moteur alimentaire a
-   trouvé **22 mentions d'étiquette sur 22 non détectées** — dont tous les
-   codes E écrits en toutes lettres. Les 26 règles INCI n'ont subi aucun test
-   équivalent ; rien ne dit qu'elles s'en tirent mieux.
-   *Méthode, déjà écrite :* `sonde2.mjs` du bloc-notes — une liste de mentions
-   réellement imprimées sur des flacons, passées au moteur, et on compte celles
-   qui ressortent sans alerte. Puis la sonde inverse, sur des compositions
-   banales, pour vérifier qu'on n'a pas introduit de faux positifs.
-
 ---
 
 ## Fait
+
+- **Le moteur cosmétique n'avait aucun test, et trois trous** *(10 août)* —
+  même sonde que sur l'alimentaire, sur 30 mentions INCI réellement imprimées
+  au dos de flacons.
+
+  | Sonde | Avant | Après |
+  |---|---|---|
+  | Mentions animales devant alerter | **27 / 30** | **30 / 30** |
+  | Mentions banales devant rester muettes | 10 / 10 | **10 / 10** |
+
+  Manquaient : la bave d'escargot (*Snail Secretion Filtrate*), le castoréum
+  et les sécrétions de parfumerie (civette, musc, ambre gris), et le rétinol.
+  Ce dernier est ajouté en **doute mineur** — il est obtenu par synthèse dans la
+  quasi-totalité des cosmétiques ; l'annoncer comme un vrai doute aurait fait du
+  bruit sur un ingrédient très courant, ce qui use la confiance autant qu'un
+  oubli.
+
+  **Le vrai sujet était ailleurs : ce moteur n'avait AUCUN test.** La suite ne
+  compilait que `lib/halal.ts`. Trois règles venaient d'y être ajoutées sur un
+  moteur que rien ne protégeait. 18 cas ajoutés, dont les cinq qui gardent le
+  piège central du produit : *Cetyl*, *Cetearyl*, *Stearyl* et *Behenyl
+  Alcohol* sont des CIRES et ne doivent jamais être signalées comme de
+  l'alcool — c'est ce qui nous sépare des applications concurrentes.
+  Tests du moteur : **33 → 51**. Règles publiées : 98 → 101.
+
+  *Note de méthode :* la sonde a d'abord annoncé **10 faux positifs sur 10**,
+  jusqu'à « Sodium Chloride ». C'était l'instrument : son décor de test
+  contenait « Glycerin », que le moteur signale à juste titre. Le décor est
+  désormais vérifié par la suite elle-même — elle refuse de tourner s'il alerte
+  tout seul. Deuxième fois en deux cycles qu'une sonde ment ; la compétence
+  `soupconner-l-instrument` a exactement raison.
 
 - **Le moteur laissait passer des étiquettes entières** *(10 août)* — sonde de
   faux négatifs sur des mentions réellement imprimées sur des emballages. C'est

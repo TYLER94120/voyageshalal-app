@@ -125,6 +125,31 @@ export const REGLES_DOUTEUSES: RegleInci[] = [
     famille: "lanoline",
   },
   {
+    motif: /snail secretion|helix aspersa|\bmucin\b|bave d'escargot/,
+    element: "Bave d'escargot (Snail Secretion Filtrate)",
+    niveau: "douteux",
+    raison:
+      "Sécrétion prélevée sur un animal vivant. Les avis divergent : certains l'assimilent à un produit d'animal non abattu, d'autres l'écartent car l'escargot n'est pas consommable.",
+    famille: "escargot",
+  },
+  {
+    motif: /\bcastoreum\b|\bcivette?\b|\bmusk\b|\bmusc\b|\bambergris\b|ambre gris/,
+    element: "Sécrétion animale de parfumerie",
+    niveau: "douteux",
+    raison:
+      "Castoréum, civette, musc et ambre gris sont prélevés sur des animaux. Les versions de synthèse sont aujourd'hui majoritaires, mais l'étiquette ne le précise pas.",
+    famille: "secretions-parfumerie",
+  },
+  {
+    motif: /\bretinols?\b|rétinol|retinyl palmitate/,
+    element: "Rétinol",
+    niveau: "douteux",
+    raison:
+      "Obtenu par synthèse dans la quasi-totalité des cosmétiques ; historiquement extrait de foie animal. Le doute est théorique.",
+    gravite: "faible",
+    famille: "retinol",
+  },
+  {
     motif: /\bcholesterol\b|cholestérol|cholesteryl/,
     element: "Cholestérol",
     niveau: "douteux",

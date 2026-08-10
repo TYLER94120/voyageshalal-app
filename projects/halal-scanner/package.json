@@ -13,7 +13,8 @@
     "build:additifs": "node scripts/page-additifs.mjs",
     "seo:dates": "node scripts/dates-seo.mjs",
     "sonde:faux-negatifs": "node scripts/sonde-faux-negatifs.mjs",
-    "sonde:faux-positifs": "node scripts/sonde-faux-positifs.mjs"
+    "sonde:faux-positifs": "node scripts/sonde-faux-positifs.mjs",
+    "sonde:cosmetiques": "node scripts/sonde-cosmetiques.mjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
