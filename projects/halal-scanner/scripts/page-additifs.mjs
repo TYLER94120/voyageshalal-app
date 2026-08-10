@@ -514,8 +514,8 @@ ${sections.map((s) => s.html).join("\n\n")}
     <p>HalalCheck ✓ — <a href="./index.html">Accueil</a> · <a href="./scan.html">Scanner</a> · <a href="./mentions-legales.html">Méthode</a></p>
     <p style="margin-top:10px">
       <a href="https://halalgpt.fr?${UTM}">🌙 HalalGPT</a>
-      <a href="https://www.voyageshalal.fr">🗺 VoyagesHalal</a>
-      <a href="https://www.gohalaltravel.com">🌍 GoHalalTravel</a>
+      <a href="https://www.voyageshalal.fr?${UTM}">🗺 VoyagesHalal</a>
+      <a href="https://www.gohalaltravel.com?${UTM}">🌍 GoHalalTravel</a>
     </p>
   </footer>
 
