@@ -249,14 +249,58 @@ Une skill qui ne connait pas ses trous ment. Dans HalalCheck, sans reseau :
 - **l'annuaire des fiches d'additifs** de HalalGPT n'est pas joignable, donc les
   liens « Comprendre le E471 » pointent vers une page qui ne s'ouvrira pas.
 
-Et un manque connu, pas encore traite : le service worker fait bien
-`fetch(requete)` en reseau d'abord, **sans delai maximum**. Sur un reseau tres
-lent, le chargement de la page elle-meme peut donc trainer, meme si le scan qui
-suit est protege. Le correctif est le meme `AbortController` a l'interieur du
-service worker.
-
 Dire ces trois choses vaut mieux que promettre un « mode hors ligne » complet qui
 decevrait au premier essai.
+
+### Le meme piege se cache DANS le service worker
+
+Cette section annoncait un manque connu : le service worker faisait
+`fetch(requete)` en reseau d'abord, sans delai maximum. **Corrige le 10 aout,
+et la mesure valait la peine :**
+
+| Reseau retarde de 20 s | Temps avant affichage de la page |
+|---|---|
+| Avant | **20,1 s** |
+| Apres | **4,1 s** |
+
+La page etait pourtant **deja dans le cache**. Proteger le scan ne suffit pas si
+le chargement de la page qui le contient reste otage du reseau.
+
+Le remede n'est pas un `AbortController` : couper la requete ferait perdre la
+mise a jour. C'est une **course entre le reseau et un minuteur**, ou la copie
+en cache gagne si le reseau tarde, pendant que la requete continue en
+arriere-plan et rafraichit le cache pour la fois suivante :
+
+```js
+function reseauDAbordAvecDelai(requete) {
+  const reseau = fetch(requete).then((r) => {
+    const copie = r.clone();
+    caches.open(CACHE).then((c) => c.put(requete, copie));
+    return r;
+  });
+  return caches.match(requete).then((enCache) => {
+    // Sans copie locale, on attend le reseau quel qu'en soit le temps :
+    // rien a servir vaut moins qu'une attente.
+    if (!enCache) return reseau.catch(() => Response.error());
+    return new Promise((resoudre) => {
+      let repondu = false;
+      const une = (r) => { if (!repondu) { repondu = true; resoudre(r); } };
+      const t = setTimeout(() => une(enCache.clone()), DELAI_RESEAU);
+      reseau.then((r) => { clearTimeout(t); une(r); },
+                  () => { clearTimeout(t); une(enCache.clone()); });
+    });
+  });
+}
+```
+
+Le `enCache.clone()` n'est pas un detail : une reponse ne se consomme qu'une
+fois, et les deux branches peuvent la servir.
+
+Quatre cas verifies apres correction, et il faut les quatre : reseau normal
+0,1 s (aucune penalite), reseau lent 4,1 s, reseau coupe avec page en cache
+0,1 s, et **premiere visite sans cache** — on attend toujours le reseau, ce qui
+est le comportement voulu. Ne tester que le cas lent aurait laisse passer une
+regression sur les trois autres.
 
 ## Comment le verifier
 

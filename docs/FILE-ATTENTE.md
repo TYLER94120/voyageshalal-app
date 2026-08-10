@@ -35,17 +35,7 @@ une explication honnête, jamais un verdict inventé.
    *Ce qu'il faut :* des codes-barres marocains avec photo des ingrédients, ou
    une réponse écrite de fabricant. Demandé à Mohamed, pas encore reçu.
 
-3. **Le service worker n'a aucun délai maximum.**
-   *Preuve :* `sw.js` fait `fetch(requete)` en réseau d'abord pour les pages
-   HTML et les bases JSON, sans `AbortController`. Le scan lui-même est protégé
-   depuis le 10 août (4 s), mais **le chargement de la page ne l'est pas** : sur
-   un réseau lent en rayon, la page peut traîner avant même que le scanner
-   démarre. Défaut documenté dans ma propre compétence
-   `repondre-en-conditions-degradees`, section « ce qui ne marche pas encore ».
-   *Mesure attendue :* temps d'affichage de scan.html avec le réseau retardé de
-   20 s, avant et après.
-
-4. **Le seul `h1` non vide de scan.html décrit une fonction secondaire.**
+3. **Le seul `h1` non vide de scan.html décrit une fonction secondaire.**
    *Preuve :* trois `h1` dans le document (lignes 705, 767, 816). Deux sont
    vides au chargement — remplis par JavaScript. Le seul qui porte du texte est
    « Lire l'étiquette en photo », qui n'est pas ce que la page fait. C'est ce
@@ -53,7 +43,7 @@ une explication honnête, jamais un verdict inventé.
    *À mesurer d'abord :* ce que le robot voit réellement après rendu, pas ce que
    le HTML contient. Ne pas corriger avant d'avoir ce chiffre.
 
-5. **Open Food Facts est injoignable depuis l'atelier.**
+4. **Open Food Facts est injoignable depuis l'atelier.**
    *Preuve :* `curl` vers `world.openfoodfacts.org` rend le code 000 en 0,45 s —
    bloqué par le proxy réseau. Conséquence : **aucun agent ne peut tester le
    moteur sur des produits réels.** Les 56 additifs et 26 règles cosmétiques ne
@@ -62,7 +52,7 @@ une explication honnête, jamais un verdict inventé.
    *Piste :* constituer un jeu de fiches réelles figées dans le dépôt, capturées
    une fois depuis le navigateur de Mohamed, pour tester hors ligne.
 
-6. **Les liens « Comprendre le E471 » sont trop petits au doigt.**
+5. **Les liens « Comprendre le E471 » sont trop petits au doigt.**
    *Preuve :* mesurés à 30 px de haut sur un écran de 320 px, sous les 44 px
    recommandés. Il y en a 57 sur `additifs.html`, et ce sont eux qui portent la
    passerelle vers HalalGPT — donc les rater coûte deux fois.
@@ -70,6 +60,19 @@ une explication honnête, jamais un verdict inventé.
 ---
 
 ## Fait
+
+- **Le service worker attendait le réseau sans limite** *(10 août)* — les pages
+  HTML et les bases JSON étaient servies « réseau d'abord » avec un `fetch` sans
+  délai maximum. Une page pourtant **présente dans le cache** restait invisible
+  tant que le réseau n'avait pas répondu : exactement la situation du rayon de
+  supermarché, où le réseau n'est pas coupé mais lent.
+  **Mesure, réseau retardé de 20 s : 20,1 s → 4,1 s avant affichage.**
+  Les trois autres cas vérifiés sans régression : réseau normal 0,1 s, réseau
+  coupé avec page en cache 0,1 s, et première visite sans cache — on continue
+  d'attendre le réseau quel qu'en soit le temps, puisqu'il n'y a rien à servir.
+  La requête n'est pas annulée : elle continue en arrière-plan et met le cache à
+  jour pour la fois suivante. Trou que ma propre compétence
+  `repondre-en-conditions-degradees` documentait comme non traité ; il l'est.
 
 - **Le débordement horizontal du scanner** *(10 août)* — sur un écran de 320 px,
   le bouton « Chercher » sortait de 64 px et toute la page défilait
@@ -98,7 +101,7 @@ autant de temps que de les trouver :
 - **« 3 h1 sur scan.html »** — c'est une application à écrans multiples : les
   trois `h1` appartiennent à trois écrans dont un seul est visible à la fois.
   Ce n'est pas une faute de structure. Il en reste un vrai sujet, plus étroit,
-  gardé en file sous le point 4.
+  gardé en file sous le point 3.
 - **« un lien vide sans aria-label »** — `#cta-verifier` est `hidden` et rempli
   par JavaScript au moment où il sert. Aucun utilisateur ne le rencontre vide.
 
