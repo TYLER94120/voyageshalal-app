@@ -216,6 +216,7 @@
       display: flex; gap: 10px 28px; justify-content: center; flex-wrap: wrap;
       font-size: 15px; font-weight: 600;
     }
+    .bande a { color: var(--or); text-decoration: none; border-bottom: 1px solid rgba(201, 168, 76, 0.45); }
 
     section.bloc { max-width: 1080px; margin: 0 auto; padding: 64px 24px; }
     .bloc h2 { font-size: clamp(28px, 4.5vw, 38px); font-weight: 800; margin-bottom: 28px; }
@@ -399,7 +400,7 @@
           "name": "Qui décide de ce qui est halal ou haram ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Personne chez nous ne « décide » : l'app applique des règles documentées (porc, alcool, gélatine, additifs d'origine animale…) et cite l'ingrédient exact pour que tu puisses juger en connaissance de cause, selon ton école et ton exigence."
+            "text": "Personne chez nous ne « décide » : l'app applique des règles documentées (porc, alcool, gélatine, additifs d'origine animale…) et cite l'ingrédient exact pour que tu puisses juger en connaissance de cause, selon ton école et ton exigence. Ces règles sont publiques : la liste complète des 56 additifs surveillés et des ingrédients repérés est consultable sur la page « Ce que le scanner surveille »."
           }
         },
         {
@@ -465,7 +466,7 @@
     <span>🧴 Alimentaire et cosmétiques</span>
     <span>📷 Étiquette lue en photo</span>
     <span>🔎 Recherche par nom</span>
-    <span>🔬 30+ additifs expliqués</span>
+    <span>🔬 <a href="./additifs.html">56 additifs surveillés</a></span>
     <span>🆓 100 % gratuit</span>
   </div>
 
@@ -480,7 +481,7 @@
       <div class="carte">
         <div class="emoji">🔬</div>
         <h3>Expliqué, pas juste coloré</h3>
-        <p>Chaque alerte dit quel ingrédient pose question et pourquoi : gélatine, E120, E471, présure… avec un lien vers la fiche complète de l'additif.</p>
+        <p>Chaque alerte dit quel ingrédient pose question et pourquoi : gélatine, E120, E471, présure… avec un lien vers la fiche complète de l'additif. <a href="./additifs.html" style="color:var(--or-lisible);font-weight:700">Voir la liste complète →</a></p>
       </div>
       <div class="carte">
         <div class="emoji">✓</div>
@@ -510,6 +511,25 @@
         <div><h3>Garde tes produits</h3><p>Un tap sur « ⭐ Garder » et le produit rejoint ta liste de courses halal, consultable à chaque passage en magasin.</p></div>
       </div>
     </div>
+  </section>
+
+  <section class="bloc" id="surveille">
+    <h2>Ce que le scanner surveille</h2>
+    <p style="max-width:720px;color:var(--texte-doux);font-size:17px;margin:-14px 0 22px">
+      Rien n'est caché : la liste des <strong>56 additifs</strong>, des ingrédients repérés
+      dans la composition et des <strong>26 règles cosmétiques</strong> est publiée, avec la
+      raison exacte de chaque alerte. Cette page est générée depuis le moteur d'analyse —
+      ce qui y est écrit est exactement ce qui est détecté.
+    </p>
+    <p style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px">
+      <span class="carte" style="padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px">E441 — Gélatine</span>
+      <span class="carte" style="padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px">E120 — Carmin</span>
+      <span class="carte" style="padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px">E471</span>
+      <span class="carte" style="padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px">Présure</span>
+      <span class="carte" style="padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px">Tallow (suif)</span>
+      <span class="carte" style="padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px">Alcohol Denat.</span>
+    </p>
+    <a class="cta" href="./additifs.html">Voir les 56 additifs surveillés →</a>
   </section>
 
   <section class="bloc" id="faq">
@@ -544,7 +564,7 @@
     </details>
     <details>
       <summary>Qui décide de ce qui est halal ou haram ?</summary>
-      <p>Personne chez nous ne « décide » : l'app applique des règles documentées (porc, alcool, gélatine, additifs d'origine animale…) et cite l'ingrédient exact pour que tu puisses juger en connaissance de cause, selon ton école et ton exigence.</p>
+      <p>Personne chez nous ne « décide » : l'app applique des règles documentées (porc, alcool, gélatine, additifs d'origine animale…) et cite l'ingrédient exact pour que tu puisses juger en connaissance de cause, selon ton école et ton exigence. Ces règles sont publiques : <a href="./additifs.html" style="color:var(--or-lisible);font-weight:700">voir les 56 additifs surveillés</a>.</p>
     </details>
     <details>
       <summary>Et l'application mobile ?</summary>
@@ -555,7 +575,11 @@
   <footer>
     <div class="logo">HalalCheck <span class="coche">✓</span></div>
     <p>oulali.mohamed@gmail.com</p>
-    <p>Mis à jour le <span class="date-maj">9 août 2026</span> · <a href="./mentions-legales.html" style="color:var(--or)">Mentions légales et méthode</a></p>
+    <p>
+      <a href="./additifs.html" style="color:var(--or)">Additifs surveillés</a> ·
+      <a href="./mentions-legales.html" style="color:var(--or)">Mentions légales et méthode</a>
+    </p>
+    <p>Mis à jour le <span class="date-maj">9 août 2026</span></p>
     <p>Une application de l'écosystème halal :</p>
     <p class="famille">
       <a href="https://halalgpt.fr">🌙 HalalGPT — l'IA musulmane</a>

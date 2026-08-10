@@ -13,7 +13,7 @@
 
 import type { Alerte, StatutVerdict, Verdict } from "./halal";
 
-interface RegleInci {
+export interface RegleInci {
   motif: RegExp;
   element: string;
   niveau: "haram" | "douteux";
@@ -30,7 +30,7 @@ interface RegleInci {
 }
 
 // Interdits : l'origine est établie, pas seulement possible.
-const REGLES_INTERDITES: RegleInci[] = [
+export const REGLES_INTERDITES: RegleInci[] = [
   {
     motif: /\btallow\b|sodium tallowate|potassium tallowate|tallowate|\bsuif\b/,
     element: "Suif (Tallow)",
@@ -63,7 +63,7 @@ const REGLES_INTERDITES: RegleInci[] = [
 
 // À vérifier : l'ingrédient existe en version végétale ET animale, sans que
 // l'étiquette permette de trancher.
-const REGLES_DOUTEUSES: RegleInci[] = [
+export const REGLES_DOUTEUSES: RegleInci[] = [
   {
     motif: /\bcollagen\b|collagène|hydrolyzed collagen|soluble collagen/,
     element: "Collagène",
@@ -217,7 +217,7 @@ const REGLES_DOUTEUSES: RegleInci[] = [
 
 // Alcools : seuls les alcools éthyliques sont relevés. Les alcools gras
 // (cires) sont explicitement exclus — c'est l'erreur la plus répandue.
-const REGLES_ALCOOL: RegleInci[] = [
+export const REGLES_ALCOOL: RegleInci[] = [
   {
     motif: /\balcohol denat\b|denatured alcohol|\bsd alcohol\b|\bethanol\b|\bethyl alcohol\b|alcool dénaturé/,
     element: "Alcool éthylique (Alcohol Denat.)",

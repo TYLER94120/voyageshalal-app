@@ -731,6 +731,10 @@
         <a class="lien-additif" href="https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=verdict-douteux" target="_blank" rel="noopener">🌙 En parler avec HalalGPT →</a>
       </div>
       <div id="alertes"></div>
+      <!-- Transparence : depuis un verdict, on peut voir toutes les règles
+           appliquées, pas seulement celles déclenchées par ce produit. -->
+      <a id="lien-liste-additifs" class="lien-additif" href="./additifs.html" hidden
+         style="display:block; margin-top:12px;">🔬 Voir tous les additifs surveillés →</a>
       <div id="composition-bloc" hidden>
         <h2>Composition</h2>
         <div id="composition"></div>
@@ -794,6 +798,8 @@
         <a class="lien-additif" href="https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=verdict-douteux" target="_blank" rel="noopener">🌙 En parler avec HalalGPT →</a>
       </div>
       <div id="etiquette-risques"></div>
+      <a id="etiquette-lien-liste" class="lien-additif" href="./additifs.html" hidden
+         style="display:block; margin: 12px 0;">🔬 Voir tous les additifs surveillés →</a>
       <p id="etiquette-texte"></p>
       <p id="etiquette-conseil" hidden></p>
       <p id="etiquette-source"></p>
@@ -1978,6 +1984,7 @@
         $("verif-source").textContent =
           "Source : " + (verif.source || "—") + (verif.date ? " · " + verif.date : "");
         $("alertes").innerHTML = "";
+        $("lien-liste-additifs").hidden = true;
         $("conclusion").hidden = true;
         $("note-cosmetique").hidden = true;
         $("cta-verifier").hidden = true;
@@ -2024,6 +2031,7 @@
           }
           alertes.appendChild(div);
         }
+        $("lien-liste-additifs").hidden = verdict.alertes.length === 0;
 
         const conclusion = conclusionPratique(verdict);
         $("note-cosmetique").hidden = !(
@@ -2327,6 +2335,7 @@
       }
 
       $("etiquette-note-cosmetique").hidden = alertesEvaluees.length === 0;
+      $("etiquette-lien-liste").hidden = alertesEvaluees.length === 0;
       $("etiquette-texte").textContent = lecture.explication || "";
       $("etiquette-conseil").hidden = !lecture.conseil;
       $("etiquette-conseil").textContent = lecture.conseil ? "💡 " + lecture.conseil : "";
@@ -2676,7 +2685,7 @@
   </script>
 
   <footer style="text-align: center; padding: 26px 16px calc(30px + env(safe-area-inset-bottom, 0px)); font-size: 14px; color: rgba(18, 38, 26, 0.55); line-height: 2.2; border-top: 1px solid rgba(18, 38, 26, 0.10); margin-top: 28px;">
-    <span style="display:block; margin-bottom:6px; font-size:13px;">Mis à jour le <span class="date-maj">9 août 2026</span> · <a href="./mentions-legales.html" style="color:#7A5F1C; text-decoration:none;">Mentions légales</a></span>
+    <span style="display:block; margin-bottom:6px; font-size:13px;">Mis à jour le <span class="date-maj">9 août 2026</span> · <a href="./additifs.html" style="color:#7A5F1C; text-decoration:none;">Additifs surveillés</a> · <a href="./mentions-legales.html" style="color:#7A5F1C; text-decoration:none;">Mentions légales</a></span>
     Un doute sur un ingrédient ?
     <a href="https://halalgpt.fr" style="color: #7A5F1C; text-decoration: none; padding: 4px 6px; font-weight: 700;">🌙 Demande à HalalGPT</a>
     <span aria-hidden>·</span>
