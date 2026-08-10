@@ -29,6 +29,7 @@ n'est declare mort qu'apres HEAD puis GET, et un 403 est note a part comme
 « bloque aux robots », jamais comme mort.
 """
 
+import html
 import json
 import os
 import re
@@ -78,6 +79,12 @@ def etat_du_lien(url):
     HEAD d'abord parce que c'est cent fois moins lourd pour le site d'en face.
     GET ensuite, parce que beaucoup de serveurs refusent HEAD sans que la page
     soit cassee — s'arreter au HEAD ferait retirer des liens valides.
+
+    Et si les deux echouent SANS code de reponse — delai depasse, connexion
+    coupee — on ne conclut pas. Le robot lance 8 requetes en parallele : une
+    coupure passagere sous cette charge ne prouve rien. Mesure du 10 aout :
+    sur 5 liens declares morts, 3 repondaient parfaitement au controle calme.
+    Un seul echec n'est pas un verdict.
     """
     code, _, erreur = demander(url, "HEAD")
     if code in (200, 201, 202, 204, 206, 301, 302, 303, 307, 308):
@@ -88,7 +95,17 @@ def etat_du_lien(url):
     if code2 in (401, 403, 429) or code in (401, 403, 429):
         return "bloque", f"code {code2 or code} — refuse les robots, pas forcement mort"
     if code2 == 0 and code == 0:
-        return "mort", erreur2 or erreur or "aucune reponse"
+        # Aucune reponse du tout : on retente une fois, calmement, avant de
+        # dire quoi que ce soit.
+        time.sleep(1.5)
+        code3, _, erreur3 = demander(url, "GET")
+        if code3 in (200, 201, 202, 204, 206, 301, 302, 303, 307, 308):
+            return "vivant", ""
+        if code3 in (401, 403, 429):
+            return "bloque", f"code {code3} — refuse les robots"
+        if code3 == 0:
+            return "mort", f"{erreur3 or erreur2 or erreur} (confirme au 2e controle)"
+        return "mort", f"code {code3} (confirme au 2e controle)"
     return "mort", f"code {code2 or code}"
 
 
@@ -96,11 +113,15 @@ def liens_de_la_page(base, url):
     code, corps, _ = demander(url, "GET")
     if code != 200 or not corps:
         return set(), set()
-    html = corps.decode("utf-8", "replace")
+    page = corps.decode("utf-8", "replace")
     internes, externes = set(), set()
     hote = urllib.parse.urlparse(base).netloc.replace("www.", "")
-    for brut in re.findall(r'<a[^>]+href=["\']([^"\']+)["\']', html, re.I):
-        brut = brut.strip()
+    for brut in re.findall(r'<a[^>]+href=["\']([^"\']+)["\']', page, re.I):
+        # Une adresse ecrite dans du HTML porte ses entites : « &amp; » et non
+        # « & ». Sans ce decodage, le robot demandait litteralement
+        # « ?utm_source=x&amp;utm_medium=y » — une adresse que personne n'a
+        # jamais publiee — et declarait mort un lien parfaitement valide.
+        brut = html.unescape(brut.strip())
         if not brut or IGNORER.match(brut):
             continue
         absolu = urllib.parse.urljoin(url, brut)
