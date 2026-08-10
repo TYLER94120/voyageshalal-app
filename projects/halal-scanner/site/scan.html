@@ -10,7 +10,7 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-10T10:55:10+00:00" />
+  <meta name="last-modified" content="2026-08-10T13:00:56+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -124,6 +124,12 @@
       border: 1.5px solid rgba(253, 250, 243, 0.4);
       color: var(--creme);
       font-size: 14.5px; font-weight: 700;
+    }
+    /* Discret : la caméra reste la vedette, le titre ne fait que nommer l'écran. */
+    .titre-scan {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 22px; font-weight: 800;
+      margin: 0 0 12px; text-align: center;
     }
     .consigne { text-align: center; font-size: 15.5px; font-weight: 600; margin: 16px 0 20px; color: var(--texte-doux); }
     .ligne-saisie { display: flex; gap: 10px; }
@@ -625,7 +631,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-10T10:55:10+00:00"
+      "dateModified": "2026-08-10T13:00:56+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -663,6 +669,12 @@
 
   <main>
     <section id="ecran-scan">
+      <!-- Cet écran n'avait aucun h1 : le seul titre du document était « Lire
+           l'étiquette en photo », caché et décrivant une fonction secondaire.
+           C'est pourtant ce qu'un robot retenait comme titre principal de la
+           page la plus importante du site. Celui-ci est visible, arrive en
+           premier dans le document, et dit ce que la page fait. -->
+      <h1 class="titre-scan">Scanner un produit</h1>
       <div class="cadre-video">
         <video id="video" playsinline muted></video>
         <div class="viseur" aria-hidden="true"></div>

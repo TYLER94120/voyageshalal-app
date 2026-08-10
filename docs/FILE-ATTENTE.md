@@ -35,15 +35,7 @@ une explication honnête, jamais un verdict inventé.
    *Ce qu'il faut :* des codes-barres marocains avec photo des ingrédients, ou
    une réponse écrite de fabricant. Demandé à Mohamed, pas encore reçu.
 
-3. **Le seul `h1` non vide de scan.html décrit une fonction secondaire.**
-   *Preuve :* trois `h1` dans le document (lignes 705, 767, 816). Deux sont
-   vides au chargement — remplis par JavaScript. Le seul qui porte du texte est
-   « Lire l'étiquette en photo », qui n'est pas ce que la page fait. C'est ce
-   que Google indexe.
-   *À mesurer d'abord :* ce que le robot voit réellement après rendu, pas ce que
-   le HTML contient. Ne pas corriger avant d'avoir ce chiffre.
-
-4. **Open Food Facts est injoignable depuis l'atelier.**
+3. **Open Food Facts est injoignable depuis l'atelier.**
    *Preuve :* `curl` vers `world.openfoodfacts.org` rend le code 000 en 0,45 s —
    bloqué par le proxy réseau. Conséquence : **aucun agent ne peut tester le
    moteur sur des produits réels.** Les 56 additifs et 26 règles cosmétiques ne
@@ -52,7 +44,7 @@ une explication honnête, jamais un verdict inventé.
    *Piste :* constituer un jeu de fiches réelles figées dans le dépôt, capturées
    une fois depuis le navigateur de Mohamed, pour tester hors ligne.
 
-5. **Les liens « Comprendre le E471 » sont trop petits au doigt.**
+4. **Les liens « Comprendre le E471 » sont trop petits au doigt.**
    *Preuve :* mesurés à 30 px de haut sur un écran de 320 px, sous les 44 px
    recommandés. Il y en a 57 sur `additifs.html`, et ce sont eux qui portent la
    passerelle vers HalalGPT — donc les rater coûte deux fois.
@@ -60,6 +52,16 @@ une explication honnête, jamais un verdict inventé.
 ---
 
 ## Fait
+
+- **La page du scanner n'avait aucun titre principal** *(10 août)* — mesuré
+  après rendu, comme le fait le robot de Google : les trois `h1` du document
+  étaient cachés, et le seul portant du texte disait « Lire l'étiquette en
+  photo » — une fonction secondaire, sur un écran invisible. L'écran du
+  scanner, lui, n'avait aucun titre.
+  **Mesure : titre retenu par un robot « Lire l'étiquette en photo » →
+  « Scanner un produit »**, désormais visible et premier dans le document.
+  Vérifié sans régression : aucun débordement horizontal, aucune erreur JS.
+  Les trois autres pages avaient déjà un `h1` unique et juste.
 
 - **Le service worker attendait le réseau sans limite** *(10 août)* — les pages
   HTML et les bases JSON étaient servies « réseau d'abord » avec un `fetch` sans
@@ -100,8 +102,8 @@ autant de temps que de les trouver :
 
 - **« 3 h1 sur scan.html »** — c'est une application à écrans multiples : les
   trois `h1` appartiennent à trois écrans dont un seul est visible à la fois.
-  Ce n'est pas une faute de structure. Il en reste un vrai sujet, plus étroit,
-  gardé en file sous le point 3.
+  Ce n'est pas une faute de structure. Il en restait un vrai sujet, plus étroit,
+  traité le 10 août (voir « Fait »).
 - **« un lien vide sans aria-label »** — `#cta-verifier` est `hidden` et rempli
   par JavaScript au moment où il sert. Aucun utilisateur ne le rencontre vide.
 
