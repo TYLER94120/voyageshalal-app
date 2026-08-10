@@ -1,0 +1,56 @@
+# Le premier robot de l'usine a projets.
+#
+# Il ne construit rien. Il repond a une seule question : est-ce que les sources
+# des trois prochains projets existent et rendent la donnee attendue ?
+#
+# Pourquoi il tourne ICI et pas dans les depots des projets : les depots
+# n'existent pas encore, Mohamed les cree ce soir. Or c'est justement AVANT
+# d'acheter les domaines qu'il faut savoir lesquels sont jouables. Ce robot
+# demenagera dans chaque depot des qu'ils seront la — il n'a rien a voir avec
+# VoyagesHalal, il est seulement heberge le temps qu'il faut.
+#
+# Pourquoi un robot et pas l'agent : la sortie reseau de l'atelier des agents
+# est fermee (403 sur a peu pres tout). Un runner GitHub, lui, a le reseau.
+# C'est toute l'architecture de l'usine qui tient sur cette difference.
+
+name: Usine — verifier les sources
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Une fois par jour : une source qui meurt doit se voir, pas s'oublier.
+    - cron: '0 5 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: usine-verifier-sources
+  cancel-in-progress: false
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      - name: Interroger les sources et ecrire le constat
+        run: python3 outils/verifier-sources.py
+
+      - name: Afficher le constat dans le resume du travail
+        if: always()
+        run: cat docs/usine/VERIFICATION-SOURCES.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Deposer le constat dans le depot
+        if: always()
+        run: |
+          git config user.name  "robot-usine"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/usine/
+          # Aucun changement = rien a dire. On ne fabrique pas un commit vide
+          # par jour juste pour prouver qu'on a tourne.
+          git diff --staged --quiet && echo "Rien de nouveau." && exit 0
+          git commit -m "Usine: constat de verification des sources"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
