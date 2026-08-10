@@ -1,0 +1,45 @@
+# Releve des noms de domaine libres, pour les trois projets de l'usine.
+#
+# A la demande seulement : c'est un besoin ponctuel (Mohamed achete ce soir),
+# pas une surveillance. Un robot qui tournerait tous les jours la-dessus ne
+# produirait que du bruit.
+#
+# Ce robot ne reserve rien et n'engage aucune depense. Il pose une question a
+# l'annuaire public et ecrit la reponse. L'achat reste a Mohamed.
+
+name: Usine — noms de domaine libres
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: usine-verifier-domaines
+  cancel-in-progress: false
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      - name: Interroger l'annuaire
+        run: python3 outils/verifier-domaines.py
+
+      - name: Afficher le constat dans le resume du travail
+        if: always()
+        run: cat docs/usine/DOMAINES-CANDIDATS.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Deposer le constat dans le depot
+        if: always()
+        run: |
+          git config user.name  "robot-usine"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/usine/
+          git diff --staged --quiet && echo "Rien de nouveau." && exit 0
+          git commit -m "Usine: releve des noms de domaine libres"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
