@@ -1,59 +1,35 @@
 {
-  "verifie_le": "2026-08-10 11:58 UTC",
-  "liens_controles": 1359,
+  "verifie_le": "2026-08-10 13:46 UTC",
+  "liens_controles": 1656,
   "morts": [
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/www.darfatima.com",
+      "url": "https://www.voyageshalal.fr/destinations/www.hotelvakhsh.tj",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/hotel-marmar.com",
+      "url": "https://www.voyageshalal.fr/destinations/toyoko-inn.com",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/grouplehahotels.com",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/greenssuite2021@gmail.com",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/hotel-Medina.com",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/blog/manger-halal-bali",
+      "url": "https://www.voyageshalal.fr/priere/annaba",
       "detail": "URLError"
     },
     {
-      "site": "voyageshalal.fr",
+      "site": "halalgpt.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/communaute/ajouter?ville=san-francisco",
+      "url": "https://halalgpt.fr/categorie/vie-quotidienne",
       "detail": "URLError"
     },
     {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://gohalaltravel.com/destinations/dubai",
-      "detail": "URLError"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://gohalaltravel.com/destinations/istanbul",
+      "site": "halalgpt.fr",
+      "genre": "externe",
+      "url": "https://www.voyageshalal.fr?utm_source=halalgpt&amp;utm_medium=passerelle&amp;utm_campaign=fiche-voyage",
       "detail": "URLError"
     }
   ],
