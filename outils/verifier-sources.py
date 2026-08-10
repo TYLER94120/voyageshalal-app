@@ -193,6 +193,17 @@ LIBELLE = {
 }
 
 
+def substance(constats):
+    """Ce qui merite un commit, et rien d'autre.
+
+    L'heure du releve et le nombre exact d'octets changent a chaque passage :
+    les garder dans la comparaison fabriquerait un commit par jour pour dire
+    « rien n'a change », ce qui est exactement le bruit qu'on veut eviter.
+    """
+    return [(c["url"], c["verdict"], c["code"], c["forme"], c["detail"])
+            for c in constats]
+
+
 def main():
     horodatage = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     constats = [sonder(s) for s in SOURCES]
@@ -204,6 +215,20 @@ def main():
             print(f"      → {c['detail']}")
         if c["forme"]:
             print(f"      → {c['forme']}")
+
+    # Rien de neuf : on ne reecrit rien. Le robot tourne tous les jours, mais
+    # l'historique du depot ne doit raconter que ce qui a bouge. La preuve
+    # qu'il a tourne est dans l'historique des executions, pas dans un commit.
+    try:
+        with open("docs/usine/verification-sources.json", encoding="utf-8") as f:
+            ancien = json.load(f)
+        if substance(ancien.get("constats", [])) == substance(constats):
+            print("\nInchange depuis le dernier releve : aucun fichier reecrit.")
+            return 0
+    except FileNotFoundError:
+        pass
+    except Exception as e:
+        print(f"\n(ancien constat illisible, on reecrit : {e})")
 
     os.makedirs("docs/usine", exist_ok=True)
 
@@ -221,7 +246,12 @@ def main():
     lignes = [
         "# Verification des sources de l'usine",
         "",
-        f"Releve automatique du **{horodatage}**, par un robot GitHub.",
+        f"**Dernier changement constate le {horodatage}**, par un robot GitHub.",
+        "",
+        "Le controle tourne **tous les jours a 5 h**. Ce fichier n'est reecrit",
+        "que si quelque chose a bouge : la date ci-dessus est donc celle du",
+        "dernier CHANGEMENT, pas celle du dernier controle. Une date ancienne",
+        "est une bonne nouvelle — elle veut dire que rien n'a casse depuis.",
         "",
         "Ce fichier est genere : ne pas l'ecrire a la main. Il repond a une",
         "seule question — *est-ce que la donnee arrive ?* — et rien n'est bati",
