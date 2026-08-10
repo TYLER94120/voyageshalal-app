@@ -1,7 +1,364 @@
 {
-  "ronde_du": "2026-08-10 11:49 UTC",
-  "pages_vues": 867,
+  "ronde_du": "2026-08-10 17:12 UTC",
+  "pages_vues": 1751,
   "defauts": [
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/planificateur",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Planificateur voyage halal — Itinéraire jour par jour gratui… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/horaires-priere",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Heures de prière aujourd&#x27;hui — Toutes les villes du mon… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/communaute",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Communauté — partage coins prière &amp; bonnes adresses hala… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/kota-kinabalu",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Kota Kinabalu Halal 2026 : Restaurants, Mosquées &amp; Prièr… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/sharm-el-sheikh",
+      "quoi": "titre coupe par Google (63 car.)",
+      "detail": "« Charm el-Cheikh Halal 2026 : Restaurants, Mosquées &amp; Pri… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/san-francisco",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« San Francisco Halal 2026 : Restaurants, Mosquées &amp; Prièr… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/rio-de-janeiro",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Rio de Janeiro Halal 2026 : Restaurants, Mosquées &amp; Priè… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/thessalonique",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Thessalonique Halal 2026 : Restaurants, Mosquées &amp; Prièr… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/ras-al-khaimah",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Ras el Khaïmah Halal 2026 : Restaurants, Mosquées &amp; Priè… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/dar-es-salaam",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Dar es Salaam Halal 2026 : Restaurants, Mosquées &amp; Prièr… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/larache",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "grave",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/agra",
+      "quoi": "la page ne repond pas",
+      "detail": "URLError: <urlopen error _ssl.c:983: The handshake operation timed out> — confirme au second controle"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/guides/hotel-halal-tout-savoir",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Hôtel halal : tout ce qu&#x27;il faut savoir avant de réserv… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/blog/voile-controle-securite-aeroport",
+      "quoi": "titre coupe par Google (64 car.)",
+      "detail": "« Voile au contrôle de sécurité : ce qu&#x27;on peut vous dema… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/blog/ou-prier-aeroport-lyon",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Où prier à l&#x27;aéroport de Lyon-Saint-Exupéry — guide 202… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/blog/ou-prier-aeroport-nice",
+      "quoi": "titre coupe par Google (64 car.)",
+      "detail": "« Où prier à l&#x27;aéroport de Nice-Côte d&#x27;Azur — guide … »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/blog/ou-prier-aeroport-orly",
+      "quoi": "titre coupe par Google (64 car.)",
+      "detail": "« Salle de prière à l&#x27;aéroport d&#x27;Orly : où prier en … »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/blog/ou-prier-aeroport-marseille",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Où prier à l&#x27;aéroport de Marseille-Provence — guide 202… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/priere/saidia/mosque-a-10-minutes-de-saidia-dans-la-montagne",
+      "quoi": "titre coupe par Google (84 car.)",
+      "detail": "« Où prier à Mosque a 10 minutes de saidia dans la montagne — … »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/priere/marrakech/hotel-excentre-de-marrakech",
+      "quoi": "titre coupe par Google (68 car.)",
+      "detail": "« Où prier à Hôtel excentre de Marrakech — Marrakech | Voyages… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/priere/fes/cafe-sympa-sorti-de-des-direction-berkane",
+      "quoi": "titre coupe par Google (76 car.)",
+      "detail": "« Où prier à Café sympa sorti de des direction berkane — Fès |… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/priere/marrakech/coin-priere-dans-un-restaurant-familial",
+      "quoi": "titre coupe par Google (80 car.)",
+      "detail": "« Où prier à Coin prière dans un restaurant familial — Marrake… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "titre coupe par Google (93 car.)",
+      "detail": "« Où prier à Resto traditionnel spécial jus de fruit et pétit … »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/priere/marrakech/hotel-excentre-magnifique",
+      "quoi": "titre coupe par Google (66 car.)",
+      "detail": "« Où prier à Hôtel excentre magnifique — Marrakech | VoyagesHa… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer",
+      "quoi": "titre coupe par Google (74 car.)",
+      "detail": "« Où prier à Resto Sidi koi Ali en bord de mer — Essaouira | V… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_mrtmy7zu_wd5zv",
+      "quoi": "titre coupe par Google (97 car.)",
+      "detail": "« Mosque a 10 minutes de saidia dans la montagne — Coin prière… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_mrziflcm_yxqrl",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« GreenOil — Resto halal à Marrakech (partagé par la communaut… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms1kzqor_ybexr",
+      "quoi": "titre coupe par Google (75 car.)",
+      "detail": "« Hôtel excentre de Marrakech — Autre à Marrakech (partagé par… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd",
+      "quoi": "description trop courte (24 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msn1o7z8_zaii0",
+      "quoi": "titre coupe par Google (89 car.)",
+      "detail": "« Café sympa sorti de des direction berkane — Resto halal à Fè… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_mrtftu4b_52671",
+      "quoi": "titre coupe par Google (70 car.)",
+      "detail": "« Mosquée magnifique — Coin prière à Berkane (partagé par la c… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms28x8qb_g18zz",
+      "quoi": "titre coupe par Google (68 car.)",
+      "detail": "« La dune agafay — Resto halal à Marrakech (partagé par la com… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Hash point — Resto halal à Agadir (partagé par la communauté… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr",
+      "quoi": "description trop courte (41 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt",
+      "quoi": "titre coupe par Google (93 car.)",
+      "detail": "« Coin prière dans un restaurant familial — Coin prière à Marr… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt",
+      "quoi": "description trop courte (17 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms3ag9sm_uv5ug",
+      "quoi": "titre coupe par Google (100 car.)",
+      "detail": "« Resto traditionnel spécial jus de fruit et pétit dej — Autre… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac",
+      "quoi": "titre coupe par Google (67 car.)",
+      "detail": "« Resto à Imsouane — Resto halal à Agadir (partagé par la comm… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac",
+      "quoi": "description trop courte (10 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msdjx32v_jkx0l",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Riad essaouira — Autre à Marrakech (partagé par la communaut… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
+      "quoi": "titre coupe par Google (63 car.)",
+      "detail": "« Dar dasha — Resto halal à Essaouira (partagé par la communau… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
+      "quoi": "description trop courte (18 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
+      "quoi": "titre coupe par Google (73 car.)",
+      "detail": "« Resto avec piscine — Resto halal à Tafoughalt (partagé par l… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
+      "quoi": "description trop courte (21 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_mrthy3ne_hjxfv",
+      "quoi": "titre coupe par Google (72 car.)",
+      "detail": "« Mosquée Sidi slimane — Coin prière à Berkane (partagé par la… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms7iirki_ws5oz",
+      "quoi": "titre coupe par Google (73 car.)",
+      "detail": "« Hôtel excentre magnifique — Autre à Marrakech (partagé par l… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
+      "quoi": "titre coupe par Google (73 car.)",
+      "detail": "« Restaura Café chill — Resto halal à Marrakech (partagé par l… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
+      "quoi": "description trop courte (42 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msdnho52_dw9u4",
+      "quoi": "titre coupe par Google (69 car.)",
+      "detail": "« Le rendez vous — Resto halal à Casablanca (partagé par la co… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_mselbxzb_9ujf8",
+      "quoi": "titre coupe par Google (87 car.)",
+      "detail": "« Resto Sidi koi Ali en bord de mer — Resto halal à Essaouira … »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/guide-vivant/marrakech",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Guide vivant halal de Marrakech — par la communauté (8 spots… »"
+    },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
@@ -14,14 +371,14 @@
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/addis-abeba",
       "quoi": "titre coupe par Google (63 car.)",
-      "detail": "« Addis-Abeba Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
+      "detail": "« Addis Ababa Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/alexandrie",
       "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Alexandrie Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
+      "detail": "« Alexandria Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
     },
     {
       "niveau": "defaut",
@@ -42,14 +399,14 @@
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/barcelone",
       "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Barcelone Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+      "detail": "« Barcelona Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/cappadoce",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Cappadoce Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Cappadocia Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
     },
     {
       "niveau": "defaut",
@@ -89,16 +446,9 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/kota-kinabalu",
-      "quoi": "titre coupe par Google (65 car.)",
-      "detail": "« Kota Kinabalu Halal Guide 2026: Restaurants, Mosques &amp; P… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/koweit-city",
       "quoi": "titre coupe par Google (63 car.)",
-      "detail": "« Koweït City Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
+      "detail": "« Kuwait City Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
     },
     {
       "niveau": "defaut",
@@ -161,7 +511,7 @@
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/al-hoceima",
       "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Al Hoceïma Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
+      "detail": "« Al Hoceima Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
     },
     {
       "niveau": "defaut",
@@ -196,7 +546,7 @@
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/beni-mellal",
       "quoi": "titre coupe par Google (63 car.)",
-      "detail": "« Béni Mellal Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
+      "detail": "« Beni Mellal Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
     },
     {
       "niveau": "defaut",
@@ -209,8 +559,8 @@
       "niveau": "defaut",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/al-quds",
-      "quoi": "titre coupe par Google (71 car.)",
-      "detail": "« Al-Quds (Jerusalem) Halal Guide 2026: Restaurants, Mosques &… »"
+      "quoi": "titre coupe par Google (63 car.)",
+      "detail": "« Al-Quds (Jerusalem) Halal Guide 2026: Restaurants &amp; Mosq… »"
     },
     {
       "niveau": "defaut",
@@ -223,8 +573,8 @@
       "niveau": "defaut",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/bandar-seri-begawan",
-      "quoi": "titre coupe par Google (71 car.)",
-      "detail": "« Bandar Seri Begawan Halal Guide 2026: Restaurants, Mosques &… »"
+      "quoi": "titre coupe par Google (63 car.)",
+      "detail": "« Bandar Seri Begawan Halal Guide 2026: Restaurants &amp; Mosq… »"
     },
     {
       "niveau": "defaut",
@@ -252,7 +602,7 @@
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/francfort",
       "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Francfort Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+      "detail": "« Frankfurt Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
     },
     {
       "niveau": "defaut",
@@ -264,9 +614,9 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/sharm-el-sheikh",
-      "quoi": "titre coupe par Google (67 car.)",
-      "detail": "« Charm el-Cheikh Halal Guide 2026: Restaurants, Mosques &amp;… »"
+      "url": "https://www.gohalaltravel.com/destinations/le-cap",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Cape Town Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
     },
     {
       "niveau": "defaut",
@@ -281,6 +631,13 @@
       "url": "https://www.gohalaltravel.com/destinations/strasbourg",
       "quoi": "titre coupe par Google (62 car.)",
       "detail": "« Strasbourg Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/santorin",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Santorini Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
     },
     {
       "niveau": "defaut",
@@ -313,20 +670,6 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/saint-petersbourg",
-      "quoi": "titre coupe par Google (68 car.)",
-      "detail": "« Saint Petersburg Halal Guide 2026: Restaurants, Mosques &amp… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/san-francisco",
-      "quoi": "titre coupe par Google (65 car.)",
-      "detail": "« San Francisco Halal Guide 2026: Restaurants, Mosques &amp; P… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/washington",
       "quoi": "titre coupe par Google (62 car.)",
       "detail": "« Washington Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
@@ -348,6 +691,13 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/mexico",
+      "quoi": "titre coupe par Google (63 car.)",
+      "detail": "« Mexico City Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/hong-kong",
       "quoi": "titre coupe par Google (61 car.)",
       "detail": "« Hong Kong Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
@@ -355,16 +705,9 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/ho-chi-minh",
-      "quoi": "titre coupe par Google (69 car.)",
-      "detail": "« Hô Chi Minh-Ville Halal Guide 2026: Restaurants, Mosques &am… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/katmandou",
       "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Katmandou Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+      "detail": "« Kathmandu Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
     },
     {
       "niveau": "defaut",
@@ -397,13 +740,6 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/rio-de-janeiro",
-      "quoi": "titre coupe par Google (66 car.)",
-      "detail": "« Rio de Janeiro Halal Guide 2026: Restaurants, Mosques &amp; … »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/sao-paulo",
       "quoi": "titre coupe par Google (61 car.)",
       "detail": "« São Paulo Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
@@ -432,6 +768,13 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/goteborg",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Gothenburg Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/bratislava",
       "quoi": "titre coupe par Google (62 car.)",
       "detail": "« Bratislava Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
@@ -453,9 +796,16 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/bucarest",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Bucharest Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/thessalonique",
-      "quoi": "titre coupe par Google (65 car.)",
-      "detail": "« Thessalonique Halal Guide 2026: Restaurants, Mosques &amp; P… »"
+      "quoi": "titre coupe par Google (64 car.)",
+      "detail": "« Thessaloniki Halal Guide 2026: Restaurants, Mosques &amp; Pr… »"
     },
     {
       "niveau": "defaut",
@@ -486,6 +836,13 @@
       "detail": "« Minneapolis Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
     },
     {
+      "niveau": "grave",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/portland",
+      "quoi": "la page ne repond pas",
+      "detail": "URLError: <urlopen error _ssl.c:983: The handshake operation timed out> — confirme au second controle"
+    },
+    {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/san-antonio",
@@ -504,14 +861,14 @@
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/philadelphie",
       "quoi": "titre coupe par Google (64 car.)",
-      "detail": "« Philadelphie Halal Guide 2026: Restaurants, Mosques &amp; Pr… »"
+      "detail": "« Philadelphia Halal Guide 2026: Restaurants, Mosques &amp; Pr… »"
     },
     {
-      "niveau": "defaut",
+      "niveau": "surveiller",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/new-orleans",
-      "quoi": "titre coupe par Google (63 car.)",
-      "detail": "« New Orleans Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
     },
     {
       "niveau": "defaut",
@@ -530,13 +887,6 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/la-havane",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« La Havane Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/guayaquil",
       "quoi": "titre coupe par Google (61 car.)",
       "detail": "« Guayaquil Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
@@ -551,23 +901,16 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/salvador-bahia",
-      "quoi": "titre coupe par Google (69 car.)",
-      "detail": "« Salvador de Bahia Halal Guide 2026: Restaurants, Mosques &am… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/hiroshima",
       "quoi": "titre coupe par Google (61 car.)",
       "detail": "« Hiroshima Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
     },
     {
-      "niveau": "defaut",
+      "niveau": "grave",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/kaohsiung",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Kaohsiung Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+      "quoi": "la page ne repond pas",
+      "detail": "URLError: <urlopen error _ssl.c:983: The handshake operation timed out> — confirme au second controle"
     },
     {
       "niveau": "defaut",
@@ -582,6 +925,13 @@
       "url": "https://www.gohalaltravel.com/destinations/guangzhou",
       "quoi": "titre coupe par Google (61 car.)",
       "detail": "« Guangzhou Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+    },
+    {
+      "niveau": "grave",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/hangzhou",
+      "quoi": "la page ne repond pas",
+      "detail": "URLError: <urlopen error _ssl.c:983: The handshake operation timed out> — confirme au second controle"
     },
     {
       "niveau": "defaut",
@@ -607,23 +957,9 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/ras-al-khaimah",
-      "quoi": "titre coupe par Google (66 car.)",
-      "detail": "« Ras el Khaïmah Halal Guide 2026: Restaurants, Mosques &amp; … »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/samarcande",
-      "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Samarcande Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/douchanbe",
       "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Douchanbé Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+      "detail": "« Samarkand Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
     },
     {
       "niveau": "defaut",
@@ -631,13 +967,6 @@
       "url": "https://www.gohalaltravel.com/destinations/ouagadougou",
       "quoi": "titre coupe par Google (63 car.)",
       "detail": "« Ouagadougou Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/dar-es-salaam",
-      "quoi": "titre coupe par Google (65 car.)",
-      "detail": "« Dar es Salaam Halal Guide 2026: Restaurants, Mosques &amp; P… »"
     },
     {
       "niveau": "defaut",
@@ -654,11 +983,11 @@
       "detail": "« Port-Louis Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
     },
     {
-      "niveau": "defaut",
+      "niveau": "grave",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/destinations/gold-coast",
-      "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Gold Coast Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
+      "quoi": "la page ne repond pas",
+      "detail": "URLError: <urlopen error _ssl.c:983: The handshake operation timed out> — confirme au second controle"
     },
     {
       "niveau": "defaut",
@@ -670,44 +999,9 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/guides/istanbul-halal-travel-guide",
-      "quoi": "titre coupe par Google (74 car.)",
-      "detail": "« Istanbul Halal Travel Guide 2026: Restaurants, Mosques &amp;… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/guides/dubai-halal-travel-guide-2026",
-      "quoi": "titre coupe par Google (71 car.)",
-      "detail": "« Dubai Halal Travel Guide 2026: Everything for Your Muslim-Fr… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/guides/marrakech-halal-travel-guide",
-      "quoi": "titre coupe par Google (68 car.)",
-      "detail": "« Marrakesh Halal Travel Guide 2026: The Red City for Muslim T… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/guides/malaysia-halal-destination-guide",
       "quoi": "titre coupe par Google (62 car.)",
       "detail": "« Malaysia: The World&#x27;s #1 Destination for Muslim Travele… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/guides/halal-honeymoon-guide",
-      "quoi": "titre coupe par Google (63 car.)",
-      "detail": "« Halal Honeymoon: Romantic Destinations That Respect Your Val… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/guides/halal-travel-checklist",
-      "quoi": "titre coupe par Google (63 car.)",
-      "detail": "« The Halal Travel Checklist: Everything to Prepare Before You… »"
     },
     {
       "niveau": "defaut",
@@ -717,60 +1011,18 @@
       "detail": "« Solo Female Muslim Travel: Safe Destinations &amp; Honest Ad… »"
     },
     {
-      "niveau": "defaut",
+      "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/guides/what-is-halal-tourism",
-      "quoi": "titre coupe par Google (70 car.)",
-      "detail": "« What Is Halal Tourism? Definition, Numbers &amp; What It Mea… »"
+      "url": "https://www.gohalaltravel.com/blog/is-this-restaurant-really-halal",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/blog/no-pork-no-alcohol-in-12-languages",
-      "quoi": "titre coupe par Google (77 car.)",
+      "quoi": "titre coupe par Google (65 car.)",
       "detail": "« &quot;No pork, no alcohol&quot; in 12 languages: the card to… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/blog/praying-on-a-plane",
-      "quoi": "titre coupe par Google (73 car.)",
-      "detail": "« How to pray on a plane: the Muslim traveler&#x27;s practical… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/blog/halal-travel-morocco-2026-complete-guide",
-      "quoi": "titre coupe par Google (71 car.)",
-      "detail": "« Halal Travel in Morocco 2026: The Complete Muslim Traveler&#… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/blog/best-halal-restaurants-istanbul-2026",
-      "quoi": "titre coupe par Google (63 car.)",
-      "detail": "« Best Halal Restaurants in Istanbul 2026 — A Complete Food Gu… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/blog/halal-travel-guide-beginners",
-      "quoi": "titre coupe par Google (69 car.)",
-      "detail": "« Halal Travel for Beginners: Everything You Need to Know Befo… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/blog/top-10-halal-destinations-2026",
-      "quoi": "titre coupe par Google (70 car.)",
-      "detail": "« Top 10 Halal Travel Destinations in 2026 — Ranked by Halal T… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/blog/halal-food-seoul-guide",
-      "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Halal Food in Seoul: Itaewon, Korean BBQ and Where Muslims E… »"
     },
     {
       "niveau": "defaut",
@@ -794,18 +1046,18 @@
       "detail": "« Where to pray in Essaouira — prayer spots | GoHalalTravel.co… »"
     },
     {
-      "niveau": "defaut",
+      "niveau": "grave",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/berkane/mosquee-sidi-slimane",
-      "quoi": "titre coupe par Google (67 car.)",
-      "detail": "« Where to pray at Mosquée Sidi slimane — Berkane | GoHalalTra… »"
+      "url": "https://www.gohalaltravel.com/priere/agadir",
+      "quoi": "la page ne repond pas",
+      "detail": "URLError: <urlopen error _ssl.c:983: The handshake operation timed out> — confirme au second controle"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/saidia/mosque-a-10-minutes-de-saidia-dans-la-montagne",
-      "quoi": "titre coupe par Google (92 car.)",
-      "detail": "« Where to pray at Mosque a 10 minutes de saidia dans la monta… »"
+      "url": "https://www.gohalaltravel.com/priere/tafoughalt",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Where to pray in Tafoughalt — prayer spots | GoHalalTravel.c… »"
     },
     {
       "niveau": "defaut",
@@ -813,55 +1065,6 @@
       "url": "https://www.gohalaltravel.com/priere/marrakech/hotel-excentre-de-marrakech",
       "quoi": "titre coupe par Google (76 car.)",
       "detail": "« Where to pray at Hôtel excentre de Marrakech — Marrakech | G… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/casablanca/le-rendez-vous",
-      "quoi": "titre coupe par Google (64 car.)",
-      "detail": "« Where to pray at Le rendez vous — Casablanca | GoHalalTravel… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/berkane/mosquee-magnifique",
-      "quoi": "titre coupe par Google (65 car.)",
-      "detail": "« Where to pray at Mosquée magnifique — Berkane | GoHalalTrave… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/marrakech/coin-priere-dans-un-restaurant-familial",
-      "quoi": "titre coupe par Google (88 car.)",
-      "detail": "« Where to pray at Coin prière dans un restaurant familial — M… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/marrakech/restaura-cafe-chill",
-      "quoi": "titre coupe par Google (68 car.)",
-      "detail": "« Where to pray at Restaura Café chill — Marrakech | GoHalalTr… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/marrakech/riad-essaouira",
-      "quoi": "titre coupe par Google (63 car.)",
-      "detail": "« Where to pray at Riad essaouira — Marrakech | GoHalalTravel.… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/fes/cafe-sympa-sorti-de-des-direction-berkane",
-      "quoi": "titre coupe par Google (84 car.)",
-      "detail": "« Where to pray at Café sympa sorti de des direction berkane —… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer",
-      "quoi": "titre coupe par Google (82 car.)",
-      "detail": "« Where to pray at Resto Sidi koi Ali en bord de mer — Essaoui… »"
     },
     {
       "niveau": "defaut",
@@ -878,11 +1081,60 @@
       "detail": "« Where to pray at Resto traditionnel spécial jus de fruit et … »"
     },
     {
+      "niveau": "grave",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/casablanca/le-rendez-vous",
+      "quoi": "la page ne repond pas",
+      "detail": "URLError: <urlopen error _ssl.c:983: The handshake operation timed out> — confirme au second controle"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer",
+      "quoi": "titre coupe par Google (82 car.)",
+      "detail": "« Where to pray at Resto Sidi koi Ali en bord de mer — Essaoui… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/fes/cafe-sympa-sorti-de-des-direction-berkane",
+      "quoi": "titre coupe par Google (84 car.)",
+      "detail": "« Where to pray at Café sympa sorti de des direction berkane —… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/berkane/mosquee-sidi-slimane",
+      "quoi": "titre coupe par Google (67 car.)",
+      "detail": "« Where to pray at Mosquée Sidi slimane — Berkane | GoHalalTra… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/saidia/mosque-a-10-minutes-de-saidia-dans-la-montagne",
+      "quoi": "titre coupe par Google (92 car.)",
+      "detail": "« Where to pray at Mosque a 10 minutes de saidia dans la monta… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/coin-priere-dans-un-restaurant-familial",
+      "quoi": "titre coupe par Google (88 car.)",
+      "detail": "« Where to pray at Coin prière dans un restaurant familial — M… »"
+    },
+    {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/priere/marrakech/hotel-excentre-magnifique",
       "quoi": "titre coupe par Google (74 car.)",
       "detail": "« Where to pray at Hôtel excentre magnifique — Marrakech | GoH… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/restaura-cafe-chill",
+      "quoi": "titre coupe par Google (68 car.)",
+      "detail": "« Where to pray at Restaura Café chill — Marrakech | GoHalalTr… »"
     },
     {
       "niveau": "defaut",
@@ -894,16 +1146,23 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_mrthy3ne_hjxfv",
-      "quoi": "titre coupe par Google (64 car.)",
-      "detail": "« Mosquée Sidi slimane — Prayer spot in Berkane (community-sha… »"
+      "url": "https://www.gohalaltravel.com/priere/marrakech/riad-essaouira",
+      "quoi": "titre coupe par Google (63 car.)",
+      "detail": "« Where to pray at Riad essaouira — Marrakech | GoHalalTravel.… »"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_mrtmy7zu_wd5zv",
-      "quoi": "titre coupe par Google (89 car.)",
-      "detail": "« Mosque a 10 minutes de saidia dans la montagne — Prayer spot… »"
+      "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
+      "quoi": "titre coupe par Google (68 car.)",
+      "detail": "« Where to pray at Resto avec piscine — Tafoughalt | GoHalalTr… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/berkane/mosquee-magnifique",
+      "quoi": "titre coupe par Google (65 car.)",
+      "detail": "« Where to pray at Mosquée magnifique — Berkane | GoHalalTrave… »"
     },
     {
       "niveau": "defaut",
@@ -922,6 +1181,13 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
+      "quoi": "titre coupe par Google (92 car.)",
+      "detail": "« Resto traditionnel spécial jus de fruit et pétit dej — Other… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_msdnho52_dw9u4",
       "quoi": "titre coupe par Google (61 car.)",
       "detail": "« Le rendez vous — Halal resto in Casablanca (community-shared… »"
@@ -929,23 +1195,65 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_mrtftu4b_52671",
-      "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Mosquée magnifique — Prayer spot in Berkane (community-share… »"
+      "url": "https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8",
+      "quoi": "titre coupe par Google (79 car.)",
+      "detail": "« Resto Sidi koi Ali en bord de mer — Halal resto in Essaouira… »"
+    },
+    {
+      "niveau": "grave",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_mrt8jguh_45vfn",
+      "quoi": "la page ne repond pas",
+      "detail": "URLError: <urlopen error _ssl.c:983: The handshake operation timed out> — confirme au second controle"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msf72qww_41c1r",
+      "quoi": "description trop courte (18 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msn1o7z8_zaii0",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.9 s au controle calme — a surveiller, pas a reparer"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
-      "quoi": "titre coupe par Google (85 car.)",
-      "detail": "« Coin prière dans un restaurant familial — Prayer spot in Mar… »"
+      "url": "https://www.gohalaltravel.com/spot/sp_mrthy3ne_hjxfv",
+      "quoi": "titre coupe par Google (64 car.)",
+      "detail": "« Mosquée Sidi slimane — Prayer spot in Berkane (community-sha… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_mrtmy7zu_wd5zv",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.6 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms1se3yb_mju65",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.6 s au controle calme — a surveiller, pas a reparer"
     },
     {
       "niveau": "surveiller",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
-      "quoi": "description trop courte (17 car.)",
-      "detail": ""
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.7 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms7iirki_ws5oz",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.7 s au controle calme — a surveiller, pas a reparer"
     },
     {
       "niveau": "defaut",
@@ -962,39 +1270,11 @@
       "detail": ""
     },
     {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msn1o7z8_zaii0",
-      "quoi": "titre coupe par Google (81 car.)",
-      "detail": "« Café sympa sorti de des direction berkane — Halal resto in F… »"
-    },
-    {
       "niveau": "surveiller",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr",
       "quoi": "description trop courte (41 car.)",
       "detail": ""
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8",
-      "quoi": "titre coupe par Google (79 car.)",
-      "detail": "« Resto Sidi koi Ali en bord de mer — Halal resto in Essaouira… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
-      "quoi": "titre coupe par Google (92 car.)",
-      "detail": "« Resto traditionnel spécial jus de fruit et pétit dej — Other… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms7iirki_ws5oz",
-      "quoi": "titre coupe par Google (65 car.)",
-      "detail": "« Hôtel excentre magnifique — Other in Marrakech (community-sh… »"
     },
     {
       "niveau": "surveiller",
@@ -1004,18 +1284,25 @@
       "detail": ""
     },
     {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
+      "quoi": "titre coupe par Google (65 car.)",
+      "detail": "« Resto avec piscine — Halal resto in Tafoughalt (community-sh… »"
+    },
+    {
       "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msf72qww_41c1r",
-      "quoi": "description trop courte (18 car.)",
+      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
+      "quoi": "description trop courte (21 car.)",
       "detail": ""
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/guide-vivant/berkane",
-      "quoi": "titre coupe par Google (65 car.)",
-      "detail": "« Living halal guide to Berkane — by the Muslim community (5 s… »"
+      "url": "https://www.gohalaltravel.com/spot/sp_mrtftu4b_52671",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Mosquée magnifique — Prayer spot in Berkane (community-share… »"
     },
     {
       "niveau": "defaut",
@@ -1023,6 +1310,13 @@
       "url": "https://www.gohalaltravel.com/guide-vivant/marrakech",
       "quoi": "titre coupe par Google (67 car.)",
       "detail": "« Living halal guide to Marrakech — by the Muslim community (8… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/guide-vivant/berkane",
+      "quoi": "titre coupe par Google (65 car.)",
+      "detail": "« Living halal guide to Berkane — by the Muslim community (5 s… »"
     },
     {
       "niveau": "defaut",
