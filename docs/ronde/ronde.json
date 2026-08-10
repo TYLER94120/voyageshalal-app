@@ -1,48 +1,5 @@
 {
-  "ronde_du": "2026-08-10 16:24 UTC",
-  "pages_vues": 128,
-  "defauts": [
-    {
-      "niveau": "defaut",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/ras-al-khaimah",
-      "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Ras el Khaïmah Halal 2026 : Restaurants, Mosquées &amp; Priè… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/phnom-penh",
-      "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Phnom Penh Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/vientiane",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Vientiane Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/ahmedabad",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Ahmedabad Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/samarcande",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Samarkand Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/ouagadougou",
-      "quoi": "titre coupe par Google (63 car.)",
-      "detail": "« Ouagadougou Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
-    }
-  ]
+  "ronde_du": "2026-08-10 17:28 UTC",
+  "pages_vues": 129,
+  "defauts": []
 }
