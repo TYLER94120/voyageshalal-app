@@ -1,0 +1,89 @@
+{
+  "verifie_le": "2026-08-10 10:25 UTC",
+  "constats": [
+    {
+      "projet": "jours-feries",
+      "url": "https://calendrier.api.gouv.fr/jours-feries/metropole.json",
+      "attendu": "json",
+      "note": "API officielle Etalab, toutes annees",
+      "code": 200,
+      "type": "application/json; charset=utf-8",
+      "octets": 8243,
+      "forme": "objet a 285 cles: {2031-01-01, 2031-04-14, 2031-05-01, 2031-05-08, 2031-05-22, 2031-06-02, 2031-07-14, 2031-08-15}",
+      "verdict": "vert",
+      "detail": ""
+    },
+    {
+      "projet": "jours-feries",
+      "url": "https://calendrier.api.gouv.fr/jours-feries/metropole/2027.json",
+      "attendu": "json",
+      "note": "une annee future : c'est elle qui sert au calcul des ponts",
+      "code": 200,
+      "type": "application/json; charset=utf-8",
+      "octets": 318,
+      "forme": "objet a 11 cles: {2027-01-01, 2027-03-29, 2027-05-01, 2027-05-06, 2027-05-08, 2027-05-17, 2027-07-14, 2027-08-15}",
+      "verdict": "vert",
+      "detail": ""
+    },
+    {
+      "projet": "jours-feries",
+      "url": "https://data.education.gouv.fr/api/explore/v2.1/catalog/datasets/fr-en-calendrier-scolaire/records?limit=5",
+      "attendu": "json",
+      "note": "calendrier scolaire par zone",
+      "code": 200,
+      "type": "application/json; charset=utf-8",
+      "octets": 1145,
+      "forme": "objet a 2 cles: {total_count, results}",
+      "verdict": "vert",
+      "detail": ""
+    },
+    {
+      "projet": "carburants",
+      "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?limit=5",
+      "attendu": "json",
+      "note": "flux instantane, adresse moderne",
+      "code": 200,
+      "type": "application/json; charset=utf-8",
+      "octets": 13266,
+      "forme": "objet a 2 cles: {total_count, results}",
+      "verdict": "vert",
+      "detail": ""
+    },
+    {
+      "projet": "carburants",
+      "url": "https://donnees.roulez-eco.fr/opendata/instantane",
+      "attendu": "binaire",
+      "note": "ancienne adresse, archive zip — a tester car citee de memoire",
+      "code": 200,
+      "type": "application/zip",
+      "octets": 953972,
+      "forme": "binaire, 4 premiers octets b'PK\\x03\\x04'",
+      "verdict": "vert",
+      "detail": ""
+    },
+    {
+      "projet": "fin-de-support",
+      "url": "https://endoflife.date/api/all.json",
+      "attendu": "json",
+      "note": "index de tous les produits suivis",
+      "code": 200,
+      "type": "application/json",
+      "octets": 5826,
+      "forme": "liste de 462 elements (str)",
+      "verdict": "vert",
+      "detail": ""
+    },
+    {
+      "projet": "fin-de-support",
+      "url": "https://endoflife.date/api/windows.json",
+      "attendu": "json",
+      "note": "un produit reel : verifie que le format porte bien des dates",
+      "code": 200,
+      "type": "application/json",
+      "octets": 12801,
+      "forme": "liste de 47 elements, 1er objet: {cycle, releaseLabel, releaseDate, eol, latest, link, lts, support}",
+      "verdict": "vert",
+      "detail": ""
+    }
+  ]
+}
