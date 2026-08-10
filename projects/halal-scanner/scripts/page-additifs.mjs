@@ -381,7 +381,7 @@ const html = `<!DOCTYPE html>
     .sommaire a {
       display: inline-flex; align-items: center; gap: 7px;
       background: var(--carte); border: 1px solid var(--bordure);
-      border-radius: 999px; padding: 9px 14px;
+      border-radius: 999px; padding: 9px 14px; min-height: 44px;
       color: var(--texte); text-decoration: none;
       font-size: 14px; font-weight: 600; box-shadow: var(--ombre-douce);
     }
@@ -428,9 +428,12 @@ const html = `<!DOCTYPE html>
       font-size: 12px; background: rgba(18, 38, 26, 0.05);
       border-radius: 999px; padding: 3px 9px; color: var(--texte-doux);
     }
+    /* 44 px : en dessous, on rate le lien au doigt. Ces 57 liens portent la
+       passerelle vers HalalGPT — les rater coute deux fois. */
     .fiche {
-      display: inline-block; margin-top: 10px; font-size: 14px; font-weight: 700;
-      color: var(--or-lisible); text-decoration: none; padding: 4px 0;
+      display: inline-flex; align-items: center; min-height: 44px;
+      margin-top: 6px; font-size: 14px; font-weight: 700;
+      color: var(--or-lisible); text-decoration: none;
     }
 
     .rappel {
@@ -454,7 +457,10 @@ const html = `<!DOCTYPE html>
       background: var(--nuit); color: var(--creme);
       text-align: center; padding: 40px 24px; margin-top: 44px;
     }
-    footer a { color: var(--or); text-decoration: none; padding: 4px 8px; display: inline-block; }
+    footer a {
+      color: var(--or); text-decoration: none; padding: 4px 8px;
+      display: inline-flex; align-items: center; min-height: 44px;
+    }
     footer p { font-size: 14px; color: rgba(253, 250, 243, 0.6); }
     @media (min-width: 700px) { h1 { font-size: 38px; } }
   </style>

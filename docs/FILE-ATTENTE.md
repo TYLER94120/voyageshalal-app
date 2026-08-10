@@ -44,14 +44,25 @@ une explication honnête, jamais un verdict inventé.
    *Piste :* constituer un jeu de fiches réelles figées dans le dépôt, capturées
    une fois depuis le navigateur de Mohamed, pour tester hors ligne.
 
-4. **Les liens « Comprendre le E471 » sont trop petits au doigt.**
-   *Preuve :* mesurés à 30 px de haut sur un écran de 320 px, sous les 44 px
-   recommandés. Il y en a 57 sur `additifs.html`, et ce sont eux qui portent la
-   passerelle vers HalalGPT — donc les rater coûte deux fois.
-
 ---
 
 ## Fait
+
+- **Les liens d'action étaient trop petits au doigt** *(10 août)* — mesuré sur
+  un écran de 320 px, sur les liens d'action autonomes uniquement (boutons et
+  navigation), 44 px étant le minimum recommandé.
+  **Mesure : 74 liens sous 44 px → 0**, sur les quatre pages.
+  Le gros du lot : les 57 liens « Comprendre le E471 → » d'`additifs.html`, à
+  30 px, qui portent la passerelle vers HalalGPT — les rater coûtait deux fois.
+  Corrigé dans la RÈGLE (`.fiche`, `.sommaire a`, `footer a`, `.pied a`), pas
+  page par page : `additifs.html` étant générée, la prochaine régénération ne
+  peut pas réintroduire le défaut.
+  **Ce qui n'a délibérément PAS été touché :** les liens en pleine phrase
+  (adresse de contact, sources externes citées dans un paragraphe). Un lien
+  dans un texte a la hauteur de sa ligne ; le forcer à 44 px casserait le
+  paragraphe. Le script de mesure les exclut explicitement.
+  Vérifié sans régression : aucun débordement horizontal sur les quatre pages,
+  aucune erreur JS, scan « douteux » de bout en bout inchangé.
 
 - **La page du scanner n'avait aucun titre principal** *(10 août)* — mesuré
   après rendu, comme le fait le robot de Google : les trois `h1` du document
