@@ -10,7 +10,7 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-10T08:03:37+00:00" />
+  <meta name="last-modified" content="2026-08-10T08:51:00+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -128,7 +128,11 @@
     .consigne { text-align: center; font-size: 15.5px; font-weight: 600; margin: 16px 0 20px; color: var(--texte-doux); }
     .ligne-saisie { display: flex; gap: 10px; }
     #saisie {
-      flex: 1; min-height: 56px;
+      /* min-width: 0 est indispensable, pas decoratif : un enfant de flex a par
+         defaut min-width:auto et refuse de retrecir sous sa largeur intrinseque.
+         Sans lui, sur un ecran de 320 px, le champ pousse le bouton « Chercher »
+         64 px hors de l'ecran et toute la page defile lateralement. */
+      flex: 1; min-width: 0; min-height: 56px;
       background: var(--carte); color: var(--texte);
       border: 1px solid var(--bordure); border-radius: 14px;
       padding: 0 16px;
@@ -621,7 +625,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-10T08:03:37+00:00"
+      "dateModified": "2026-08-10T08:51:00+00:00"
     },
     {
       "@type": "BreadcrumbList",
