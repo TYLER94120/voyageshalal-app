@@ -193,7 +193,7 @@ def examiner(site, url):
     return defauts
 
 
-def ronde_du_site(site, tour):
+def ronde_du_site(site, tour, complet=False):
     defauts = []
     base = site["base"]
 
@@ -215,7 +215,9 @@ def ronde_du_site(site, tour):
     # site sans le marteler 48 fois par jour.
     accueil = [base + "/"]
     traine = [a for a in adresses if a.rstrip("/") != base.rstrip("/")]
-    if traine:
+    if complet:
+        tranche = traine
+    elif traine:
         depart = (tour * PAR_TOUR) % len(traine)
         tranche = (traine + traine)[depart:depart + PAR_TOUR]
     else:
@@ -241,9 +243,25 @@ def main():
     horodatage = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     tour = int(os.environ.get("GITHUB_RUN_NUMBER", "0"))
 
+    # Balayage complet, a la demande : on regarde TOUTES les pages au lieu
+    # d'une tranche. On ne le fait pas toutes les 30 minutes — ce serait des
+    # milliers de requetes par heure pour re-constater ce qu'on sait deja.
+    # Mais avant de reprocher a un agent « beaucoup de defauts », il faut le
+    # chiffre exact, pas un echantillon.
+    complet = os.environ.get("RONDE_COMPLETE", "").strip() not in ("", "0", "non")
+
+    # Filtre facultatif : « voyageshalal.fr,gohalaltravel.com ».
+    filtre = [s.strip() for s in os.environ.get("RONDE_SITES", "").split(",") if s.strip()]
+    sites = [s for s in SITES if not filtre or s["nom"] in filtre]
+    if filtre and not sites:
+        print(f"Aucun site ne correspond a « {filtre} ».")
+        return 0
+    if complet:
+        print("Balayage COMPLET : toutes les pages, pas une tranche.\n")
+
     tous, vues = [], 0
-    for site in SITES:
-        defauts, n = ronde_du_site(site, tour)
+    for site in sites:
+        defauts, n = ronde_du_site(site, tour, complet)
         tous += defauts
         vues += n
         graves = sum(1 for d in defauts if d["niveau"] == GRAVE)
@@ -255,9 +273,16 @@ def main():
 
     os.makedirs("docs/ronde", exist_ok=True)
 
+    # Le balayage complet ecrit AILLEURS. Sinon il ecraserait le rapport que
+    # les agents lisent toutes les 30 minutes, et la comparaison « qu'est-ce
+    # qui a change » n'aurait plus de sens : on comparerait un echantillon de
+    # 40 pages a un balayage de 800.
+    fichier_json = "docs/ronde/balayage-complet.json" if complet else "docs/ronde/ronde.json"
+    fichier_md = "docs/ronde/BALAYAGE-COMPLET.md" if complet else "docs/ronde/RONDE.md"
+
     ancien = None
     try:
-        with open("docs/ronde/ronde.json", encoding="utf-8") as f:
+        with open(fichier_json, encoding="utf-8") as f:
             ancien = json.load(f)
     except Exception:
         pass
@@ -265,13 +290,13 @@ def main():
     inchange = ancien is not None and substance(ancien.get("defauts", [])) == substance(tous)
 
     if not inchange:
-        with open("docs/ronde/ronde.json", "w", encoding="utf-8") as f:
+        with open(fichier_json, "w", encoding="utf-8") as f:
             json.dump({"ronde_du": horodatage, "pages_vues": vues, "defauts": tous},
                       f, ensure_ascii=False, indent=2)
             f.write("\n")
 
         lignes = [
-            "# La ronde des sites",
+            "# Balayage complet" if complet else "# La ronde des sites",
             "",
             f"**Dernier changement constate le {horodatage}.** "
             f"{vues} pages regardees a cette ronde.",
@@ -309,9 +334,9 @@ def main():
                                   f"liste complete dans `ronde.json`")
                 lignes.append("")
 
-        with open("docs/ronde/RONDE.md", "w", encoding="utf-8") as f:
+        with open(fichier_md, "w", encoding="utf-8") as f:
             f.write("\n".join(lignes))
-        print("\nConstat ecrit : docs/ronde/RONDE.md")
+        print(f"\nConstat ecrit : {fichier_md}")
     else:
         print("\nRien de nouveau depuis la derniere ronde : aucun fichier reecrit.")
 

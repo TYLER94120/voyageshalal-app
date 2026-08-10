@@ -20,6 +20,15 @@ name: La ronde des sites
 
 on:
   workflow_dispatch:
+    inputs:
+      complete:
+        description: "Balayage COMPLET (toutes les pages, pas une tranche)"
+        type: boolean
+        default: false
+      sites:
+        description: "Limiter a certains sites, separes par des virgules (vide = tous)"
+        type: string
+        default: ""
   schedule:
     - cron: '*/30 * * * *'
 
@@ -40,11 +49,17 @@ jobs:
       - name: Faire la ronde
         id: ronde
         continue-on-error: true
+        env:
+          RONDE_COMPLETE: ${{ inputs.complete && '1' || '' }}
+          RONDE_SITES: ${{ inputs.sites }}
         run: python3 outils/ronde-des-sites.py
 
       - name: Afficher le constat dans le resume du travail
         if: always()
-        run: cat docs/ronde/RONDE.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+        run: |
+          f=docs/ronde/RONDE.md
+          [ "${{ inputs.complete }}" = "true" ] && f=docs/ronde/BALAYAGE-COMPLET.md
+          cat "$f" >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
 
       # On depose le constat AVANT de faire echouer la ronde : sinon, le jour
       # ou un site tombe, la croix rouge arriverait sans le rapport qui dit
