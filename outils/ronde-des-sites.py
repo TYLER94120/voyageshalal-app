@@ -52,6 +52,7 @@ TITRE_MAX = 60      # au-dela, Google coupe le titre dans ses resultats.
 DESC_MIN = 50
 PAR_TOUR = 40       # pages de la longue traine verifiees a chaque ronde
 PARALLELE = 6
+PAUSE_COMPLET = 0.0  # pause entre deux pages, en balayage complet seulement
 AGENT = "Mozilla/5.0 (compatible; ronde-empire/1.0)"
 
 # Les sites, et ce qu'on attend d'eux. `langue` = ce que <html lang> DOIT
@@ -121,6 +122,8 @@ def urls_du_sitemap(base):
 
 def examiner(site, url):
     """Regarde une page comme un visiteur. Rend la liste de ses defauts."""
+    if PAUSE_COMPLET:
+        time.sleep(PAUSE_COMPLET)
     defauts = []
 
     def noter(niveau, quoi, detail=""):
@@ -303,7 +306,21 @@ def main():
         print(f"Aucun site ne correspond a « {filtre} ».")
         return 0
     if complet:
-        print("Balayage COMPLET : toutes les pages, pas une tranche.\n")
+        # On ralentit le balayage complet. Mesure du 10 aout, 17h12 : sur
+        # 1751 pages a 6 requetes en parallele, 8 pages ont rendu une erreur de
+        # POIGNEE DE MAIN SSL — pas un 404, pas une erreur serveur. C'est la
+        # signature d'un hebergeur qui limite le debit d'une adresse qui l'a
+        # interroge 1751 fois en quelques minutes, et ca produit de fausses
+        # pannes en fin de balayage.
+        #
+        # C'est la troisieme fois dans la journee que mon propre robot fabrique
+        # des defauts en tapant trop fort. Deux requetes a la fois et une pause
+        # entre chaque : le balayage dure plus longtemps, et ce qu'il rend est
+        # vrai. Un balayage rapide qui ment ne sert a rien.
+        global PARALLELE, PAUSE_COMPLET
+        PARALLELE = 2
+        PAUSE_COMPLET = 0.35
+        print("Balayage COMPLET : toutes les pages, doucement (2 a la fois).\n")
 
     tous, vues = [], 0
     for site in sites:
