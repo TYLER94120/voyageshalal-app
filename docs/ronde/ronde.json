@@ -1,104 +1,20 @@
 {
-  "ronde_du": "2026-08-10 12:10 UTC",
-  "pages_vues": 128,
+  "ronde_du": "2026-08-10 13:57 UTC",
+  "pages_vues": 130,
   "defauts": [
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/saint-petersbourg",
-      "quoi": "titre coupe par Google (65 car.)",
-      "detail": "« Saint-Pétersbourg Halal 2026 : Restaurants, Mosquées &amp; P… »"
+      "url": "https://www.voyageshalal.fr/destinations/rio-de-janeiro",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Rio de Janeiro Halal 2026 : Restaurants, Mosquées &amp; Priè… »"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/san-francisco",
+      "url": "https://www.voyageshalal.fr/destinations/thessalonique",
       "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« San Francisco Halal 2026 : Restaurants, Mosquées &amp; Prièr… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/ho-chi-minh",
-      "quoi": "titre coupe par Google (65 car.)",
-      "detail": "« Hô Chi Minh-Ville Halal 2026 : Restaurants, Mosquées &amp; P… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/saint-petersbourg",
-      "quoi": "titre coupe par Google (68 car.)",
-      "detail": "« Saint Petersburg Halal Guide 2026: Restaurants, Mosques &amp… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/san-francisco",
-      "quoi": "titre coupe par Google (65 car.)",
-      "detail": "« San Francisco Halal Guide 2026: Restaurants, Mosques &amp; P… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/washington",
-      "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Washington Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/las-vegas",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Las Vegas Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/vancouver",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Vancouver Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/hong-kong",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Hong Kong Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/ho-chi-minh",
-      "quoi": "titre coupe par Google (69 car.)",
-      "detail": "« Hô Chi Minh-Ville Halal Guide 2026: Restaurants, Mosques &am… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/katmandou",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Katmandou Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/bangalore",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Bangalore Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/chiang-mai",
-      "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Chiang Mai Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/siem-reap",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Siem Reap Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+      "detail": "« Thessalonique Halal 2026 : Restaurants, Mosquées &amp; Prièr… »"
     },
     {
       "niveau": "defaut",
@@ -106,6 +22,97 @@
       "url": "https://www.gohalaltravel.com/destinations/johannesburg",
       "quoi": "titre coupe par Google (64 car.)",
       "detail": "« Johannesburg Halal Guide 2026: Restaurants, Mosques &amp; Pr… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/sao-paulo",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« São Paulo Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/buenos-aires",
+      "quoi": "titre coupe par Google (64 car.)",
+      "detail": "« Buenos Aires Halal Guide 2026: Restaurants, Mosques &amp; Pr… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/montpellier",
+      "quoi": "titre coupe par Google (63 car.)",
+      "detail": "« Montpellier Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/la-haye",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« The Hague Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/goteborg",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Gothenburg Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/bratislava",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Bratislava Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/ljubljana",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Ljubljana Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/dubrovnik",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Dubrovnik Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/bucarest",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Bucharest Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/thessalonique",
+      "quoi": "titre coupe par Google (64 car.)",
+      "detail": "« Thessaloniki Halal Guide 2026: Restaurants, Mosques &amp; Pr… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/reykjavik",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Reykjavik Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/luxembourg",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Luxembourg Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/san-diego",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« San Diego Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
     }
   ]
 }
