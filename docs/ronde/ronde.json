@@ -1,118 +1,48 @@
 {
-  "ronde_du": "2026-08-10 11:05 UTC",
-  "pages_vues": 129,
+  "ronde_du": "2026-08-10 11:16 UTC",
+  "pages_vues": 128,
   "defauts": [
     {
       "niveau": "defaut",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/kota-kinabalu",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/samarkand",
       "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Kota Kinabalu Halal 2026 : Restaurants, Mosquées &amp; Prièr… »"
+      "detail": "« Samarkand Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/cappadoce",
+      "url": "https://www.gohalaltravel.com/destinations/singapour",
       "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Cappadoce Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
+      "detail": "« Singapore Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/casablanca",
+      "url": "https://www.gohalaltravel.com/destinations/yogyakarta",
       "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Casablanca Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
+      "detail": "« Yogyakarta Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/chefchaouen",
-      "quoi": "titre coupe par Google (63 car.)",
-      "detail": "« Chefchaouen Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
+      "url": "https://www.gohalaltravel.com/destinations/tafoughalt",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Tafoughalt Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/gaziantep",
+      "url": "https://www.gohalaltravel.com/destinations/al-hoceima",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Al Hoceïma Halal Guide 2026: Restaurants, Mosques &amp; Pray… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/el-jadida",
       "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Gaziantep Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/hyderabad-inde",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Hyderabad Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/islamabad",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Islamabad Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/kota-kinabalu",
-      "quoi": "titre coupe par Google (65 car.)",
-      "detail": "« Kota Kinabalu Halal Guide 2026: Restaurants, Mosques &amp; P… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/koweit-city",
-      "quoi": "titre coupe par Google (63 car.)",
-      "detail": "« Koweït City Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/kuala-lumpur",
-      "quoi": "titre coupe par Google (64 car.)",
-      "detail": "« Kuala Lumpur Halal Guide 2026: Restaurants, Mosques &amp; Pr… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/los-angeles",
-      "quoi": "titre coupe par Google (63 car.)",
-      "detail": "« Los Angeles Halal Guide 2026: Restaurants, Mosques &amp; Pra… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/marrakech",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Marrakesh Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/marseille",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Marseille Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/q/retard-fajr-reveil",
-      "quoi": "titre coupe par Google (66 car.)",
-      "detail": "« Je me suis réveillé après l’heure du Fajr : que faire ? — Ha… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/q/serrer-la-main-islam",
-      "quoi": "titre coupe par Google (72 car.)",
-      "detail": "« Serrer la main à une personne du sexe opposé, est-ce permis … »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/q/ramadan-voyage-jeune",
-      "quoi": "titre coupe par Google (63 car.)",
-      "detail": "« Peut-on ne pas jeûner en voyage pendant le Ramadan ? — Halal… »"
+      "detail": "« El Jadida Halal Guide 2026: Restaurants, Mosques &amp; Praye… »"
     }
   ]
 }
