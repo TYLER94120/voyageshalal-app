@@ -1,0 +1,101 @@
+{
+  "verifie_le": "2026-08-10 10:27 UTC",
+  "candidats": {
+    "jours-feries": [
+      {
+        "domaine": "lesponts.fr",
+        "etat": "pris",
+        "detail": "enregistre (RDAP 200)"
+      },
+      {
+        "domaine": "monpont.fr",
+        "etat": "libre",
+        "detail": "aucun enregistrement trouve"
+      },
+      {
+        "domaine": "quandposer.fr",
+        "etat": "libre",
+        "detail": "aucun enregistrement trouve"
+      },
+      {
+        "domaine": "poserunjour.fr",
+        "etat": "libre",
+        "detail": "aucun enregistrement trouve"
+      },
+      {
+        "domaine": "calendrierdesponts.fr",
+        "etat": "libre",
+        "detail": "aucun enregistrement trouve"
+      },
+      {
+        "domaine": "pontsetvacances.fr",
+        "etat": "libre",
+        "detail": "aucun enregistrement trouve"
+      }
+    ],
+    "carburants": [
+      {
+        "domaine": "leplein.fr",
+        "etat": "pris",
+        "detail": "enregistre (RDAP 200)"
+      },
+      {
+        "domaine": "monplein.fr",
+        "etat": "pris",
+        "detail": "enregistre (RDAP 200)"
+      },
+      {
+        "domaine": "pleinmoinscher.fr",
+        "etat": "pris",
+        "detail": "enregistre (RDAP 200)"
+      },
+      {
+        "domaine": "oufaireleplein.fr",
+        "etat": "pris",
+        "detail": "enregistre (RDAP 200)"
+      },
+      {
+        "domaine": "carburantpascher.fr",
+        "etat": "libre",
+        "detail": "aucun enregistrement trouve"
+      },
+      {
+        "domaine": "prixdupleinfr.fr",
+        "etat": "libre",
+        "detail": "aucun enregistrement trouve"
+      }
+    ],
+    "fin-de-support": [
+      {
+        "domaine": "findesupport.fr",
+        "etat": "libre",
+        "detail": "aucun enregistrement trouve"
+      },
+      {
+        "domaine": "jusquaquand.fr",
+        "etat": "libre",
+        "detail": "aucun enregistrement trouve"
+      },
+      {
+        "domaine": "encoresupporte.fr",
+        "etat": "libre",
+        "detail": "aucun enregistrement trouve"
+      },
+      {
+        "domaine": "finmisesajour.fr",
+        "etat": "libre",
+        "detail": "aucun enregistrement trouve"
+      },
+      {
+        "domaine": "toujourssupporte.fr",
+        "etat": "inconnu",
+        "detail": "TimeoutError: The read operation timed out"
+      },
+      {
+        "domaine": "datedefin.fr",
+        "etat": "inconnu",
+        "detail": "TimeoutError: The read operation timed out"
+      }
+    ]
+  }
+}
