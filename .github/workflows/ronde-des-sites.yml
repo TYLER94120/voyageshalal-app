@@ -1,0 +1,71 @@
+# La ronde : toutes les 30 minutes, un robot regarde les quatre sites en
+# ligne comme un visiteur, et note ce qui ne va pas.
+#
+# Demande de Mohamed, 10 aout 2026 : « Je n'arrete pas de remonter des
+# problemes avec des captures d'ecran. Ce n'est pas normal. »
+#
+# Il a raison. Le detecteur de pannes de cet empire etait un humain, qui ne
+# regarde que les pages ou il passe, et qui ne voit que ce qui creve les
+# yeux. Un titre trop long ne se voit pas a l'oeil nu et coute des clics
+# tous les jours.
+#
+# La ronde echoue — croix rouge, et GitHub previent par courriel — UNIQUEMENT
+# s'il y a un defaut grave, c'est-a-dire si un visiteur ne recoit pas la
+# page. Les defauts moins graves sont ecrits dans docs/ronde/RONDE.md et les
+# agents les traitent a leur cycle. Une alerte qui sonne pour un titre trop
+# long finirait ignoree, et le jour ou un site tombe vraiment plus personne
+# ne regarderait.
+
+name: La ronde des sites
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/30 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ronde-des-sites
+  cancel-in-progress: false
+
+jobs:
+  ronde:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      - name: Faire la ronde
+        id: ronde
+        continue-on-error: true
+        run: python3 outils/ronde-des-sites.py
+
+      - name: Afficher le constat dans le resume du travail
+        if: always()
+        run: cat docs/ronde/RONDE.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+
+      # On depose le constat AVANT de faire echouer la ronde : sinon, le jour
+      # ou un site tombe, la croix rouge arriverait sans le rapport qui dit
+      # quoi reparer.
+      - name: Deposer le constat dans le depot
+        if: always()
+        run: |
+          git config user.name  "robot-ronde"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/ronde/
+          git diff --staged --quiet && echo "Rien de nouveau." && exit 0
+          git commit -m "Ronde: la liste des defauts a change"
+          for essai in 1 2 3; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && break
+            echo "Course avec un autre robot, nouvel essai ($essai)."
+            sleep $((essai * 5))
+          done
+
+      - name: Conclure
+        if: steps.ronde.outcome == 'failure'
+        run: |
+          echo "::error::Defaut GRAVE detecte — un visiteur ne recoit pas la page. Voir docs/ronde/RONDE.md"
+          exit 1
