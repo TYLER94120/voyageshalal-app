@@ -68,7 +68,7 @@ GRAVE, DEFAUT, SURVEILLER = "grave", "defaut", "surveiller"
 SYMBOLE = {GRAVE: "🔴", DEFAUT: "🟠", SURVEILLER: "🟡"}
 
 
-def chercher(url, methode="GET"):
+def chercher(url, methode="GET", delai=None):
     """Rend (code, corps, secondes, erreur). Ne leve jamais."""
     requete = urllib.request.Request(url, method=methode, headers={
         "User-Agent": AGENT,
@@ -78,7 +78,7 @@ def chercher(url, methode="GET"):
     depart = time.monotonic()
     try:
         contexte = ssl.create_default_context()
-        with urllib.request.urlopen(requete, timeout=DELAI, context=contexte) as r:
+        with urllib.request.urlopen(requete, timeout=delai or DELAI, context=contexte) as r:
             corps = r.read(400_000) if methode == "GET" else b""
             return r.status, corps, time.monotonic() - depart, None
     except urllib.error.HTTPError as e:
@@ -231,6 +231,52 @@ def ronde_du_site(site, tour, complet=False):
     return defauts, len(a_voir)
 
 
+def confirmer_les_graves(defauts):
+    """Un defaut grave ne s'annonce jamais sur un seul essai.
+
+    La ronde interroge jusqu'a 6 pages a la fois. Sur un balayage complet,
+    c'est plus de 1700 requetes en quelques minutes — assez pour faire tousser
+    un hebergement et provoquer des delais depasses qui n'ont RIEN a voir avec
+    l'etat du site.
+
+    Annoncer « 29 pages mortes » alors que c'est notre propre robot qui a
+    sature le serveur serait une accusation fausse, et elle enverrait un agent
+    reparer un defaut qui n'existe pas. On recontrole donc chaque grave, un par
+    un, sans parallelisme, avec plus de patience.
+
+    Une page qui repond au controle calme n'est pas morte : elle est instable
+    sous charge. C'est une vraie information, mais ce n'est pas la meme.
+    """
+    muettes = [d for d in defauts
+               if d["niveau"] == GRAVE and "ne repond pas" in d["quoi"]]
+    if not muettes:
+        return defauts
+
+    print(f"\n{len(muettes)} page(s) muette(s) : second controle, une par une, "
+          f"sans parallelisme.")
+    verdict = {}
+    for d in muettes:
+        time.sleep(1.0)
+        code, corps, duree, erreur = chercher(d["url"], delai=45)
+        vivante = not erreur and code == 200 and len(corps) >= 500
+        verdict[d["url"]] = (vivante, duree, code, erreur)
+        print(f"  {'repond' if vivante else 'MUETTE'}  {duree:5.1f} s  {d['url']}")
+
+    sortie = []
+    for d in defauts:
+        v = verdict.get(d["url"]) if d["niveau"] == GRAVE and "ne repond pas" in d["quoi"] else None
+        if v and v[0]:
+            sortie.append({**d, "niveau": SURVEILLER,
+                           "quoi": "page instable sous charge",
+                           "detail": f"muette pendant la ronde, repond en {v[1]:.1f} s "
+                                     f"au controle calme — a surveiller, pas a reparer"})
+        elif v:
+            sortie.append({**d, "detail": d["detail"] + " — confirme au second controle"})
+        else:
+            sortie.append(d)
+    return sortie
+
+
 def substance(defauts):
     """Ce qui merite un commit. On laisse de cote les durees, qui bougent a
     chaque ronde sans rien vouloir dire."""
@@ -267,6 +313,8 @@ def main():
         graves = sum(1 for d in defauts if d["niveau"] == GRAVE)
         print(f"{site['nom']:22} {n:3} pages · {len(defauts):3} defauts "
               f"dont {graves} graves")
+
+    tous = confirmer_les_graves(tous)
 
     par_niveau = {n: [d for d in tous if d["niveau"] == n]
                   for n in (GRAVE, DEFAUT, SURVEILLER)}

@@ -1,0 +1,69 @@
+# Deuxieme robot : les liens qui ne menent nulle part.
+#
+# La ronde regarde si une PAGE est bonne. Celui-ci regarde si les CHEMINS qui
+# en partent menent quelque part. Une page parfaite remplie de liens morts
+# reste une mauvaise page — et pour un guide de voyage, c'est le defaut le
+# plus couteux : le lecteur arrive sur une erreur au moment precis ou il
+# faisait confiance au guide.
+#
+# Toutes les 4 heures et non toutes les 30 minutes : verifier des milliers de
+# liens, dont beaucoup chez des tiers, est lourd pour eux comme pour nous. La
+# rotation couvre tout le monde au fil des passages.
+
+name: Les liens morts
+
+on:
+  workflow_dispatch:
+    inputs:
+      sites:
+        description: "Limiter a certains sites, separes par des virgules (vide = tous)"
+        type: string
+        default: ""
+  schedule:
+    - cron: '20 */4 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: liens-morts
+  cancel-in-progress: false
+
+jobs:
+  controler:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      - name: Controler les liens
+        id: liens
+        continue-on-error: true
+        env:
+          LIENS_SITES: ${{ inputs.sites }}
+        run: python3 outils/liens-morts.py
+
+      - name: Afficher le constat dans le resume du travail
+        if: always()
+        run: cat docs/ronde/LIENS-MORTS.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+
+      - name: Deposer le constat dans le depot
+        if: always()
+        run: |
+          git config user.name  "robot-liens"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/ronde/
+          git diff --staged --quiet && echo "Rien de nouveau." && exit 0
+          git commit -m "Liens morts: le constat a change"
+          for essai in 1 2 3; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && break
+            sleep $((essai * 5))
+          done
+
+      - name: Conclure
+        if: steps.liens.outcome == 'failure'
+        run: |
+          echo "::error::Des liens INTERNES sont morts — c'est notre faute et ca se repare. Voir docs/ronde/LIENS-MORTS.md"
+          exit 1
