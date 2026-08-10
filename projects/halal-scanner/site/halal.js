@@ -2,7 +2,7 @@
 // Analyse indicative basée sur les ingrédients et additifs Open Food Facts —
 // ne remplace jamais une certification officielle (AVS, ARGML, etc.).
 // Additifs à risque les plus fréquents (codes sans le préfixe "en:").
-const ADDITIFS_A_RISQUE = {
+export const ADDITIFS_A_RISQUE = {
     e120: {
         niveau: "douteux",
         nom: "E120 — Carmin (cochenille)",
@@ -147,7 +147,7 @@ const ADDITIFS_A_RISQUE = {
     },
 };
 // Les textes sont normalisés (minuscules, sans accents) avant le test.
-const REGLES_HARAM = [
+export const REGLES_HARAM = [
     {
         motif: /\bporcs?\b|porcine?s?\b|\blard\b|saindoux|couenne|\bbacon\b|poitrine fumee/,
         element: "Porc / dérivé de porc",
@@ -164,7 +164,7 @@ const REGLES_HARAM = [
         raison: "Boisson alcoolisée utilisée comme ingrédient.",
     },
 ];
-const REGLES_DOUTEUX = [
+export const REGLES_DOUTEUX = [
     {
         motif: /gelatine/,
         element: "Gélatine",

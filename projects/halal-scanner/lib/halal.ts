@@ -25,7 +25,7 @@ export interface Verdict {
   alertes: Alerte[];
 }
 
-interface InfosAdditif {
+export interface InfosAdditif {
   niveau: "haram" | "douteux";
   nom: string;
   raison: string;
@@ -33,7 +33,7 @@ interface InfosAdditif {
 }
 
 // Additifs à risque les plus fréquents (codes sans le préfixe "en:").
-const ADDITIFS_A_RISQUE: Record<string, InfosAdditif> = {
+export const ADDITIFS_A_RISQUE: Record<string, InfosAdditif> = {
   e120: {
     niveau: "douteux",
     nom: "E120 — Carmin (cochenille)",
@@ -178,7 +178,7 @@ const ADDITIFS_A_RISQUE: Record<string, InfosAdditif> = {
   },
 };
 
-interface RegleTexte {
+export interface RegleTexte {
   motif: RegExp;
   element: string;
   raison: string;
@@ -186,7 +186,7 @@ interface RegleTexte {
 }
 
 // Les textes sont normalisés (minuscules, sans accents) avant le test.
-const REGLES_HARAM: RegleTexte[] = [
+export const REGLES_HARAM: RegleTexte[] = [
   {
     motif: /\bporcs?\b|porcine?s?\b|\blard\b|saindoux|couenne|\bbacon\b|poitrine fumee/,
     element: "Porc / dérivé de porc",
@@ -204,7 +204,7 @@ const REGLES_HARAM: RegleTexte[] = [
   },
 ];
 
-const REGLES_DOUTEUX: RegleTexte[] = [
+export const REGLES_DOUTEUX: RegleTexte[] = [
   {
     motif: /gelatine/,
     element: "Gélatine",
