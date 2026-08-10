@@ -10,7 +10,7 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-10T01:26:10+00:00" />
+  <meta name="last-modified" content="2026-08-10T01:31:15+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -621,7 +621,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-10T01:26:10+00:00"
+      "dateModified": "2026-08-10T01:31:15+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -1198,11 +1198,15 @@
     const CONTACT = "oulali.mohamed@gmail.com";
     let VERIFS = {};
     let LOCAUX = {};
+    // fetchCourt et non fetch : chaque scan attend cette promesse avant
+    // d'afficher quoi que ce soit. Un fetch sans délai maximum rendrait donc
+    // TOUS les scans — même ceux servis depuis la mémoire — otages d'un réseau
+    // lent, ce qui annulerait exactement la promesse « verdict immédiat ».
     const verifsPretes = (async () => {
       try {
         const [rv, rl] = await Promise.all([
-          fetch("./verifications.json", { cache: "no-store" }),
-          fetch("./produits-locaux.json", { cache: "no-store" }),
+          fetchCourt("./verifications.json", { cache: "no-store" }),
+          fetchCourt("./produits-locaux.json", { cache: "no-store" }),
         ]);
         if (rv.ok) {
           const j = await rv.json();
@@ -1327,7 +1331,7 @@
     let ECODES = null;
     (async () => {
       try {
-        const r = await fetch("https://halalgpt.fr/api/ecodes");
+        const r = await fetchCourt("https://halalgpt.fr/api/ecodes");
         if (!r.ok) return;
         const j = await r.json();
         const liste = (j && (j.additifs || j.ecodes)) || [];
@@ -2200,6 +2204,11 @@
         return;
       }
 
+      // Volontairement SANS délai maximum, contrairement aux autres appels :
+      // l'utilisateur a lancé lui-même cet envoi, il sait qu'il est long, et
+      // une photo compressée pèse plusieurs centaines de kilo-octets. Couper
+      // au bout de 4 s le priverait de la seule réponse possible pour un
+      // produit non référencé — il n'y a aucun repli local à lui servir.
       let reponse;
       try {
         reponse = await fetch(API_ETIQUETTE, {
