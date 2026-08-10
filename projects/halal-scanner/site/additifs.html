@@ -10,7 +10,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://halalcheck.fr/additifs.html" />
   <link rel="canonical" href="https://halalcheck.fr/additifs.html" />
-  <meta name="last-modified" content="2026-08-10T01:25:55+00:00" />
+  <meta name="last-modified" content="2026-08-10T01:26:10+00:00" />
   <meta name="theme-color" content="#FDFAF3" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
@@ -32,7 +32,7 @@
         "description": "E120, E441, E471… la liste complète des additifs et ingrédients que HalalCheck repère, avec la raison du doute pour chacun. Alimentaire et cosmétiques.",
         "isPartOf": { "@id": "https://halalcheck.fr/#application" },
         "publisher": { "@id": "https://halalcheck.fr/#editeur" },
-        "dateModified": "2026-08-10T01:25:55+00:00"
+        "dateModified": "2026-08-10T01:26:10+00:00"
       },
       {
         "@type": "BreadcrumbList",
@@ -226,7 +226,7 @@
     </nav>
 
     <section class="bloc" id="additifs-interdits">
-      <h2>Additifs interdits <span class="compte">2</span></h2>
+      <h2>Additifs interdits <span class="compte" data-total="2">2</span></h2>
       <p class="chapeau">Leur origine est établie, pas seulement possible. Le verdict est <strong>haram</strong> sauf mention halal certifiée sur l'emballage.</p>
       <article class="carte haram" data-cherche="e441 gelatine gelatine le plus souvent porcine. interdite sauf gelatine certifiee halal.">
         <div class="entete"><span class="code">E441</span><h3>Gélatine</h3></div>
@@ -241,7 +241,7 @@
     </section>
 
     <section class="bloc" id="additifs-verifier">
-      <h2>Additifs à vérifier <span class="compte">54</span></h2>
+      <h2>Additifs à vérifier <span class="compte" data-total="54">54</span></h2>
       <p class="chapeau">Ces additifs existent en version végétale <em>comme</em> animale. L'étiquette ne permet pas de trancher : le verdict est <strong>douteux</strong>, et la raison exacte est affichée.</p>
       <article class="carte douteux" data-cherche="e120 carmin (cochenille) colorant extrait d'insectes broyes, considere non halal par la majorite des avis.">
         <div class="entete"><span class="code">E120</span><h3>Carmin (cochenille)</h3></div>
@@ -516,7 +516,7 @@
     </section>
 
     <section class="bloc" id="ingredients-interdits">
-      <h2>Ingrédients interdits dans la liste <span class="compte">3</span></h2>
+      <h2>Ingrédients interdits dans la liste <span class="compte" data-total="3">3</span></h2>
       <p class="chapeau">Repérés directement dans le texte de la composition, sans code E.</p>
       <article class="carte haram" data-cherche="porc / derive de porc le porc et tous ses derives sont interdits. porc porcin lard saindoux couenne bacon poitrine fumee">
         <div class="entete"><h3>Porc / dérivé de porc</h3></div>
@@ -539,7 +539,7 @@
     </section>
 
     <section class="bloc" id="ingredients-verifier">
-      <h2>Ingrédients à vérifier dans la liste <span class="compte">9</span></h2>
+      <h2>Ingrédients à vérifier dans la liste <span class="compte" data-total="9">9</span></h2>
       <p class="chapeau">Mots qui déclenchent un doute et une demande de vérification.</p>
       <article class="carte douteux" data-cherche="gelatine origine non precisee — souvent porcine, sauf mention halal. gelatine">
         <div class="entete"><h3>Gélatine</h3></div>
@@ -598,7 +598,7 @@
     </section>
 
     <section class="bloc" id="cosmetiques-interdits">
-      <h2>Cosmétiques — ingrédients interdits <span class="compte">4</span></h2>
+      <h2>Cosmétiques — ingrédients interdits <span class="compte" data-total="4">4</span></h2>
       <p class="chapeau">Nomenclature INCI, celle imprimée au dos des shampooings, crèmes et savons.</p>
       <article class="carte haram" data-cherche="suif (tallow) graisse de boeuf ou de mouton fondue, tres utilisee dans les savons. interdite sauf origine halal certifiee. tallow sodium tallowate potassium tallowate tallowate suif">
         <div class="entete"><h3>Suif (Tallow)</h3></div>
@@ -627,7 +627,7 @@
     </section>
 
     <section class="bloc" id="cosmetiques-verifier">
-      <h2>Cosmétiques — ingrédients à vérifier <span class="compte">21</span></h2>
+      <h2>Cosmétiques — ingrédients à vérifier <span class="compte" data-total="21">21</span></h2>
       <p class="chapeau">Origine végétale ou animale selon le fabricant. Un produit certifié halal ou végane lève ce doute.</p>
       <article class="carte douteux" data-cherche="collagene extrait de peau, d'os ou d'ecailles ; l'espece et l'abattage ne sont pas precises. collagen collagene hydrolyzed collagen soluble collagen">
         <div class="entete"><h3>Collagène</h3></div>
@@ -758,7 +758,7 @@
     </section>
 
     <section class="bloc" id="cosmetiques-alcool">
-      <h2>Cosmétiques — alcool <span class="compte">1</span></h2>
+      <h2>Cosmétiques — alcool <span class="compte" data-total="1">1</span></h2>
       <p class="chapeau">Seul l'alcool <em>éthylique</em> est relevé. Cetyl, Cetearyl et Stearyl Alcohol sont des cires grasses, pas de l'alcool : le scanner ne les signale jamais.</p>
       <article class="carte douteux" data-cherche="alcool ethylique (alcohol denat.) alcool non potable, servant de support ou d'antiseptique. beaucoup de savants l'autorisent en usage externe ; d'autres le deconseillent. alcohol denat denatured alcohol sd alcohol ethanol ethyl alcohol alcool denature">
         <div class="entete"><h3>Alcool éthylique (Alcohol Denat.)</h3></div>
@@ -814,10 +814,14 @@
           c.hidden = !visible;
           if (visible) trouves += 1;
         });
-        // Une section dont toutes les cartes sont masquées disparaît aussi.
+        // Une section dont toutes les cartes sont masquées disparaît aussi, et
+        // son compteur suit la recherche : afficher « 9 » au-dessus d'une seule
+        // fiche donnerait l'impression qu'il en manque huit.
         blocs.forEach(function (b) {
           var reste = b.querySelectorAll(".carte:not([hidden])").length;
           b.hidden = reste === 0;
+          var compte = b.querySelector(".compte");
+          if (compte) compte.textContent = q ? reste : compte.getAttribute("data-total");
         });
         // Pendant une recherche, le sommaire n'a plus de sens : les sections
         // affichées sont déjà la réponse.

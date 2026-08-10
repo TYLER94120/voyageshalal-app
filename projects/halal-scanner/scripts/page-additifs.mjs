@@ -193,7 +193,7 @@ function section(id, titre, chapeau, cartes) {
     titre,
     nombre: cartes.length,
     html: `    <section class="bloc" id="${id}">
-      <h2>${titre} <span class="compte">${cartes.length}</span></h2>
+      <h2>${titre} <span class="compte" data-total="${cartes.length}">${cartes.length}</span></h2>
       <p class="chapeau">${chapeau}</p>
 ${cartes.join("\n")}
     </section>`,
@@ -542,10 +542,14 @@ ${sections.map((s) => s.html).join("\n\n")}
           c.hidden = !visible;
           if (visible) trouves += 1;
         });
-        // Une section dont toutes les cartes sont masquées disparaît aussi.
+        // Une section dont toutes les cartes sont masquées disparaît aussi, et
+        // son compteur suit la recherche : afficher « 9 » au-dessus d'une seule
+        // fiche donnerait l'impression qu'il en manque huit.
         blocs.forEach(function (b) {
           var reste = b.querySelectorAll(".carte:not([hidden])").length;
           b.hidden = reste === 0;
+          var compte = b.querySelector(".compte");
+          if (compte) compte.textContent = q ? reste : compte.getAttribute("data-total");
         });
         // Pendant une recherche, le sommaire n'a plus de sens : les sections
         // affichées sont déjà la réponse.
