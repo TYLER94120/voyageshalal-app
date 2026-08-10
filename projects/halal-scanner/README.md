@@ -22,9 +22,20 @@ mises à jour instantanées, partage par lien). Le dossier `site/` contient :
 - `index.html` — la page d'accueil / argumentaire
 - `scan.html` — **le scanner** : caméra dans le navigateur (API BarcodeDetector,
   repli ZXing pour Safari/iPhone), saisie manuelle, verdict, historique
+- `additifs.html` — **la liste publique des règles** : les 56 additifs, les
+  ingrédients repérés dans la composition et les règles cosmétiques, avec la
+  raison de chaque alerte et une recherche instantanée. **Fichier généré, ne pas
+  éditer à la main** : il est construit depuis les tables du moteur par
+  `npm run build:additifs` (donc jamais désynchronisé de l'analyse réelle)
+- `mentions-legales.html` — méthode, sources, limites, données personnelles
 - `halal.js` — le moteur compilé depuis `lib/halal.ts` (**ne pas éditer à la main** :
   modifier `lib/halal.ts` puis `npm run build:site`)
 - `manifest.json` + `sw.js` + icônes — installable sur l'écran d'accueil comme une app
+
+**Après avoir touché au moteur**, la chaîne complète est :
+`npm run typecheck && npm run test:moteur && npm run build:site && npm run build:additifs && npm run seo:dates`
+(la dernière commande réécrit les dates de mise à jour depuis l'historique git —
+aucune date n'est inventée).
 
 **Tester en local** : `python3 -m http.server 8000 --directory site` puis ouvrir
 http://localhost:8000 (la caméra exige HTTPS ou localhost).
