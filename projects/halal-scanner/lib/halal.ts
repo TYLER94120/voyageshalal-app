@@ -301,6 +301,22 @@ function normaliser(texte: string): string {
 }
 
 /**
+ * Le texte est-il rédigé dans une langue que nos règles savent lire ?
+ *
+ * Nos motifs sont français et anglais. Une étiquette écrite uniquement en
+ * arabe ne déclenche donc rien — et sans ce garde-fou, « aucune alerte »
+ * devenait « halal ». Mesuré le 10 août : une composition arabe disant
+ * « graisse de porc » (دهن الخنزير) ressortait HALAL. C'est le pire verdict
+ * possible, sur exactement le public visé par ce produit.
+ *
+ * Le seuil de 12 lettres latines est celui déjà utilisé à l'affichage pour
+ * décider si l'on peut retirer l'arabe d'une étiquette bilingue.
+ */
+function texteAnalysable(texte: string): boolean {
+  return (texte.match(/[a-zà-öø-ÿ]/gi) || []).length >= 12;
+}
+
+/**
  * Récupère les codes E écrits en toutes lettres dans la composition.
  *
  * Pourquoi c'est indispensable : les codes ne nous arrivent normalement que par
@@ -384,7 +400,11 @@ export function analyserProduit(entree: {
 
   const aHaram = alertesUniques.some((a) => a.niveau === "haram");
   const aDouteux = alertesUniques.some((a) => a.niveau === "douteux");
-  const aDesDonnees = texte.trim().length >= 3 || (entree.additifs ?? []).length > 0;
+  // On ne peut conclure « halal » que sur ce qu'on a réellement su lire :
+  // un texte analysable, ou des codes additifs fournis par la base.
+  const brut = entree.ingredientsTexte ?? "";
+  const aDesDonnees =
+    texteAnalysable(brut) || codes.length > 0 || (entree.additifs ?? []).length > 0;
 
   let statut: StatutVerdict;
   if (certifieHalal && !aHaram) {
@@ -399,6 +419,8 @@ export function analyserProduit(entree: {
   } else if (aDesDonnees) {
     statut = "halal";
   } else {
+    // Couvre les deux cas : aucune donnée, et une étiquette illisible pour nous.
+    // Dans les deux, « inconnu » est la seule réponse honnête.
     statut = "inconnu";
   }
 

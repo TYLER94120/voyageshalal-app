@@ -273,6 +273,15 @@ function normaliser(texte: string): string {
  * Un label halal certifié prime ; un produit végane écarte les doutes
  * d'origine animale (mais pas l'alcool éthylique).
  */
+/**
+ * Même garde-fou que dans le moteur alimentaire : nos motifs INCI sont
+ * latins. Une étiquette écrite uniquement en arabe ne déclenche rien, et
+ * « aucune alerte » ne doit jamais devenir « halal ».
+ */
+function texteAnalysable(texte: string): boolean {
+  return (texte.match(/[a-zà-öø-ÿ]/gi) || []).length >= 12;
+}
+
 export function analyserCosmetique(entree: {
   ingredientsTexte?: string | null;
   labels?: string[] | null;
@@ -310,7 +319,9 @@ export function analyserCosmetique(entree: {
 
   const aHaram = alertes.some((a) => a.niveau === "haram");
   const aDouteux = alertes.some((a) => a.niveau === "douteux");
-  const aDesDonnees = texte.trim().length >= 10;
+  // On ne conclut « halal » que sur une liste INCI réellement lisible par nos
+  // règles. Un flacon dont l'étiquette n'est écrite qu'en arabe reste inconnu.
+  const aDesDonnees = texteAnalysable(entree.ingredientsTexte ?? "");
 
   let statut: StatutVerdict;
   if (certifieHalal && !aHaram) statut = "halal";

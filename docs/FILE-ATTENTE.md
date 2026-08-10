@@ -45,9 +45,50 @@ une explication honnête, jamais un verdict inventé.
    *Piste :* constituer un jeu de fiches réelles figées dans le dépôt, capturées
    une fois depuis le navigateur de Mohamed, pour tester hors ligne.
 
+4. **Une étiquette bilingue dont seul le côté arabe porte l'ingrédient à risque.**
+   *Preuve :* mesuré le 10 août. « ماء، سكر، جيلاتين / eau, sucre, arome »
+   ressort **halal** : le côté français est lisible et ne dit rien de risqué,
+   donc le garde-fou « étiquette illisible » ne se déclenche pas, à raison.
+   C'est une vraie limite, pas un oubli — et elle est rare, les deux moitiés
+   d'une étiquette étant normalement la traduction l'une de l'autre.
+   *Ce qu'il faudrait :* savoir lire l'arabe. HalalGPT sait déjà le faire via
+   la lecture par photo ; la piste est de lui envoyer le texte arabe et non
+   seulement les images. À discuter avec l'agent HalalGPT avant de coder.
+
 ---
 
 ## Fait
+
+- **Une étiquette en arabe disant « graisse de porc » ressortait HALAL**
+  *(10 août)* — le pire verdict que ce produit puisse rendre, sur exactement le
+  public pour lequel il a été construit.
+
+  | Composition | Avant | Après |
+  |---|---|---|
+  | Arabe seul, contenant « دهن الخنزير » (graisse de porc) | **HALAL** | **INCONNU** |
+  | Arabe seul, produit banal | HALAL | INCONNU |
+  | Arabe + codes additifs fournis par la base | — | analysé normalement |
+  | Bilingue avec un côté français lisible | DOUTEUX | DOUTEUX (inchangé) |
+  | Français seul | DOUTEUX | DOUTEUX (inchangé) |
+
+  Cause : nos motifs sont français et anglais. Une composition en arabe ne
+  déclenchait rien, et « aucune alerte » devenait « halal ». Le moteur conclut
+  désormais « halal » **uniquement sur ce qu'il a réellement su lire** : au
+  moins 12 lettres latines, ou des codes additifs fournis par la base. Même
+  garde-fou côté cosmétiques.
+
+  À l'écran, « inconnu » ne dit plus « pas assez d'informations » — ce serait
+  faux, l'information est là — mais **« Étiquette non lisible par nos
+  règles »**, avec l'action qui marche : photographier la liste d'ingrédients,
+  la lecture par photo sachant lire l'arabe. Vérifié au navigateur sur une
+  vraie étiquette arabe.
+
+  Tests du moteur : **51 → 56**. Sonde conservée : `npm run sonde:arabe`.
+
+  *Ce que ça ne règle PAS, et c'est en file sous le point 4 :* une étiquette
+  bilingue dont seul le côté arabe porte l'ingrédient à risque reste « halal ».
+  Le côté français est lisible et ne dit rien — le garde-fou ne peut pas se
+  déclencher, et il a raison de ne pas le faire.
 
 - **Le moteur cosmétique n'avait aucun test, et trois trous** *(10 août)* —
   même sonde que sur l'alimentaire, sur 30 mentions INCI réellement imprimées

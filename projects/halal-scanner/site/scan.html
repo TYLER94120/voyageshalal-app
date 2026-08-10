@@ -10,7 +10,7 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-10T18:56:24+00:00" />
+  <meta name="last-modified" content="2026-08-10T20:54:50+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -632,7 +632,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-10T18:56:24+00:00"
+      "dateModified": "2026-08-10T20:54:50+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -1927,7 +1927,17 @@
       });
     }
 
-    function sousTitre(verdict) {
+    // Une étiquette écrite en arabe n'est PAS une absence d'information : c'est
+    // une information que nos règles, écrites en français et en anglais, ne
+    // savent pas lire. Le dire ainsi, et proposer la lecture par photo qui,
+    // elle, sait la lire.
+    function texteIllisiblePourNous(produit) {
+      const t = (produit && produit.ingredientsTexte) || "";
+      if (t.trim().length < 3) return false;
+      return (t.match(/[a-zà-öø-ÿ]/gi) || []).length < 12;
+    }
+
+    function sousTitre(verdict, produit) {
       if (verdict.statut === "halal" && verdict.certifieHalal) return "Produit certifié halal ✓";
       if (verdict.statut === "halal" && verdict.vegan) return "Produit végane — aucun risque détecté";
       if (verdict.statut === "halal") return "Aucun ingrédient à risque détecté";
@@ -1936,13 +1946,21 @@
         return n + " ingrédient" + (n > 1 ? "s" : "") + " à vérifier";
       }
       if (verdict.statut === "haram") return "Ingrédient interdit détecté";
+      if (texteIllisiblePourNous(produit)) return "Étiquette non lisible par nos règles";
       return "Pas assez d'informations sur ce produit";
     }
 
     // « Douteux » ne dit pas quoi faire. Cette conclusion, si : elle distingue
     // les doutes mineurs (ingrédients presque toujours végétaux aujourd'hui)
     // des doutes réels, et donne l'action concrète.
-    function conclusionPratique(verdict) {
+    function conclusionPratique(verdict, produit) {
+      if (verdict.statut === "inconnu" && texteIllisiblePourNous(produit)) {
+        return {
+          titre: "Ce qu'il faut retenir",
+          texte:
+            "L'étiquette de ce produit n'est pas écrite dans une langue que notre analyse sait lire — de l'arabe, le plus souvent. Nous ne disons donc NI halal NI haram : nous ne savons pas. Photographie la liste d'ingrédients avec le bouton ci-dessous, la lecture par photo sait la lire.",
+        };
+      }
       if (verdict.statut === "haram") {
         return {
           titre: "Ce qu'il faut retenir",
@@ -2020,7 +2038,7 @@
         $("verdict").className = "verdict verdict-" + verdict.statut;
         $("verdict-emoji").textContent = EMOJIS[verdict.statut];
         $("verdict-label").textContent = LABELS[verdict.statut];
-        $("verdict-detail").textContent = sousTitre(verdict);
+        $("verdict-detail").textContent = sousTitre(verdict, produit);
 
         const alertes = $("alertes");
         alertes.innerHTML = "";
@@ -2054,7 +2072,7 @@
         }
         $("lien-liste-additifs").hidden = verdict.alertes.length === 0;
 
-        const conclusion = conclusionPratique(verdict);
+        const conclusion = conclusionPratique(verdict, produit);
         $("note-cosmetique").hidden = !(
           produit && produit.cosmetique && verdict.alertes.length > 0
         );

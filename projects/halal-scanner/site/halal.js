@@ -258,6 +258,21 @@ function normaliser(texte) {
     return t;
 }
 /**
+ * Le texte est-il rédigé dans une langue que nos règles savent lire ?
+ *
+ * Nos motifs sont français et anglais. Une étiquette écrite uniquement en
+ * arabe ne déclenche donc rien — et sans ce garde-fou, « aucune alerte »
+ * devenait « halal ». Mesuré le 10 août : une composition arabe disant
+ * « graisse de porc » (دهن الخنزير) ressortait HALAL. C'est le pire verdict
+ * possible, sur exactement le public visé par ce produit.
+ *
+ * Le seuil de 12 lettres latines est celui déjà utilisé à l'affichage pour
+ * décider si l'on peut retirer l'arabe d'une étiquette bilingue.
+ */
+function texteAnalysable(texte) {
+    return (texte.match(/[a-zà-öø-ÿ]/gi) || []).length >= 12;
+}
+/**
  * Récupère les codes E écrits en toutes lettres dans la composition.
  *
  * Pourquoi c'est indispensable : les codes ne nous arrivent normalement que par
@@ -282,7 +297,7 @@ function codesEDuTexte(texte) {
     return [...trouves];
 }
 export function analyserProduit(entree) {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f;
     const labels = ((_a = entree.labels) !== null && _a !== void 0 ? _a : []).map((l) => l.toLowerCase());
     const certifieHalal = labels.some((l) => l.includes("halal"));
     const vegan = labels.some((l) => l.includes("vegan") || l.includes("vegetalien"));
@@ -332,7 +347,10 @@ export function analyserProduit(entree) {
     const alertesUniques = [...parCle.values()];
     const aHaram = alertesUniques.some((a) => a.niveau === "haram");
     const aDouteux = alertesUniques.some((a) => a.niveau === "douteux");
-    const aDesDonnees = texte.trim().length >= 3 || ((_e = entree.additifs) !== null && _e !== void 0 ? _e : []).length > 0;
+    // On ne peut conclure « halal » que sur ce qu'on a réellement su lire :
+    // un texte analysable, ou des codes additifs fournis par la base.
+    const brut = (_e = entree.ingredientsTexte) !== null && _e !== void 0 ? _e : "";
+    const aDesDonnees = texteAnalysable(brut) || codes.length > 0 || ((_f = entree.additifs) !== null && _f !== void 0 ? _f : []).length > 0;
     let statut;
     if (certifieHalal && !aHaram) {
         statut = "halal";
@@ -351,6 +369,8 @@ export function analyserProduit(entree) {
         statut = "halal";
     }
     else {
+        // Couvre les deux cas : aucune donnée, et une étiquette illisible pour nous.
+        // Dans les deux, « inconnu » est la seule réponse honnête.
         statut = "inconnu";
     }
     return { statut, certifieHalal, vegan, alertes: alertesUniques };

@@ -56,6 +56,16 @@ const cas = [
   ["Gomme laque et E904 : une seule alerte", { ingredientsTexte: "sucre, gomme laque", additifs: ["en:e904"] }, "douteux", 1],
   ["Glycérine et E422 : une seule alerte", { ingredientsTexte: "eau, glycérine", additifs: ["en:e422"] }, "douteux", 1],
 
+  // --- ETIQUETTES QU'ON NE SAIT PAS LIRE (10 août) ----------------------------
+  // Nos motifs sont français et anglais. Une composition en arabe ne déclenche
+  // rien — et « aucune alerte » ne doit JAMAIS devenir « halal ». Mesuré :
+  // « دهن الخنزير » (graisse de porc) ressortait HALAL.
+  ["Étiquette arabe seule → inconnu, jamais halal", { ingredientsTexte: "المكونات: دهن الخنزير، ملح", additifs: [] }, "inconnu", 0],
+  ["Étiquette arabe banale → inconnu aussi", { ingredientsTexte: "المكونات: ماء، سكر، ملح", additifs: [] }, "inconnu", 0],
+  ["Arabe + codes additifs fournis par la base → analysable", { ingredientsTexte: "المكونات: ماء، سكر", additifs: ["en:e441"] }, "haram", 1],
+  ["Bilingue avec un côté français lisible → analysé", { ingredientsTexte: "ماء، سكر، جيلاتين / eau, sucre, gélatine", additifs: [] }, "douteux", 1],
+  ["Texte latin trop court pour conclure → inconnu", { ingredientsTexte: "sel", additifs: [] }, "inconnu", 0],
+
   // --- GARDE-FOUS : une origine annoncée lève le doute ------------------------
   ["Glycérine végétale reste halal", { ingredientsTexte: "eau, glycérine végétale, parfum", additifs: [] }, "halal", 0],
   ["Lipase microbienne reste halal", { ingredientsTexte: "lait, lipase microbienne, sel", additifs: [] }, "halal", 0],
