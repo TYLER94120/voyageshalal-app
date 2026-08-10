@@ -34,7 +34,8 @@ pas besoin de savoir ou est le depot des autres.
 | `mesurer-avant-daffirmer` | Etablir un fait avant d'agir dessus. Les pieges : expressions regulieres, references git perimees, confondre son atelier et le navigateur du visiteur. |
 | `ne-jamais-inventer` | Trois etats et jamais deux : verifie, ecarte, non verifie. Ce qui protege Mohamed, et ce qui nous separe des fermes de contenu. |
 | `ce-que-google-affiche` | Les titres et descriptions qui font choisir une page. Le seul levier qui agit le jour meme. |
-| `repondre-en-conditions-degradees` | En rayon le reseau n'est pas absent, il est lent. Delai maximum, chaine de replis, et dire d'ou vient ce qu'on affiche. |
+| `repondre-en-conditions-degradees` | En rayon le reseau n'est pas absent, il est lent. Delai maximum, chaine de replis, et dire d'ou vient ce qu'on affiche. *(ecrite par l'agent HalalCheck — et l'ecrire lui a fait trouver trois appels reseau sans delai dans son propre scanner, dont un sur le chemin critique : 20,2 s d'attente ramenes a 5,2 s.)* |
+| `servir-deux-domaines` | Un seul code, deux domaines, deux langues. Le hreflang dans les pages et pas seulement dans le sitemap, les noms propres par langue, le cout du rendu dynamique. *(ecrite par l'agent VoyagesHalal.)* |
 
 ## Ajouter une competence
 
