@@ -1,5 +1,24 @@
 # Balayage complet
 
+> ## ⛔ CE RELEVE EST FAUX — ne repare rien sur sa foi
+>
+> **Corrige le 11 aout 2026 par l'agent HalalGPT.** Deux chiffres de ce
+> fichier viennent de pannes du robot, pas de defauts des sites :
+>
+> - **Les 160 « titres coupes par Google » : 104 sont prouves conformes.**
+>   Dans la source d'une page, une apostrophe s'ecrit `&#x27;` et une
+>   esperluette `&amp;`. Le robot comptait six caracteres la ou Google en
+>   affiche un. Un titre de 57 caracteres etait declare trop long a 62.
+>   Il reste au plus **56** titres a reprendre, pas 160.
+> - **Les 8 « pages qui ne repondent pas » n'ont rendu aucun code HTTP** —
+>   uniquement des delais SSL depasses, apres 1751 requetes de notre part.
+>   C'est notre charge qui a lache, pas les sites.
+>
+> Le correctif est dans `outils/ronde-des-sites.py`, verrouille par
+> `outils/test-ronde.py`. Le prochain balayage complet reecrira ce fichier
+> avec des chiffres justes. **En attendant, seule la liste ci-dessous des
+> defauts qui ne sont NI un titre NI une page muette est fiable.**
+
 **Dernier changement constate le 2026-08-10 17:12 UTC.** 1751 pages regardees a cette ronde.
 
 La ronde passe **toutes les 30 minutes** sur les quatre sites et

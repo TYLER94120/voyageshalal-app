@@ -38,6 +38,10 @@ import json
 import os
 import re
 import ssl
+# On importe la FONCTION et non le module : plusieurs fonctions d'ici recoivent
+# la source de la page dans une variable nommee `html`, qui masquerait le
+# module et ferait echouer `html.unescape` a l'execution.
+from html import unescape
 import sys
 import time
 import urllib.error
@@ -93,8 +97,22 @@ def texte(corps):
 
 
 def balise(html, motif):
+    """Rend la valeur REELLE d'une balise, entites HTML decodees.
+
+    Le 11 aout, la ronde a signale 160 titres « coupes par Google ». Mesure
+    faite : 104 d'entre eux tenaient largement sous la limite. La cause tient
+    en six caracteres — dans la source d'une page, une apostrophe s'ecrit
+    « &#x27; » et une esperluette « &amp; ». Le robot comptait donc six
+    caracteres la ou le lecteur, et Google, en voient un seul.
+
+    Un titre de 57 caracteres etait declare trop long a 62. Et j'ai envoye
+    l'agent VoyagesHalal reparer 104 titres qui n'avaient rien.
+
+    Ce qu'on mesure doit etre ce que le visiteur recoit, jamais ce que le
+    fichier contient. Meme faute, meme correctif que dans liens-morts.py, ou
+    « &amp; » dans une adresse faisait declarer morts des liens valides."""
     m = re.search(motif, html, re.I | re.S)
-    return (m.group(1).strip() if m else None)
+    return (unescape(m.group(1)).strip() if m else None)
 
 
 def urls_du_sitemap(base):
