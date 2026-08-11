@@ -1,13 +1,5 @@
 {
-  "ronde_du": "2026-08-11 20:10 UTC",
-  "pages_vues": 130,
-  "defauts": [
-    {
-      "niveau": "defaut",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/conduite",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    }
-  ]
+  "ronde_du": "2026-08-11 21:23 UTC",
+  "pages_vues": 129,
+  "defauts": []
 }
