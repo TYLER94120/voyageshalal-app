@@ -1,0 +1,93 @@
+# Les controles qui tournent tout seuls, a chaque envoi de code.
+#
+# Pourquoi ce fichier existe : le 11 aout 2026, ce depot contenait sept series
+# de tests — cinq pour le moteur de verdict halal, deux pour les robots de
+# surveillance — et AUCUN moyen de les lancer autrement qu'a la main.
+#
+# Ce jour-la, l'agent HalalCheck a livre six corrections successives sur le
+# moteur : un interdit invente sur la levure de biere, dix pluriels manques,
+# des lardons qui ressortaient halal, de la graisse de porc muette dans un
+# cosmetique. A chaque fois les tests ont ete relances a la main, parce que
+# quelqu'un y a pense.
+#
+# **Le moteur de verdict est ce qu'il y a de plus sensible dans l'empire.** Un
+# seul verdict faux detruit la confiance qui fait toute la valeur du produit —
+# et un faux HALAL fait manger du porc a quelqu'un qui nous a crus.
+#
+# Ce qui est controle ici, sans qu'on ait a y penser :
+#   · le moteur alimentaire et le moteur cosmetique (test:moteur)
+#   · les faux negatifs : ce qui est interdit doit etre attrape
+#   · les faux positifs : ce qui est licite ne doit PAS etre accuse
+#   · les etiquettes en arabe
+#   · les deux robots de surveillance, dont les regles de mesure
+#
+# CE QUI N'EST PAS CONTROLE ICI, et il faut le savoir :
+# les sondes qui demandent un vrai navigateur (sonde:photo, sonde:iphone) ne
+# tournent pas ici — elles ouvrent Chromium et servent le site. Elles se
+# lancent a la main. Un controle automatique qui tait ses angles morts est
+# exactement l'instrument qui rassure a tort.
+
+name: Controles
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  moteur:
+    name: Le moteur de verdict halal
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/halal-scanner
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      - name: Preparer Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # TypeScript seul, en global. Un `npm ci` installerait tout Expo et
+      # React Native pour compiler deux fichiers : plusieurs minutes, et autant
+      # d'occasions qu'un controle echoue pour une raison etrangere au moteur.
+      - name: Installer TypeScript, et rien d'autre
+        run: npm install -g typescript@5.3.3
+
+      # En premier : il compile lib/ vers .test-build/, dont les sondes
+      # suivantes ont besoin.
+      - name: Les tests du moteur
+        run: npm run test:moteur
+
+      - name: Faux negatifs — ce qui est interdit doit etre attrape
+        run: npm run sonde:faux-negatifs
+
+      # Celle-ci compte autant que la precedente, et on l'oublie toujours :
+      # un moteur qui accuse tout est aussi inutile qu'un moteur aveugle.
+      - name: Faux positifs — ce qui est licite ne doit PAS etre accuse
+        run: npm run sonde:faux-positifs
+
+      - name: Les cosmetiques
+        run: npm run sonde:cosmetiques
+
+      - name: Les etiquettes en arabe
+        run: npm run sonde:arabe
+
+  robots:
+    name: Les robots de surveillance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      # Ces deux-la verrouillent la facon de MESURER, pas le site. Ils ont ete
+      # ecrits apres que les robots ont annonce, en un seul jour, 104 titres
+      # casses qui ne l'etaient pas et une page morte qui repondait tres bien.
+      - name: La ronde mesure ce que Google affiche
+        run: python3 outils/test-ronde.py
+
+      - name: Une panne du robot n'est pas une page cassee
+        run: python3 outils/test-liens-morts.py

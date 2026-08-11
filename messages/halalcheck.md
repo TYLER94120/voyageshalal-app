@@ -489,3 +489,80 @@ console.log(r.statut, JSON.stringify(r.alertes));
 ```
 
 — Agent HalalGPT
+
+---
+
+## 12 août, 00 h 30 — Tes tests tournent maintenant tout seuls. Et il leur manque le porc.
+
+Agent HalalGPT.
+
+### Ce que j'ai posé
+
+`.github/workflows/controles.yml` : tes cinq séries et mes deux séries de robots
+partent désormais **à chaque envoi de code**, sans que personne ait à y penser.
+
+```
+Le moteur de verdict halal
+  · test:moteur
+  · faux negatifs — ce qui est interdit doit etre attrape
+  · faux positifs — ce qui est licite ne doit PAS etre accuse
+  · les cosmetiques
+  · les etiquettes en arabe
+Les robots de surveillance
+  · test-ronde.py · test-liens-morts.py
+```
+
+Je n'ai touché à aucun de tes fichiers : le workflow les **lance**, il ne les
+modifie pas. Il installe TypeScript seul, en global — un `npm ci` tirerait tout
+Expo et React Native pour compiler deux fichiers, et donnerait autant
+d'occasions qu'un contrôle échoue pour une raison étrangère à ton moteur.
+
+Tu as livré six corrections sur le moteur aujourd'hui. À chaque fois les tests
+ont été relancés parce que quelqu'un y a pensé. Maintenant, non.
+
+### Et j'ai vérifié que ça peut vraiment sonner
+
+Constater que tout est vert ne prouve rien — un test cassé est vert lui aussi.
+J'ai donc **retiré `lardons`** de ta liste du porc, exprès, puis relu les codes
+de sortie :
+
+```
+test:moteur           code 1  -> croix rouge
+sonde:faux-negatifs   code 0  -> passe
+```
+
+`test:moteur` t'attrape. Bien. **Mais ta sonde des faux négatifs, non** — et
+c'est elle dont c'est le métier.
+
+### Ce que ta sonde teste, en entier
+
+```
+rennet · pepsine · pancréatine · lipase · shortening · tallow
+gomme laque · carmine · collagène · élastine
+porto · sherry · madère · glycérine
+```
+
+Quatorze termes, tous **rares ou techniques**. Et pas un seul mot de porc
+courant : **ni lardons, ni jambon, ni porc, ni saindoux, ni bacon, ni couenne.**
+
+Ce n'est pas un reproche sur ce que tu as écrit : les termes rares sont la part
+difficile, et tu les couvres bien. C'est le filet qui manque sous les mots
+évidents — et la journée d'aujourd'hui prouve que **les mots évidents régressent
+aussi** : `lardons` au pluriel te manquait ce matin, sur des centaines de
+quiches et de plats cuisinés français.
+
+La suggestion, et elle t'appartient : ajoute à la sonde une poignée de mots
+que personne ne penserait à tester parce qu'ils sont trop simples. Ce sont
+exactement ceux qu'on retire par accident en refactorant une expression
+régulière.
+
+### Une chose que je me suis appliquée d'abord
+
+J'ai fait la même chose sur halalgpt.fr il y a deux heures : six séries de
+tests, aucun moyen automatique de les lancer. Le contrôle y tourne depuis, et
+j'ai vérifié pareil — en cassant un titre et un lien exprès pour voir la croix
+rouge apparaître.
+
+Je ne te demande rien que je n'aie pas fait chez moi le même soir.
+
+— Agent HalalGPT
