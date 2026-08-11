@@ -85,6 +85,35 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Sept chiffres écrits à la main sur l'accueil, qu'aucun contrôle ne tenait
+  à jour** *(11 août)* — audit des promesses de la page d'accueil : chaque
+  affirmation chiffrée confrontée au moteur.
+
+  **Bonne nouvelle d'abord :** les 4 nombres affichés aujourd'hui sont
+  **justes** — 56 additifs, 29 règles cosmétiques, 24 ingrédients, 109 au
+  total. Rien de faux en ligne.
+
+  **Le défaut est ailleurs :** ces nombres apparaissent **sept fois** sur
+  l'accueil — dans le `<title>`, dans le bloc FAQ que Google lit, dans deux
+  boutons et dans le corps de la page — et ils étaient écrits à la main,
+  indépendants du moteur. Le générateur `build:additifs` ne touchait que
+  `additifs.html`. Au premier additif ajouté, l'accueil devenait faux sans que
+  personne ne le voie. Un site qui annonce un chiffre faux sur sa page
+  d'accueil abîme la confiance exactement comme un verdict faux.
+
+  Réparé à la règle, pas page par page : le générateur recale désormais
+  l'accueil à la source. **Vérifié en cassant volontairement les nombres**
+  (56 → 81, 29 → 44) : la génération suivante en a remis **8 sur 8** d'accord
+  avec le moteur.
+
+  Et un contrôle qui refuse de passer si quelqu'un les réécrit à la main sans
+  régénérer : `npm run verif:chiffres`, 5 contrôles sur les deux pages.
+
+  *Note de méthode :* ce contrôle a annoncé « 29 est faux, le moteur dit 28 ».
+  C'était lui qui comptait mal — les règles cosmétiques vivent dans **trois**
+  listes, pas deux, et il en oubliait une. Quatrième instrument fautif de la
+  journée. Il compte maintenant à la même source que le générateur.
+
 - **Chaque règle corrigée laissait une pastille verte périmée dans la liste
   des gens** *(11 août)* — le défaut le plus grave trouvé aujourd'hui, et une
   conséquence directe de tout le reste du travail de la journée.

@@ -594,6 +594,29 @@ if (iso) {
   console.log("  aucune date git disponible — placeholders laissés en place");
 }
 
+
+// ---------------------------------------------------------------------------
+// L'accueil annonce ces mêmes nombres — sept fois, y compris dans son <title>
+// et dans le bloc FAQ lu par Google. Ils étaient écrits à la main, donc
+// indépendants du moteur : la page serait devenue fausse au premier additif
+// ajouté, sans que personne ne le voie. On les recale ici, à la source.
+const ACCUEIL = join(RACINE_PROJET, "site", "index.html");
+try {
+  const avant = readFileSync(ACCUEIL, "utf8");
+  const apres = avant
+    .replace(/\b\d+ additifs\b/g, `${nbAdditifs} additifs`)
+    .replace(/\b\d+ règles cosmétiques\b/g, `${nbCosmetiques} règles cosmétiques`);
+  if (apres !== avant) {
+    writeFileSync(ACCUEIL, apres);
+    const combien = (avant.match(/\b\d+ (additifs|règles cosmétiques)\b/g) || []).length;
+    console.log(`  accueil recalé : ${combien} nombre(s) remis d'accord avec le moteur`);
+  } else {
+    console.log("  accueil : les nombres étaient déjà justes");
+  }
+} catch (e) {
+  console.log("  accueil introuvable — nombres non vérifiés");
+}
+
 console.log(`
 site/additifs.html généré
   additifs alimentaires : ${nbAdditifs} (${additifsHaram.length} interdits, ${additifsDouteux.length} à vérifier)

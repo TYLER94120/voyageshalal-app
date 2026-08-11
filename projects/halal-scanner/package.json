@@ -22,7 +22,8 @@
     "sonde:pays": "node scripts/sonde-pays.mjs",
     "sonde:inci": "node scripts/sonde-inci.mjs",
     "sonde:verdicts": "node scripts/sonde-verdicts.mjs",
-    "sonde:historique": "node scripts/sonde-historique.mjs"
+    "sonde:historique": "node scripts/sonde-historique.mjs",
+    "verif:chiffres": "node scripts/verif-chiffres.mjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
