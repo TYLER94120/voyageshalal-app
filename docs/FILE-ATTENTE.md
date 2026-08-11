@@ -45,9 +45,49 @@ une explication honnête, jamais un verdict inventé.
    *Piste :* constituer un jeu de fiches réelles figées dans le dépôt, capturées
    une fois depuis le navigateur de Mohamed, pour tester hors ligne.
 
+4. **La lecture d'étiquette n'a jamais été vérifiée contre le VRAI service.**
+   *Preuve :* les six façons d'échouer ont été mesurées le 11 août avec une
+   fausse réponse d'API — le côté navigateur est sain. Mais `halalgpt.fr` est
+   injoignable depuis l'atelier (code 000), donc **personne n'a jamais vu la
+   chaîne complète fonctionner**. La plainte de Mohamed du 10 août
+   (« ça me demande de reprendre la photo ») venait forcément du service ou du
+   réseau, jamais du navigateur.
+   *Ce qu'il faut :* un essai depuis le téléphone de Mohamed, ou l'agent
+   HalalGPT qui confirme que `/api/etiquette` répond et dans quel format.
+   La sonde `npm run sonde:photo` rejoue les six cas en trente secondes.
+
 ---
 
 ## Fait
+
+- **L'app accusait la photo de l'utilisateur quand c'était le service qui
+  tombait** *(11 août)* — la lecture d'étiquette conduite de bout en bout avec
+  une vraie photo de téléphone (4032×3024, 8,1 Mo), sur les six façons
+  d'échouer.
+
+  **Ce qui marche, mesuré :** la compression ramène **8,1 Mo à 0,74 Mo**, très
+  en dessous de la limite de 2 Mo du service, et la voie normale aboutit bien à
+  l'écran de résultat. Le navigateur n'est pas en cause.
+
+  **Le défaut :** sur 3 des 6 échecs, le message disait « Reprends une photo
+  nette de la liste d'ingrédients » — alors que la photo était parfaite et que
+  c'était le service qui avait mal répondu. L'utilisateur reprend une photo,
+  une deuxième, une troisième, et finit par croire que l'app ne marche pas.
+  **C'est exactement ce que Mohamed a décrit le 10 août.**
+
+  | Cas | Avant | Après |
+  |---|---|---|
+  | Service en panne (500) | « Reprends une photo nette » | « **Ce n'est pas ta photo** : le service est en panne » |
+  | Réponse illisible | « Reprends une photo nette » | « **Le service de lecture a mal répondu** » |
+  | JSON sans verdict | « Reprends une photo nette » | idem |
+  | Photo vraiment inutilisable | « Reprends une photo nette » | dit *pourquoi* : trop lourde ou format inhabituel |
+  | Réseau coupé, service saturé | déjà justes | inchangés |
+
+  Chaque écran d'erreur offre désormais une deuxième sortie — « Scanner un
+  autre produit » — pour ne pas enfermer quelqu'un dans une boucle de photos
+  qui ne peuvent pas aboutir.
+
+  Sonde conservée : `npm run sonde:photo`, les six cas en trente secondes.
 
 - **Le moteur sait maintenant lire six mots d'arabe** *(10 août, soir)* — suite
   directe du garde-fou posé le matin. Le garde-fou évitait le faux « halal » ;

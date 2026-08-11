@@ -10,7 +10,7 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-10T22:54:18+00:00" />
+  <meta name="last-modified" content="2026-08-11T00:52:28+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -632,7 +632,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-10T22:54:18+00:00"
+      "dateModified": "2026-08-11T00:52:28+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -2232,9 +2232,12 @@
         montrerErreur(
           "🖼",
           "Photo inutilisable",
-          "Cette image n'a pas pu être préparée. Reprends une photo nette de la liste d'ingrédients.",
+          "Cette image n'a pas pu être préparée — elle est peut-être trop lourde ou dans un " +
+            "format inhabituel. Reprends-la avec l'appareil photo, en cadrant la liste " +
+            "d'ingrédients de près.",
           "📷  Reprendre la photo",
-          demarrerLectureEtiquette
+          demarrerLectureEtiquette,
+          { libelle: "Scanner un autre produit", action: relancerScan }
         );
         return;
       }
@@ -2276,9 +2279,11 @@
         montrerErreur(
           "🛠",
           "Lecture indisponible",
-          "Le service n'a pas pu lire l'étiquette (erreur " + reponse.status + "). Réessaie dans un moment.",
-          "📷  Reprendre la photo",
-          demarrerLectureEtiquette
+          "Ce n'est pas ta photo : le service de lecture est en panne (erreur " +
+            reponse.status + "). Réessaie dans quelques minutes.",
+          "📷  Réessayer la photo",
+          demarrerLectureEtiquette,
+          { libelle: "Scanner un autre produit", action: relancerScan }
         );
         return;
       }
@@ -2292,10 +2297,13 @@
       if (!lecture || typeof lecture !== "object" || !lecture.verdict) {
         montrerErreur(
           "🛠",
-          "Réponse inattendue",
-          "La lecture n'a pas abouti. Reprends une photo nette de la liste d'ingrédients.",
-          "📷  Reprendre la photo",
-          demarrerLectureEtiquette
+          "Le service de lecture a mal répondu",
+          "Ce n'est pas ta photo : le service qui lit les étiquettes a renvoyé quelque chose " +
+            "que nous ne savons pas interpréter. Réessayer peut marcher, mais si ça recommence, " +
+            "le problème est chez nous — pas chez toi.",
+          "📷  Réessayer la photo",
+          demarrerLectureEtiquette,
+          { libelle: "Scanner un autre produit", action: relancerScan }
         );
         return;
       }
@@ -2729,7 +2737,7 @@
   </script>
 
   <footer class="pied" style="text-align: center; padding: 26px 16px calc(30px + env(safe-area-inset-bottom, 0px)); font-size: 14px; color: rgba(18, 38, 26, 0.55); line-height: 2.2; border-top: 1px solid rgba(18, 38, 26, 0.10); margin-top: 28px;">
-    <span style="display:block; margin-bottom:6px; font-size:13px;">Mis à jour le <span class="date-maj">10 août 2026</span> · <a href="./additifs.html" style="color:#7A5F1C; text-decoration:none;">Additifs surveillés</a> · <a href="./mentions-legales.html" style="color:#7A5F1C; text-decoration:none;">Mentions légales</a></span>
+    <span style="display:block; margin-bottom:6px; font-size:13px;">Mis à jour le <span class="date-maj">11 août 2026</span> · <a href="./additifs.html" style="color:#7A5F1C; text-decoration:none;">Additifs surveillés</a> · <a href="./mentions-legales.html" style="color:#7A5F1C; text-decoration:none;">Mentions légales</a></span>
     Un doute sur un ingrédient ?
     <a href="https://halalgpt.fr?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=pied-scanner" style="color: #7A5F1C; text-decoration: none; padding: 4px 6px; font-weight: 700;">🌙 Demande à HalalGPT</a>
     <span aria-hidden>·</span>
