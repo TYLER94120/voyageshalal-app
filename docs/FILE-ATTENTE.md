@@ -44,6 +44,10 @@ une explication honnête, jamais un verdict inventé.
    pourcentage des produits réels tombe en « inconnu ».
    *Piste :* constituer un jeu de fiches réelles figées dans le dépôt, capturées
    une fois depuis le navigateur de Mohamed, pour tester hors ligne.
+   *Attention :* seule la porte HTTP directe a été essayée. Le 11 août, un
+   blocage « réseau » identique s'est révélé faux — le registre npm passait très
+   bien. Avant de reclasser cette ligne en « impossible », essayer les autres
+   portes (paquet npm, export figé, miroir).
 
 4. **La lecture d'étiquette n'a jamais été vérifiée contre le VRAI service.**
    *Preuve :* les six façons d'échouer ont été mesurées le 11 août avec une
@@ -54,22 +58,11 @@ une explication honnête, jamais un verdict inventé.
    réseau, jamais du navigateur.
    *Ce qu'il faut :* un essai depuis le téléphone de Mohamed, ou l'agent
    HalalGPT qui confirme que `/api/etiquette` répond et dans quel format.
+   *Attention :* même remarque que ci-dessus — « le réseau bloque » n'est un
+   blocage qu'une fois les autres portes essayées.
    La sonde `npm run sonde:photo` rejoue les six cas en trente secondes.
 
-5. **Le lecteur de codes-barres des iPhone vient d'un serveur qu'on ne
-   contrôle pas.**
-   *Preuve :* Safari iOS et Firefox n'ont pas de `BarcodeDetector` natif ; le
-   scanner télécharge alors `@zxing/library` depuis `unpkg.com`. Ce fichier
-   n'est **pas** dans la liste `FICHIERS` du service worker (12 entrées, aucune
-   n'est celle-ci). Conséquences : sur iPhone la lecture automatique ne marche
-   **jamais hors ligne**, même à la deuxième visite, et le jour où unpkg tombe
-   ou est bloqué par un réseau d'entreprise, plus aucun iPhone ne scanne.
-   *Ce qu'il faut :* héberger le fichier avec le site. Impossible depuis
-   l'atelier — `unpkg.com` y répond 000 comme tout le reste. Il faut soit un
-   accès réseau, soit que quelqu'un dépose le fichier dans `site/`.
-   Mesure de contrôle : `npm run sonde:iphone`.
-
-6. **La compétence `repondre-en-conditions-degradees` est à jour ici seulement.**
+5. **La compétence `repondre-en-conditions-degradees` est à jour ici seulement.**
    *Preuve :* elle existe en trois exemplaires identiques (halalgpt,
    voyageshalal, voyageshalal-app) ; la leçon du 11 août — « `grep "fetch("` ne
    suffit pas, une balise `<script>` distante attend sans limite elle aussi » —
@@ -80,6 +73,47 @@ une explication honnête, jamais un verdict inventé.
 ---
 
 ## Fait
+
+- **Sur iPhone, le scan ne marchait pas hors ligne — et le blocage annoncé
+  n'existait pas** *(11 août)*. Safari iOS et Firefox n'ont pas de lecteur de
+  codes-barres intégré : le scanner allait chercher `@zxing/library` (328 Ko)
+  sur `unpkg.com`. Le service worker ignore par construction tout ce qui vient
+  d'une autre origine, donc ce fichier n'entrait jamais dans le cache.
+
+  **Le faux diagnostic, d'abord.** Cette ligne était classée « impossible
+  depuis l'atelier, unpkg répond 000 ». C'était vrai pour unpkg, et faux pour
+  la conclusion : le **registre npm répond normalement** ici. `npm pack
+  @zxing/library@0.21.3` a suffi — et il vérifie l'empreinte du paquet au
+  passage. Un blocage supposé sans avoir cherché la porte à côté.
+
+  **Mesure, iPhone simulé, deuxième visite sans réseau :**
+
+  | | Page servie hors ligne | Lecteur disponible | Scan possible |
+  |---|---|---|---|
+  | Avant (bibliothèque sur une autre origine) | oui | **non** | **aucun** |
+  | Après (livrée avec le site) | oui | **oui** | oui |
+
+  L'« avant » n'est pas déduit du code : il a été rejoué en servant la
+  bibliothèque depuis une seconde origine locale, pour reproduire exactement la
+  situation d'unpkg.
+
+  Le fichier n'est **pas** ajouté à la liste d'installation : 328 Ko imposés à
+  tout le monde alors que Chrome et Edge n'y touchent jamais. Le service worker
+  garde désormais ce qu'il va chercher (`put` sur les requêtes de notre
+  domaine, ce qu'il ne faisait pas) : la bibliothèque entre au premier scan
+  réel. Cache passé en `halalcheck-v10`.
+
+  Effet de bord qui compte : chaque scan sur iPhone montrait l'adresse IP du
+  visiteur à un serveur tiers, alors que les mentions légales annoncent deux
+  sorties de données et deux seulement. Il n'y en a plus que deux.
+
+  **La sonde s'est trompée trois fois avant de dire vrai** — motif d'URL qui ne
+  correspondait plus, variable vivant dans un `<script type="module">` donc
+  illisible de l'extérieur, et service worker qui servait la bibliothèque
+  depuis le cache au lieu de laisser passer la panne simulée. Les trois fois,
+  elle affichait un résultat crédible. Corrigée : reconnaissance par fonction
+  et non par motif, colonne renommée d'après ce qu'elle observe vraiment, et
+  scène D dédiée au hors-ligne. `npm run sonde:iphone`.
 
 - **En rayon, sur iPhone, l'app reprochait sa façon de filmer à quelqu'un
   pendant qu'elle ne cherchait rien** *(11 août)* — même défaut que la veille

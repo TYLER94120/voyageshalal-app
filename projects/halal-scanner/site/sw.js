@@ -1,6 +1,6 @@
-// Service worker HalalCheck v0.9 — cache l'app web pour un démarrage instantané.
+// Service worker HalalCheck v0.10 — cache l'app web pour un démarrage instantané.
 // Déploiement : GitHub Pages via .github/workflows/deploy-halalcheck.yml
-const CACHE = "halalcheck-v9";
+const CACHE = "halalcheck-v10";
 
 // En rayon, le réseau n'est pas absent : il est LENT. Au-delà de ce délai, une
 // copie en cache vaut mieux qu'une page fraîche qui n'arrive jamais.
@@ -96,5 +96,24 @@ self.addEventListener("fetch", (evt) => {
     evt.respondWith(reseauDAbordAvecDelai(requete));
     return;
   }
-  evt.respondWith(caches.match(requete).then((hit) => hit || fetch(requete)));
+  // Le reste (scripts, images, polices de notre domaine) : cache d'abord, et on
+  // GARDE ce qu'on va chercher. Sans ce `put`, un fichier absent de la liste
+  // d'installation était re-téléchargé à chaque visite et manquait hors ligne —
+  // c'était le cas du lecteur de codes-barres des iPhone.
+  //
+  // Il n'est volontairement pas dans FICHIERS : 328 Ko imposés à l'installation
+  // à tout le monde, alors que Chrome et Edge n'en ont jamais besoin. Il entre
+  // dans le cache à la première utilisation réelle, donc dès le premier scan.
+  evt.respondWith(
+    caches.match(requete).then((hit) => {
+      if (hit) return hit;
+      return fetch(requete).then((reponse) => {
+        if (reponse && reponse.ok) {
+          const copie = reponse.clone();
+          caches.open(CACHE).then((c) => c.put(requete, copie));
+        }
+        return reponse;
+      });
+    })
+  );
 });
