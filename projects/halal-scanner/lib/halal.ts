@@ -236,7 +236,7 @@ export const REGLES_HARAM: RegleTexte[] = [
     raison: "Présence d'alcool dans la composition.",
   },
   {
-    motif: /\bvins?\b|\bbieres?\b|\brhum\b|\bwhisky\b|liqueur|cognac|marsala|calvados|kirsch|grand marnier|\bporto\b|\bsherry\b|\bxeres\b|\bmadere\b|vermouth|\bsake\b|\bcidre\b/,
+    motif: /\bvins?\b|\bbieres?\b|\brhums?\b|\bwhisk(?:y|ys|ies)\b|liqueurs?|cognacs?|marsala|calvados|kirsch|grand marnier|\bportos?\b|\bsherry\b|\bxeres\b|\bmadere\b|vermouths?|\bsake\b|\bcidres?\b/,
     element: "Alcool (vin / spiritueux)",
     raison: "Boisson alcoolisée utilisée comme ingrédient.",
   },
@@ -270,7 +270,7 @@ export const REGLES_DOUTEUX: RegleTexte[] = [
   {
     // Le code E920 etait repere, le mot ecrit en toutes lettres non — or les
     // etiquettes francaises ecrivent souvent « L-cysteine » sans le numero.
-    motif: /\bl-?cysteine\b|\bcysteine\b/,
+    motif: /\bl-?cysteines?\b|\bcysteines?\b/,
     element: "L-cystéine",
     raison: "Améliorant de panification, parfois extrait de plumes ou de soies animales.",
     famille: "cysteine",
@@ -294,12 +294,12 @@ export const REGLES_DOUTEUX: RegleTexte[] = [
     raison: "Coagulant souvent d'origine animale (fromages) — origine à vérifier.",
   },
   {
-    motif: /\bjambon\b|chorizo|pepperoni|salami|mortadelle/,
+    motif: /\bjambons?\b|chorizos?|pepperonis?|salamis?|mortadelles?/,
     element: "Charcuterie",
     raison: "Origine de la viande et abattage à vérifier (souvent porc).",
   },
   {
-    motif: /graisses? animales?|gras animal|\bsuif\b|graisses? d'origine animale|\btallow\b|\bshortening\b/,
+    motif: /graisses? animales?|gras animal|\bsuifs?\b|graisses? d'origine animale|\btallow\b|\bshortening\b/,
     element: "Graisse animale",
     raison: "Origine et abattage non vérifiables.",
   },
@@ -329,7 +329,7 @@ export const REGLES_DOUTEUX: RegleTexte[] = [
     famille: "shellac",
   },
   {
-    motif: /\bcollagene\b|\belastine\b/,
+    motif: /\bcollagenes?\b|\belastines?\b/,
     element: "Collagène / élastine",
     raison: "Protéines extraites de peau, d'os ou de tissus animaux — espèce et abattage non précisés.",
     famille: "collagene",
@@ -352,7 +352,7 @@ export const REGLES_DOUTEUX: RegleTexte[] = [
     raison: "Origine de la viande et abattage à vérifier.",
   },
   {
-    motif: /\bviandes?\b|\bpoulets?\b|\bboeuf\b|\bbœuf\b|\bagneau\b|\bdindes?\b|\bvolailles?\b|\bcanard\b|\bveau\b|\bmouton\b/,
+    motif: /\bviandes?\b|\bpoulets?\b|\bboeufs?\b|\bbœufs?\b|\bagneaux?\b|\bdindes?\b|\bvolailles?\b|\bcanards?\b|\bveaux?\b|\bmoutons?\b/,
     element: "Viande",
     raison: "Viande détectée — abattage halal à vérifier, sauf certification.",
   },
@@ -375,6 +375,15 @@ function normaliser(texte: string): string {
   // la regle qui suit le retrouve et le garde-fou ne sert a rien.
   t = t.replace(/glycerines? vegetales?|glycerols? vegetals?|glycerine d'origine vegetale/g, " corps gras vegetal ");
   t = t.replace(/lipase microbienne|enzyme microbienne|presure microbienne/g, " enzyme microbienne ");
+  // « levure de bière » est une levure séchée, sans une goutte d'alcool : le mot
+  // « bière » n'y désigne que son origine industrielle. Mesuré le 11 août, le
+  // moteur rendait HARAM — un interdit inventé chasse les gens d'un aliment
+  // permis, et abîme la confiance autant qu'un « halal » faux.
+  t = t.replace(/levures? de bieres?/g, " levure sechee ");
+  // Même décision que « vinaigre de vin », déjà neutralisé plus haut : le
+  // vinaigre d'alcool est le vinaigre blanc des moutardes et des cornichons.
+  // Laisser l'un passer et déclarer l'autre interdit était incohérent.
+  t = t.replace(/vinaigres? d'alcool|vinaigres? blancs?/g, " vinaigre ");
   return t;
 }
 

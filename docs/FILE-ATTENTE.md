@@ -66,22 +66,61 @@ une explication honnête, jamais un verdict inventé.
    l'un comme l'autre contourne la règle sans toucher à l'environnement.
    La sonde `npm run sonde:photo` rejoue les six cas en trente secondes.
 
-5. **« Arôme naturel » et « vinaigre de vin » : deux verdicts que je ne
-   tranche pas seul.**
-   *Preuve :* mesurés le 11 août, tous deux ressortent **halal**. Or « arôme
-   naturel » peut être porté par de l'alcool ou tiré d'une source animale, et
-   le vinaigre de vin part d'une boisson interdite avant transformation
-   complète. D'autres scanners les signalent.
-   *Pourquoi je m'arrête là :* les deux relèvent d'un désaccord entre écoles,
-   pas d'un fait d'étiquette. Et « arôme naturel » figure sur une part énorme
-   des produits français : le signaler ferait basculer des milliers de produits
-   en DOUTEUX. Un doute inventé abîme la confiance autant qu'un verdict faux.
+5. **« Arôme naturel » : un verdict que je ne tranche pas seul.**
+   *Preuve :* mesuré le 11 août, il ressort **halal**. Or un arôme naturel peut
+   être porté par de l'alcool ou tiré d'une source animale. D'autres scanners
+   le signalent.
+   *Pourquoi je m'arrête là :* cela relève d'un désaccord entre écoles, pas d'un
+   fait d'étiquette. Et « arôme naturel » figure sur une part énorme des
+   produits français : le signaler ferait basculer des milliers de produits en
+   DOUTEUX. Un doute inventé abîme la confiance autant qu'un verdict faux.
    *Ce qu'il faut :* la position que Mohamed veut tenir, ou l'avis d'un savant.
-   Dès que c'est tranché, c'est deux lignes de code et deux tests.
+   Dès que c'est tranché, c'est une ligne de code et un test.
+   *Correction du 11 août :* j'avais mis « vinaigre de vin » sur la même ligne.
+   C'était faux — le code le neutralise **volontairement** depuis longtemps
+   (`t.replace(/vinaigre de vin/g, "vinaigre")`). Ce n'était pas un oubli mais
+   une décision déjà prise ; le vinaigre d'alcool la rejoint (voir « Fait »).
 
 ---
 
 ## Fait
+
+- **Dix pluriels manqués, et un interdit inventé** *(11 août)* — suite directe
+  du défaut « lardons ». Si un `\blard\b` laissait passer « lardons », combien
+  d'autres règles s'arrêtaient au mot exact ?
+
+  **La première mesure était fausse** : en fabriquant des variantes
+  automatiquement, elle a annoncé **226 formes manquées**. Presque toutes
+  étaient du charabia — « agneaus », « vinss », « bacones ». L'instrument
+  fabriquait le défaut. Refaite sur 27 formes qui figurent réellement sur des
+  étiquettes françaises : **17 vues sur 27**.
+
+  | Manqué | Statut avant | Après |
+  |---|---|---|
+  | jambons secs, canards, moutons, suifs | halal | douteux |
+  | rhums, cidres, portos, whiskies | halal | haram |
+  | collagènes marins, cystéines | halal | douteux |
+
+  Les pluriels en **-x** (veaux, agneaux) et la ligature **œ** (bœuf) étaient
+  déjà couverts — le générateur les avait mal formés, pas le moteur.
+
+  **Et le défaut inverse, plus grave que les dix autres :**
+
+  | Ingrédient | Avant | Après |
+  |---|---|---|
+  | extrait de **levure de bière** | **HARAM** | halal |
+  | **vinaigre d'alcool** | **HARAM** | halal |
+
+  La levure de bière est une levure séchée, sans une goutte d'alcool : le mot
+  « bière » n'y désigne que son origine industrielle. Et le vinaigre d'alcool
+  est le vinaigre blanc des moutardes et des cornichons — le code neutralisait
+  déjà « vinaigre de vin » par décision explicite, mais pas celui-ci : deux
+  produits de la même famille, deux verdicts opposés. **Un interdit inventé
+  chasse les gens d'un aliment permis** et abîme la confiance autant qu'un
+  « halal » faux. « Bière » seule reste HARAM, un test le vérifie.
+
+  Contrôles : 8 nouveaux tests, les 73 passent, 0 faux positif sur les deux
+  sondes, 14/14 sur les mots d'étiquette, page des additifs régénérée.
 
 - **« Lardons » ressortait HALAL** *(11 août)* — demande de Mohamed : les
   produits vendus en France aussi. Vérifié plutôt qu'affirmé : 32 mots

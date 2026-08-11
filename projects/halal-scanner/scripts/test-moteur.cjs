@@ -36,6 +36,16 @@ const cas = [
   ["Acide stéarique écrit sans son code", { ingredientsTexte: "sucre, acide stearique", additifs: [] }, "douteux", 1],
   ["Stéarate de magnésium", { ingredientsTexte: "poudre, stearate de magnesium", additifs: [] }, "douteux", 1],
   ["« milliard » ne déclenche pas la règle du lard", { ingredientsTexte: "eau, sucre, un milliard de bulles", additifs: [] }, "halal", 0],
+  // Pluriels des étiquettes françaises — 10 formes manquées sur 27, mesurées le 11 août.
+  ["Jambons secs (pluriel)", { ingredientsTexte: "pain, jambons secs", additifs: [] }, "douteux", null],
+  ["Suifs (pluriel)", { ingredientsTexte: "farine, suifs", additifs: [] }, "douteux", null],
+  ["Rhums, cidres, portos (pluriels)", { ingredientsTexte: "sucre, arômes : rhums", additifs: [] }, "haram", null],
+  ["Veaux et agneaux (pluriels en -x)", { ingredientsTexte: "gelatine de veaux", additifs: [] }, "douteux", null],
+  ["Collagènes marins (pluriel)", { ingredientsTexte: "eau, collagènes marins", additifs: [] }, "douteux", null],
+  // Deux mots composés où le mot interdit ne désigne pas la substance.
+  ["« levure de bière » n'est pas de la bière", { ingredientsTexte: "farine, extrait de levure de bière, sel", additifs: [] }, "halal", 0],
+  ["« vinaigre d'alcool » suit la même règle que le vinaigre de vin", { ingredientsTexte: "eau, vinaigre d'alcool, sel", additifs: [] }, "halal", 0],
+  ["mais « bière » seule reste haram", { ingredientsTexte: "eau, bière, sel", additifs: [] }, "haram", null],
   ["Chips nature", { ingredientsTexte: "pommes de terre, huile de tournesol, sel", additifs: [] }, "halal", 0],
   ["Poulet certifié halal", { ingredientsTexte: "poulet, épices", additifs: [], labels: ["en:halal"] }, "halal", null],
   ["Poulet non certifié", { ingredientsTexte: "poulet, épices", additifs: [] }, "douteux", null],
