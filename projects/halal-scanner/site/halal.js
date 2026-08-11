@@ -460,5 +460,14 @@ export function analyserProduit(entree) {
         // Dans les deux, « inconnu » est la seule réponse honnête.
         statut = "inconnu";
     }
-    return { statut, certifieHalal, vegan, alertes: alertesUniques };
+    // Un écran ne doit pas dire deux choses contraires. Mesuré le 11 août : un
+    // produit portant un label halal affichait « HALAL — certifié ✓ » ET juste
+    // dessous « ⚠️ Viande — abattage halal à vérifier, SAUF CERTIFICATION ».
+    // Le doute était donc levé par la certification, de l'aveu même de la règle,
+    // et on l'affichait quand même. On retire les doutes que le label répond —
+    // reconnus à leur propre formulation. Jamais un interdit : celui-là fait
+    // basculer le verdict et reste affiché.
+    const leveParLeLabel = (a) => a.niveau !== "haram" && /sauf (certification|mention halal|origine halal)/i.test(a.raison);
+    const alertesAffichees = certifieHalal && !aHaram ? alertesUniques.filter((a) => !leveParLeLabel(a)) : alertesUniques;
+    return { statut, certifieHalal, vegan, alertes: alertesAffichees };
 }

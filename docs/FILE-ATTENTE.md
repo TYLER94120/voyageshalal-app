@@ -85,6 +85,36 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Un produit certifié halal affichait « certifié ✓ » ET « ⚠️ à vérifier »**
+  *(11 août)* — le moteur avait été mesuré sous toutes les coutures ; l'écran
+  qui montre son résultat, jamais en entier. Les six écrans lus intégralement.
+
+  **Ce qui était déjà bon :** le DOUTEUX ne se contente pas du mot — il nomme
+  l'ingrédient, donne la raison, renvoie à sa fiche, et montre la composition
+  ligne par ligne. L'INCONNU ne ressemble jamais à un feu vert.
+
+  **Le défaut :** sur un produit portant un label halal, l'écran disait en haut
+  « HALAL — Produit certifié halal ✓ » et juste dessous
+  « ⚠️ Viande — abattage halal à vérifier, **sauf certification** ». Le doute
+  était donc levé par la certification, de l'aveu même de la règle, et on
+  l'affichait quand même. Deux réponses contraires à la même question, dans le
+  même écran.
+
+  Corrigé des deux côtés : le moteur retire les doutes que le label répond —
+  reconnus à leur propre formulation « sauf certification », **jamais un
+  interdit** — et la composition ligne par ligne suit la même règle.
+
+  **Le bug derrière le bug :** la première correction n'a rien changé, et la
+  mesure l'a montré. `verdict` est déclaré dans un bloc `else` ; plus bas, hors
+  de ce bloc, le nom désignait l'**élément `#verdict` du DOM** — les `id` sont
+  exposés comme variables globales. L'expression était donc toujours vraie et
+  le champ toujours vide, sans la moindre erreur JavaScript. Sans la sonde,
+  j'aurais annoncé une réparation qui n'existait pas.
+
+  Sonde conservée : `npm run sonde:verdicts`, six écrans lus en entier, elle
+  sort en erreur si un écran dit deux choses à la fois. Contrôles : 73 tests,
+  26/26 INCI, 0 faux positif.
+
 - **Le moteur cosmétiques n'avait jamais été mesuré sur ce qu'il RATE**
   *(11 août)* — la sonde existante ne vérifiait que les faux positifs. La
   moitié cosmétique du produit n'avait donc aucun contrôle de détection, alors

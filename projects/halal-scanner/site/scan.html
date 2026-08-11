@@ -10,7 +10,7 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-11T14:52:56+00:00" />
+  <meta name="last-modified" content="2026-08-11T16:52:40+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -632,7 +632,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-11T14:52:56+00:00"
+      "dateModified": "2026-08-11T16:52:40+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -1784,15 +1784,27 @@
 
     // Chaque ingrédient est repassé seul dans le moteur : mêmes règles, même
     // rigueur que pour le produit entier.
-    function analyserUnIngredient(texte, estCosmetique) {
+    // Un doute que le label lève déjà — reconnu à sa propre formulation
+    // « sauf certification » — ne doit pas réapparaître ligne par ligne dans la
+    // composition. Sinon l'écran dit « certifié halal ✓ » en haut et
+    // « poulet : à vérifier » en bas : deux réponses contraires à la même
+    // question, dans le même écran.
+    function leveParLeLabel(alerte) {
+      return alerte && alerte.niveau !== "haram" &&
+        /sauf (certification|mention halal|origine halal)/i.test(alerte.raison || "");
+    }
+
+    function analyserUnIngredient(texte, estCosmetique, certifie) {
       try {
         if (estCosmetique) {
-          return analyserCosmetique({ ingredientsTexte: texte, labels: [] }).alertes[0] || null;
+          const a = analyserCosmetique({ ingredientsTexte: texte, labels: [] }).alertes[0] || null;
+          return certifie && leveParLeLabel(a) ? null : a;
         }
         const codes = (texte.match(/\bE\s?\d{3,4}\s?[a-z]?\b/gi) || []).map(
           (c) => "en:" + c.replace(/\s+/g, "").toLowerCase()
         );
-        return analyserProduit({ ingredientsTexte: texte, additifs: codes }).alertes[0] || null;
+        const a = analyserProduit({ ingredientsTexte: texte, additifs: codes }).alertes[0] || null;
+        return certifie && leveParLeLabel(a) ? null : a;
       } catch (e) {
         return null;
       }
@@ -1852,7 +1864,7 @@
       return ligne;
     }
 
-    function afficherComposition(texteIngredients, estCosmetique) {
+    function afficherComposition(texteIngredients, estCosmetique, certifie) {
       const bloc = $("composition-bloc");
       const liste = $("composition");
       const reste = $("composition-reste");
@@ -1872,7 +1884,7 @@
       const signales = [];
       const surs = [];
       for (const m of morceaux) {
-        const alerte = analyserUnIngredient(m, estCosmetique);
+        const alerte = analyserUnIngredient(m, estCosmetique, certifie);
         (alerte ? signales : surs).push({ nom: m, alerte });
       }
 
@@ -2068,6 +2080,7 @@
       $("badge-hors-ligne").hidden = !servieDeMemoire;
 
       let statutFinal;
+      let certifieParLabel = false;
 
       if (verif) {
         // ---- CERTITUDE : information vérifiée (prime sur l'analyse auto) ----
@@ -2092,6 +2105,10 @@
         // ---- ANALYSE INDICATIVE : déduction automatique des ingrédients ----
         const verdict = analyserSelonType(produit);
         statutFinal = verdict.statut;
+        // Sert plus bas, hors de ce bloc. Attention : `verdict` y désignerait
+        // l'élément #verdict du DOM — les id sont exposés comme variables
+        // globales, donc l'expression serait vraie et le champ toujours vide.
+        certifieParLabel = !!verdict.certifieHalal;
         $("label-indicatif").hidden = false;
         $("sceau").hidden = true;
         $("verif-detail").hidden = true;
@@ -2160,7 +2177,7 @@
       const texteIngredients = produit ? produit.ingredientsTexte : null;
       const estCosmetique = !!(produit && produit.cosmetique);
       const compositionAffichee = texteIngredients
-        ? afficherComposition(texteIngredients, estCosmetique)
+        ? afficherComposition(texteIngredients, estCosmetique, certifieParLabel)
         : false;
       if (!compositionAffichee) $("composition-bloc").hidden = true;
 
