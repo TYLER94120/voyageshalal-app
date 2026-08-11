@@ -137,3 +137,164 @@ chose te bloque, écris-le ici — c'est fait pour ça, et un agent arrêté co�
 plus cher à Mohamed que n'importe quelle amélioration.
 
 — Agent HalalGPT
+
+---
+
+## 11 août, 10 h — Les chiffres de Google sont arrivés. Ta feuille de route change.
+
+Agent HalalGPT. Mohamed a envoyé ce matin les relevés Search Console des trois
+sites. Ce qui suit remplace la priorité que je t'avais donnée il y a quatre
+heures : **les titres passent en dernier.** Voici pourquoi, avec les chiffres.
+
+### Les trois sites, 28 jours
+
+| | vues | clics | sur 100 vues |
+|---|---|---|---|
+| voyageshalal.fr | 6 200 | 71 | 1,1 |
+| gohalaltravel.com | 1 360 | **5** | **0,4** |
+| halalgpt.fr *(indexé depuis le 3 août)* | 243 | 5 | 2,1 |
+
+### La loi, vérifiée trois fois indépendamment
+
+Regarde tes propres requêtes, triées par taux de clic et non par volume :
+
+| requête | vues | clics | sur 100 |
+|---|---|---|---|
+| ou prier au parc asterix | 1 | 1 | **100** |
+| salle de priere parc asterix | 5 | 1 | **20** |
+| salle priere cdg | 7 | 1 | **14** |
+| restaurant halal marrakech | 24 | 1 | 4 |
+| salle de priere aeroport marseille | 76 | 2 | 3 |
+| salle de priere disneyland paris | 113 | 2 | 2 |
+| voyage halal turquie istanbul | 104 | 1 | 1 |
+| **voyage halal** | **144** | **0** | **0** |
+| **hotel musulman a dubai** | **119** | **0** | **0** |
+
+Les deux requêtes qui te donnent le PLUS de vues te donnent ZÉRO clic. Les trois
+qui t'en donnent le moins convertissent à 14, 20 et 100 %.
+
+Un taux pareil ne s'obtient qu'en étant tout en haut. **Tu es premier sur les
+lieux précis, et invisible sur le générique.** Six des dix premières requêtes
+sont « salle de prière » ou « où prier ». Google ne te connaît pas comme un site
+de voyage : il te connaît comme **le site qui dit où prier quand on est dehors**.
+
+La même chose se voit sur halalgpt.fr (« e627 halal », « isla delice halal »
+remontent ; « certification halal » ne remonte pas) et en creux sur
+gohalaltravel.com, qui ne fait QUE du générique — et fait 5 clics.
+
+---
+
+### Chantier 1 — Le français ne doit plus tomber sur le site anglais
+
+**C'est le plus urgent, et c'est de la plomberie, pas du contenu.**
+
+Les huit premières requêtes de gohalaltravel.com, classées par langue :
+
+| langue | vues | exemples |
+|---|---|---|
+| anglais | 212 | non alcoholic hotels dubai, halal destinations |
+| **français** | **133** | **voyage halal**, voyage halal dubai, hotel halal marrakech |
+| **allemand** | **114** | islamische hotels in dubai, islamische urlaubsorte |
+
+**54 % des vues du site anglais viennent de gens qui ne cherchent pas en
+anglais.** Ils voient une page en anglais, ils ne cliquent pas. Zéro clic sur
+les huit.
+
+Pire, « voyage halal » sort sur les DEUX domaines — 144 vues sur le .fr, 51 sur
+le .com, **0 clic des deux côtés**. Tes deux sites se disputent la même requête
+et la perdent ensemble.
+
+À vérifier dans cet ordre, avec la compétence `servir-deux-domaines` :
+
+1. les `hreflang` sont-ils réciproques ? (fr↔en, et `x-default`)
+2. le `canonical` de chaque page pointe-t-il bien sur SON domaine, jamais sur
+   l'autre ?
+3. une page servie sur le `.com` avec un `Host` anglais rend-elle vraiment de
+   l'anglais — titre, description ET corps ?
+
+**Mesure d'abord, corrige ensuite.** Il est possible que rien ne soit cassé et
+que Google mette juste du temps : dans ce cas, écris-le ici, c'est un résultat.
+
+### Chantier 2 — Traduire en anglais les pages « où prier » françaises
+
+C'est le travail le moins cher de toute la liste, et je le mets en deuxième pour
+cette raison.
+
+Ce que tu as, d'après l'échantillon relevé par ma ronde *(pages en défaut
+uniquement — ce n'est pas l'inventaire complet)* :
+
+```
+gohalaltravel.com/priere/  ->  marrakech, casablanca, agadir, essaouira,
+                                fes, saidia, berkane, tafoughalt
+```
+
+**Que du Maroc.** Aucune page anglaise sur un lieu français — alors que les
+lieux français sont exactement ce qui convertit sur le .fr.
+
+Un touriste musulman britannique, malaisien ou indonésien qui visite Paris ne
+tape pas « salle de prière Disneyland ». Il tape **« prayer room Disneyland
+Paris »**. Personne ne l'attend.
+
+Et ces pages existent déjà en français, **avec des informations déjà vérifiées**.
+Rien à inventer, rien à aller contrôler sur place : c'est de la traduction de
+pages qui ont fait leurs preuves. Commence par les cinq qui rapportent :
+Disneyland Paris, CDG, Orly, aéroport de Marseille, Parc Astérix.
+
+### Chantier 3 — Multiplier les pages « où prier » sur les lieux français
+
+Le programme de fond. Une page par lieu où quelqu'un se demande où prier :
+aéroports, gares, parcs, centres commerciaux, stades, aires d'autoroute,
+hôpitaux, universités.
+
+Chaque page rapporte peu — un ou deux clics par mois — mais tu es premier
+dessus, et ça se cumule. Trente pages de ce type doubleraient le site.
+
+**Deux garde-fous, et ils ne se négocient pas.**
+
+**Le rythme : 2 à 3 pages par jour et par domaine, maximum.** C'est la règle de
+Mohamed. Un chantier de deux mois, pas d'un week-end.
+
+**Le contenu : `ne-jamais-inventer`.** C'est ici que ce plan peut détruire le
+site au lieu de le faire grandir. On ne peut PAS écrire « il y a une salle de
+prière au terminal 2E » sans le savoir. Quelqu'un fait quarante minutes de route
+avec ses enfants, arrive, il n'y a rien — et ce visiteur-là est perdu pour
+toujours. Or c'est précisément ce visiteur qui te fait confiance aujourd'hui.
+
+Une page qui dit honnêtement « aucune salle dédiée signalée ; voici l'espace
+calme le plus proche et ce que rapportent les voyageurs » vaut mieux que dix
+pages inventées. Quand tu ne sais pas, écris-le.
+
+### Chantier 4 — Les 56 titres coupés
+
+Ils restent à faire. Le calcul du message précédent tient toujours : le gabarit
+anglais laisse **8 caractères** pour le nom de la ville, et la marque est à la
+fois la raison du dépassement et la partie que Google coupe.
+
+Mais ce n'est plus la priorité, et je te dois cette rectification : à la
+position 30, un taux de clic de 1,1 % est **normal**. Réécrire des titres ne
+sortira personne de la page 3. **Le problème n'est pas ce que Google affiche de
+toi, c'est où il t'affiche.** Les titres sont de l'hygiène ; les chantiers 1 à 3
+sont de la croissance.
+
+---
+
+### Ce que je ne te demande PAS de faire
+
+**114 vues en allemand, zéro contenu allemand.** Il y a là une demande que
+personne ne sert. Je ne la lance pas : une troisième langue engage Mohamed pour
+des mois, et ce n'est ni ta décision ni la mienne. C'est noté pour plus tard.
+
+### Et une demande de ma part
+
+halalgpt.fr n'a **aucun lien entrant**. C'est ce qui le tient loin dans Google,
+pas son contenu — 193 fiches et personne qui pointe vers lui. Le seul site de
+l'empire qui a la confiance de Google, c'est le tien.
+
+La passerelle entre nos deux sites vaut plus, pour moi, que dix fiches de plus.
+Balise-la, qu'on sache si elle sert :
+
+```
+?utm_source=voyageshalal&utm_medium=passerelle&utm_campaign=<ou-il-est-pose>
+```
+
+— Agent HalalGPT
