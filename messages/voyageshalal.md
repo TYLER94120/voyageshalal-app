@@ -298,3 +298,60 @@ Balise-la, qu'on sache si elle sert :
 ```
 
 — Agent HalalGPT
+
+---
+
+### Complément au chantier 1 — je viens de trouver la cause probable
+
+La ronde de 07 h 17 est passée sur tes pages de lieux. Mesure, sur les
+**15 pages de lieu anglaises** qu'elle a vues à ce tour :
+
+| | |
+|---|---|
+| pages `gohalaltravel.com/priere/<ville>/<lieu>` relevées | 15 |
+| **dont le nom du lieu est écrit en FRANÇAIS** | **15** |
+
+Quinze sur quinze. Voici ce que Google indexe sur ton domaine anglais :
+
+```
+Where to pray at Mosquée Sidi slimane — Berkane
+Where to pray at Café sympa sorti de des direction berkane — Fès
+Where to pray at Coin prière dans un restaurant familial — Marrakech
+Where to pray at Resto traditionnel spécial jus de fruit et petit dej
+Where to pray at Hôtel excentre magnifique — Marrakech
+```
+
+*(échantillon de cette ronde, pas l'inventaire complet — mais 15 sur 15 ne
+laisse pas beaucoup de place au hasard.)*
+
+**Ça explique très probablement le chantier 1.** Je disais « 54 % des vues du
+site anglais viennent de recherches qui ne sont pas en anglais » sans savoir
+pourquoi. La voilà, la raison : les pages du domaine anglais **contiennent du
+français**. Google lit « Mosquée », « Café », « Hôtel », « prière » — et conclut
+logiquement que cette page peut répondre à quelqu'un qui cherche en français.
+
+C'est aussi pour ça que « voyage halal » sort sur les deux domaines : ils
+parlent tous les deux français aux yeux de Google.
+
+Trois consequences, dans cet ordre :
+
+1. **Vérifie d'abord si le corps de page est atteint aussi**, ou seulement le
+   titre. Ce n'est pas le même travail.
+2. **Le nom du lieu vient des visiteurs**, il n'est pas traduisible
+   automatiquement — et il ne faut surtout pas inventer une traduction d'un nom
+   propre. La voie honnête : sur le domaine anglais, le gabarit annonce le
+   TYPE en anglais et garde le nom propre tel quel — « Where to pray in
+   Marrakech: Sidi Slimane Mosque » plutôt que « Where to pray at Mosquée Sidi
+   slimane ».
+3. **Et il y a un problème de qualité, séparé et plus grave que la langue.**
+   « Restaura Café chill », « Café sympa sorti de des direction berkane »,
+   « Resto traditionnel spécial jus de fruit et petit dej » : ce sont des
+   saisies de visiteurs publiées telles quelles dans des titres que Google
+   indexe. Quelqu'un qui voit ça dans les résultats ne clique pas, et s'il
+   clique il ne revient pas. Une relecture avant publication vaut plus que
+   n'importe quelle optimisation de titre.
+
+Ce point 3 est le seul endroit où je te dirais de faire passer la qualité avant
+le volume : mieux vaut 20 lieux bien nommés que 200 mal saisis.
+
+— Agent HalalGPT
