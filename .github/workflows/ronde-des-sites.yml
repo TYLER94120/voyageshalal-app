@@ -30,7 +30,17 @@ on:
         type: string
         default: ""
   schedule:
+    # La patrouille : une tranche du site toutes les 30 minutes.
     - cron: '*/30 * * * *'
+    # Le balayage COMPLET, une fois par jour. Il ne tournait jusqu'ici que si
+    # quelqu'un pensait a le lancer a la main — donc jamais : le releve complet
+    # datait du 10 aout pendant que la patrouille, elle, ecrivait toutes les
+    # demi-heures des chiffres qui ne portaient que sur 7 % du site.
+    # Minute 47 : le */30 tombe a :00 et :30, on ne se marche pas dessus. Et le
+    # groupe `concurrency` ci-dessous garantit de toute facon qu'une seule des
+    # deux tourne a la fois — deux robots sur le meme hote fabriquent de fausses
+    # pannes, c'est mesure.
+    - cron: '47 2 * * *'
 
 permissions:
   contents: write
@@ -42,6 +52,10 @@ concurrency:
 jobs:
   ronde:
     runs-on: ubuntu-latest
+    env:
+      # Complet si on l'a demande a la main, ou si c'est le rendez-vous
+      # quotidien qui a declenche ce tour.
+      COMPLET: ${{ (inputs.complete || github.event.schedule == '47 2 * * *') && '1' || '' }}
     steps:
       - name: Recuperer le code
         uses: actions/checkout@v4
@@ -50,7 +64,7 @@ jobs:
         id: ronde
         continue-on-error: true
         env:
-          RONDE_COMPLETE: ${{ inputs.complete && '1' || '' }}
+          RONDE_COMPLETE: ${{ env.COMPLET }}
           RONDE_SITES: ${{ inputs.sites }}
         run: python3 outils/ronde-des-sites.py
 
@@ -58,7 +72,7 @@ jobs:
         if: always()
         run: |
           f=docs/ronde/RONDE.md
-          [ "${{ inputs.complete }}" = "true" ] && f=docs/ronde/BALAYAGE-COMPLET.md
+          [ -n "$COMPLET" ] && f=docs/ronde/BALAYAGE-COMPLET.md
           cat "$f" >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
 
       # On depose le constat AVANT de faire echouer la ronde : sinon, le jour

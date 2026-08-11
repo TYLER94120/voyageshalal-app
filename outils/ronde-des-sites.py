@@ -282,7 +282,10 @@ def ronde_du_site(site, tour, complet=False):
         defauts.append({"niveau": GRAVE, "site": site["nom"], "url": base + "/",
                         "quoi": "le site entier ne repond pas",
                         "detail": erreur or f"code {code}"})
-        return defauts, 0
+        # Trois valeurs ici aussi : le site est tombe, on n'a rien vu et on ne
+        # connait rien. Ce chemin-la n'est emprunte qu'un jour de panne — donc
+        # exactement le jour ou une erreur de plus serait le plus couteuse.
+        return defauts, 0, 0
 
     adresses = urls_du_sitemap(base)
     if not adresses:
@@ -308,7 +311,10 @@ def ronde_du_site(site, tour, complet=False):
         for lot in pool.map(lambda u: examiner(site, u), a_voir):
             defauts += lot
 
-    return defauts, len(a_voir)
+    # On rend aussi le total connu : sans lui, le rapport ne peut pas dire
+    # quelle PART du site cette ronde a vue — et un chiffre de defauts sans
+    # sa couverture se lit comme un verdict sur tout le site.
+    return defauts, len(a_voir), len(adresses)
 
 
 def confirmer_les_graves(defauts):
@@ -399,11 +405,12 @@ def main():
         PAUSE_COMPLET = 0.35
         print("Balayage COMPLET : toutes les pages, doucement (2 a la fois).\n")
 
-    tous, vues = [], 0
+    tous, vues, connues = [], 0, 0
     for site in sites:
-        defauts, n = ronde_du_site(site, tour, complet)
+        defauts, n, total = ronde_du_site(site, tour, complet)
         tous += defauts
         vues += n
+        connues += total
         graves = sum(1 for d in defauts if d["niveau"] == GRAVE)
         print(f"{site['nom']:22} {n:3} pages · {len(defauts):3} defauts "
               f"dont {graves} graves")
@@ -440,9 +447,33 @@ def main():
         lignes = [
             "# Balayage complet" if complet else "# La ronde des sites",
             "",
-            f"**Dernier changement constate le {horodatage}.** "
-            f"{vues} pages regardees a cette ronde.",
+            f"**Dernier changement constate le {horodatage}.**",
             "",
+        ]
+        if complet:
+            lignes += [
+                f"**{vues} pages regardees — le site entier.** Les chiffres "
+                "ci-dessous",
+                "valent donc pour tout ce que Google peut voir.",
+                "",
+            ]
+        else:
+            part = round(100 * vues / connues) if connues else 0
+            lignes += [
+                f"⚠️ **Cette ronde a regarde {vues} pages sur {connues} — "
+                f"environ {part} %.**",
+                "",
+                "Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site "
+                "entier. Un",
+                "jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 "
+                "choses ont",
+                "casse dans la nuit : la rotation est simplement passee sur "
+                "d'autres pages.",
+                "Pour le compte complet, voir "
+                "[BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md).",
+                "",
+            ]
+        lignes += [
             "La ronde passe **toutes les 30 minutes** sur les quatre sites et",
             "regarde ce qu'un visiteur recoit vraiment. Ce fichier n'est reecrit",
             "que si la liste des defauts a bouge : une date ancienne veut dire",

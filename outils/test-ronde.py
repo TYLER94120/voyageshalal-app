@@ -126,6 +126,64 @@ dire(any(s["langue"] == "fr" for s in robot.SITES)
      and any(s["langue"] == "en" for s in robot.SITES),
      "le contrôle sait quels domaines sont anglais et lesquels sont français")
 
+# ── 13 à 16. Le rapport doit dire quelle PART du site il a vue ────────────
+# Le 11 août, RONDE.md est passé de 28 défauts à 1 en trois heures. Rien
+# n'était réparé : la rotation avait simplement changé de tranche. Le tableau
+# se lisait pourtant comme un verdict sur le site entier.
+#
+# Ce test fait tourner la ronde EN ENTIER, sans réseau, et relit le fichier
+# produit. C'est le seul moyen de vérifier ce que GitHub Actions écrira
+# vraiment — le reste du test ne contrôle que des morceaux.
+print()
+import os as _os, tempfile
+
+PAGES = {"https://gohalaltravel.com/p%d" % i for i in range(60)}
+
+
+def _faux_sitemap(base):
+    return [base + "/"] + sorted(base + "/p%d" % i for i in range(60))
+
+
+def _fausse_page(url, methode="GET", delai=None):
+    # Plus de 500 caracteres : en dessous, la ronde crie « page quasi vide » —
+    # a juste titre. Une page d'essai trop courte ferait echouer ce test pour
+    # une raison qui n'a rien a voir avec ce qu'il mesure.
+    corps = (
+        "<html lang='en'><head><title>Where to pray in Fez</title>"
+        "<meta name='description' content='A long enough description about "
+        "prayer rooms in Fez for travellers who need one while visiting.'>"
+        "</head><body><h1>Fez</h1><p>" + ("Prayer rooms in Fez. " * 30) +
+        "</p></body></html>"
+    )
+    return (200, corps.encode("utf-8"), 0.1, None)
+
+
+robot.urls_du_sitemap = _faux_sitemap
+robot.chercher = _fausse_page
+robot.SITES = [{"nom": "gohalaltravel.com", "base": "https://gohalaltravel.com",
+                "langue": "en"}]
+
+_avant = _os.getcwd()
+with tempfile.TemporaryDirectory() as dossier:
+    _os.chdir(dossier)
+    _os.environ.pop("RONDE_COMPLETE", None)
+    _os.environ["GITHUB_RUN_NUMBER"] = "1"
+    try:
+        robot.main()
+    except SystemExit:
+        pass
+    rapport = open("docs/ronde/RONDE.md", encoding="utf-8").read()
+    _os.chdir(_avant)
+
+dire("Cette ronde a regarde" in rapport,
+     "le rapport de patrouille annonce sa couverture")
+dire("sur 61" in rapport, "il donne le total des pages connues, pas seulement les vues",
+     [l for l in rapport.splitlines() if "sur 61" in l][:1])
+dire("CETTE TRANCHE" in rapport,
+     "il previent que les chiffres ne valent pas pour le site entier")
+dire("BALAYAGE-COMPLET.md" in rapport,
+     "il renvoie vers le releve complet pour le compte reel")
+
 print("\n" + ("✓ La ronde mesure ce que Google affiche, pas ce que le fichier contient."
               if echecs == 0 else f"✗ {echecs} echec(s)"))
 sys.exit(0 if echecs == 0 else 1)
