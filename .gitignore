@@ -20,3 +20,6 @@ ios/
 
 expo-env.d.ts
 # @end expo-cli
+# Python (les robots de outils/)
+__pycache__/
+*.pyc

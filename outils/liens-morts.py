@@ -104,9 +104,52 @@ def etat_du_lien(url):
         if code3 in (401, 403, 429):
             return "bloque", f"code {code3} — refuse les robots"
         if code3 == 0:
-            return "mort", f"{erreur3 or erreur2 or erreur} (confirme au 2e controle)"
+            # TOUJOURS aucun code de reponse. On ne conclut pas ici, et surtout
+            # pas parce qu'on a « reessaye » : ce 2e controle a eu lieu DANS le
+            # pool, pendant que 7 autres fils tapaient sur le meme hote. Une
+            # confirmation faite sous la charge qui a cause la panne ne
+            # confirme rien.
+            # Le 11 aout, halalgpt.fr/e/E572 a ete declare mort ainsi. Verifie
+            # a la main : 308 vers /categorie/additifs, qui repond 200. La page
+            # allait bien ; c'est l'instrument qui a menti.
+            # Ces liens partent donc en quarantaine et seront rejuges a la fin,
+            # un par un, machine calme.
+            return "doute", f"{erreur3 or erreur2 or erreur} — aucun code de reponse"
         return "mort", f"code {code3} (confirme au 2e controle)"
     return "mort", f"code {code2 or code}"
+
+
+def confirmer_les_muets(suspects):
+    """Rejuge, machine calme, les liens qui n'ont rendu AUCUN code de reponse.
+
+    Un code HTTP est un verdict : le serveur a parle, il a dit 404. Une panne
+    reseau sans code n'est pas un verdict, c'est une absence de reponse — et
+    apres 1700 requetes, l'absence de reponse dit surtout que nous avons
+    fatigue l'hote.
+
+    Sequentiel, une seconde et demie entre chaque, apres que tout le reste
+    s'est tu. Ce qui echoue encore ici a vraiment un probleme.
+    """
+    if not suspects:
+        return [], []
+    print(f"\n⏳ {len(suspects)} lien(s) sans code de reponse — controle calme, "
+          f"un par un…")
+    time.sleep(5)
+    confirmes, innocentes = [], []
+    for s in suspects:
+        code, _, erreur = demander(s["url"], "GET")
+        if code in (200, 201, 202, 204, 206, 301, 302, 303, 307, 308):
+            innocentes.append(s)
+            print(f"   ✅ finalement vivant ({code}) : {s['url'][:90]}")
+        elif code in (401, 403, 429):
+            innocentes.append(s)
+            print(f"   ⚪ bloque aux robots ({code}), pas mort : {s['url'][:90]}")
+        else:
+            s["detail"] = f"{erreur or f'code {code}'} (confirme machine calme)"
+            confirmes.append(s)
+            print(f"   🔴 mort confirme : {s['url'][:90]}")
+        time.sleep(1.5)
+    return confirmes, innocentes
 
 
 def liens_de_la_page(base, url):
@@ -161,7 +204,7 @@ def main():
     filtre = [s.strip() for s in os.environ.get("LIENS_SITES", "").split(",") if s.strip()]
     sites = [s for s in SITES if not filtre or s["nom"] in filtre]
 
-    morts, bloques = [], []
+    morts, bloques, suspects = [], [], []
     total_liens = 0
 
     for site in sites:
@@ -200,10 +243,21 @@ def main():
             elif etat == "bloque":
                 bloques.append({"site": site["nom"], "genre": genre, "url": url,
                                 "detail": detail})
+            elif etat == "doute":
+                suspects.append({"site": site["nom"], "genre": genre, "url": url,
+                                 "detail": detail})
 
         with ThreadPoolExecutor(max_workers=PARALLELE) as pool:
             list(pool.map(lambda u: controler(u, "interne"), internes))
             list(pool.map(lambda u: controler(u, "externe"), externes))
+
+    # Les liens muets ne sont juges qu'une fois TOUS les sites parcourus, quand
+    # plus aucun fil ne tape. C'est la seule mesure qui vaille quelque chose.
+    confirmes, innocentes = confirmer_les_muets(suspects)
+    morts.extend(confirmes)
+    if innocentes:
+        print(f"\n💡 {len(innocentes)} lien(s) auraient ete declares morts a tort "
+              f"sans ce controle calme.")
 
     internes_morts = [m for m in morts if m["genre"] == "interne"]
     externes_morts = [m for m in morts if m["genre"] == "externe"]
@@ -215,7 +269,9 @@ def main():
     os.makedirs("docs/ronde", exist_ok=True)
     with open("docs/ronde/liens-morts.json", "w", encoding="utf-8") as f:
         json.dump({"verifie_le": horodatage, "liens_controles": total_liens,
-                   "morts": morts, "bloques": bloques}, f, ensure_ascii=False, indent=2)
+                   "morts": morts, "bloques": bloques,
+                   "innocentes_au_controle_calme": innocentes},
+                  f, ensure_ascii=False, indent=2)
         f.write("\n")
 
     lignes = [
@@ -237,6 +293,21 @@ def main():
         "serait pire que le probleme qu'on corrige.",
         "",
     ]
+    if innocentes:
+        lignes += [
+            f"✅ **{len(innocentes)} lien(s) sauve(s) du controle calme.** Ils "
+            "n'avaient rendu",
+            "aucun code de reponse pendant le balayage — ce qui ne veut pas dire "
+            "« mort »,",
+            "mais « l'hote ne repond plus a NOTRE robot ». Rejuges un par un, "
+            "machine calme,",
+            "ils repondent tres bien. Sans cette etape, on serait alle reparer "
+            "des pages saines.",
+            "",
+        ]
+        for s in innocentes[:20]:
+            lignes.append(f"- `{s['url']}` *(sur {s['site']})*")
+        lignes.append("")
     for titre, liste in (("🔴 Liens internes morts", internes_morts),
                          ("🟠 Liens externes morts", externes_morts)):
         if not liste:
