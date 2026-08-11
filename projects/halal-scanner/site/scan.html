@@ -10,7 +10,7 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-11T05:03:10+00:00" />
+  <meta name="last-modified" content="2026-08-11T07:05:50+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -632,7 +632,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-11T05:03:10+00:00"
+      "dateModified": "2026-08-11T07:05:50+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -1023,6 +1023,7 @@
         $("etat-camera").textContent =
           "Le lecteur de codes-barres met du temps à arriver (réseau lent) — " +
           "ce n'est pas ton code-barres. Saisis les chiffres ci-dessous ⬇";
+        montrerLaSaisie();
       }, DELAI_BIBLIOTHEQUE);
       try {
         await arrivee;
@@ -1053,7 +1054,25 @@
         $("etat-camera").textContent =
           "Ce navigateur n'a pas de lecteur de codes-barres et nous n'avons pas pu " +
           "en télécharger un — ce n'est pas ton code-barres. Saisis les chiffres ci-dessous ⬇";
+        montrerLaSaisie();
       }
+    }
+
+    /**
+     * Amène le champ de saisie sous les yeux.
+     *
+     * Mesuré le 11 août sur un écran de 320×568 (iPhone SE, Android d'entrée
+     * de gamme) : le message disait « saisis les chiffres ci-dessous ⬇ » alors
+     * que le bas du champ se trouvait à 674 px, soit 106 px SOUS le bord de
+     * l'écran. On envoyait quelqu'un vers une sortie invisible.
+     *
+     * Uniquement dans les cas où la caméra ou le lecteur est inutilisable : si
+     * la détection tourne, faire défiler la page arracherait le viseur des
+     * mains de quelqu'un en train de viser un produit.
+     */
+    function montrerLaSaisie() {
+      // Défilement immédiat, pas « smooth » : la personne en a besoin maintenant.
+      $("saisie").scrollIntoView({ block: "center" });
     }
 
     function montrerCameraIndisponible(e) {
@@ -1062,6 +1081,7 @@
       $("etat-camera").textContent = refus
         ? "Caméra refusée — autorise-la dans ton navigateur, ou saisis le code ci-dessous."
         : "Caméra indisponible ici — saisis le code-barres ci-dessous.";
+      montrerLaSaisie();
     }
 
     function arreterScanner() {

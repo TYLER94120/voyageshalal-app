@@ -62,15 +62,51 @@ une explication honnête, jamais un verdict inventé.
    (« ça me demande de reprendre la photo ») venait forcément du service ou du
    réseau, jamais du navigateur.
    *Ce qu'il faut :* un essai depuis le téléphone de Mohamed, ou l'agent
-   HalalGPT qui confirme que `/api/etiquette` répond et dans quel format.
-   *Blocage précis :* `halalgpt.fr` est refusé par la même règle (403 au
-   CONNECT). Un essai depuis le téléphone de Mohamed, ou l'agent HalalGPT qui
-   répond, contourne le problème sans toucher à l'environnement.
+   HalalGPT qui confirme que `/api/etiquette` répond et dans quel format —
+   l'un comme l'autre contourne la règle sans toucher à l'environnement.
    La sonde `npm run sonde:photo` rejoue les six cas en trente secondes.
+
+5. **Le champ de secours ouvre le mauvais clavier.**
+   *Preuve :* `#saisie` sert à deux choses — chercher par nom OU taper un
+   code-barres — et n'a donc **aucun attribut `inputmode`**. Quand l'app dit
+   « saisis les chiffres ci-dessous », le téléphone ouvre le clavier
+   alphabétique : il faut basculer en mode chiffres à la main avant de taper
+   13 chiffres, debout dans un rayon. Trois messages d'erreur au moins mènent
+   maintenant à ce champ.
+   *Piste :* pas d'`inputmode="numeric"` fixe, ce serait faux pour la recherche
+   par nom — plutôt le basculer dynamiquement dès que la saisie ne contient que
+   des chiffres, ou proposer deux entrées distinctes. À mesurer avant de
+   choisir : `npm run sonde:saisie` couvre déjà le chemin.
 
 ---
 
 ## Fait
+
+- **On renvoyait les gens vers une sortie invisible** *(11 août)*. Depuis deux
+  cycles, au moins trois messages d'erreur finissent par « Saisis les chiffres
+  ci-dessous ⬇ » : caméra refusée, lecteur qui tarde, lecteur introuvable.
+  C'est devenu LA porte de sortie du produit, et elle n'avait jamais été
+  vérifiée.
+
+  **Ce qui marchait déjà :** les quatre façons d'écrire un code-barres
+  aboutissent au verdict — 13 chiffres collés, avec espaces, avec tirets, et
+  12 chiffres (UPC américain). 4 sur 4.
+
+  **Le défaut :** sur un écran de 320×568 (iPhone SE, Android d'entrée de
+  gamme), le champ était **hors de l'écran** au moment où le message y
+  renvoyait.
+
+  | Écran | Bas du champ | Bord de l'écran | Avant | Après |
+  |---|---|---|---|---|
+  | 390×844 | 768 px | 844 px | visible | visible (450 px) |
+  | **320×568** | **674 px** | **568 px** | **106 px sous le bord** | visible (312 px) |
+
+  La page se place maintenant sur le champ dès qu'un de ces messages
+  s'affiche — uniquement quand la caméra ou le lecteur est inutilisable. Si la
+  détection tourne, on ne fait rien : faire défiler la page arracherait le
+  viseur des mains de quelqu'un en train de viser un produit.
+
+  Sonde conservée : `npm run sonde:saisie`.
 
 - **Deux agents sur trois travaillaient avec une compétence périmée**
   *(11 août)*. La compétence `repondre-en-conditions-degradees` existe en trois
