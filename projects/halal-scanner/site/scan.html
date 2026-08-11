@@ -10,7 +10,7 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-11T16:52:40+00:00" />
+  <meta name="last-modified" content="2026-08-11T18:59:30+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -632,7 +632,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-11T16:52:40+00:00"
+      "dateModified": "2026-08-11T18:59:30+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -2542,12 +2542,54 @@
       );
     }
 
+    /**
+     * Le verdict d'hier n'est pas le verdict d'aujourd'hui.
+     *
+     * Mesuré le 11 août : une quiche aux lardons scannée avant la correction
+     * de ce jour restait affichée ✅ VERT dans l'historique ET dans les
+     * produits gardés, alors que le moteur rend désormais HARAM. Chaque règle
+     * corrigée laissait ainsi une pastille périmée dans la liste des gens —
+     * et c'est la première chose qu'ils voient en ouvrant le scanner.
+     *
+     * La fiche du produit, elle, est gardée telle quelle en cache : on peut
+     * donc refaire le calcul. Quand la fiche n'y est plus, on garde le statut
+     * enregistré — inventer serait pire.
+     */
+    function statutAJour(item) {
+      if (!item || !item.code) return item && item.statut;
+      const produit = lireCacheProduit(item.code);
+      if (!produit) return item.statut;
+      try {
+        const frais = analyserSelonType(produit).statut;
+        if (frais && frais !== item.statut) corrigerStatutEnregistre(item.code, frais);
+        return frais || item.statut;
+      } catch (e) {
+        return item.statut;
+      }
+    }
+
+    /** Réécrit le statut dans les deux listes, pour qu'il reste juste sans le cache. */
+    function corrigerStatutEnregistre(code, statut) {
+      for (const cle of [CLE_SCANS, CLE_GARDES]) {
+        try {
+          const liste = JSON.parse(localStorage.getItem(cle) || "[]");
+          if (!Array.isArray(liste)) continue;
+          let change = false;
+          for (const e of liste) {
+            if (e && e.code === code && e.statut !== statut) { e.statut = statut; change = true; }
+          }
+          if (change) localStorage.setItem(cle, JSON.stringify(liste));
+        } catch (e) { /* liste illisible : on n'y touche pas */ }
+      }
+    }
+
     function ligneProduit(item, options) {
+      const statut = statutAJour(item);
       const bouton = document.createElement("button");
       bouton.className = "scan-ligne";
       const emo = document.createElement("span");
       emo.className = "emo";
-      emo.textContent = EMOJIS[item.statut] || "❓";
+      emo.textContent = EMOJIS[statut] || "❓";
       const nom = document.createElement("span");
       nom.className = "nom";
       nom.textContent = item.nom;
@@ -2560,7 +2602,7 @@
       }
       const pastille = document.createElement("span");
       pastille.className = "pastille";
-      pastille.style.background = COULEURS[item.statut] || "var(--inconnu)";
+      pastille.style.background = COULEURS[statut] || "var(--inconnu)";
       bouton.appendChild(pastille);
       bouton.onclick = () => {
         arreterScanner();

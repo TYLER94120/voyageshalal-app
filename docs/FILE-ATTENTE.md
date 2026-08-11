@@ -85,6 +85,38 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Chaque règle corrigée laissait une pastille verte périmée dans la liste
+  des gens** *(11 août)* — le défaut le plus grave trouvé aujourd'hui, et une
+  conséquence directe de tout le reste du travail de la journée.
+
+  L'historique et les produits gardés enregistrent le **verdict**, pas la
+  composition. Une quiche aux lardons scannée le matin — donc enregistrée
+  « halal » avant la correction — restait affichée **✅ vert** l'après-midi,
+  alors que le moteur rendait HARAM. C'est la première chose qu'on voit en
+  ouvrant le scanner, et l'étoile « gardé » désigne précisément les produits
+  auxquels quelqu'un fait le plus confiance.
+
+  | | Ce que la liste affiche | Ce que le moteur dit |
+  |---|---|---|
+  | Avant | **✅ Quiche lardons ★** | HARAM |
+  | Après | ❌ Quiche lardons ★ | HARAM |
+
+  La fiche du produit, elle, est gardée telle quelle en cache (60 produits, et
+  l'historique en compte 20 au maximum) : on peut donc **refaire le calcul** à
+  l'affichage au lieu de croire la mémoire. Le statut corrigé est aussi
+  réécrit dans les deux listes, pour rester juste quand la fiche sortira du
+  cache. Sans fiche en cache, on garde le statut enregistré — inventer serait
+  pire.
+
+  *Note de méthode :* la première mesure n'a rien montré. La sonde écrivait le
+  cache sous la clé `halalcheck.cache` alors que le code lit
+  `halalcheck.produits` : elle testait un chemin qui n'existe pas. Troisième
+  fois qu'une sonde ment avant de dire vrai. L'« avant » du tableau a été
+  rejoué avec la bonne clé, correctif retiré, pour ne pas comparer deux choses
+  différentes.
+
+  Sonde conservée : `npm run sonde:historique`.
+
 - **Un produit certifié halal affichait « certifié ✓ » ET « ⚠️ à vérifier »**
   *(11 août)* — le moteur avait été mesuré sous toutes les coutures ; l'écran
   qui montre son résultat, jamais en entier. Les six écrans lus intégralement.

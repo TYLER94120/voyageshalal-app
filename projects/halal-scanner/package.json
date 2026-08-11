@@ -21,7 +21,8 @@
     "sonde:saisie": "node scripts/sonde-saisie.mjs",
     "sonde:pays": "node scripts/sonde-pays.mjs",
     "sonde:inci": "node scripts/sonde-inci.mjs",
-    "sonde:verdicts": "node scripts/sonde-verdicts.mjs"
+    "sonde:verdicts": "node scripts/sonde-verdicts.mjs",
+    "sonde:historique": "node scripts/sonde-historique.mjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
