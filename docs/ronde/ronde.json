@@ -1,27 +1,48 @@
 {
-  "ronde_du": "2026-08-11 04:02 UTC",
-  "pages_vues": 130,
+  "ronde_du": "2026-08-11 05:36 UTC",
+  "pages_vues": 129,
   "defauts": [
     {
       "niveau": "defaut",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/guides/hotel-halal-tout-savoir",
-      "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Hôtel halal : tout ce qu&#x27;il faut savoir avant de réserv… »"
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Where to pray in Marrakech — prayer spots | GoHalalTravel.co… »"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/guides/malaysia-halal-destination-guide",
+      "url": "https://www.gohalaltravel.com/priere/tafoughalt",
       "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Malaysia: The World&#x27;s #1 Destination for Muslim Travele… »"
+      "detail": "« Where to pray in Tafoughalt — prayer spots | GoHalalTravel.c… »"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/guides/solo-female-muslim-travel",
-      "quoi": "titre coupe par Google (64 car.)",
-      "detail": "« Solo Female Muslim Travel: Safe Destinations &amp; Honest Ad… »"
+      "url": "https://www.gohalaltravel.com/priere/essaouira",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Where to pray in Essaouira — prayer spots | GoHalalTravel.co… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/casablanca",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Where to pray in Casablanca — prayer spots | GoHalalTravel.c… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/coin-priere-dans-un-restaurant-familial",
+      "quoi": "titre coupe par Google (88 car.)",
+      "detail": "« Where to pray at Coin prière dans un restaurant familial — M… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "titre coupe par Google (101 car.)",
+      "detail": "« Where to pray at Resto traditionnel spécial jus de fruit et … »"
     }
   ]
 }

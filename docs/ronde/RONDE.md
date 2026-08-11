@@ -1,6 +1,6 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-08-11 04:02 UTC.** 130 pages regardees a cette ronde.
+**Dernier changement constate le 2026-08-11 05:36 UTC.** 129 pages regardees a cette ronde.
 
 La ronde passe **toutes les 30 minutes** sur les quatre sites et
 regarde ce qu'un visiteur recoit vraiment. Ce fichier n'est reecrit
@@ -10,19 +10,22 @@ que rien de nouveau n'est casse, pas que le robot dort.
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 3 | il la recoit, mais elle le dessert |
+| 🟠 defaut | 6 | il la recoit, mais elle le dessert |
 | 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
 
-## 🟠 defaut — 3
+## 🟠 defaut — 6
 
-### voyageshalal.fr (1)
+### gohalaltravel.com (6)
 
-- **titre coupe par Google (62 car.)** — « Hôtel halal : tout ce qu&#x27;il faut savoir avant de réserv… »  
-  `https://www.voyageshalal.fr/guides/hotel-halal-tout-savoir`
-
-### gohalaltravel.com (2)
-
-- **titre coupe par Google (62 car.)** — « Malaysia: The World&#x27;s #1 Destination for Muslim Travele… »  
-  `https://www.gohalaltravel.com/guides/malaysia-halal-destination-guide`
-- **titre coupe par Google (64 car.)** — « Solo Female Muslim Travel: Safe Destinations &amp; Honest Ad… »  
-  `https://www.gohalaltravel.com/guides/solo-female-muslim-travel`
+- **titre coupe par Google (61 car.)** — « Where to pray in Marrakech — prayer spots | GoHalalTravel.co… »  
+  `https://www.gohalaltravel.com/priere/marrakech`
+- **titre coupe par Google (62 car.)** — « Where to pray in Tafoughalt — prayer spots | GoHalalTravel.c… »  
+  `https://www.gohalaltravel.com/priere/tafoughalt`
+- **titre coupe par Google (61 car.)** — « Where to pray in Essaouira — prayer spots | GoHalalTravel.co… »  
+  `https://www.gohalaltravel.com/priere/essaouira`
+- **titre coupe par Google (62 car.)** — « Where to pray in Casablanca — prayer spots | GoHalalTravel.c… »  
+  `https://www.gohalaltravel.com/priere/casablanca`
+- **titre coupe par Google (88 car.)** — « Where to pray at Coin prière dans un restaurant familial — M… »  
+  `https://www.gohalaltravel.com/priere/marrakech/coin-priere-dans-un-restaurant-familial`
+- **titre coupe par Google (101 car.)** — « Where to pray at Resto traditionnel spécial jus de fruit et … »  
+  `https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej`
