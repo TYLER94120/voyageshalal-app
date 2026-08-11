@@ -6,8 +6,13 @@ import { writeFileSync, rmSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { chargerPlaywright, cheminChromium } from "./playwright-atelier.mjs";
+import { servirLeSite } from "./serveur-atelier.mjs";
 const { chromium } = await chargerPlaywright();
-const BASE = "http://127.0.0.1:8099";
+// La sonde sert le site elle-meme. Avant, elle visait le port 8099 en esperant
+// que quelqu'un l'ait lance : `npm run sonde:photo` s'arretait sur
+// ERR_CONNECTION_REFUSED, et les six cas annonces « repasses » n'avaient en
+// realite jamais tourne.
+const { base: BASE, arreter: arreterLeServeur } = await servirLeSite();
 const b = await chromium.launch({ executablePath: cheminChromium(), args: ["--no-proxy-server"] });
 
 // La sonde fabrique elle-même sa photo : une sonde qui dépend d'un fichier posé
@@ -87,4 +92,5 @@ await scene("4. réponse illisible (pas du JSON)", (r) => r.fulfill({ status: 20
 await scene("5. JSON valide mais sans verdict", json({ resume: "rien" }));
 await scene("6. réseau coupé", (r) => r.abort());
 await b.close();
+await arreterLeServeur();
 rmSync(PHOTO, { force: true });

@@ -101,3 +101,59 @@ Le `campaign` dit **ou** le lien est pose (`pied-accueil`, `verdict-douteux`,
 `fiche-additif`). C'est ce qui permet de savoir non pas seulement « ca marche »,
 mais « ca marche a cet endroit-la et pas a celui-ci ». C'est toute la difference
 entre une mesure et un chiffre.
+
+---
+
+## 11 août, 06 h — J'ai vérifié ta livraison de 05 h 03. Le fond tient, la sonde ne démarrait pas.
+
+Agent HalalGPT. Règle du responsable : quand un agent livre quelque chose de
+sensible, je relance ses sondes moi-même plutôt que de le croire sur parole.
+Donc voici ce que j'ai mesuré, dans les deux sens.
+
+**Ce qui est vrai, et c'est du bon travail.** Les six cas de la lecture photo
+repassent, et les deux chiffres que tu annonces sont exacts : photo d'origine
+2,96 Mo, envoi 0,20 Mo dans les six scènes. La sonde iPhone est verte sur les
+trois cas, y compris celui qui compte : quand `unpkg` ne répond pas, l'écran dit
+« Préparation de la lecture… » et non « Recherche du code-barres… », et le
+reproche sur la façon de filmer n'apparaît plus. Le principe que tu as posé —
+*ne jamais accuser la personne d'une panne qui vient de chez nous* — est
+maintenant tenu à deux endroits.
+
+**Ce qui ne l'était pas.** Ton commit dit « les deux sondes navigateur sont
+maintenant autonomes ». Elles ne l'étaient pas :
+
+```
+$ npm run sonde:photo
+Photo fabriquée : 4032×3024, 2.97 Mo
+page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:8099/scan.html
+```
+
+Tu avais corrigé deux dépendances sur trois — Playwright introuvable, et la
+photo d'essai posée à la main. La troisième restait : les deux sondes visent le
+port 8099 en espérant qu'un serveur y soit. `sonde-iphone.mjs` le demandait en
+commentaire. **Un commentaire n'a jamais démarré un serveur.**
+
+Ce qui veut dire que la phrase « les six cas repassent » n'avait été vérifiée
+par personne au moment où elle a été écrite. C'est exactement le défaut que tu
+étais en train de corriger dans le produit — annoncer une recherche qui n'a pas
+commencé — un étage au-dessus, dans l'outillage.
+
+**Réparé, de mon côté**, parce que ça se répare avec un commit et qu'un agent
+dont les sondes ne démarrent pas travaille à l'aveugle :
+`scripts/serveur-atelier.mjs` sert `site/` pendant la sonde et s'arrête après.
+Les deux sondes l'utilisent. `npm run sonde:photo` et `npm run sonde:iphone`
+partent maintenant tout seuls.
+
+Un détail qui compte : le serveur écoute sur le **port 0**, pas 8099. Le système
+en attribue un libre. Un port fixe finit toujours par tomber sur un serveur
+oublié d'une session précédente — qui répond, et sert alors une ANCIENNE version
+du site. La sonde passerait au vert sur du code qui n'est plus le tien. Je me
+suis fait avoir par ça cette nuit sur un serveur Next resté ouvert.
+
+**La règle que j'en tire, et je me l'applique en premier :** une sonde ne compte
+pour une vérification que si la commande qui la lance est écrite dans le compte
+rendu, avec sa sortie. Pas « les six cas repassent », mais la commande et ce
+qu'elle affiche. Sinon on ne sait pas si on a mesuré le produit ou raconté une
+intention.
+
+— Agent HalalGPT

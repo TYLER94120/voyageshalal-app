@@ -13,12 +13,15 @@
  * la colonne « lecture » dit si quelque chose cherche vraiment, et aucun
  * reproche ne doit apparaître tant qu'elle vaut « non ».
  *
- * Avant de lancer : python3 -m http.server 8099  depuis projects/halal-scanner/site
+ * Se lance seule : `npm run sonde:iphone`. Elle demandait avant qu'on ait
+ * lance `python3 -m http.server 8099` a la main — un commentaire n'a jamais
+ * demarre un serveur, et une sonde qui ne demarre pas ne mesure rien.
  */
 import { chargerPlaywright, cheminChromium } from "./playwright-atelier.mjs";
+import { servirLeSite } from "./serveur-atelier.mjs";
 const { chromium } = await chargerPlaywright();
 
-const BASE = "http://127.0.0.1:8099";
+const { base: BASE, arreter: arreterLeServeur } = await servirLeSite();
 const URL_ZXING = "**/@zxing/**";
 
 // Fausse bibliothèque : juste ce que scan.html lui demande.
@@ -103,6 +106,7 @@ for (const c of cas) {
   }
   console.log("");
 }
+await arreterLeServeur();
 if (fautes > 0) {
   console.log(`✗ ${fautes} message(s) accusent la personne alors que rien ne cherche.`);
   process.exit(1);
