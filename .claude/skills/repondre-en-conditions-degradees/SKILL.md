@@ -5,13 +5,15 @@ description: >
   cas normal en rayon de supermarche, en sous-sol, en voyage, a l'etranger. A
   utiliser des qu'on ecrit un appel reseau destine a un telephone : fetch, appel
   d'API, chargement d'une fiche produit, recherche, service worker, mode hors
-  ligne, cache local, localStorage. Declenche aussi sur : « ca rame », « ca
+  ligne, cache local, localStorage, chargement d'une bibliotheque depuis un CDN,
+  balise script ou import() dynamique. Declenche aussi sur : « ca rame », « ca
   tourne dans le vide », « l'ecran de chargement reste bloque », « ca marche chez
   moi », « et si l'utilisateur n'a pas de reseau », « hors connexion »,
   « offline », « en magasin », « en 3G », « a l'etranger », « ca met dix
   secondes », delai d'attente, timeout, AbortController, PWA, ecran de
-  chargement, message d'erreur reseau. Si tu ecris un `await fetch(...)` sans
-  delai maximum, lis cette skill d'abord.
+  chargement, message d'erreur reseau. Si tu ecris une attente reseau sans delai
+  maximum — `await fetch(...)`, mais aussi un `<script>` distant ou un `import()`
+  — lis cette skill d'abord.
 ---
 
 # Repondre en conditions degradees
@@ -128,6 +130,56 @@ Deux enseignements :
    domaine, livres avec le site : on les croit gratuits. Ils passent pourtant
    par le reseau au premier chargement, et le service worker les sert reseau
    d'abord. Un fichier de son propre site n'est pas une donnee locale.
+
+### `grep "fetch("` ne suffit pas : le reseau entre aussi par d'autres portes
+
+Suite du meme enseignement, apprise deux jours plus tard, et plus large que la
+precedente : **le controle par `grep "fetch("` a laisse passer l'attente la
+plus longue du produit.** Elle ne s'ecrivait pas avec `fetch`.
+
+Sur Safari iOS et Firefox il n'y a pas de lecteur de codes-barres natif : le
+scanner telecharge une bibliotheque depuis un serveur tiers.
+
+```js
+await chargerScript("https://unpkg.com/@zxing/library@…/index.min.js");
+```
+
+Un `<script>` a un `onerror` — donc une **panne** est bien traitee. Mais
+`onerror` ne se declenche jamais pour un chargement simplement **lent** : la
+promesse reste en attente indefiniment. Or en rayon, la panne franche est le
+cas rare ; la lenteur est le cas normal. Mesure, sur un navigateur sans
+detecteur natif, le serveur tiers ne repondant pas :
+
+| | Ce que la personne voit | Est-ce qu'on cherche vraiment ? |
+|---|---|---|
+| 3 s | « 🔎 Recherche du code-barres… » | **non** |
+| 9 s | « Tiens le telephone a 15–20 cm, bien a plat, sans reflet » | **non** |
+| 17 s | « Code abime ou arrondi ? » | **non** |
+| 25 s, et au-dela | identique, indefiniment | **non** |
+
+Le produit reprochait sa facon de filmer a quelqu'un dont le geste etait
+parfait. C'est le pire des deux mondes : l'attente infinie **plus** une fausse
+accusation.
+
+Ce qu'il faut en retenir, dans l'ordre d'importance :
+
+1. **Inventorier les attentes, pas les `fetch`.** Tout ce qui suspend le
+   produit en attendant un octet distant : `fetch`, `XMLHttpRequest`,
+   `import()` dynamique, `<script>`, `<img>` dont on attend `onload`,
+   `link rel=stylesheet` bloquant, `navigator.sendBeacon` qu'on croit
+   asynchrone, une police web. Chacun doit avoir un delai maximum ou une
+   raison ecrite de ne pas en avoir.
+2. **Un `onerror` n'est pas un delai maximum.** Il couvre l'echec, pas la
+   lenteur. Les deux se traitent separement.
+3. **Ne jamais annoncer une action qui n'a pas commence.** « Recherche en
+   cours » pendant qu'on attend l'outil qui fera la recherche est un mensonge,
+   et il devient une accusation des que le message suivant conseille a la
+   personne de mieux s'y prendre. Les conseils d'usage ne se declenchent
+   qu'apres le demarrage reel.
+4. **Le delai peut avertir sans interrompre.** Ici le telechargement continue
+   apres l'avertissement : s'il finit par arriver, la lecture demarre. Un
+   `abort()` sec aurait casse une 3G lente mais fonctionnelle. Couper est
+   parfois necessaire (le verdict d'un scan), avertir suffit souvent.
 
 ## Pourquoi 4 secondes, et pas 10
 

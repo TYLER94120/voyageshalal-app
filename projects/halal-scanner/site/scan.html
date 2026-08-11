@@ -10,7 +10,7 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-11T00:52:28+00:00" />
+  <meta name="last-modified" content="2026-08-11T03:17:19+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -632,7 +632,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-11T00:52:28+00:00"
+      "dateModified": "2026-08-11T03:17:19+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -855,6 +855,12 @@
     const CLE_GARDES = "halalcheck.gardes";
     const MAX_GARDES = 100;
     const FORMATS = ["ean_13", "ean_8", "upc_a", "upc_e", "code_128"];
+    // Sur iPhone/Safari et Firefox il n'y a pas de lecteur de codes-barres natif :
+    // il faut télécharger une bibliothèque depuis un serveur tiers. En rayon ce
+    // téléchargement peut durer — au-delà de ce délai on cesse d'attendre en
+    // silence et on le dit, sans arrêter le téléchargement pour autant.
+    const BIBLIOTHEQUE_CODES = "https://unpkg.com/@zxing/library@0.21.3/umd/index.min.js";
+    const DELAI_BIBLIOTHEQUE = 8000;
 
     let flux = null;
     let detectionActive = false;
@@ -973,12 +979,15 @@
         /* lecture différée par le navigateur : la détection démarre quand même */
       }
       reglerCamera(flux);
-      lancerConseils();
 
       if ("BarcodeDetector" in window) {
         try {
           const detecteur = new BarcodeDetector({ formats: FORMATS });
           detectionActive = true;
+          // Les conseils (« tiens le téléphone plus à plat ») ne se déclenchent
+          // qu'à partir d'ici : tant que rien ne cherche vraiment, reprocher sa
+          // façon de filmer à quelqu'un est un mensonge.
+          lancerConseils();
           const boucle = async () => {
             if (!detectionActive || !flux) return;
             try {
@@ -1001,8 +1010,22 @@
 
       // Pas de détecteur natif (iPhone/Safari notamment) → bibliothèque ZXing,
       // branchée sur le flux déjà ouvert pour garder nos réglages caméra.
+      // Elle vient d'un serveur tiers : on annonce l'attente au lieu de laisser
+      // croire qu'une recherche est en cours, et on avertit si elle s'éternise.
+      $("etat-camera").hidden = false;
+      $("etat-camera").textContent = "Préparation de la lecture…";
+      const fluxAuDepart = flux;
+      const arrivee = chargerScript(BIBLIOTHEQUE_CODES);
+      const avertirLenteur = setTimeout(() => {
+        $("etat-camera").textContent =
+          "Le lecteur de codes-barres met du temps à arriver (réseau lent) — " +
+          "ce n'est pas ton code-barres. Saisis les chiffres ci-dessous ⬇";
+      }, DELAI_BIBLIOTHEQUE);
       try {
-        await chargerScript("https://unpkg.com/@zxing/library@0.21.3/umd/index.min.js");
+        await arrivee;
+        clearTimeout(avertirLenteur);
+        // Le scanner a pu être quitté ou relancé pendant le téléchargement.
+        if (flux !== fluxAuDepart) return;
         lecteurZxing = new window.ZXing.BrowserMultiFormatReader();
         detectionActive = true;
         const surLecture = (resultat) => {
@@ -1018,11 +1041,15 @@
           $("torche").hidden = true;
           lecteurZxing.decodeFromVideoDevice(undefined, $("video"), surLecture);
         }
+        // Là seulement quelque chose cherche réellement le code-barres.
+        lancerConseils();
       } catch (e) {
+        clearTimeout(avertirLenteur);
         arreterConseils();
         $("etat-camera").hidden = false;
         $("etat-camera").textContent =
-          "Lecture automatique indisponible sur ce téléphone — saisis les chiffres du code-barres ci-dessous.";
+          "Ce navigateur n'a pas de lecteur de codes-barres et nous n'avons pas pu " +
+          "en télécharger un — ce n'est pas ton code-barres. Saisis les chiffres ci-dessous ⬇";
       }
     }
 

@@ -16,7 +16,8 @@
     "sonde:faux-positifs": "node scripts/sonde-faux-positifs.mjs",
     "sonde:cosmetiques": "node scripts/sonde-cosmetiques.mjs",
     "sonde:arabe": "node scripts/sonde-etiquettes-arabes.mjs",
-    "sonde:photo": "node scripts/sonde-photo.mjs"
+    "sonde:photo": "node scripts/sonde-photo.mjs",
+    "sonde:iphone": "node scripts/sonde-iphone.mjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",

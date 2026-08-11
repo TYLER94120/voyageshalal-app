@@ -56,9 +56,59 @@ une explication honnête, jamais un verdict inventé.
    HalalGPT qui confirme que `/api/etiquette` répond et dans quel format.
    La sonde `npm run sonde:photo` rejoue les six cas en trente secondes.
 
+5. **Le lecteur de codes-barres des iPhone vient d'un serveur qu'on ne
+   contrôle pas.**
+   *Preuve :* Safari iOS et Firefox n'ont pas de `BarcodeDetector` natif ; le
+   scanner télécharge alors `@zxing/library` depuis `unpkg.com`. Ce fichier
+   n'est **pas** dans la liste `FICHIERS` du service worker (12 entrées, aucune
+   n'est celle-ci). Conséquences : sur iPhone la lecture automatique ne marche
+   **jamais hors ligne**, même à la deuxième visite, et le jour où unpkg tombe
+   ou est bloqué par un réseau d'entreprise, plus aucun iPhone ne scanne.
+   *Ce qu'il faut :* héberger le fichier avec le site. Impossible depuis
+   l'atelier — `unpkg.com` y répond 000 comme tout le reste. Il faut soit un
+   accès réseau, soit que quelqu'un dépose le fichier dans `site/`.
+   Mesure de contrôle : `npm run sonde:iphone`.
+
+6. **La compétence `repondre-en-conditions-degradees` est à jour ici seulement.**
+   *Preuve :* elle existe en trois exemplaires identiques (halalgpt,
+   voyageshalal, voyageshalal-app) ; la leçon du 11 août — « `grep "fetch("` ne
+   suffit pas, une balise `<script>` distante attend sans limite elle aussi » —
+   n'est que dans **1 des 3**. Les deux autres agents gardent donc la version
+   qui ne cherche que les `fetch`, et peuvent réintroduire exactement ce défaut.
+   *Ce qu'il faut :* cloner les deux autres dépôts et y recopier le fichier.
+
 ---
 
 ## Fait
+
+- **En rayon, sur iPhone, l'app reprochait sa façon de filmer à quelqu'un
+  pendant qu'elle ne cherchait rien** *(11 août)* — même défaut que la veille
+  sur la photo, à un autre endroit : accuser la personne d'une panne qui vient
+  de chez nous.
+
+  **Le constat, mesuré** sur un navigateur sans `BarcodeDetector` (Safari iOS,
+  Firefox), quand le téléchargement de la bibliothèque traîne :
+
+  | | Avant | Après |
+  |---|---|---|
+  | 3 s | « 🔎 Recherche du code-barres… » alors que **rien ne cherchait** | « Préparation de la lecture… » |
+  | 9 s | « Tiens le téléphone à 15–20 cm, bien à plat, sans reflet » | « Le lecteur met du temps à arriver (réseau lent) — **ce n'est pas ton code-barres** » |
+  | 17 s | « Code abîmé ou arrondi ? » | idem, avec la saisie manuelle en sortie |
+  | 25 s | rien de plus, indéfiniment | idem |
+
+  Les conseils de cadrage ne se déclenchent plus qu'une fois qu'une détection
+  tourne vraiment. Le téléchargement, lui, n'est pas interrompu : s'il finit
+  par arriver, la lecture démarre — ce qu'un délai sec aurait cassé sur une 3G
+  lente mais fonctionnelle.
+
+  **Ce que la sonde a révélé d'autre :** `npm run sonde:photo`, écrite la
+  veille et annoncée comme « conservée », **ne démarrait pas** — ni Playwright
+  ni la photo d'essai n'étaient trouvables hors du dossier temporaire du jour.
+  Une sonde qui ne démarre pas ne mesure rien et fait croire que la
+  vérification existe. Les deux sondes navigateur sont maintenant autonomes :
+  `scripts/playwright-atelier.mjs` retrouve Playwright, et `sonde-photo`
+  fabrique elle-même sa photo (4032×3024). Les six cas repassent : compression
+  2,97 Mo → 0,20 Mo, aucun message n'accuse plus la personne.
 
 - **L'app accusait la photo de l'utilisateur quand c'était le service qui
   tombait** *(11 août)* — la lecture d'étiquette conduite de bout en bout avec
