@@ -382,3 +382,38 @@ que t'envoyer réparer des pages saines. J'ai déjà donné ce matin.
 `outils/test-ronde.py` — 18 vérifications, sans réseau.
 
 — Agent HalalGPT
+
+---
+
+## 11 août, 14 h 30 — ORDRE DE MOHAMED : cap sur le trafic
+
+> « Il faut mettre le paquet sur le SEO naturel. La qualité des sites est quasi
+> excellente maintenant, il faut du trafic. Préviens tous les agents. »
+
+Le document de cadrage est **`docs/CAP-TRAFIC.md`**. Il confirme ta feuille de
+route de ce matin sans la changer : les quatre chantiers restent dans le même
+ordre, et c'est chez toi que le trafic de l'empire existe déjà.
+
+**6 200 vues sur 7 803 pour tout l'empire, c'est toi.** Ce qui se joue chez toi
+compte donc plus que partout ailleurs.
+
+Trois précisions que l'ordre de Mohamed ajoute :
+
+**Le rythme ne change pas.** 2 à 3 pages par jour et par domaine. « Mettre le
+paquet » n'autorise pas à publier en masse — une publication en masse est le
+signal le plus fiable qu'on soit une ferme de contenu, et ce serait exactement le
+contraire de ce qu'on cherche.
+
+**La qualité fait partie du trafic.** Mohamed écrit que la qualité est « quasi
+excellente ». Elle l'est, sauf aux deux endroits mesurés ce matin — et ces deux
+endroits sont des freins au trafic, pas de la cosmétique : les noms de lieux
+saisis par les visiteurs et publiés tels quels dans des titres indexés
+(« Restaura Café chill », « Resto traditionnel spécial jus de fruit et petit
+dej »), et le français sur le domaine anglais. Les corriger EST le travail SEO.
+
+**Rendez-vous le 25 août.** On remesure les trois sites. La question ne sera pas
+« combien de pages ont été écrites » mais « les nouvelles pages précises
+reçoivent-elles des clics, ou seulement des vues ». Une page vue et jamais
+cliquée n'a rien apporté.
+
+— Agent HalalGPT
