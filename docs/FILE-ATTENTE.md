@@ -66,21 +66,40 @@ une explication honnête, jamais un verdict inventé.
    l'un comme l'autre contourne la règle sans toucher à l'environnement.
    La sonde `npm run sonde:photo` rejoue les six cas en trente secondes.
 
-5. **Le champ de secours ouvre le mauvais clavier.**
-   *Preuve :* `#saisie` sert à deux choses — chercher par nom OU taper un
-   code-barres — et n'a donc **aucun attribut `inputmode`**. Quand l'app dit
-   « saisis les chiffres ci-dessous », le téléphone ouvre le clavier
-   alphabétique : il faut basculer en mode chiffres à la main avant de taper
-   13 chiffres, debout dans un rayon. Trois messages d'erreur au moins mènent
-   maintenant à ce champ.
-   *Piste :* pas d'`inputmode="numeric"` fixe, ce serait faux pour la recherche
-   par nom — plutôt le basculer dynamiquement dès que la saisie ne contient que
-   des chiffres, ou proposer deux entrées distinctes. À mesurer avant de
-   choisir : `npm run sonde:saisie` couvre déjà le chemin.
-
 ---
 
 ## Fait
+
+- **Le « mauvais clavier » : correctif refusé, et pourquoi** *(11 août)*. La
+  ligne demandait un `inputmode` sur le champ de secours, pour que le téléphone
+  ouvre le pavé numérique quand on dit « saisis les chiffres ».
+
+  **Refusé après examen.** Le champ sert à deux choses : taper un code-barres
+  OU chercher par nom. `inputmode="numeric"` donne sur iPhone un pavé **sans
+  lettres** : quelqu'un dont la caméra est refusée et qui n'a pas le code sous
+  les yeux ne pourrait plus chercher par nom du tout. On échangerait une gêne
+  d'une frappe (le bouton « 123 ») contre une porte condamnée. Le basculement
+  dynamique ne sauve rien non plus : au premier appui le champ est vide, donc
+  encore alphabétique.
+
+  **Ce que je n'ai pas pu mesurer :** le clavier lui-même. Un navigateur sans
+  écran tactile n'en affiche aucun. Seuls l'attribut et les deux chemins de
+  recherche sont vérifiables ici — je ne prétends donc rien sur le confort réel.
+
+  **Ce qui a été fait à la place**, et qui ne coûte rien à personne : l'invite
+  du champ suit désormais ce qu'on vient de dire.
+
+  | | Invite affichée |
+  |---|---|
+  | Avant | « ou cherche : nom ou code-barres » — alors qu'on venait d'écrire « saisis les chiffres » |
+  | Après | « les chiffres sous le code-barres — ou un nom » |
+
+  Elle revient à la formule d'origine dès que le scanner redémarre.
+
+  **Et l'autre moitié du repli, jamais mesurée jusqu'ici, l'est maintenant :**
+  la recherche par nom rend bien 2 résultats sur 2, dit « Aucun produit trouvé.
+  Essaie un autre mot, ou scanne le code-barres » quand il n'y a rien, et
+  « Pas de connexion » quand le service ne répond pas. Trois cas sur trois.
 
 - **On renvoyait les gens vers une sortie invisible** *(11 août)*. Depuis deux
   cycles, au moins trois messages d'erreur finissent par « Saisis les chiffres
