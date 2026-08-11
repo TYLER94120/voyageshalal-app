@@ -66,9 +66,61 @@ une explication honnête, jamais un verdict inventé.
    l'un comme l'autre contourne la règle sans toucher à l'environnement.
    La sonde `npm run sonde:photo` rejoue les six cas en trente secondes.
 
+5. **« Arôme naturel » et « vinaigre de vin » : deux verdicts que je ne
+   tranche pas seul.**
+   *Preuve :* mesurés le 11 août, tous deux ressortent **halal**. Or « arôme
+   naturel » peut être porté par de l'alcool ou tiré d'une source animale, et
+   le vinaigre de vin part d'une boisson interdite avant transformation
+   complète. D'autres scanners les signalent.
+   *Pourquoi je m'arrête là :* les deux relèvent d'un désaccord entre écoles,
+   pas d'un fait d'étiquette. Et « arôme naturel » figure sur une part énorme
+   des produits français : le signaler ferait basculer des milliers de produits
+   en DOUTEUX. Un doute inventé abîme la confiance autant qu'un verdict faux.
+   *Ce qu'il faut :* la position que Mohamed veut tenir, ou l'avis d'un savant.
+   Dès que c'est tranché, c'est deux lignes de code et deux tests.
+
 ---
 
 ## Fait
+
+- **« Lardons » ressortait HALAL** *(11 août)* — demande de Mohamed : les
+  produits vendus en France aussi. Vérifié plutôt qu'affirmé : 32 mots
+  d'étiquette française passés au moteur, **21 conformes sur 32** au départ.
+
+  **D'abord la réponse à la question :** les produits français marchent déjà
+  de bout en bout. Code présent dans la base → écran de verdict avec ses
+  alertes ; code absent → message adapté à la France (« fréquent pour les
+  marques de distributeur et les nouveautés »), et non le message Maghreb.
+
+  **Les quatre vrais défauts, tous corrigés :**
+
+  | Mot d'étiquette | Avant | Après |
+  |---|---|---|
+  | **lardons** | **halal** | **haram** |
+  | boyau naturel | halal | douteux |
+  | cystéine écrite sans son code | halal | douteux |
+  | acide stéarique, stéarate de magnésium | halal | douteux |
+
+  Le premier est le plus grave que ce moteur ait produit : un produit au porc
+  déclaré halal. La règle disait `\blard\b`, qui s'arrête au mot exact et
+  laisse passer « lardons » — présent sur des centaines d'étiquettes
+  françaises. Un test vérifie aussi que « milliard » ne déclenche rien.
+
+  **Une incohérence corrigée dans la foulée :** la gélatine rendait DOUTEUX
+  écrite en toutes lettres et **HARAM** sous son code E441 — la même substance,
+  deux verdicts selon la façon dont l'étiquette l'écrit. Une gélatine sans
+  origine précisée peut être bovine : « interdit » est un verdict que
+  l'étiquette ne permet pas. Aligné sur DOUTEUX, conformément à la doctrine.
+  « Gélatine de porc » reste HARAM, avec ses deux alertes.
+
+  **Trois écarts n'en étaient pas** — jambon, présure animale, graisse animale
+  ressortent DOUTEUX là où j'attendais HARAM. C'est le moteur qui a raison :
+  le jambon de dinde existe, la présure peut venir d'un veau abattu selon les
+  règles, la graisse animale peut être bovine. Mon attente était plus sévère
+  que la réalité de l'étiquette.
+
+  Contrôles : 6 nouveaux tests, les 65 passent, 0 faux positif sur les deux
+  sondes, page des additifs régénérée (109 règles publiées).
 
 - **« Les produits enregistrés DANS LE Maroc »** *(11 août)* — question de
   Mohamed : est-ce que les produits du Maghreb sont pris en compte ? Vérifié

@@ -81,9 +81,13 @@ export const ADDITIFS_A_RISQUE: Record<string, InfosAdditif> = {
     famille: "glycerol",
   },
   e441: {
-    niveau: "haram",
+    // Aligné sur la règle texte « gélatine » : la même substance rendait
+    // DOUTEUX écrite en toutes lettres et HARAM sous son code. Une gélatine
+    // sans origine précisée peut être bovine ; dire « interdit » serait un
+    // verdict que l'étiquette ne permet pas. Le doute se dit DOUTEUX.
+    niveau: "douteux",
     nom: "E441 — Gélatine",
-    raison: "Gélatine le plus souvent porcine. Interdite sauf gélatine certifiée halal.",
+    raison: "Origine non précisée — souvent porcine, sauf mention halal certifiée.",
     famille: "gelatine",
   },
   e430: { niveau: "douteux", nom: "E430 — Stéarate de polyoxyéthylène", raison: "Dérivé d'acides gras — origine animale possible." },
@@ -218,7 +222,11 @@ export const REGLES_HARAM: RegleTexte[] = [
     famille: "alcool",
   },
   {
-    motif: /\bporcs?\b|porcine?s?\b|\blard\b|saindoux|couenne|\bbacon\b|poitrine fumee/,
+    // « lardons » n'etait pas attrape : \blard\b s'arrete au mot exact, et
+    // « lardons » figure sur des centaines d'etiquettes francaises (quiches,
+    // salades, plats cuisines). Mesure du 11 aout : le produit ressortait HALAL.
+    // Le \b initial protege « milliard », « lardacé » n'existe pas en cuisine.
+    motif: /\bporcs?\b|porcine?s?\b|\blard\b|\blardons?\b|saindoux|couenne|\bbacon\b|poitrine fumee|petit sale/,
     element: "Porc / dérivé de porc",
     raison: "Le porc et tous ses dérivés sont interdits.",
   },
@@ -258,6 +266,27 @@ export const REGLES_DOUTEUX: RegleTexte[] = [
     element: "Gélatine",
     raison: "Origine non précisée — souvent porcine, sauf mention halal.",
     famille: "gelatine",
+  },
+  {
+    // Le code E920 etait repere, le mot ecrit en toutes lettres non — or les
+    // etiquettes francaises ecrivent souvent « L-cysteine » sans le numero.
+    motif: /\bl-?cysteine\b|\bcysteine\b/,
+    element: "L-cystéine",
+    raison: "Améliorant de panification, parfois extrait de plumes ou de soies animales.",
+    famille: "cysteine",
+  },
+  {
+    // Meme substance que E570 et E572, deja surveilles par leur code seul.
+    motif: /acides? stearique|\bstearates?\b|stearate de magnesium|acides? gras animaux/,
+    element: "Acide stéarique / stéarate",
+    raison: "Corps gras d'origine végétale ou animale non précisée.",
+    famille: "acides-gras",
+  },
+  {
+    motif: /boyaux? naturels?|\bboyaux?\b/,
+    element: "Boyau naturel",
+    raison: "Enveloppe des saucisses : intestin animal, souvent porcin. Origine à vérifier.",
+    famille: "boyau",
   },
   {
     motif: /presure|\brennet\b/,

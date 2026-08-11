@@ -15,11 +15,27 @@ const { analyserCosmetique } = require(path.join(racine, ".test-build", "cosmeti
 // [nom, entrée, statut attendu, nombre d'alertes attendu (null = non vérifié)]
 const cas = [
   [
+    // Attendu corrigé le 11 août, pas le code contourné : le mot « gélatine »
+    // rendait DOUTEUX et son code E441 rendait HARAM — la même substance, deux
+    // verdicts selon la façon dont l'étiquette l'écrit. Une gélatine sans
+    // origine précisée peut être bovine : dire « interdit » serait un verdict
+    // que l'étiquette ne permet pas. La doctrine dit DOUTEUX en cas de doute.
+    // « gélatine de porc », elle, reste HARAM.
     "Bonbons gélatine (E441 + texte → 1 seule alerte, la plus sévère)",
     { ingredientsTexte: "sirop de glucose, gélatine, arômes", additifs: ["en:e441"] },
-    "haram",
+    "douteux",
     1,
   ],
+  // Deux alertes de familles distinctes — « porc » et « gélatine » — et c'est juste :
+  // les deux méritent d'être nommées à l'écran.
+  ["Gélatine explicitement de porc → haram", { ingredientsTexte: "sucre, gélatine de porc", additifs: [] }, "haram", 2],
+  // Étiquettes françaises — écarts mesurés le 11 août sur 32 mots courants.
+  ["Lardons : le mot ressortait HALAL", { ingredientsTexte: "pate, creme, lardons, oeufs", additifs: [] }, "haram", 1],
+  ["Boyau naturel (saucisses)", { ingredientsTexte: "viande, sel, boyau naturel", additifs: [] }, "douteux", null],
+  ["L-cystéine écrite sans son code", { ingredientsTexte: "farine, eau, levure, l-cysteine", additifs: [] }, "douteux", 1],
+  ["Acide stéarique écrit sans son code", { ingredientsTexte: "sucre, acide stearique", additifs: [] }, "douteux", 1],
+  ["Stéarate de magnésium", { ingredientsTexte: "poudre, stearate de magnesium", additifs: [] }, "douteux", 1],
+  ["« milliard » ne déclenche pas la règle du lard", { ingredientsTexte: "eau, sucre, un milliard de bulles", additifs: [] }, "halal", 0],
   ["Chips nature", { ingredientsTexte: "pommes de terre, huile de tournesol, sel", additifs: [] }, "halal", 0],
   ["Poulet certifié halal", { ingredientsTexte: "poulet, épices", additifs: [], labels: ["en:halal"] }, "halal", null],
   ["Poulet non certifié", { ingredientsTexte: "poulet, épices", additifs: [] }, "douteux", null],
@@ -41,7 +57,7 @@ const cas = [
   // Sans cette lecture, un produit du Maghreb transcrit depuis une photo — donc
   // sans champ « additifs » — ressortait halal alors que son étiquette dit E471.
   ["E471 écrit dans le texte", { ingredientsTexte: "farine, sucre, émulsifiant E471", additifs: [] }, "douteux", 1],
-  ["E441 écrit dans le texte", { ingredientsTexte: "eau, sucre, gélifiant E441", additifs: [] }, "haram", 1],
+  ["E441 écrit dans le texte", { ingredientsTexte: "eau, sucre, gélifiant E441", additifs: [] }, "douteux", 1],
   ["E 471 avec une espace", { ingredientsTexte: "farine, émulsifiant E 471", additifs: [] }, "douteux", 1],
   ["E472e avec sa lettre", { ingredientsTexte: "farine, E472e, sel", additifs: [] }, "douteux", 1],
   ["Code dans le texte ET dans les additifs : une seule alerte", { ingredientsTexte: "sucre, E471", additifs: ["en:e471"] }, "douteux", 1],
@@ -70,7 +86,7 @@ const cas = [
   // Ce qui reste vrai : hors de ce petit vocabulaire, on ne sait pas lire.
   ["Étiquette arabe banale → inconnu, jamais halal", { ingredientsTexte: "المكونات: ماء، سكر، ملح", additifs: [] }, "inconnu", 0],
   ["Bilingue, risque SEULEMENT du côté arabe → détecté", { ingredientsTexte: "ماء، سكر، جيلاتين / eau, sucre, arome", additifs: [] }, "douteux", 1],
-  ["Arabe + codes additifs fournis par la base → analysable", { ingredientsTexte: "المكونات: ماء، سكر", additifs: ["en:e441"] }, "haram", 1],
+  ["Arabe + codes additifs fournis par la base → analysable", { ingredientsTexte: "المكونات: ماء، سكر", additifs: ["en:e441"] }, "douteux", 1],
   ["Bilingue avec un côté français lisible → analysé", { ingredientsTexte: "ماء، سكر، جيلاتين / eau, sucre, gélatine", additifs: [] }, "douteux", 1],
   ["Texte latin trop court pour conclure → inconnu", { ingredientsTexte: "sel", additifs: [] }, "inconnu", 0],
 
