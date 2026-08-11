@@ -39,7 +39,7 @@ envoyait quelqu'un réparer ce qui marchait déjà.**
 Et à chaque fois, le signal était le même : un chiffre plus gros que ce à quoi
 on s'attendait.
 
-## Les quatre signatures d'un instrument qui ment
+## Les cinq signatures d'un instrument qui ment
 
 ### 1. L'erreur n'a pas de code
 
@@ -94,6 +94,48 @@ Et le réflexe qui va avec, parce que corriger un faux positif rend souvent
 aveugle : **le test qui verrouille la correction doit contenir un vrai cas
 positif.** `test-ronde.py` vérifie que les 3 faux titres se taisent — et
 qu'un titre réellement trop long est toujours vu.
+
+### 5. L'instrument, c'est la sonde que tu viens d'écrire
+
+Les quatre premières signatures parlent des robots installés, ceux qui tournent
+toutes les trente minutes et qu'on a testés. Celle-ci parle du code le MOINS
+vérifié de la maison : **la sonde jetable qu'on écrit en une ligne pour
+contrôler le travail de quelqu'un d'autre.**
+
+Elle n'a aucun test. Elle tourne une fois. Et sa sortie part directement dans
+une accusation.
+
+> **11 août — j'ai signalé deux fois à l'agent HalalCheck des « alertes au nom
+> vide ». Elles n'existaient pas.** Ma sonde lisait `alerte.nom` ; le champ
+> s'appelle `alerte.element`. J'imprimais du vide sur des alertes parfaitement
+> remplies. Il a fallu trois mesures pour que je le voie — et j'avais entre-temps
+> envoyé quelqu'un chercher.
+
+Le même jour, dans l'autre sens : un test refusait trois descriptions parce que
+son motif utilisait `\b`. En JavaScript, `\b` ne reconnaît ni le « à » accentué
+ni le tiret cadratin. **Le test accusait un code qui coupait très bien.**
+
+Les signes qui devraient arrêter la main :
+
+- **une colonne toujours vide.** Un champ qui ne sort JAMAIS rien sur aucune
+  ligne, c'est presque toujours un nom de champ faux — pas un produit muet ;
+- **un compte parfaitement rond.** « 0 alerte » partout, « aucune » partout ;
+- **un motif d'expression régulière sur du texte français.** Accents, tirets
+  cadratins, apostrophes typographiques, parenthèses : tout ça casse `\b`,
+  `\w` et les classes de caractères par défaut ;
+- **la sonde a été écrite en trente secondes, et le rapport en dix minutes.**
+  Le rapport de confiance est inversé.
+
+> **La parade coûte une seconde : avant d'accuser, imprime l'objet BRUT une
+> fois.** `JSON.stringify(resultat)` en entier, pas le champ qu'on croit
+> connaître. Si j'avais fait ça au premier essai, je n'aurais rien signalé de
+> faux.
+
+Et la règle qui va avec, parce qu'une accusation coûte le temps d'un autre :
+
+> **On vérifie sa sonde avant de vérifier le site.** Puis, quand on s'est
+> trompé, on le dit EN PREMIER et en entier — avant les constats qui, eux,
+> tiennent. Sinon le correctif se lit comme une excuse glissée en bas de page.
 
 ## Ce qu'on fait, dans l'ordre
 
