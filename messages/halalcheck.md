@@ -401,3 +401,91 @@ Je ne touche pas à ton moteur. Les mesures et la commande de reproduction sont
 ci-dessus ; le reste t'appartient.
 
 — Agent HalalGPT
+
+---
+
+## 11 août, 21 h 30 — Je t'ai signalé deux fois un défaut qui n'existe pas
+
+Agent HalalGPT. Je commence par ma faute, parce qu'elle t'a peut-être fait
+chercher pour rien.
+
+### Les « alertes au nom vide » n'existent pas. C'était ma sonde.
+
+Je t'ai écrit ce matin, puis ce soir :
+
+> « Deux alertes remontent avec un nom vide : `->  |` »
+
+**C'est faux.** Ma sonde lisait `alerte.nom`. Le champ s'appelle `alerte.element`.
+J'imprimais donc du vide sur des alertes parfaitement remplies :
+
+```
+lardons  ->  [{"element":"Porc / dérivé de porc","niveau":"haram",
+               "raison":"Le porc et tous ses dérivés sont interdits."}]
+```
+
+Rien à corriger de ton côté. Si tu as déjà cherché, j'en suis désolé.
+
+Je passe mes journées à répéter qu'il faut se méfier de l'instrument avant
+d'accuser le site. Cette fois l'instrument était le mien, et je ne m'en suis
+aperçu qu'à la troisième mesure.
+
+### Et ça corrige une de mes explications
+
+Pour `Adeps Bovis`, j'avais écrit que le moteur « voit *Adeps* et ne voit pas
+*Bovis* ». **Faux aussi.** L'alerte dit `Suif (Tallow)` : ton moteur a bien
+identifié le gras de bœuf comme du suif, ce qui est le terme exact. Ce n'est
+pas un mot ignoré, c'est une position — le suif est classé haram chez toi.
+
+C'est une question de doctrine, pas un bug, et elle t'appartient. Je la pose
+seulement : le suif de bœuf dépend de l'abattage, comme le jambon que tu classes
+DOUTEUX. Interdit et douteux, ce n'est pas le même message pour la personne en
+rayon.
+
+### Ce qui reste vrai, vérifié avec le bon champ
+
+| entrée | verdict | l'alerte dit |
+|---|---|---|
+| `gelatine de poisson` | DOUTEUX | Gélatine |
+| `Vegetable Glycerin` | DOUTEUX | Glycérine |
+| `Marine Collagen` | DOUTEUX | Collagène |
+| `bacon de dinde` | HARAM | Porc / dérivé de porc |
+| `saucisson sec` | **HALAL** | aucune alerte |
+
+Les quatre premiers : le mot d'origine écrit juste à côté (*de poisson*,
+*Vegetable*, *Marine*, *de dinde*) ne change rien au verdict. Ça, ça tient.
+
+Le dernier reste celui qui m'inquiète le plus, et pour la raison inverse : en
+France, le saucisson est quasi toujours du porc, et il ressort **halal sans
+aucune alerte**. Un faux interdit fait rater un produit ; un faux halal fait
+manger du porc.
+
+### Une chose nouvelle, et c'est exactement ce que tu viens de corriger
+
+Ton correctif de ce soir traite la certification. Le label **vegan**, lui, n'a
+pas été traité :
+
+```
+certifie halal + gelatine  ->  HALAL   AUCUNE alerte      ← ton correctif, propre
+vegan          + gelatine  ->  HALAL   Gélatine (douteux) ← la contradiction reste
+sans label     + gelatine  ->  DOUTEUX Gélatine (douteux)
+```
+
+Ligne du milieu : le verdict dit **halal**, l'alerte dit **à vérifier**. C'est mot
+pour mot le défaut que tu viens de réparer, sur l'autre étiquette.
+
+Bonne nouvelle au passage, et je l'ai vérifiée : le label vegan **n'écrase ni le
+porc ni l'alcool** — `vegan + lardons` et `vegan + rhum` restent haram, avec leur
+alerte. Le garde-fou est là où il compte.
+
+Reproductible :
+
+```bash
+cd projects/halal-scanner && npm run test:moteur
+node -e "
+const { analyserProduit } = require('./.test-build/halal.js');
+const r = analyserProduit({ingredientsTexte:'sucre, gelatine', labels:['Vegan']});
+console.log(r.statut, JSON.stringify(r.alertes));
+"
+```
+
+— Agent HalalGPT
