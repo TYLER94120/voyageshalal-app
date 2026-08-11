@@ -36,43 +36,57 @@ une explication honnête, jamais un verdict inventé.
    une réponse écrite de fabricant. Demandé à Mohamed, pas encore reçu.
 
 3. **Open Food Facts est injoignable depuis l'atelier.**
-   *Preuve :* `curl` vers `world.openfoodfacts.org` rend le code 000 en 0,45 s —
-   bloqué par le proxy réseau. Conséquence : **aucun agent ne peut tester le
+   *Preuve, mesurée précisément le 11 août :* ce n'est pas une panne, c'est une
+   **politique**. Le proxy de l'atelier répond `connect_rejected — gateway
+   answered 403 to CONNECT (policy denial)` pour `world.openfoodfacts.org`,
+   `halalgpt.fr` et `unpkg.com`. Sa liste d'exceptions ne contient que des
+   dépôts de paquets : npm, jsr, PyPI, crates.io, proxy.golang.org — plus
+   GitHub. **Tout le reste du web est refusé par règle**, pas par incident.
+   Conséquence : **aucun agent ne peut tester le
    moteur sur des produits réels.** Les 56 additifs et 29 règles cosmétiques ne
    sont validés que par 51 tests écrits à la main — écrits par nous, donc ils ne
    couvrent que ce à quoi nous avons pensé. On ne sait toujours pas quel
    pourcentage des produits réels tombe en « inconnu ».
    *Piste :* constituer un jeu de fiches réelles figées dans le dépôt, capturées
    une fois depuis le navigateur de Mohamed, pour tester hors ligne.
-   *Attention :* seule la porte HTTP directe a été essayée. Le 11 août, un
-   blocage « réseau » identique s'est révélé faux — le registre npm passait très
-   bien. Avant de reclasser cette ligne en « impossible », essayer les autres
-   portes (paquet npm, export figé, miroir).
+   *Ce que Mohamed seul peut faire :* élargir la politique réseau de
+   l'environnement (réglages de l'environnement Claude Code) pour y autoriser
+   `world.openfoodfacts.org`. Sans cela, la seule voie reste un jeu de fiches
+   figées déposé dans le dépôt — les dépôts de paquets, eux, sont ouverts.
 
 4. **La lecture d'étiquette n'a jamais été vérifiée contre le VRAI service.**
    *Preuve :* les six façons d'échouer ont été mesurées le 11 août avec une
    fausse réponse d'API — le côté navigateur est sain. Mais `halalgpt.fr` est
-   injoignable depuis l'atelier (code 000), donc **personne n'a jamais vu la
-   chaîne complète fonctionner**. La plainte de Mohamed du 10 août
+   refusé par la politique réseau de l'atelier (403 au CONNECT, voir le point
+   ci-dessus), donc **personne n'a jamais vu la chaîne complète fonctionner**. La plainte de Mohamed du 10 août
    (« ça me demande de reprendre la photo ») venait forcément du service ou du
    réseau, jamais du navigateur.
    *Ce qu'il faut :* un essai depuis le téléphone de Mohamed, ou l'agent
    HalalGPT qui confirme que `/api/etiquette` répond et dans quel format.
-   *Attention :* même remarque que ci-dessus — « le réseau bloque » n'est un
-   blocage qu'une fois les autres portes essayées.
+   *Blocage précis :* `halalgpt.fr` est refusé par la même règle (403 au
+   CONNECT). Un essai depuis le téléphone de Mohamed, ou l'agent HalalGPT qui
+   répond, contourne le problème sans toucher à l'environnement.
    La sonde `npm run sonde:photo` rejoue les six cas en trente secondes.
-
-5. **La compétence `repondre-en-conditions-degradees` est à jour ici seulement.**
-   *Preuve :* elle existe en trois exemplaires identiques (halalgpt,
-   voyageshalal, voyageshalal-app) ; la leçon du 11 août — « `grep "fetch("` ne
-   suffit pas, une balise `<script>` distante attend sans limite elle aussi » —
-   n'est que dans **1 des 3**. Les deux autres agents gardent donc la version
-   qui ne cherche que les `fetch`, et peuvent réintroduire exactement ce défaut.
-   *Ce qu'il faut :* cloner les deux autres dépôts et y recopier le fichier.
 
 ---
 
 ## Fait
+
+- **Deux agents sur trois travaillaient avec une compétence périmée**
+  *(11 août)*. La compétence `repondre-en-conditions-degradees` existe en trois
+  exemplaires ; la leçon écrite le matin même — « `grep "fetch("` ne suffit pas
+  à inventorier les attentes réseau » — n'était que dans un seul.
+
+  | Dépôt | Avant | Après |
+  |---|---|---|
+  | voyageshalal-app | 412 lignes | 412 |
+  | halalgpt | **360** | 412 |
+  | VOYAGESHALAL | **360** | 412 |
+
+  Vérifié en relisant les trois fichiers depuis GitHub après envoi, pas depuis
+  la copie locale. Les 52 lignes manquantes étaient exactement celles qui
+  disent qu'une balise `<script>` distante attend sans limite : les deux autres
+  agents pouvaient réintroduire le défaut corrigé le matin.
 
 - **Sur iPhone, le scan ne marchait pas hors ligne — et le blocage annoncé
   n'existait pas** *(11 août)*. Safari iOS et Firefox n'ont pas de lecteur de
