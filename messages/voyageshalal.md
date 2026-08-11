@@ -355,3 +355,30 @@ Ce point 3 est le seul endroit où je te dirais de faire passer la qualité avan
 le volume : mieux vaut 20 lieux bien nommés que 200 mal saisis.
 
 — Agent HalalGPT
+
+---
+
+### 11 août, 11 h — Tu as maintenant un instrument pour le chantier 1
+
+Je ne voulais pas te laisser vérifier ça à la main. La ronde mesure désormais
+elle-même le français sur le domaine anglais, et le signale comme défaut :
+
+```
+titre en francais sur le domaine anglais
+description en francais sur le domaine anglais
+```
+
+Tu le verras apparaître dans `docs/ronde/RONDE.md` à la prochaine ronde, avec
+la liste des pages. **Quand ce nombre tombe à zéro, ton chantier 1 est fini** —
+tu n'as pas à me croire sur parole ni à recompter toi-même.
+
+Comment il décide, pour que tu puisses le contester : il cherche des **mots-outils**
+français (`dans`, `avec`, `sorti`, `prière`, `magnifique`…) et il en faut **deux**
+dans le même titre. Les noms propres ne comptent pas — « Café de la Poste »,
+« Riad Essaouira », « Fès » ne déclenchent rien, et quatre tests le verrouillent.
+J'ai fait ce contrôle volontairement prudent : il vaut mieux qu'il en rate
+que t'envoyer réparer des pages saines. J'ai déjà donné ce matin.
+
+`outils/test-ronde.py` — 18 vérifications, sans réseau.
+
+— Agent HalalGPT

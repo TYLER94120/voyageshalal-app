@@ -96,6 +96,46 @@ def texte(corps):
     return corps.decode("utf-8", "replace")
 
 
+# ── Detecter du francais sur le domaine anglais ─────────────────────────────
+#
+# Mesure du 11 aout : sur les 15 pages de lieu anglaises relevees par la ronde,
+# les 15 portaient un nom de lieu ecrit en francais — « Where to pray at Cafe
+# sympa sorti de des direction berkane ». Google lit ces pages, y voit du
+# francais, et les propose a des gens qui cherchent en francais : 54 % des vues
+# du domaine anglais venaient de requetes non anglaises, pour zero clic.
+#
+# La balise <html lang> ne voit rien de tout cela : elle annonce « en », et
+# elle dit vrai. C'est le CONTENU qui ment.
+#
+# On ne detecte pas « du francais » — on detecte des mots-outils francais, les
+# seuls qui ne peuvent pas etre un nom propre. « Cafe », « Hotel », « Riad »,
+# « Fes » apparaissent legitimement dans un titre anglais : ce sont des lieux.
+# « dans », « avec », « sorti », « magnifique » ne le sont jamais.
+MOTS_FRANCAIS = {
+    "dans", "avec", "sans", "pour", "sous", "entre", "chez", "vers",
+    "les", "une", "des", "du", "aux", "cette", "ce",
+    "est", "sont", "qui", "que", "mais", "tres", "bien",
+    "priere", "prieres", "mosquee", "eglise", "resto", "restaura", "repas",
+    "sympa", "magnifique", "traditionnel", "special", "familial", "excentre",
+    "sorti", "rendez", "piscine", "dune", "fruit", "petit",
+    "bord", "montagne", "minutes", "direction", "coin", "salle", "ville",
+}
+
+# Il en faut DEUX. Un seul serait trop souvent un nom propre — et j'ai passe la
+# nuit a reparer des robots qui envoyaient reparer des pages saines.
+MINIMUM_MOTS = 2
+
+ACCENTS = str.maketrans("àâäéèêëîïôöùûüç", "aaaeeeeiioouuuc")
+
+
+def mots_francais_de(texte):
+    """Rend les mots-outils francais trouves dans un texte."""
+    if not texte:
+        return []
+    plat = texte.lower().translate(ACCENTS)
+    return sorted(set(m for m in re.findall(r"[a-z]+", plat) if m in MOTS_FRANCAIS))
+
+
 def balise(html, motif):
     """Rend la valeur REELLE d'une balise, entites HTML decodees.
 
@@ -190,6 +230,19 @@ def examiner(site, url):
             noter(DEFAUT, f"titre coupe par Google ({len(titre)} car.)",
                   f"« {titre[:TITRE_MAX]}… »")
 
+    # Le domaine anglais ne doit pas parler francais a Google.
+    #
+    # Ce controle est volontairement prudent : deux mots-outils minimum, et
+    # uniquement dans le titre et la description — ce que Google lit pour
+    # decider a qui montrer la page. Une page anglaise qui cite « Cafe de la
+    # Poste » ou « Riad Essaouira » ne declenche rien : ce sont des noms de
+    # lieux, pas de la prose francaise.
+    if site["langue"].startswith("en") and titre:
+        trouves = mots_francais_de(titre)
+        if len(trouves) >= MINIMUM_MOTS:
+            noter(DEFAUT, "titre en francais sur le domaine anglais",
+                  f"mots francais : {', '.join(trouves[:6])} — « {titre[:56]}… »")
+
     desc = balise(html, r'<meta[^>]+name=["\']description["\'][^>]+content=["\'](.*?)["\']')
     if not desc:
         desc = balise(html, r'<meta[^>]+content=["\'](.*?)["\'][^>]+name=["\']description["\']')
@@ -197,6 +250,12 @@ def examiner(site, url):
         noter(DEFAUT, "aucune description", "Google en invente une, souvent mauvaise")
     elif len(desc.strip()) < DESC_MIN:
         noter(SURVEILLER, f"description trop courte ({len(desc.strip())} car.)")
+
+    if site["langue"].startswith("en") and desc:
+        trouves = mots_francais_de(desc)
+        if len(trouves) >= MINIMUM_MOTS:
+            noter(DEFAUT, "description en francais sur le domaine anglais",
+                  f"mots francais : {', '.join(trouves[:6])}")
 
     if not re.search(r"<h1[\s>]", html, re.I):
         noter(DEFAUT, "aucun titre H1", "la page n'annonce pas son sujet")

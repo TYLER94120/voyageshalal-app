@@ -91,6 +91,41 @@ dire(desc == "Tout sur l'hôtel halal",
 dire(titre_lu("<html><head></head></html>") is None,
      "une page sans titre rend None, le robot le signalera comme grave")
 
+# ── 8 à 12. Du français sur le domaine anglais ────────────────────────────
+# Mesuré le 11 août : sur les 15 pages de lieu anglaises vues par la ronde, les
+# 15 portaient un nom de lieu en français. La balise <html lang> ne voyait rien
+# — elle annonce « en » et elle dit vrai. C'est le contenu qui ment, et c'est le
+# contenu que Google lit pour décider à qui montrer la page.
+print()
+CAS_FRANCAIS = [
+    "Where to pray at Café sympa sorti de des direction berkane — Fès",
+    "Where to pray at Coin prière dans un restaurant familial — Marrakech",
+    "Where to pray at Resto avec piscine — Tafoughalt",
+]
+for t in CAS_FRANCAIS:
+    dire(len(robot.mots_francais_de(t)) >= robot.MINIMUM_MOTS,
+         "détecté comme français", t[:48] + "…")
+
+# Le risque de ce contrôle est de crier sur des pages saines. Un titre anglais
+# qui cite un lieu marocain ou un mot français passé en anglais ne doit RIEN
+# déclencher — c'est la moitié qui compte le plus dans ce test.
+CAS_ANGLAIS = [
+    "Where to pray in Marrakech — prayer spots",
+    "Halal restaurants in Fès and Café de la Poste",
+    "Where to pray at Riad Essaouira",
+    "Muslim-friendly hotels in Casablanca | GoHalalTravel",
+]
+for t in CAS_ANGLAIS:
+    n = len(robot.mots_francais_de(t))
+    dire(n < robot.MINIMUM_MOTS, "laissé tranquille (titre anglais légitime)",
+         f"{n} mot(s) — {t[:44]}")
+
+# Et le contrôle ne s'applique QU'AU domaine anglais : le site français a le
+# droit d'être écrit en français.
+dire(any(s["langue"] == "fr" for s in robot.SITES)
+     and any(s["langue"] == "en" for s in robot.SITES),
+     "le contrôle sait quels domaines sont anglais et lesquels sont français")
+
 print("\n" + ("✓ La ronde mesure ce que Google affiche, pas ce que le fichier contient."
               if echecs == 0 else f"✗ {echecs} echec(s)"))
 sys.exit(0 if echecs == 0 else 1)
