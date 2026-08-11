@@ -188,7 +188,35 @@ export interface RegleTexte {
 }
 
 // Les textes sont normalisés (minuscules, sans accents) avant le test.
+/**
+ * Les mots arabes que nous savons reconnaitre — et rien de plus.
+ *
+ * Ce n'est PAS de la comprehension de l'arabe : c'est une liste courte de
+ * mentions dont le sens ne se discute pas et qui figurent telles quelles sur
+ * les emballages du Maghreb. Mesure du 10 aout : une etiquette bilingue dont
+ * seul le cote arabe portait l'ingredient a risque ressortait « halal ».
+ *
+ * Pourquoi une simple sous-chaine suffit : l'arabe n'a pas de majuscules, et
+ * les prefixes se collent au mot sans le modifier — « الخنزير » (le porc)
+ * contient « خنزير ».
+ *
+ * On n'ajoute ici que ce dont on est sur. « شحم » (graisse) ou « دهن » (gras)
+ * sont trop generiques et resteraient dehors : ils seraient vegetaux neuf fois
+ * sur dix, et un faux « douteux » use la confiance autant qu'un oubli.
+ */
 export const REGLES_HARAM: RegleTexte[] = [
+  {
+    motif: /خنزير/,
+    element: "Porc (خنزير)",
+    raison: "Le mot « porc » figure en arabe sur l'étiquette. Le porc et tous ses dérivés sont interdits.",
+    famille: "porc",
+  },
+  {
+    motif: /كحول|خمر/,
+    element: "Alcool (كحول)",
+    raison: "Le mot « alcool » ou « vin » figure en arabe sur l'étiquette.",
+    famille: "alcool",
+  },
   {
     motif: /\bporcs?\b|porcine?s?\b|\blard\b|saindoux|couenne|\bbacon\b|poitrine fumee/,
     element: "Porc / dérivé de porc",
@@ -207,6 +235,24 @@ export const REGLES_HARAM: RegleTexte[] = [
 ];
 
 export const REGLES_DOUTEUX: RegleTexte[] = [
+  {
+    motif: /جيلاتين|جلاتين/,
+    element: "Gélatine (جيلاتين)",
+    raison: "Le mot « gélatine » figure en arabe sur l'étiquette. Origine non précisée — souvent porcine, sauf mention halal.",
+    famille: "gelatine",
+  },
+  {
+    motif: /انفحة|إنفحة/,
+    element: "Présure (إنفحة)",
+    raison: "Le mot « présure » figure en arabe sur l'étiquette. Coagulant souvent d'origine animale.",
+    famille: "presure",
+  },
+  {
+    motif: /لحم/,
+    element: "Viande (لحم)",
+    raison: "Le mot « viande » figure en arabe sur l'étiquette. Abattage halal à vérifier, sauf certification.",
+    famille: "viande",
+  },
   {
     motif: /gelatine/,
     element: "Gélatine",
@@ -287,7 +333,10 @@ function normaliser(texte: string): string {
   let t = texte
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+    .replace(/[\u0300-\u036f]/g, "")
+    // Harakat arabes : rares sur les emballages, mais elles casseraient la
+    // comparaison quand elles sont la.
+    .replace(/[\u064B-\u0652\u0670]/g, "");
   // Faux positifs connus : on neutralise avant l'analyse.
   t = t.replace(/vinaigre de vin/g, "vinaigre");
   t = t.replace(/sans alcool/g, "");

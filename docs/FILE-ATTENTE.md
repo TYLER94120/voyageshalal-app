@@ -45,19 +45,40 @@ une explication honnête, jamais un verdict inventé.
    *Piste :* constituer un jeu de fiches réelles figées dans le dépôt, capturées
    une fois depuis le navigateur de Mohamed, pour tester hors ligne.
 
-4. **Une étiquette bilingue dont seul le côté arabe porte l'ingrédient à risque.**
-   *Preuve :* mesuré le 10 août. « ماء، سكر، جيلاتين / eau, sucre, arome »
-   ressort **halal** : le côté français est lisible et ne dit rien de risqué,
-   donc le garde-fou « étiquette illisible » ne se déclenche pas, à raison.
-   C'est une vraie limite, pas un oubli — et elle est rare, les deux moitiés
-   d'une étiquette étant normalement la traduction l'une de l'autre.
-   *Ce qu'il faudrait :* savoir lire l'arabe. HalalGPT sait déjà le faire via
-   la lecture par photo ; la piste est de lui envoyer le texte arabe et non
-   seulement les images. À discuter avec l'agent HalalGPT avant de coder.
-
 ---
 
 ## Fait
+
+- **Le moteur sait maintenant lire six mots d'arabe** *(10 août, soir)* — suite
+  directe du garde-fou posé le matin. Le garde-fou évitait le faux « halal » ;
+  celui-ci va plus loin et rend un vrai verdict.
+
+  | Composition | Avant | Après |
+  |---|---|---|
+  | Bilingue, risque **seulement du côté arabe** | **HALAL** | **DOUTEUX** |
+  | Arabe seul, gélatine (جيلاتين) | INCONNU | **DOUTEUX** |
+  | Arabe seul, porc (خنزير) | INCONNU | **HARAM** |
+  | Arabe seul, produit banal | INCONNU | INCONNU *(inchangé, et honnête)* |
+  | Français seul | DOUTEUX | DOUTEUX *(inchangé)* |
+
+  **Ce n'est pas de la compréhension de l'arabe** : c'est une liste de six
+  mentions dont le sens ne se discute pas — خنزير (porc), كحول et خمر (alcool,
+  vin), جيلاتين (gélatine), إنفحة (présure), لحم (viande). Une recherche de
+  sous-chaîne suffit : l'arabe n'a pas de majuscules et les préfixes se collent
+  au mot sans le modifier, « الخنزير » contient « خنزير ».
+
+  **Ce qui est resté dehors volontairement :** شحم (graisse) et دهن (gras),
+  trop génériques — ils seraient végétaux neuf fois sur dix, et un faux
+  « douteux » use la confiance autant qu'un oubli.
+
+  Tests du moteur : **56 → 59**. Règles publiées : 101 → 106. Les trois autres
+  sondes restent à zéro défaut.
+
+  *Note de méthode :* un test écrit le matin même est passé au rouge — il
+  attendait « inconnu » sur une étiquette arabe contenant « porc ». C'est
+  l'attente qui était périmée, pas le code : on sait maintenant lire ce mot, et
+  « haram » est plus juste. **Le test a été mis à jour, pas le code contourné** —
+  et le commentaire dit pourquoi, pour qu'on ne croie pas à une régression.
 
 - **Une étiquette en arabe disant « graisse de porc » ressortait HALAL**
   *(10 août)* — le pire verdict que ce produit puisse rendre, sur exactement le

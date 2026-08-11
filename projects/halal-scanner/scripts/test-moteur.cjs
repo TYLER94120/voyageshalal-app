@@ -60,8 +60,16 @@ const cas = [
   // Nos motifs sont français et anglais. Une composition en arabe ne déclenche
   // rien — et « aucune alerte » ne doit JAMAIS devenir « halal ». Mesuré :
   // « دهن الخنزير » (graisse de porc) ressortait HALAL.
-  ["Étiquette arabe seule → inconnu, jamais halal", { ingredientsTexte: "المكونات: دهن الخنزير، ملح", additifs: [] }, "inconnu", 0],
-  ["Étiquette arabe banale → inconnu aussi", { ingredientsTexte: "المكونات: ماء، سكر، ملح", additifs: [] }, "inconnu", 0],
+  // Le 10 août au soir, un petit vocabulaire arabe a été ajouté : ce cas ne
+  // ressort plus « inconnu » mais « haram », ce qui est plus juste — le mot
+  // « خنزير » (porc) est maintenant reconnu. L'attente a été mise à jour, pas
+  // le code : c'est le test qui était périmé.
+  ["Porc écrit en arabe → haram", { ingredientsTexte: "المكونات: دهن الخنزير، ملح", additifs: [] }, "haram", 1],
+  ["Gélatine écrite en arabe → douteux", { ingredientsTexte: "المكونات: ماء، سكر، جيلاتين", additifs: [] }, "douteux", 1],
+  ["Alcool écrit en arabe → haram", { ingredientsTexte: "المكونات: ماء، كحول", additifs: [] }, "haram", 1],
+  // Ce qui reste vrai : hors de ce petit vocabulaire, on ne sait pas lire.
+  ["Étiquette arabe banale → inconnu, jamais halal", { ingredientsTexte: "المكونات: ماء، سكر، ملح", additifs: [] }, "inconnu", 0],
+  ["Bilingue, risque SEULEMENT du côté arabe → détecté", { ingredientsTexte: "ماء، سكر، جيلاتين / eau, sucre, arome", additifs: [] }, "douteux", 1],
   ["Arabe + codes additifs fournis par la base → analysable", { ingredientsTexte: "المكونات: ماء، سكر", additifs: ["en:e441"] }, "haram", 1],
   ["Bilingue avec un côté français lisible → analysé", { ingredientsTexte: "ماء، سكر، جيلاتين / eau, sucre, gélatine", additifs: [] }, "douteux", 1],
   ["Texte latin trop court pour conclure → inconnu", { ingredientsTexte: "sel", additifs: [] }, "inconnu", 0],

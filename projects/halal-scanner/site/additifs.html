@@ -10,7 +10,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://halalcheck.fr/additifs.html" />
   <link rel="canonical" href="https://halalcheck.fr/additifs.html" />
-  <meta name="last-modified" content="2026-08-10T20:54:50+00:00" />
+  <meta name="last-modified" content="2026-08-10T22:54:18+00:00" />
   <meta name="theme-color" content="#FDFAF3" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
@@ -32,7 +32,7 @@
         "description": "E120, E441, E471… la liste complète des additifs et ingrédients que HalalCheck repère, avec la raison du doute pour chacun. Alimentaire et cosmétiques.",
         "isPartOf": { "@id": "https://halalcheck.fr/#application" },
         "publisher": { "@id": "https://halalcheck.fr/#editeur" },
-        "dateModified": "2026-08-10T20:54:50+00:00"
+        "dateModified": "2026-08-10T22:54:18+00:00"
       },
       {
         "@type": "BreadcrumbList",
@@ -204,7 +204,7 @@
   <main>
     <h1>Ce que le scanner surveille</h1>
     <p class="intro">
-      101 règles au total&nbsp;: 56 additifs alimentaires, 16 ingrédients repérés
+      106 règles au total&nbsp;: 56 additifs alimentaires, 21 ingrédients repérés
       dans la composition et 29 règles cosmétiques. Cette page est générée
       directement depuis le moteur d'analyse&nbsp;: ce qui est écrit ici est exactement
       ce qui est détecté lors d'un scan.
@@ -224,8 +224,8 @@
     <nav class="sommaire" id="sommaire" aria-label="Sommaire">
       <a href="#additifs-interdits">Additifs interdits <span>2</span></a>
       <a href="#additifs-verifier">Additifs à vérifier <span>54</span></a>
-      <a href="#ingredients-interdits">Ingrédients interdits dans la liste <span>3</span></a>
-      <a href="#ingredients-verifier">Ingrédients à vérifier dans la liste <span>13</span></a>
+      <a href="#ingredients-interdits">Ingrédients interdits dans la liste <span>5</span></a>
+      <a href="#ingredients-verifier">Ingrédients à vérifier dans la liste <span>16</span></a>
       <a href="#cosmetiques-interdits">Cosmétiques · ingrédients interdits <span>4</span></a>
       <a href="#cosmetiques-verifier">Cosmétiques · ingrédients à vérifier <span>24</span></a>
       <a href="#cosmetiques-alcool">Cosmétiques · alcool <span>1</span></a>
@@ -522,8 +522,20 @@
     </section>
 
     <section class="bloc" id="ingredients-interdits">
-      <h2>Ingrédients interdits dans la liste <span class="compte" data-total="3">3</span></h2>
+      <h2>Ingrédients interdits dans la liste <span class="compte" data-total="5">5</span></h2>
       <p class="chapeau">Repérés directement dans le texte de la composition, sans code E.</p>
+      <article class="carte haram" data-cherche="porc (خنزير) le mot « porc » figure en arabe sur l'etiquette. le porc et tous ses derives sont interdits. خنزير">
+        <div class="entete"><h3>Porc (خنزير)</h3></div>
+        <p class="raison">Le mot « porc » figure en arabe sur l'étiquette. Le porc et tous ses dérivés sont interdits.</p>
+        
+        <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">خنزير</span></div>
+      </article>
+      <article class="carte haram" data-cherche="alcool (كحول) le mot « alcool » ou « vin » figure en arabe sur l'etiquette. كحول خمر">
+        <div class="entete"><h3>Alcool (كحول)</h3></div>
+        <p class="raison">Le mot « alcool » ou « vin » figure en arabe sur l'étiquette.</p>
+        
+        <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">كحول</span><span class="mot">خمر</span></div>
+      </article>
       <article class="carte haram" data-cherche="porc / derive de porc le porc et tous ses derives sont interdits. porc porcin lard saindoux couenne bacon poitrine fumee">
         <div class="entete"><h3>Porc / dérivé de porc</h3></div>
         <p class="raison">Le porc et tous ses dérivés sont interdits.</p>
@@ -545,8 +557,26 @@
     </section>
 
     <section class="bloc" id="ingredients-verifier">
-      <h2>Ingrédients à vérifier dans la liste <span class="compte" data-total="13">13</span></h2>
+      <h2>Ingrédients à vérifier dans la liste <span class="compte" data-total="16">16</span></h2>
       <p class="chapeau">Mots qui déclenchent un doute et une demande de vérification.</p>
+      <article class="carte douteux" data-cherche="gelatine (جيلاتين) le mot « gelatine » figure en arabe sur l'etiquette. origine non precisee — souvent porcine, sauf mention halal. جيلاتين جلاتين">
+        <div class="entete"><h3>Gélatine (جيلاتين)</h3></div>
+        <p class="raison">Le mot « gélatine » figure en arabe sur l'étiquette. Origine non précisée — souvent porcine, sauf mention halal.</p>
+        
+        <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">جيلاتين</span><span class="mot">جلاتين</span></div>
+      </article>
+      <article class="carte douteux" data-cherche="presure (إنفحة) le mot « presure » figure en arabe sur l'etiquette. coagulant souvent d'origine animale. انفحة إنفحة">
+        <div class="entete"><h3>Présure (إنفحة)</h3></div>
+        <p class="raison">Le mot « présure » figure en arabe sur l'étiquette. Coagulant souvent d'origine animale.</p>
+        
+        <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">انفحة</span><span class="mot">إنفحة</span></div>
+      </article>
+      <article class="carte douteux" data-cherche="viande (لحم) le mot « viande » figure en arabe sur l'etiquette. abattage halal a verifier, sauf certification. لحم">
+        <div class="entete"><h3>Viande (لحم)</h3></div>
+        <p class="raison">Le mot « viande » figure en arabe sur l'étiquette. Abattage halal à vérifier, sauf certification.</p>
+        
+        <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">لحم</span></div>
+      </article>
       <article class="carte douteux" data-cherche="gelatine origine non precisee — souvent porcine, sauf mention halal. gelatine">
         <div class="entete"><h3>Gélatine</h3></div>
         <p class="raison">Origine non précisée — souvent porcine, sauf mention halal.</p>
