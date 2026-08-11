@@ -1,39 +1,57 @@
 {
-  "verifie_le": "2026-08-11 17:13 UTC",
-  "liens_controles": 1619,
+  "verifie_le": "2026-08-11 21:05 UTC",
+  "liens_controles": 1396,
   "morts": [
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/www.diademcappadocia.com",
+      "url": "https://www.voyageshalal.fr/destinations/greenssuite2021@gmail.com",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/www.hotelbellevue.ma",
+      "url": "https://www.voyageshalal.fr/destinations/grouplehahotels.com",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/turisthotel.com.tr",
+      "url": "https://www.voyageshalal.fr/destinations/hotel-Medina.com",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/hotel-marmar.com",
+      "url": "https://www.voyageshalal.fr/destinations/www.darfatima.com",
       "detail": "code 404"
     }
   ],
-  "bloques": [
+  "bloques": [],
+  "innocentes_au_controle_calme": [
     {
-      "site": "gohalaltravel.com",
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/hotels/taza",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/miami",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/horaires-priere?lat=2.1896&lng=102.2501&lieu=Malacca&pays=Malaisie",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://unsplash.com",
-      "detail": "code 401 — refuse les robots, pas forcement mort"
+      "url": "https://halalgpt.fr/e/E476?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
     }
-  ],
-  "innocentes_au_controle_calme": []
+  ]
 }
