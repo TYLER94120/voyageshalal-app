@@ -1,5 +1,27 @@
 {
-  "ronde_du": "2026-08-10 17:28 UTC",
-  "pages_vues": 129,
-  "defauts": []
+  "ronde_du": "2026-08-11 04:02 UTC",
+  "pages_vues": 130,
+  "defauts": [
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/guides/hotel-halal-tout-savoir",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Hôtel halal : tout ce qu&#x27;il faut savoir avant de réserv… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/guides/malaysia-halal-destination-guide",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Malaysia: The World&#x27;s #1 Destination for Muslim Travele… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/guides/solo-female-muslim-travel",
+      "quoi": "titre coupe par Google (64 car.)",
+      "detail": "« Solo Female Muslim Travel: Safe Destinations &amp; Honest Ad… »"
+    }
+  ]
 }
