@@ -39,7 +39,7 @@ envoyait quelqu'un réparer ce qui marchait déjà.**
 Et à chaque fois, le signal était le même : un chiffre plus gros que ce à quoi
 on s'attendait.
 
-## Les trois signatures d'un instrument qui ment
+## Les quatre signatures d'un instrument qui ment
 
 ### 1. L'erreur n'a pas de code
 
@@ -66,6 +66,34 @@ venait de l'instrument.
 
 > 1751 pages à 6 en parallèle : 8 pages mortes.
 > 867 pages, un domaine, calmement : **zéro.**
+
+### 4. L'instrument mesure le FICHIER, le visiteur reçoit autre chose
+
+Les trois premières signatures parlent de pannes. Celle-ci est pire, parce
+qu'elle ne ressemble pas à une panne : l'instrument fonctionne parfaitement,
+il mesure simplement la mauvaise chose. Aucun `timeout`, aucune grappe, et le
+chiffre reste **stable** quand on refait la mesure — puisque le défaut est
+dans la définition, pas dans la mesure.
+
+Dans la source d'une page, une apostrophe s'écrit `&#x27;` et une esperluette
+`&amp;`. Un titre de 57 caractères en compte donc 62 dans le fichier.
+
+> **11 août — 160 titres « coupés par Google ». 104 ne l'étaient pas.**
+> Un ordre de mission était déjà parti vers l'agent VoyagesHalal.
+> Même faute, un jour plus tôt, dans le robot des liens : `&amp;` non décodé
+> faisait déclarer morts des liens parfaitement valides.
+
+Ce piège vit partout où l'on compte : entités HTML, espaces insécables,
+émojis (plusieurs octets, un seul caractère à l'écran), balises laissées dans
+le texte, accents décomposés.
+
+> **Règle : mesure toujours ce que le visiteur reçoit, jamais ce que le
+> fichier contient.** Décode d'abord, compte ensuite.
+
+Et le réflexe qui va avec, parce que corriger un faux positif rend souvent
+aveugle : **le test qui verrouille la correction doit contenir un vrai cas
+positif.** `test-ronde.py` vérifie que les 3 faux titres se taisent — et
+qu'un titre réellement trop long est toujours vu.
 
 ## Ce qu'on fait, dans l'ordre
 
