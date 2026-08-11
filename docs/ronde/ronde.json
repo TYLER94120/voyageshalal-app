@@ -1,34 +1,118 @@
 {
-  "ronde_du": "2026-08-11 05:36 UTC",
-  "pages_vues": 129,
+  "ronde_du": "2026-08-11 07:17 UTC",
+  "pages_vues": 128,
   "defauts": [
     {
       "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/marrakech",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Where to pray in Marrakech — prayer spots | GoHalalTravel.co… »"
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/priere/fes/cafe-sympa-sorti-de-des-direction-berkane",
+      "quoi": "titre coupe par Google (76 car.)",
+      "detail": "« Où prier à Café sympa sorti de des direction berkane — Fès |… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/priere/saidia/mosque-a-10-minutes-de-saidia-dans-la-montagne",
+      "quoi": "titre coupe par Google (84 car.)",
+      "detail": "« Où prier à Mosque a 10 minutes de saidia dans la montagne — … »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/priere/marrakech/coin-priere-dans-un-restaurant-familial",
+      "quoi": "titre coupe par Google (80 car.)",
+      "detail": "« Où prier à Coin prière dans un restaurant familial — Marrake… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/priere/marrakech/hotel-excentre-magnifique",
+      "quoi": "titre coupe par Google (66 car.)",
+      "detail": "« Où prier à Hôtel excentre magnifique — Marrakech | VoyagesHa… »"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/tafoughalt",
+      "url": "https://www.gohalaltravel.com/priere/berkane/mosquee-sidi-slimane",
+      "quoi": "titre coupe par Google (67 car.)",
+      "detail": "« Where to pray at Mosquée Sidi slimane — Berkane | GoHalalTra… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/la-dune-agafay",
+      "quoi": "titre coupe par Google (63 car.)",
+      "detail": "« Where to pray at La dune agafay — Marrakech | GoHalalTravel.… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/hotel-excentre-magnifique",
+      "quoi": "titre coupe par Google (74 car.)",
+      "detail": "« Where to pray at Hôtel excentre magnifique — Marrakech | GoH… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/agadir/resto-a-imsouane",
       "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Where to pray in Tafoughalt — prayer spots | GoHalalTravel.c… »"
+      "detail": "« Where to pray at Resto à Imsouane — Agadir | GoHalalTravel.c… »"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/essaouira",
-      "quoi": "titre coupe par Google (61 car.)",
-      "detail": "« Where to pray in Essaouira — prayer spots | GoHalalTravel.co… »"
+      "url": "https://www.gohalaltravel.com/priere/casablanca/le-rendez-vous",
+      "quoi": "titre coupe par Google (64 car.)",
+      "detail": "« Where to pray at Le rendez vous — Casablanca | GoHalalTravel… »"
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/casablanca",
-      "quoi": "titre coupe par Google (62 car.)",
-      "detail": "« Where to pray in Casablanca — prayer spots | GoHalalTravel.c… »"
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "titre coupe par Google (101 car.)",
+      "detail": "« Where to pray at Resto traditionnel spécial jus de fruit et … »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer",
+      "quoi": "titre coupe par Google (82 car.)",
+      "detail": "« Where to pray at Resto Sidi koi Ali en bord de mer — Essaoui… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/riad-essaouira",
+      "quoi": "titre coupe par Google (63 car.)",
+      "detail": "« Where to pray at Riad essaouira — Marrakech | GoHalalTravel.… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/fes/cafe-sympa-sorti-de-des-direction-berkane",
+      "quoi": "titre coupe par Google (84 car.)",
+      "detail": "« Where to pray at Café sympa sorti de des direction berkane —… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/berkane/mosquee-magnifique",
+      "quoi": "titre coupe par Google (65 car.)",
+      "detail": "« Where to pray at Mosquée magnifique — Berkane | GoHalalTrave… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/saidia/mosque-a-10-minutes-de-saidia-dans-la-montagne",
+      "quoi": "titre coupe par Google (92 car.)",
+      "detail": "« Where to pray at Mosque a 10 minutes de saidia dans la monta… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/hotel-excentre-de-marrakech",
+      "quoi": "titre coupe par Google (76 car.)",
+      "detail": "« Where to pray at Hôtel excentre de Marrakech — Marrakech | G… »"
     },
     {
       "niveau": "defaut",
@@ -40,9 +124,93 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
-      "quoi": "titre coupe par Google (101 car.)",
-      "detail": "« Where to pray at Resto traditionnel spécial jus de fruit et … »"
+      "url": "https://www.gohalaltravel.com/priere/marrakech/restaura-cafe-chill",
+      "quoi": "titre coupe par Google (68 car.)",
+      "detail": "« Where to pray at Restaura Café chill — Marrakech | GoHalalTr… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
+      "quoi": "titre coupe par Google (68 car.)",
+      "detail": "« Where to pray at Resto avec piscine — Tafoughalt | GoHalalTr… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_mrthy3ne_hjxfv",
+      "quoi": "titre coupe par Google (64 car.)",
+      "detail": "« Mosquée Sidi slimane — Prayer spot in Berkane (community-sha… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms7iirki_ws5oz",
+      "quoi": "titre coupe par Google (65 car.)",
+      "detail": "« Hôtel excentre magnifique — Other in Marrakech (community-sh… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msdactjq_p5sac",
+      "quoi": "description trop courte (10 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msdnho52_dw9u4",
+      "quoi": "titre coupe par Google (61 car.)",
+      "detail": "« Le rendez vous — Halal resto in Casablanca (community-shared… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd",
+      "quoi": "description trop courte (24 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
+      "quoi": "titre coupe par Google (92 car.)",
+      "detail": "« Resto traditionnel spécial jus de fruit et pétit dej — Other… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8",
+      "quoi": "titre coupe par Google (79 car.)",
+      "detail": "« Resto Sidi koi Ali en bord de mer — Halal resto in Essaouira… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msn1o7z8_zaii0",
+      "quoi": "titre coupe par Google (81 car.)",
+      "detail": "« Café sympa sorti de des direction berkane — Halal resto in F… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_mrtftu4b_52671",
+      "quoi": "titre coupe par Google (62 car.)",
+      "detail": "« Mosquée magnifique — Prayer spot in Berkane (community-share… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_mrtmy7zu_wd5zv",
+      "quoi": "titre coupe par Google (89 car.)",
+      "detail": "« Mosque a 10 minutes de saidia dans la montagne — Prayer spot… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms1kzqor_ybexr",
+      "quoi": "titre coupe par Google (67 car.)",
+      "detail": "« Hôtel excentre de Marrakech — Other in Marrakech (community-… »"
     }
   ]
 }
