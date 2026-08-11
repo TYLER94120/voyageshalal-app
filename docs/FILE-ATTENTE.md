@@ -70,6 +70,32 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **« Les produits enregistrés DANS LE Maroc »** *(11 août)* — question de
+  Mohamed : est-ce que les produits du Maghreb sont pris en compte ? Vérifié
+  point par point plutôt que répondu de mémoire.
+
+  **Ce qui marche déjà, mesuré :**
+
+  | Cas propre au Maghreb | Verdict rendu |
+  |---|---|
+  | codes E écrits dans le texte, base sans additifs déclarés | DOUTEUX — E471, E120 repérés |
+  | étiquette bilingue, gélatine côté arabe seulement | DOUTEUX |
+  | étiquette en arabe seul, présure | DOUTEUX |
+  | étiquette en arabe seul, porc | HARAM |
+  | étiquette illisible (photo floue) | INCONNU — jamais « halal » par défaut |
+  | code-barres 611 absent des bases | écran dédié + lecture par photo |
+
+  **Le défaut trouvé en vérifiant :** la phrase affichée sur cet écran disait
+  « Les produits enregistrés **dans le** Maroc », « dans l'Algérie », « dans
+  les Émirats ». Ce n'est pas du français, et c'est adressé précisément aux
+  gens dont c'est le pays — une phrase bancale décrédibilise le verdict qui la
+  suit. Le code contenait bien un `.replace()` destiné à corriger l'article,
+  mais il remplaçait l'article **par lui-même** : il ne faisait rien.
+
+  Chaque pays porte désormais sa préposition : au Maroc, en Algérie, en
+  Tunisie, aux Émirats, au Koweït… **24 pays sur 24** justes, vérifiés sur la
+  page réelle et non dans le tableau. Sonde conservée : `npm run sonde:pays`.
+
 - **Le « mauvais clavier » : correctif refusé, et pourquoi** *(11 août)*. La
   ligne demandait un `inputmode` sur le champ de secours, pour que le téléphone
   ouvre le pavé numérique quand on dit « saisis les chiffres ».

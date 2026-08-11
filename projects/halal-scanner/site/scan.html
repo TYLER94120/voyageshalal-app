@@ -10,7 +10,7 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-11T10:55:25+00:00" />
+  <meta name="last-modified" content="2026-08-11T12:59:44+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -632,7 +632,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-11T10:55:25+00:00"
+      "dateModified": "2026-08-11T12:59:44+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -1314,31 +1314,35 @@
     // (pas forcément celui de fabrication). Utile pour expliquer honnêtement
     // pourquoi un produit manque : les bases mondiales couvrent très bien
     // l'Europe de l'Ouest et beaucoup moins le reste.
+    // Chaque pays porte SA préposition. « dans le Maroc » n'est pas du
+    // français : on dit « au Maroc », « en Algérie », « aux Émirats ». Devant
+    // des gens dont c'est le pays, une phrase bancale décrédibilise le verdict
+    // qui la suit.
     const PREFIXES_PAYS = [
-      [[611], "le Maroc", true],
-      [[613], "l'Algérie", true],
-      [[619], "la Tunisie", true],
-      [[622], "l'Égypte", true],
-      [[624], "la Libye", true],
-      [[625], "la Jordanie", true],
-      [[626], "l'Iran", true],
-      [[627], "le Koweït", true],
-      [[628], "l'Arabie saoudite", true],
-      [[629], "les Émirats arabes unis", true],
-      [[621], "la Syrie", true],
-      [[603], "le Ghana", true],
-      [[615], "le Nigeria", true],
-      [[616], "le Kenya", true],
-      [[618], "la Côte d'Ivoire", true],
-      [[890], "l'Inde", true],
-      [[896], "le Pakistan", true],
-      [[899], "l'Indonésie", true],
-      [[955], "la Malaisie", true],
-      [[885], "la Thaïlande", true],
-      [[893], "le Vietnam", true],
-      [[690, 691, 692, 693, 694, 695, 696, 697, 698, 699], "la Chine", true],
-      [[868, 869], "la Turquie", true],
-      [[729], "Israël", true],
+      [[611], "le Maroc", "au Maroc", true],
+      [[613], "l'Algérie", "en Algérie", true],
+      [[619], "la Tunisie", "en Tunisie", true],
+      [[622], "l'Égypte", "en Égypte", true],
+      [[624], "la Libye", "en Libye", true],
+      [[625], "la Jordanie", "en Jordanie", true],
+      [[626], "l'Iran", "en Iran", true],
+      [[627], "le Koweït", "au Koweït", true],
+      [[628], "l'Arabie saoudite", "en Arabie saoudite", true],
+      [[629], "les Émirats arabes unis", "aux Émirats arabes unis", true],
+      [[621], "la Syrie", "en Syrie", true],
+      [[603], "le Ghana", "au Ghana", true],
+      [[615], "le Nigeria", "au Nigeria", true],
+      [[616], "le Kenya", "au Kenya", true],
+      [[618], "la Côte d'Ivoire", "en Côte d'Ivoire", true],
+      [[890], "l'Inde", "en Inde", true],
+      [[896], "le Pakistan", "au Pakistan", true],
+      [[899], "l'Indonésie", "en Indonésie", true],
+      [[955], "la Malaisie", "en Malaisie", true],
+      [[885], "la Thaïlande", "en Thaïlande", true],
+      [[893], "le Vietnam", "au Vietnam", true],
+      [[690, 691, 692, 693, 694, 695, 696, 697, 698, 699], "la Chine", "en Chine", true],
+      [[868, 869], "la Turquie", "en Turquie", true],
+      [[729], "Israël", "en Israël", true],
     ];
 
     function paysDuCode(code) {
@@ -1346,17 +1350,17 @@
       if (c.length < 8) return null;
       const p3 = parseInt(c.slice(0, 3), 10);
       const p2 = parseInt(c.slice(0, 2), 10);
-      for (const [prefixes, nom, lointain] of PREFIXES_PAYS) {
-        if (prefixes.includes(p3)) return { nom, lointain };
+      for (const [prefixes, nom, ou, lointain] of PREFIXES_PAYS) {
+        if (prefixes.includes(p3)) return { nom, ou, lointain };
       }
-      if (p3 >= 300 && p3 <= 379) return { nom: "la France", lointain: false };
-      if (p2 >= 40 && p2 <= 44) return { nom: "l'Allemagne", lointain: false };
-      if (p3 >= 500 && p3 <= 509) return { nom: "le Royaume-Uni", lointain: false };
-      if (p3 >= 800 && p3 <= 839) return { nom: "l'Italie", lointain: false };
-      if (p3 >= 840 && p3 <= 849) return { nom: "l'Espagne", lointain: false };
-      if (p3 >= 540 && p3 <= 549) return { nom: "la Belgique", lointain: false };
-      if (p3 >= 870 && p3 <= 879) return { nom: "les Pays-Bas", lointain: false };
-      if (p3 >= 760 && p3 <= 769) return { nom: "la Suisse", lointain: false };
+      if (p3 >= 300 && p3 <= 379) return { nom: "la France", ou: "en France", lointain: false };
+      if (p2 >= 40 && p2 <= 44) return { nom: "l'Allemagne", ou: "en Allemagne", lointain: false };
+      if (p3 >= 500 && p3 <= 509) return { nom: "le Royaume-Uni", ou: "au Royaume-Uni", lointain: false };
+      if (p3 >= 800 && p3 <= 839) return { nom: "l'Italie", ou: "en Italie", lointain: false };
+      if (p3 >= 840 && p3 <= 849) return { nom: "l'Espagne", ou: "en Espagne", lointain: false };
+      if (p3 >= 540 && p3 <= 549) return { nom: "la Belgique", ou: "en Belgique", lointain: false };
+      if (p3 >= 870 && p3 <= 879) return { nom: "les Pays-Bas", ou: "aux Pays-Bas", lointain: false };
+      if (p3 >= 760 && p3 <= 769) return { nom: "la Suisse", ou: "en Suisse", lointain: false };
       return null;
     }
 
@@ -1365,7 +1369,7 @@
     function texteNonReference(code) {
       const pays = paysDuCode(code);
       if (pays && pays.lointain) {
-        return "Les produits enregistrés dans " + pays.nom.replace(/^(le |la |les |l')/, "$1") +
+        return "Les produits enregistrés " + pays.ou +
           " manquent souvent des bases mondiales. Mais tu peux avoir ton verdict quand même : photographie sa liste d'ingrédients.";
       }
       if (pays) {
