@@ -19,7 +19,8 @@
     "sonde:photo": "node scripts/sonde-photo.mjs",
     "sonde:iphone": "node scripts/sonde-iphone.mjs",
     "sonde:saisie": "node scripts/sonde-saisie.mjs",
-    "sonde:pays": "node scripts/sonde-pays.mjs"
+    "sonde:pays": "node scripts/sonde-pays.mjs",
+    "sonde:inci": "node scripts/sonde-inci.mjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",

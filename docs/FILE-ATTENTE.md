@@ -85,6 +85,39 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Le moteur cosmétiques n'avait jamais été mesuré sur ce qu'il RATE**
+  *(11 août)* — la sonde existante ne vérifiait que les faux positifs. La
+  moitié cosmétique du produit n'avait donc aucun contrôle de détection, alors
+  que la moitié alimentaire venait d'y révéler « lardons ».
+
+  26 noms INCI tels qu'ils figurent sur les emballages européens :
+  **16 conformes sur 26**, 8 vrais manques.
+
+  | Nom INCI | Avant | Après |
+  |---|---|---|
+  | **Adeps Suillus** *(graisse de porc, nom latin)* | **muet** | interdit |
+  | Adeps Bovis *(graisse de bœuf)* | muet | interdit |
+  | Tallowamide DEA, Suet | muet | interdit |
+  | Gelatine *(orthographe sans accent)* | muet | signalé |
+  | Sodium Stearoyl Lactylate, Stearoyl Glutamate | muet | signalé |
+  | Cysteine HCl | muet | signalé |
+
+  Le pire est le premier : **« Adeps Suillus » est de la graisse de porc**, et
+  le moteur ne disait rien. Même piège que « lardons » — `\btallow\b` et
+  `\bgelatin\b` s'arrêtent au mot exact et laissent passer les dérivés.
+
+  **Une incohérence entre les deux moteurs :** la cystéine était surveillée
+  côté alimentaire et ignorée côté cosmétique, alors qu'elle est bien plus
+  fréquente dans les lissages capillaires que dans le pain.
+
+  **Deux manques laissés volontairement :** « Cetyl Esters » est aujourd'hui
+  de synthèse dans la quasi-totalité des cas, et le spermaceti ne figure plus
+  sur un emballage européen depuis des décennies. Une règle pour un ingrédient
+  qui n'apparaît pas, c'est du bruit — la sonde les note comme attendus muets.
+
+  Sonde conservée : `npm run sonde:inci`, 26 cas, elle sort en erreur au
+  premier écart. Contrôles : 73 tests, 0 faux positif sur les trois sondes.
+
 - **Dix pluriels manqués, et un interdit inventé** *(11 août)* — suite directe
   du défaut « lardons ». Si un `\blard\b` laissait passer « lardons », combien
   d'autres règles s'arrêtaient au mot exact ?

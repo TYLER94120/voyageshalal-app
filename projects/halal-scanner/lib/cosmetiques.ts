@@ -32,7 +32,10 @@ export interface RegleInci {
 // Interdits : l'origine est établie, pas seulement possible.
 export const REGLES_INTERDITES: RegleInci[] = [
   {
-    motif: /\btallow\b|sodium tallowate|potassium tallowate|tallowate|\bsuif\b/,
+    // « Tallowamide », « Tallowamine », « Suet » : mesures du 11 août, tous
+    // trois muets alors que ce sont des noms INCI réels. \btallow\b s'arrête
+    // au mot exact — le même piège que « lardons » côté alimentaire.
+    motif: /\btallow\w*\b|sodium tallowate|potassium tallowate|\bsuif\b|\bsuet\b|adeps bovis/,
     element: "Suif (Tallow)",
     niveau: "haram",
     raison:
@@ -40,7 +43,9 @@ export const REGLES_INTERDITES: RegleInci[] = [
     famille: "suif",
   },
   {
-    motif: /\blard\b|porcine|\bpork\b|sus scrofa|porc\b/,
+    // « Adeps Suillus » est le nom latin INCI de la graisse de porc, et le
+    // moteur était muet devant : mesuré le 11 août.
+    motif: /\blard\b|porcine|\bpork\b|sus scrofa|porc\b|adeps suillus/,
     element: "Dérivé de porc",
     niveau: "haram",
     raison: "Ingrédient d'origine porcine — interdit.",
@@ -78,21 +83,21 @@ export const REGLES_DOUTEUSES: RegleInci[] = [
     raison: "Protéine d'origine animale (tissus conjonctifs) — origine à confirmer.",
   },
   {
-    motif: /\bkeratin\b|kératine|hydrolyzed keratin/,
+    motif: /\bkeratins?\b|kératines?|hydrolyzed keratin|\bl-?cysteines?\b|\bcysteines?\b|\bcystines?\b|cystéines?/,
     element: "Kératine",
     niveau: "douteux",
     raison: "Extraite de laine, plumes, cornes ou sabots — origine et abattage non vérifiables.",
     famille: "keratine",
   },
   {
-    motif: /\bgelatin\b|gélatine|hydrolyzed gelatin/,
+    motif: /\bgelatines?\b|\bgelatin\b|gélatines?|hydrolyzed gelatin/,
     element: "Gélatine",
     niveau: "douteux",
     raison: "Souvent d'origine porcine ou bovine, sauf mention halal.",
     famille: "gelatine",
   },
   {
-    motif: /stearic acid|acide stéarique|\bstearate\b|stéarate|glyceryl stearate|sodium stearate|magnesium stearate/,
+    motif: /stearic acid|acide stéarique|\bstearates?\b|stéarates?|glyceryl stearate|sodium stearate|magnesium stearate|\bstearoyl\b|\bstearamide\b/,
     element: "Acide stéarique / stéarates",
     niveau: "douteux",
     raison:
