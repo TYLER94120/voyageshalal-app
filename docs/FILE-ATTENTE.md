@@ -112,6 +112,51 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Une faute de frappe dans `verifications.json` mettait le sceau vert sur du
+  porc** *(12 août)* — audit de cycle, les 7 éléments de la file étant tous
+  bloqués. C'est le défaut le plus grave trouvé jusqu'ici : il touche le moat
+  lui-même.
+
+  Une fiche vérifiée **prime** sur l'analyse — son statut s'affiche, les
+  alertes du moteur sont effacées. Le statut n'était jamais contrôlé, et
+  l'écran retombait sur le vert :
+
+  ```js
+  $("verdict-emoji").textContent = EMOJIS[verif.statut] || "✅";
+  ```
+
+  Mesuré sur un pâté dont la composition dit « foie de porc, lardons » :
+
+  | Fiche saisie à la main | avant | après |
+  |---|---|---|
+  | `statut: "Halal"` *(majuscule)* | **✅, sceau, label vide** | ✅ HALAL, sceau |
+  | `statut: "halall"` | **✅, sceau, 0 alerte** | ❌ HARAM, pas de sceau |
+  | statut absent | **✅, sceau, 0 alerte** | ❌ HARAM, pas de sceau |
+  | statut vide | **✅, sceau, 0 alerte** | ❌ HARAM, pas de sceau |
+  | `statut: "oui"` | **✅, sceau, 0 alerte** | ❌ HARAM, pas de sceau |
+
+  **5 sur 5 → 0.** Et le label restait vide : aucun mot ne venait contredire la
+  pastille verte. La classe CSS devenait `verdict-halall`, `verdict-undefined`,
+  `verdict-oui` — sans correspondance, donc même la couleur ne signalait rien.
+
+  **C'est le fichier que Mohamed remplira à la main**, en recopiant des
+  réponses de fabricants. La faute de frappe y est le cas normal, pas le cas
+  rare — et la base est encore vide, donc le correctif arrive avant la première
+  fiche, pas après.
+
+  Deux serrures :
+  - **À l'exécution :** une fiche illisible est traitée comme absente, on
+    retombe sur l'analyse automatique, qui dit la vérité de la composition. Le
+    repli d'emoji est ❓, plus jamais ✅. Une majuscule est simplement
+    normalisée — c'est une faute sans ambiguïté.
+  - **Avant la mise en ligne :** `npm run verif:chiffres` (en CI) refuse de
+    passer si une fiche porte un statut inconnu, ou n'a ni source ni date, ou
+    si la clé n'est pas un code-barres. Vérifié en injectant deux fiches
+    fautives : 3 défauts, sortie en erreur.
+
+  Gelé dans `sonde:verdicts` : **6 → 12 scènes**. Sabotage de contrôle — filtre
+  retiré : 5 scènes repassent au sceau vert, la sonde vire au rouge.
+
 - **La lecture photo affichait ✅ HALAL sur du saindoux** *(12 août)* — audit de
   cycle, les 7 éléments de la file étant tous bloqués.
 

@@ -1310,9 +1310,44 @@
       return liste;
     }
 
+    /**
+     * Le sceau « ✓ VÉRIFIÉ » ne s'affiche que sur une fiche RELISIBLE.
+     *
+     * Mesuré le 12 août 2026, et c'est le défaut le plus grave trouvé jusqu'ici
+     * parce qu'il touche le moat lui-même. Une fiche vérifiée PRIME sur
+     * l'analyse : son statut s'affiche, les alertes du moteur sont effacées.
+     * Or le statut n'était jamais contrôlé, et l'écran retombait sur le vert :
+     *
+     *     $("verdict-emoji").textContent = EMOJIS[verif.statut] || "✅";
+     *
+     * Sur un pâté dont la composition dit « foie de porc, lardons », cinq
+     * fautes de saisie sur cinq affichaient ✅ avec le sceau et zéro alerte :
+     * « Halal » avec une majuscule, « halall », statut absent, statut vide,
+     * statut « oui ». Le label restait vide, donc aucun mot ne venait
+     * contredire le vert.
+     *
+     * Ce fichier est celui que Mohamed remplira à la main en transcrivant des
+     * réponses de fabricants : la faute de frappe y est le cas NORMAL.
+     *
+     * Une fiche illisible est donc traitée comme absente — on retombe sur
+     * l'analyse automatique, qui dit la vérité de la composition. Et
+     * `npm run verif:chiffres` refuse désormais de passer si une fiche du
+     * dépôt porte un statut inconnu : la faute est arrêtée avant la mise en
+     * ligne, pas rattrapée devant l'utilisateur.
+     */
+    const STATUTS_CONNUS = ["halal", "douteux", "haram", "inconnu"];
+
+    function ficheRelisible(fiche) {
+      if (!fiche || typeof fiche !== "object") return null;
+      const statut = String(fiche.statut || "").toLowerCase().trim();
+      if (!STATUTS_CONNUS.includes(statut)) return null;
+      return Object.assign({}, fiche, { statut });
+    }
+
     function chercherVerification(code) {
       for (const v of variantesCode(code)) {
-        if (VERIFS[v]) return Object.assign({ code: v }, VERIFS[v]);
+        const fiche = ficheRelisible(VERIFS[v]);
+        if (fiche) return Object.assign({ code: v }, fiche);
       }
       return null;
     }
@@ -2095,7 +2130,10 @@
         $("label-indicatif").hidden = true;
         $("sceau").hidden = false;
         $("verdict").className = "verdict verifie verdict-" + verif.statut;
-        $("verdict-emoji").textContent = EMOJIS[verif.statut] || "✅";
+        // Repli sur ❓ et jamais sur ✅ : un statut qu'on ne reconnaît pas
+        // n'est pas une bonne nouvelle. `ficheRelisible` filtre déjà en amont,
+        // ceci est la deuxième serrure.
+        $("verdict-emoji").textContent = EMOJIS[verif.statut] || "❓";
         $("verdict-label").textContent = LABELS[verif.statut] || "";
         $("verdict-detail").textContent = verif.titre || "";
         $("verif-detail").hidden = !verif.detail;
