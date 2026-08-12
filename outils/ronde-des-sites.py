@@ -59,6 +59,32 @@ PARALLELE = 6
 PAUSE_COMPLET = 0.0  # pause entre deux pages, en balayage complet seulement
 AGENT = "Mozilla/5.0 (compatible; ronde-empire/1.0)"
 
+# ── Le balayage complet se rattrape tout seul ────────────────────────────────
+#
+# Mesure du 12 aout 2026, 6 h. Le rendez-vous quotidien « 47 2 * * * », pose la
+# veille a 10 h 18, N'A JAMAIS TOURNE. Ce n'est pas une faute de cron : GitHub
+# saute une partie des rendez-vous programmes. Sur les 37 heures precedentes,
+# la patrouille « toutes les 30 minutes » aurait du tourner 74 fois. Elle a
+# tourne 30 fois, avec un trou de trois heures entre 00 h 08 et 03 h 05 — et
+# 02 h 47 tombait dedans.
+#
+# Pendant ce temps, RONDE.md envoyait les quatre agents, toutes les demi-heures,
+# vers un releve complet vieux de quarante heures et portant en tete la mention
+# « CE RELEVE EST FAUX ». Personne ne pouvait le savoir : rien ne disait son age.
+#
+# La lecon : ne pas dependre d'un evenement qu'on ne controle pas, mais d'un
+# ETAT qu'on peut lire. Chaque patrouille regarde l'age du dernier balayage
+# complet ; s'il est trop vieux, elle se promeut elle-meme. Peu importe alors
+# quels rendez-vous GitHub honore ou saute.
+HEURES_AVANT_RELANCE = 20
+
+# Et seulement dans ces heures-la (UTC), soit 4 h - 8 h a Paris. Deux raisons :
+# le balayage complet, ce sont pres de 2 000 requetes vers nos propres sites, et
+# c'est le moment ou personne ne visite ; surtout, si un balayage echoue sans
+# ecrire sa date, la fenetre borne les nouvelles tentatives a la nuit au lieu de
+# lancer une tempete de balayages toutes les 30 minutes pendant une journee.
+HEURES_DE_RATTRAPAGE = range(2, 6)
+
 # Les sites, et ce qu'on attend d'eux. `langue` = ce que <html lang> DOIT
 # porter : c'est le defaut le plus traitre du bi-domaine, parce que la page
 # s'affiche parfaitement... dans la mauvaise langue.
@@ -371,8 +397,47 @@ def substance(defauts):
                   for d in defauts)
 
 
+def age_du_balayage_complet(maintenant=None):
+    """Depuis combien d'heures le dernier balayage complet a-t-il ete ecrit ?
+
+    On lit la date DANS le fichier, jamais sa date de modification : sur un
+    poste GitHub, `actions/checkout` reecrit tous les fichiers a l'instant du
+    telechargement, donc leur date de modification vaut « il y a trois
+    secondes » pour un releve vieux de deux jours. C'est exactement le genre de
+    mesure qui rassure a tort.
+
+    Rend None si on ne sait pas — jamais zero : « je ne sais pas » et « c'est
+    tout frais » ne doivent pas se confondre.
+    """
+    try:
+        with open("docs/ronde/balayage-complet.json", encoding="utf-8") as f:
+            ecrit = json.load(f).get("ronde_du", "")
+        quand = datetime.strptime(ecrit, "%Y-%m-%d %H:%M UTC").replace(tzinfo=timezone.utc)
+    except Exception:
+        return None
+    maintenant = maintenant or datetime.now(timezone.utc)
+    return (maintenant - quand).total_seconds() / 3600
+
+
+def faut_il_rattraper(maintenant, age):
+    """Cette patrouille doit-elle se promouvoir en balayage complet ?
+
+    Sortie de `main()` pour une raison precise : une decision qui lit l'heure
+    du mur au fond d'une fonction de deux cents lignes ne se teste pas. La
+    premiere version l'y cachait, et le test de bout en bout est devenu
+    imprevisible — il passait le jour et echouait entre 2 h et 6 h UTC.
+
+    `age` a None veut dire « aucun releve lisible », pas « releve tout frais » :
+    on rattrape.
+    """
+    return maintenant.hour in HEURES_DE_RATTRAPAGE and (
+        age is None or age >= HEURES_AVANT_RELANCE
+    )
+
+
 def main():
-    horodatage = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    debut = datetime.now(timezone.utc)
+    horodatage = debut.strftime("%Y-%m-%d %H:%M UTC")
     tour = int(os.environ.get("GITHUB_RUN_NUMBER", "0"))
 
     # Balayage complet, a la demande : on regarde TOUTES les pages au lieu
@@ -381,6 +446,16 @@ def main():
     # Mais avant de reprocher a un agent « beaucoup de defauts », il faut le
     # chiffre exact, pas un echantillon.
     complet = os.environ.get("RONDE_COMPLETE", "").strip() not in ("", "0", "non")
+
+    # Le rattrapage : voir HEURES_AVANT_RELANCE en haut de ce fichier. Une
+    # patrouille de nuit qui trouve le releve complet perime prend le relais,
+    # sans attendre qu'un rendez-vous programme veuille bien se declencher.
+    age = age_du_balayage_complet(debut)
+    if not complet and faut_il_rattraper(debut, age):
+        complet = True
+        print("Le releve complet date de "
+              + ("jamais" if age is None else f"{age:.0f} h")
+              + f" (limite : {HEURES_AVANT_RELANCE} h) — cette ronde le refait.\n")
 
     # Filtre facultatif : « voyageshalal.fr,gohalaltravel.com ».
     filtre = [s.strip() for s in os.environ.get("RONDE_SITES", "").split(",") if s.strip()]
@@ -438,6 +513,15 @@ def main():
 
     inchange = ancien is not None and substance(ancien.get("defauts", [])) == substance(tous)
 
+    # Le balayage complet ecrit TOUJOURS, meme quand rien n'a bouge. Sa date
+    # n'est pas de la decoration : c'est elle qui prouve qu'il a tourne, et
+    # c'est elle que la patrouille lit pour decider de prendre le relais. Sans
+    # cette ligne, un balayage qui ne trouve rien de neuf laisserait la date
+    # d'avant — et toutes les rondes de la nuit se croiraient en retard, ce qui
+    # ferait deux mille requetes de plus toutes les trente minutes.
+    if complet:
+        inchange = False
+
     if not inchange:
         with open(fichier_json, "w", encoding="utf-8") as f:
             json.dump({"ronde_du": horodatage, "pages_vues": vues, "defauts": tous},
@@ -451,14 +535,30 @@ def main():
             "",
         ]
         if complet:
+            minutes = (datetime.now(timezone.utc) - debut).total_seconds() / 60
             lignes += [
                 f"**{vues} pages regardees — le site entier.** Les chiffres "
                 "ci-dessous",
                 "valent donc pour tout ce que Google peut voir.",
                 "",
+                f"Balayage commence le {horodatage}, termine en "
+                f"{minutes:.0f} minutes. Un balayage",
+                "complet qui rendrait la main en quelques secondes n'aurait pas "
+                "eu lieu :",
+                "c'est a cette duree qu'on le reconnait.",
+                "",
             ]
         else:
             part = round(100 * vues / connues) if connues else 0
+            # L'age du releve complet, dit franchement. Le 12 aout, ce lien
+            # envoyait les agents, toutes les demi-heures, vers un fichier
+            # vieux de quarante heures qui portait en tete « CE RELEVE EST
+            # FAUX ». Rien ne le disait. Un renvoi sans date est un piege.
+            vieux = age_du_balayage_complet()
+            quand = ("jamais fait" if vieux is None
+                     else "de ce matin" if vieux < 12
+                     else f"vieux de {vieux / 24:.0f} jour(s)" if vieux >= 24
+                     else f"vieux de {vieux:.0f} h")
             lignes += [
                 f"⚠️ **Cette ronde a regarde {vues} pages sur {connues} — "
                 f"environ {part} %.**",
@@ -470,7 +570,7 @@ def main():
                 "casse dans la nuit : la rotation est simplement passee sur "
                 "d'autres pages.",
                 "Pour le compte complet, voir "
-                "[BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md).",
+                f"[BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **{quand}**.",
                 "",
             ]
         lignes += [

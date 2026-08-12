@@ -32,10 +32,21 @@ on:
   schedule:
     # La patrouille : une tranche du site toutes les 30 minutes.
     - cron: '*/30 * * * *'
-    # Le balayage COMPLET, une fois par jour. Il ne tournait jusqu'ici que si
-    # quelqu'un pensait a le lancer a la main — donc jamais : le releve complet
-    # datait du 10 aout pendant que la patrouille, elle, ecrivait toutes les
-    # demi-heures des chiffres qui ne portaient que sur 7 % du site.
+    # Le balayage COMPLET, une fois par jour.
+    #
+    # CE RENDEZ-VOUS N'EST QUE LE PREMIER CHOIX, PAS LA GARANTIE. Pose le
+    # 11 aout a 10 h 18, il n'a jamais tourne : GitHub saute une partie des
+    # rendez-vous programmes. Sur les 37 heures suivantes, la patrouille
+    # « toutes les 30 minutes » aurait du tourner 74 fois — elle a tourne
+    # 30 fois, avec un trou de trois heures entre 00 h 08 et 03 h 05, et
+    # 02 h 47 tombait dedans.
+    #
+    # Ce qui fait vraiment tourner le balayage complet est donc dans le script :
+    # toute patrouille de nuit qui trouve le releve complet vieux de plus de
+    # 20 heures se promeut elle-meme (voir HEURES_AVANT_RELANCE dans
+    # outils/ronde-des-sites.py). On ne depend plus d'un evenement qu'on ne
+    # controle pas, mais d'un etat qu'on peut lire.
+    #
     # Minute 47 : le */30 tombe a :00 et :30, on ne se marche pas dessus. Et le
     # groupe `concurrency` ci-dessous garantit de toute facon qu'une seule des
     # deux tourne a la fois — deux robots sur le meme hote fabriquent de fausses
@@ -68,12 +79,18 @@ jobs:
           RONDE_SITES: ${{ inputs.sites }}
         run: python3 outils/ronde-des-sites.py
 
+      # On affiche le rapport que la ronde vient VRAIMENT de reecrire, pas celui
+      # qu'on avait prevu : depuis le rattrapage automatique, une patrouille
+      # ordinaire peut se promouvoir en balayage complet sans que ce fichier-ci
+      # en sache rien. Se fier a $COMPLET afficherait le mauvais rapport, ou un
+      # rapport de la veille.
       - name: Afficher le constat dans le resume du travail
         if: always()
         run: |
-          f=docs/ronde/RONDE.md
-          [ -n "$COMPLET" ] && f=docs/ronde/BALAYAGE-COMPLET.md
-          cat "$f" >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+          modifies=$(git diff --name-only -- docs/ronde/ | grep '\.md$' || true)
+          for f in ${modifies:-docs/ronde/RONDE.md}; do
+            cat "$f" >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+          done
 
       # On depose le constat AVANT de faire echouer la ronde : sinon, le jour
       # ou un site tombe, la croix rouge arriverait sans le rapport qui dit
