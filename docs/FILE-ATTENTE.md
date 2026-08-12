@@ -81,9 +81,71 @@ une explication honnête, jamais un verdict inventé.
    (`t.replace(/vinaigre de vin/g, "vinaigre")`). Ce n'était pas un oubli mais
    une décision déjà prise ; le vinaigre d'alcool la rejoint (voir « Fait »).
 
+6. **Les 10 sondes qui ouvrent un vrai navigateur ne tournent qu'à la main.**
+   *Preuve :* `.github/workflows/controles.yml` lance 5 étapes, toutes sur le
+   moteur de texte. Les sondes caméra, saisie, pays, INCI, verdicts,
+   historique, contraste, hors-ligne, photo, iPhone n'y figurent pas — leur
+   absence est d'ailleurs écrite noir sur blanc dans l'en-tête du fichier.
+   *Pourquoi ça compte :* c'est exactement la couche où vivent les captures
+   d'écran de Mohamed. Le moteur peut être juste et l'écran illisible, la
+   caméra bloquée, le bouton muet. Depuis le 12 août les contrôles de moteur
+   savent enfin virer au rouge ; ceux de l'écran, non.
+   *Ce qu'il faut :* Chromium sur le runner GitHub, et vérifier que chaque
+   sonde sort bien en erreur — la moitié d'entre elles n'ont jamais été
+   éprouvées contre une régression volontaire. À faire moi-même, pas bloqué.
+
 ---
 
 ## Fait
+
+- **Trois contrôles automatiques sur cinq ne pouvaient pas virer au rouge**
+  *(12 août)* — réponse à Mohamed : « je n'arrête pas de remonter des
+  problèmes avec des captures d'écran, ce n'est pas normal ».
+
+  La ronde ne trouve jamais rien sur halalcheck.fr. Vérifié dans le journal du
+  robot plutôt que supposé : `halalcheck.fr  7 pages · 0 defauts dont 0
+  graves` (exécution du 12 août 08:22 UTC). Le robot atteint bien le site.
+  Mais ses **16 contrôles portent tous sur l'enveloppe HTML** — code de
+  réponse, vitesse, `<html lang>`, `<title>`, description, `<h1>`, données
+  structurées, sitemap. Aucun n'ouvre la caméra, ne saisit un code-barres, ne
+  lit un verdict. Sur un site de 4 pages dont toute la valeur est ce qui se
+  passe *après* le JavaScript, il rendra 0 défaut quoi qu'il arrive.
+
+  Restaient donc les contrôles au push. **Trois des cinq étaient décoratifs :**
+
+  | Sonde | Avant | Après |
+  |---|---|---|
+  | faux-négatifs | affiche les manques, **sort en succès** | sort en erreur |
+  | faux-positifs | affiche `FAUX POSITIFS : n`, **sort en succès** | sort en erreur |
+  | étiquettes arabes | **n'attend aucune valeur**, imprime 7 lignes | 7 verdicts promis, gelés |
+
+  **Mesuré, pas déduit.** J'ai cassé le moteur exprès — la règle texte
+  `/gelatine/` remplacée par un motif impossible. « eau, sucre, gélatine,
+  arôme » ressortait **HALAL, 0 alerte**, et les trois sondes sortaient en
+  succès : contrôle vert, push accepté, mise en ligne acceptée. Le seul
+  détecteur restant, c'était Mohamed devant son téléphone.
+
+  Refait après correction, dans les deux directions :
+
+  | Sabotage | faux-nég. | faux-pos. | arabe |
+  |---|---|---|---|
+  | *(aucun — moteur propre)* | ✓ | ✓ | ✓ |
+  | gélatine non détectée *(interdit qui passe)* | **rouge** | ✓ | **rouge** |
+  | garde « vinaigre de vin » retirée *(licite accusé)* | ✓ | **rouge** | ✓ |
+
+  Le premier sabotage a révélé un trou dans la sonde elle-même : elle restait
+  verte parce qu'elle ne testait **pas le mot « gélatine »**, seulement le code
+  E441, qui passe par une autre règle. Ses 14 mots étaient tous techniques ou
+  anglais (*rennet, tallow, shortening*). Ajouté le vocabulaire d'une étiquette
+  ordinaire — gélatine, porc, lardons, saindoux, jambon, bacon, couenne, suif,
+  présure, carmin, cochenille, rhum, vin blanc, bière, boyau naturel,
+  L-cystéine, stéarate de magnésium. **14 → 33 mots, 30 → 49 cas**, tous
+  attrapés aujourd'hui. Le total est compté, plus écrit à la main.
+
+  *Ce que ça ne règle pas :* les 10 sondes qui ouvrent un vrai navigateur
+  (caméra, contraste, hors-ligne, historique) ne tournent toujours qu'à la
+  main. C'est là que vivent la plupart des captures d'écran de Mohamed.
+  Prochain élément de la file, pas revendiqué ici.
 
 - **Le lecteur de codes-barres se met de côté pendant qu'on lit l'accueil**
   *(12 août)* — l'élément 6 de la file, refermé sans imposer le choix qu'il

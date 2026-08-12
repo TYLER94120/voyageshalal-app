@@ -21,6 +21,20 @@
 #   · les etiquettes en arabe
 #   · les deux robots de surveillance, dont les regles de mesure
 #
+# 12 AOUT 2026 — ces trois lignes-la etaient fausses jusqu'a ce matin. Les
+# sondes faux-negatifs, faux-positifs et etiquettes-arabes AFFICHAIENT ce
+# qu'elles trouvaient puis sortaient en succes, quoi qu'elles trouvent ; la
+# troisieme n'attendait meme aucune valeur, elle imprimait sept lignes. Trois
+# des cinq etapes de ce travail ne pouvaient pas virer au rouge.
+#
+# Mesure, pas supposition : le moteur a ete casse expres (la regle texte
+# /gelatine/ remplacee par un motif impossible). « eau, sucre, gelatine,
+# arome » ressortait alors HALAL, 0 alerte — et les trois sondes sortaient en
+# succes. Le controle etait vert, le pousse serait passe, la mise en ligne
+# aussi. Le seul detecteur qui restait, c'etait Mohamed devant son telephone.
+# Les trois sondes sortent maintenant en erreur ; verifie dans les deux sens,
+# interdit qui passe ET licite accuse a tort.
+#
 # CE QUI N'EST PAS CONTROLE ICI, et il faut le savoir :
 # les sondes qui demandent un vrai navigateur (sonde:photo, sonde:iphone) ne
 # tournent pas ici — elles ouvrent Chromium et servent le site. Elles se
