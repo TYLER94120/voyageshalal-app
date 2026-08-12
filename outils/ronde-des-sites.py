@@ -355,6 +355,13 @@ def tenir_ses_promesses(site):
             continue
         url = site["base"] + p["chemin"]
         code, corps, _, erreur = chercher(url)
+        # On DIT qu'on a regarde, meme quand tout va bien. Sans cette ligne, un
+        # rapport a zero defaut veut dire deux choses opposees — « verifie, tout
+        # va bien » et « pas regarde du tout » — et rien ne permet de trancher.
+        # C'est la meme faute que celle du compteur de passerelles ce matin :
+        # un silence n'est pas une reponse.
+        print(f"{'':20} promesse {p['chemin']:18} "
+              f"{'✓' if not erreur and code < 400 else '✗'} code {code or '—'}")
         if erreur or code >= 400:
             defauts.append({"niveau": DEFAUT, "site": site["nom"], "url": url,
                             "quoi": p["quoi"],
