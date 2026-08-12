@@ -2409,14 +2409,95 @@
       afficherLecture(code, lecture);
     }
 
+    /**
+     * Notre moteur relit ce que le service a signalé — et ne peut que DURCIR.
+     *
+     * Mesuré le 12 août 2026. Le chemin photo affichait tel quel le verdict
+     * rendu par `halalgpt.fr/api/etiquette`. Nos règles locales — celles qui
+     * attrapent lardons, saindoux, vin — n'étaient jamais consultées sur le
+     * verdict : elles servaient uniquement à graduer la gravité, et par le
+     * moteur COSMÉTIQUE, qui ne connaît ni « Saindoux » ni « Lardons ».
+     *
+     * Ce que la personne voyait alors, réponse `{verdict:"halal",
+     * ingredients_a_risque:[{nom:"Saindoux"}]}` :
+     *
+     *     ✅ HALAL — Rien de problématique détecté.
+     *     ⚠️ Saindoux — graisse de porc
+     *
+     * Un écran vert sur du porc, avec l'aveu juste en dessous. Et la phrase
+     * « cet ingrédient existe en version végétale comme animale » collée à du
+     * saindoux, ce qui est faux : le saindoux EST de la graisse de porc.
+     *
+     * La règle posée ici ne va que dans un sens. Le service a vu l'étiquette
+     * entière, nous n'avons que les noms qu'il a signalés : nous ne pouvons
+     * donc jamais l'ADOUCIR. Mais s'il dit « halal » alors que l'un des noms
+     * qu'il nous rend est interdit chez nous, c'est le nôtre qui l'emporte.
+     * En cas de doute, le verdict le plus strict des deux.
+     *
+     * Les deux moteurs sont interrogés parce que la photo sert aussi bien une
+     * étiquette alimentaire qu'une liste INCI : « Saindoux » n'existe que pour
+     * l'un, « Sodium Tallowate » que pour l'autre.
+     */
+    function relireLocalement(ingredients) {
+      let pire = null;
+      // Vrai dès qu'un des noms est un interdit ALIMENTAIRE reconnu : du porc
+      // n'est pas un ingrédient de savon dont la saponification lèverait le
+      // problème. Le bandeau « si c'est un cosmétique » n'a alors rien à dire.
+      let interditAlimentaire = false;
+      const evaluees = (ingredients || [])
+        .filter((i) => i && i.nom)
+        .map((i) => {
+          let niveau = "douteux";
+          let gravite = "moderee";
+          try {
+            const a = analyserProduit({ ingredientsTexte: i.nom, additifs: [] }).alertes[0];
+            if (a) {
+              if (a.niveau === "haram") { niveau = "haram"; interditAlimentaire = true; }
+              if (a.gravite) gravite = a.gravite;
+            }
+          } catch (e) {
+            /* nom inconnu de la table alimentaire */
+          }
+          try {
+            const c = analyserCosmetique({ ingredientsTexte: i.nom, labels: [] }).alertes[0];
+            if (c) {
+              if (c.niveau === "haram") niveau = "haram";
+              if (c.gravite && gravite === "moderee") gravite = c.gravite;
+            }
+          } catch (e) {
+            /* nom inconnu de la table cosmétique : « douteux, modéré » */
+          }
+          if (niveau === "haram") pire = "haram";
+          else if (!pire) pire = "douteux";
+          return { element: i.nom, raison: i.raison || "", niveau, gravite };
+        });
+      return { alertes: evaluees, pire, interditAlimentaire };
+    }
+
+    function verdictLePlusStrict(duService, duMoteur) {
+      if (duMoteur === "haram") return "haram";
+      if (duMoteur === "douteux" && duService === "halal") return "douteux";
+      return duService;
+    }
+
     function afficherLecture(code, lecture) {
       const brut = String(lecture.verdict || "").toLowerCase().trim();
-      const statut = ["halal", "douteux", "haram"].includes(brut) ? brut : "inconnu";
+      const annonce = ["halal", "douteux", "haram"].includes(brut) ? brut : "inconnu";
+      const relecture = relireLocalement(lecture.ingredients_a_risque);
+      const statut = verdictLePlusStrict(annonce, relecture.pire);
 
       $("etiquette-verdict").className = "verdict verdict-" + statut;
       $("etiquette-emoji").textContent = EMOJIS[statut] || "❓";
       $("etiquette-label").textContent = LABELS[statut] || "";
-      $("etiquette-resume").textContent = lecture.resume || "";
+      // Quand nous durcissons le verdict, le résumé du service décrit l'ancien
+      // — « Rien de problématique détecté » sous un ❌ HARAM. Un écran ne dit
+      // jamais deux choses contraires : on explique l'écart au lieu de le
+      // laisser s'afficher.
+      $("etiquette-resume").textContent =
+        statut === annonce
+          ? lecture.resume || ""
+          : "Un ingrédient signalé par la lecture est interdit d'après nos règles. " +
+            "Nous retenons le verdict le plus strict.";
 
       const risques = $("etiquette-risques");
       risques.innerHTML = "";
@@ -2448,21 +2529,11 @@
         risques.appendChild(div);
       }
 
-      // Les alertes de la lecture n'ont pas de gravité : on la retrouve en
-      // repassant chaque ingrédient dans notre moteur cosmétique.
-      const alertesEvaluees = (lecture.ingredients_a_risque || [])
-        .filter((i) => i && i.nom)
-        .map((i) => {
-          let gravite = "moderee";
-          try {
-            const a = analyserCosmetique({ ingredientsTexte: i.nom, labels: [] }).alertes[0];
-            if (a && a.gravite) gravite = a.gravite;
-          } catch (e) {
-            /* ingrédient inconnu de notre table : on reste prudent */
-          }
-          return { element: i.nom, raison: i.raison || "", niveau: "douteux", gravite };
-        });
-      const conclusionLecture = conclusionPratique({ statut, alertes: alertesEvaluees });
+      // Les alertes de la lecture n'ont ni niveau ni gravité fiables : les
+      // deux viennent de la relecture locale, plus haut. C'est elle aussi qui
+      // empêche la phrase « existe en version végétale comme animale » de
+      // s'appliquer à du saindoux.
+      const conclusionLecture = conclusionPratique({ statut, alertes: relecture.alertes });
       $("etiquette-conclusion").hidden = !conclusionLecture;
       if (conclusionLecture) {
         $("etiquette-conclusion").querySelector(".conclusion-titre").textContent =
@@ -2471,8 +2542,12 @@
           conclusionLecture.texte;
       }
 
-      $("etiquette-note-cosmetique").hidden = alertesEvaluees.length === 0;
-      $("etiquette-lien-liste").hidden = alertesEvaluees.length === 0;
+      // Le bandeau « si c'est un cosmétique » explique que la transformation
+      // chimique peut lever le doute. Devant du saindoux ou des lardons, c'est
+      // hors sujet et trompeur : on le tait.
+      $("etiquette-note-cosmetique").hidden =
+        relecture.alertes.length === 0 || relecture.interditAlimentaire;
+      $("etiquette-lien-liste").hidden = relecture.alertes.length === 0;
       $("etiquette-texte").textContent = lecture.explication || "";
       $("etiquette-conseil").hidden = !lecture.conseil;
       $("etiquette-conseil").textContent = lecture.conseil ? "💡 " + lecture.conseil : "";

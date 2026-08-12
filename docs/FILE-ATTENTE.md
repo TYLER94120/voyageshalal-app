@@ -112,6 +112,55 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **La lecture photo affichait ✅ HALAL sur du saindoux** *(12 août)* — audit de
+  cycle, les 7 éléments de la file étant tous bloqués.
+
+  Question posée : **le chemin photo consulte-t-il nos règles ?** Réponse :
+  non. Il affichait tel quel le verdict rendu par `halalgpt.fr/api/etiquette`.
+  Nos règles locales — celles qui attrapent lardons, saindoux, vin — n'étaient
+  jamais consultées sur le verdict. Elles servaient uniquement à graduer la
+  gravité, et **par le moteur cosmétique**, qui ne connaît ni « Saindoux » ni
+  « Lardons ».
+
+  Ce que la personne voyait, réponse `{verdict:"halal",
+  ingredients_a_risque:[{nom:"Saindoux"}]}` — mesuré sur le vrai écran :
+
+  ```
+  ✅ HALAL — Rien de problématique détecté.
+  SI C'EST UN COSMÉTIQUE — … la transformation chimique lève le problème …
+  ⚠️ Saindoux — graisse de porc
+  ```
+
+  **Trois défauts sur le même écran.** Un verdict vert sur du porc, avec
+  l'aveu juste en dessous. Un bandeau cosmétique devant une étiquette
+  alimentaire. Et, en verdict DOUTEUX, la phrase *« le point à vérifier, c'est
+  Saindoux : cet ingrédient existe en version végétale comme animale »* —
+  **factuellement fausse**, le saindoux EST de la graisse de porc.
+
+  Ce chemin est celui recommandé pour les produits maghrébins absents des
+  bases. **Le moins vérifié était celui du public visé.**
+
+  | Réponse du service | avant | après |
+  |---|---|---|
+  | `halal` + Saindoux | **✅ HALAL** | ❌ HARAM |
+  | `halal` + Lardons | **✅ HALAL** | ❌ HARAM |
+  | `halal` + Sodium Tallowate *(INCI)* | **✅ HALAL** | ❌ HARAM |
+  | `haram` + ingrédient inconnu de nos tables | ❌ HARAM | ❌ HARAM |
+
+  **La règle ne va que dans un sens.** Le service a vu l'étiquette entière,
+  nous n'avons que les noms qu'il signale : nous ne pouvons jamais l'adoucir.
+  Mais s'il dit « halal » alors qu'un de ces noms est interdit chez nous, le
+  nôtre l'emporte. Les deux moteurs sont interrogés, la photo servant aussi
+  bien une étiquette alimentaire qu'une liste INCI.
+
+  Quand nous durcissons, le résumé du service décrivait encore l'ancien verdict
+  (« Rien de problématique détecté » sous ❌ HARAM) : il est remplacé par
+  l'explication de l'écart. Et le bandeau cosmétique se tait devant un interdit
+  alimentaire.
+
+  `sonde:photo` passe de **6 à 10 scènes**. Sabotage de contrôle — confiance
+  aveugle rétablie : 3 scènes repassent HALAL, la sonde vire au rouge.
+
 - **« non-halal » était lu comme une certification halal** *(12 août)* — audit
   de cycle, les 7 éléments de la file étant tous bloqués sur Mohamed ou sur la
   politique réseau.
