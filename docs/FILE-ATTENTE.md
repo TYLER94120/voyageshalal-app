@@ -81,9 +81,49 @@ une explication honnête, jamais un verdict inventé.
    (`t.replace(/vinaigre de vin/g, "vinaigre")`). Ce n'était pas un oubli mais
    une décision déjà prise ; le vinaigre d'alcool la rejoint (voir « Fait »).
 
+6. **Installer l'app puis partir en magasin sans avoir scanné une seule fois :
+   sur iPhone, aucun lecteur.**
+   *Preuve, mesurée le 12 août :* le lecteur de codes-barres des navigateurs
+   sans détecteur natif pèse **96 Ko compressés** et n'est **volontairement pas**
+   dans les 12 fichiers pré-chargés à l'installation — pour ne pas l'imposer à
+   Chrome et Edge, qui n'y touchent jamais. Il entre dans le cache au premier
+   scan réel. Le trou : quelqu'un qui installe l'app, ne scanne rien, puis se
+   retrouve sans réseau en rayon n'a pas de lecteur. Vérifié : à la deuxième
+   visite *après* un scan, tout marche (`npm run sonde:iphone`, scène D).
+   *Le choix à faire :* imposer 96 Ko à l'installation de tout le monde, ou
+   laisser ce trou. Petite population, coût réel : à trancher, pas à deviner.
+
 ---
 
 ## Fait
+
+- **Deux audits, aucun défaut — et c'est aussi une mesure** *(12 août)* :
+  le poids des pages et le fonctionnement complet sans réseau.
+
+  **Poids d'une première visite, compressé** (ce qui voyage réellement) :
+
+  | | Brut | Compressé |
+  |---|---|---|
+  | accueil | 28 Ko | **7 Ko** |
+  | scanner | 116 Ko | **31 Ko** |
+  | page additifs | 77 Ko | **12 Ko** |
+  | lecteur de codes-barres | 328 Ko | **96 Ko** |
+
+  Un scan complet coûte donc ~45 Ko compressés sur Chrome et Edge, ~140 Ko sur
+  les navigateurs qui ont besoin du lecteur. Rien à corriger.
+
+  *Note de méthode :* ma première mesure annonçait **489 Ko** pour le scanner
+  et 3,8 s d'attente en 3G lente. Chiffres bruts : le serveur de l'atelier
+  n'envoie pas de compression, GitHub Pages si. Septième fois qu'un instrument
+  mesure autre chose que ce qu'il prétend. Mesurer le brut quand c'est le
+  compressé qui voyage, c'est se tromper d'un facteur 3,7.
+
+  **Hors réseau, coupure totale après une première visite :** les 4 pages sont
+  servies (2 898, 335, 16 063 et 4 217 caractères lisibles), et le verdict d'un
+  produit déjà scanné s'affiche avec la mention honnête « 📴 Hors connexion —
+  fiche gardée en mémoire sur cet appareil ». 4 sur 4.
+
+  Sonde conservée : `npm run sonde:hors-ligne`.
 
 - **Le sitemap disait à Google que rien n'avait bougé depuis deux jours**
   *(12 août)* — le jour où le plus de corrections sont parties en ligne.
