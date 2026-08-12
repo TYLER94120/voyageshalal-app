@@ -262,6 +262,75 @@ with tempfile.TemporaryDirectory() as dossier:
 
     _os.chdir(_avant2)
 
+# ─── 9. Les promesses tenues en production ───────────────────────────────────
+#
+# Cette nuit j'ai livre deux adresses sur halalgpt.fr dont la panne serait
+# SILENCIEUSE : l'index de recherche (la recherche retombe sur les titres sans
+# le dire) et l'etat du compteur de passerelles (il ne compte rien, et on lit
+# zero le 25 aout). Le proxy de l'atelier refuse halalgpt.fr — ce robot, lui,
+# tourne sur GitHub et l'atteint. C'est donc lui qui pose la question.
+
+print()
+_SITE = {"nom": "halalgpt.fr", "base": "https://halalgpt.fr", "langue": "fr"}
+_vrai_chercher = robot.chercher
+
+def _repond(table):
+    def faux(url, methode="GET", delai=None):
+        return table.get(url, (404, b"", 0.1, None))
+    robot.chercher = faux
+
+# 1. Tout va bien : aucune plainte.
+_repond({
+    "https://halalgpt.fr/api/recherche": (200, b'{"fiches":197,"corps":{"e120-halal":["a","b"]}}', 0.2, None),
+    "https://halalgpt.fr/api/passerelle": (200, b'{"vivant":true,"sources_acceptees":[]}', 0.1, None),
+})
+dire(robot.tenir_ses_promesses(_SITE) == [], "quand les deux adresses repondent, la ronde se tait")
+
+# 2. L'index de recherche tombe : c'est le cas qui ne se verrait nulle part.
+_repond({
+    "https://halalgpt.fr/api/recherche": (404, b"", 0.1, None),
+    "https://halalgpt.fr/api/passerelle": (200, b'{"vivant":true}', 0.1, None),
+})
+_d = robot.tenir_ses_promesses(_SITE)
+dire(len(_d) == 1 and "recherche interne" in _d[0]["quoi"],
+     "index de recherche absent : la ronde le dit", _d[0]["quoi"] if _d else "rien")
+dire(_d and "retombe sur les titres" in _d[0]["detail"],
+     "et elle explique pourquoi personne ne le verrait autrement")
+
+# 3. LE PIEGE : 200 avec une page d'erreur. Lire le code seul ne suffit pas.
+_repond({
+    "https://halalgpt.fr/api/recherche": (200, b"<html><h1>404 - Not Found</h1></html>", 0.1, None),
+    "https://halalgpt.fr/api/passerelle": (200, b'{"vivant":true}', 0.1, None),
+})
+_d = robot.tenir_ses_promesses(_SITE)
+dire(len(_d) == 1, "une adresse qui repond 200 avec une page d'erreur est attrapee",
+     _d[0]["detail"] if _d else "RATEE")
+
+# 4. Le compteur sans base : il repond 200, vivant:false. C'est une panne.
+_repond({
+    "https://halalgpt.fr/api/recherche": (200, b'{"corps":{}}', 0.1, None),
+    "https://halalgpt.fr/api/passerelle": (200, b'{"vivant":false,"pourquoi":"aucune base configuree"}', 0.1, None),
+})
+_d = robot.tenir_ses_promesses(_SITE)
+dire(len(_d) == 1 and "compteur de passerelles" in _d[0]["quoi"],
+     "compteur repondant vivant:false : c'est une panne, meme en 200",
+     _d[0]["quoi"] if _d else "RATEE")
+
+# 5. Jamais GRAVE : le visiteur recoit toujours ses pages.
+_repond({})
+_d = robot.tenir_ses_promesses(_SITE)
+dire(len(_d) == 2 and all(x["niveau"] == robot.DEFAUT for x in _d),
+     "les deux en panne : deux defauts, aucun GRAVE",
+     f"{len(_d)} defaut(s), niveaux {sorted({x['niveau'] for x in _d})}")
+
+# 6. Une promesse ne concerne QUE son site : on ne va pas chercher
+#    /api/recherche sur voyageshalal.fr.
+dire(robot.tenir_ses_promesses({"nom": "voyageshalal.fr", "base": "https://voyageshalal.fr"}) == [],
+     "un site sans promesse declaree n'est pas interroge pour rien")
+
+robot.chercher = _vrai_chercher
+
+
 print("\n" + ("✓ La ronde mesure ce que Google affiche, pas ce que le fichier contient."
               if echecs == 0 else f"✗ {echecs} echec(s)"))
 sys.exit(0 if echecs == 0 else 1)

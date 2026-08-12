@@ -299,6 +299,79 @@ def examiner(site, url):
     return defauts
 
 
+# ── Les promesses tenues en production ──────────────────────────────────────
+#
+# Pourquoi ceci existe, ecrit le 12 aout au matin.
+#
+# Cette nuit j'ai livre deux adresses sur halalgpt.fr : l'index de la recherche
+# interne, et l'etat du compteur de passerelles. Les deux marchent en local,
+# les deux sont testees. Et je n'ai AUCUN moyen de savoir si elles marchent en
+# ligne : le proxy de l'atelier refuse halalgpt.fr (403 sur le tunnel).
+#
+# Pire, leurs pannes sont silencieuses par construction :
+#   · si l'index de recherche ne repond pas, la recherche retombe sur les
+#     titres — exactement ce qu'elle faisait avant, sans un mot a l'ecran.
+#     C'est voulu : une recherche degradee vaut mieux qu'une recherche cassee.
+#     Mais alors PERSONNE ne remarquerait qu'elle est degradee pour toujours.
+#   · si le compteur de passerelles n'a pas de base, il ne compte rien. Le
+#     25 aout on lirait zero et on conclurait « les passerelles n'amenent
+#     personne ».
+#
+# Ce robot, lui, tourne sur GitHub et atteint les quatre sites — il vient d'en
+# balayer 1967 pages. C'est donc lui qui peut poser la question a ma place.
+#
+# Regle pour ajouter une promesse ici : elle doit etre VERIFIABLE d'un coup
+# d'oeil (un mot attendu dans la reponse), et sa panne doit etre SILENCIEUSE
+# ailleurs. Une page qui casse bruyamment n'a pas besoin d'etre ici : la ronde
+# ordinaire la voit deja.
+PROMESSES = [
+    {
+        "site": "halalgpt.fr",
+        "chemin": "/api/recherche",
+        "attendu": '"corps"',
+        "quoi": "l'index de la recherche interne ne repond pas",
+        "detail": "la recherche de /questions retombe sur les titres, sans le dire",
+    },
+    {
+        "site": "halalgpt.fr",
+        "chemin": "/api/passerelle",
+        "attendu": '"vivant":true',
+        "quoi": "le compteur de passerelles n'est pas vivant",
+        "detail": "la seule mesure que les agents peuvent lire seuls n'enregistre rien",
+    },
+]
+
+
+def tenir_ses_promesses(site):
+    """Les adresses qui doivent repondre, et dont la panne ne se verrait pas.
+
+    Rend des defauts au meme format que le reste de la ronde. On ne classe
+    jamais GRAVE : un visiteur recoit toujours ses pages. Ce qui tombe, c'est
+    une fonction ou une mesure — grave pour nous, invisible pour lui.
+    """
+    defauts = []
+    for p in PROMESSES:
+        if p["site"] != site["nom"]:
+            continue
+        url = site["base"] + p["chemin"]
+        code, corps, _, erreur = chercher(url)
+        if erreur or code >= 400:
+            defauts.append({"niveau": DEFAUT, "site": site["nom"], "url": url,
+                            "quoi": p["quoi"],
+                            "detail": (erreur or f"code {code}") + " — " + p["detail"]})
+            continue
+        # On lit ce qui est REVENU, pas seulement le code : une adresse qui
+        # repond 200 avec une page d'erreur est le cas le plus courant, et le
+        # plus trompeur.
+        texte = (corps or b"").decode("utf-8", "replace")
+        if p["attendu"] not in texte:
+            defauts.append({"niveau": DEFAUT, "site": site["nom"], "url": url,
+                            "quoi": p["quoi"],
+                            "detail": f"code {code} mais « {p['attendu']} » absent "
+                                      f"de la reponse — " + p["detail"]})
+    return defauts
+
+
 def ronde_du_site(site, tour, complet=False):
     defauts = []
     base = site["base"]
@@ -336,6 +409,10 @@ def ronde_du_site(site, tour, complet=False):
     with ThreadPoolExecutor(max_workers=PARALLELE) as pool:
         for lot in pool.map(lambda u: examiner(site, u), a_voir):
             defauts += lot
+
+    # A chaque tour, pas par rotation : ce sont deux adresses, et leur panne ne
+    # se verrait nulle part ailleurs.
+    defauts += tenir_ses_promesses(site)
 
     # On rend aussi le total connu : sans lui, le rapport ne peut pas dire
     # quelle PART du site cette ronde a vue — et un chiffre de defauts sans
