@@ -63,5 +63,27 @@ export async function servirLeSite() {
   return {
     base: `http://127.0.0.1:${port}`,
     arreter: () => new Promise((ok) => serveur.close(ok)),
+    /**
+     * Coupure NETTE, pour les sondes qui testent l'absence de réseau.
+     *
+     * `arreter()` ne suffit pas : `close()` attend la fin des connexions
+     * ouvertes, et Chromium les garde en vie (keep-alive). Il faut donc les
+     * fermer de force, sinon le serveur répond encore.
+     *
+     * Pourquoi c'est nécessaire, mesuré le 12 août : `setOffline(true)` de
+     * Playwright ne s'applique PAS aux requêtes émises par un service worker.
+     * `sonde:hors-ligne` croyait donc mesurer le pré-chargement, alors que le
+     * service worker allait tranquillement chercher les pages sur le réseau.
+     * Preuve : en retirant `additifs.html` de la liste pré-chargée, la page
+     * était toujours servie hors ligne, avec 16 063 caractères. Couper le
+     * serveur est le seul « hors ligne » qu'aucune couche ne peut contourner.
+     */
+    couper: () =>
+      new Promise((ok) => {
+        serveur.closeAllConnections?.();
+        serveur.close(ok);
+        // Si une connexion résiste malgré tout, on ne bloque pas la sonde.
+        setTimeout(ok, 500);
+      }),
   };
 }

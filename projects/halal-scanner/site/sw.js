@@ -48,6 +48,34 @@ self.addEventListener("activate", (evt) => {
  * au visiteur. Et sans copie en cache, on attend le réseau quel que soit le
  * temps que ça prend : rien à servir vaut moins qu'une attente.
  */
+/**
+ * Cherche la page en cache, et à défaut la même page sans son « ? ».
+ *
+ * Défaut mesuré le 12 août 2026, serveur réellement coupé : `scan.html`
+ * s'ouvrait hors ligne, `scan.html?code=3017620422003` ne s'ouvrait pas du
+ * tout. Le cache est indexé sur l'adresse complète, question comprise, et
+ * cette adresse-là n'y est jamais.
+ *
+ * Or ce lien n'est pas théorique : c'est celui que l'app fabrique quand on
+ * partage un produit (« Scanné avec HalalCheck »), et celui par lequel
+ * HalalGPT envoie les gens ici. Quelqu'un reçoit ce lien sur WhatsApp, le
+ * touche dans un rayon sans réseau — et n'obtenait rien, alors que la page
+ * était sur son téléphone. Le code est lu à l'exécution depuis
+ * `location.search` : la copie sans question affiche donc exactement le bon
+ * produit.
+ *
+ * L'ancienne sonde hors-ligne ne pouvait pas le voir : `setOffline` de
+ * Playwright n'atteint pas les requêtes du service worker, qui allait donc
+ * chercher la page sur le réseau.
+ */
+function chercherEnCache(requete) {
+  return caches.match(requete).then((hit) => {
+    if (hit) return hit;
+    if (requete.mode !== "navigate") return undefined;
+    return caches.match(requete, { ignoreSearch: true });
+  });
+}
+
 function reseauDAbordAvecDelai(requete) {
   const reseau = fetch(requete).then((reponse) => {
     const copie = reponse.clone();
@@ -55,7 +83,7 @@ function reseauDAbordAvecDelai(requete) {
     return reponse;
   });
 
-  return caches.match(requete).then((enCache) => {
+  return chercherEnCache(requete).then((enCache) => {
     if (!enCache) return reseau.catch(() => Response.error());
 
     return new Promise((resoudre) => {

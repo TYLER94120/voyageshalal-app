@@ -81,22 +81,80 @@ une explication honnête, jamais un verdict inventé.
    (`t.replace(/vinaigre de vin/g, "vinaigre")`). Ce n'était pas un oubli mais
    une décision déjà prise ; le vinaigre d'alcool la rejoint (voir « Fait »).
 
-6. **Cinq sondes d'écran sur huit n'ont jamais été éprouvées.**
-   *Preuve :* `sonde:saisie`, `sonde:verdicts`, `sonde:historique`,
-   `sonde:pays` et `sonde:hors-ligne` tournent depuis le 12 août à chaque envoi
-   de code et passent toutes. Mais aucune n'a été confrontée à une régression
-   volontaire : je sais qu'elles disent « oui », je ne sais pas si elles savent
-   dire « non ».
-   *Pourquoi ça compte :* c'est mot pour mot le défaut trouvé ce matin sur
-   trois sondes de moteur et sur `sonde:photo` — un garde-fou qui n'a jamais
-   été attaqué ne prouve rien. Trois l'ont été (photo ×2, contraste) et les
-   trois ont viré au rouge ; les cinq autres sont une supposition.
-   *Ce qu'il faut :* un sabotage ciblé par sonde, dans les deux directions.
-   À faire moi-même, pas bloqué.
+6. **Le lien partagé `scan.html?code=…` mérite d'être vérifié en vrai.**
+   *Preuve :* corrigé le 12 août dans `sw.js` (`ignoreSearch` sur les
+   navigations), et vérifié serveur coupé dans l'atelier. Mais l'atelier n'est
+   pas un téléphone : je n'ai jamais vu ce lien s'ouvrir en mode avion sur un
+   vrai iPhone, ni sur un Android.
+   *Pourquoi ça compte :* c'est le lien que l'app fabrique au partage
+   (« Scanné avec HalalCheck ») et celui par lequel HalalGPT envoie les gens
+   ici. Il ne s'ouvrait pas du tout hors ligne.
+   *Ce qu'il faut :* Mohamed scanne un produit, se met en mode avion, et ouvre
+   le lien partagé. Une capture d'écran suffit. C'est le seul point de cette
+   file où sa capture d'écran est utile plutôt que subie.
 
 ---
 
 ## Fait
+
+- **Deux gardes-fous sur cinq étaient des feux verts — et l'un cachait un vrai
+  défaut** *(12 août)* — élément 6 de la file. Chacune des cinq sondes d'écran
+  jamais éprouvées a reçu une régression volontaire.
+
+  | Sonde | Sabotage | Verdict |
+  |---|---|---|
+  | `verdicts` | filtre du label certifié retiré | **rouge** — « CONTRADICTION dans le même écran » |
+  | `historique` | `statutAJour` ne recalcule plus | **rouge** — statuts restés `halal, halal` |
+  | `saisie` | l'invite ne parle plus de chiffres | **rouge** — 2 défauts |
+  | `pays` | « au Maroc » → « en Maroc » | **VERTE** ← aveugle |
+  | `hors-ligne` | `additifs.html` retiré du pré-chargement | **VERTE** ← aveugle |
+
+  **`sonde:pays` ne cherchait que l'ancien défaut** — les motifs « dans le /
+  dans la / dans les / dans l' » d'août 2025. La page affichait « Les produits
+  enregistrés **en Maroc** », faute de français sur le pays du public
+  principal, et la sonde répondait ✓. Elle compare maintenant à la forme
+  attendue, **pays par pays, 24 formes écrites d'après la grammaire et non
+  recopiées de la source** — une sonde qui recopie sa source ne compare rien.
+  Ajout : **la France**, que la sonde ignorait alors que Mohamed a demandé les
+  produits de France. Elle a sa phrase à elle (« marque de distributeur »), et
+  la sonde refuse désormais qu'un code français reçoive la phrase d'un pays
+  lointain. 24 → 25 cas, les deux sabotages virent au rouge.
+
+  **`sonde:hors-ligne` ne coupait pas le réseau.** Elle utilisait
+  `setOffline(true)`, dont je savais depuis ce matin qu'il **n'atteint pas les
+  requêtes du service worker** — sans en tirer la conséquence ici. Le service
+  worker allait donc chercher les pages sur le réseau et la sonde déclarait le
+  pré-chargement bon. Elle **arrête maintenant le serveur** : s'il n'y a plus
+  personne au bout du fil, ce qui s'affiche vient forcément du cache. Un
+  contrôle de la coupure elle-même a été ajouté — une adresse jamais visitée
+  doit échouer, sinon la sonde ment.
+
+  **Et là, un vrai défaut est apparu, invisible jusqu'ici :**
+
+  | Serveur réellement coupé | Avant | Après |
+  |---|---|---|
+  | `scan.html` | s'ouvre | s'ouvre |
+  | `scan.html?code=3017620422003` | **ne s'ouvre pas du tout** | s'ouvre, verdict affiché |
+
+  Le cache est indexé sur l'adresse complète, question comprise, et cette
+  adresse-là n'y est jamais. Or c'est **le lien que l'app fabrique quand on
+  partage un produit** (« Scanné avec HalalCheck ») et celui par lequel
+  HalalGPT envoie les gens ici. Quelqu'un reçoit ce lien sur WhatsApp, le
+  touche dans un rayon sans réseau — rien, alors que la page était sur son
+  téléphone. Corrigé dans `sw.js` : à défaut de l'adresse exacte, une
+  navigation retombe sur la même page sans son « ? ». Le code est lu à
+  l'exécution depuis `location.search`, donc le bon produit s'affiche.
+
+  *Deuxième fois aujourd'hui que mon propre instrument fabrique le défaut :* ma
+  première version du contrôle de coupure **naviguait** vers une adresse
+  injoignable. Chromium affiche alors sa page d'erreur, qui n'est plus
+  contrôlée par le service worker, et la navigation suivante repart au réseau.
+  La sonde annonçait « accueil NON SERVIE » alors que l'accueil sortait très
+  bien du cache — 2 898 caractères, vérifié à part. Le contrôle cassait ce
+  qu'il mesurait. Il se fait maintenant par `fetch` depuis la page en cours.
+
+  **Bilan : 5 sondes sur 5 savent maintenant virer au rouge** (8 sur 8 avec
+  photo et contraste, éprouvées ce matin).
 
 - **L'écran est enfin contrôlé tout seul, et pas seulement le moteur**
   *(12 août)* — élément 6 de la file, ouvert et refermé le même jour. Suite
