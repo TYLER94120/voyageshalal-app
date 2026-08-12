@@ -282,9 +282,18 @@ function normaliser(texte: string): string {
  * Même garde-fou que dans le moteur alimentaire : nos motifs INCI sont
  * latins. Une étiquette écrite uniquement en arabe ne déclenche rien, et
  * « aucune alerte » ne doit jamais devenir « halal ».
+ *
+ * Et, depuis le 12 août, même second garde-fou : une phrase qui dit « on ne
+ * sait pas » est faite de lettres et passait pour une liste INCI lisible.
+ * Voir le commentaire détaillé dans `halal.ts` — 16 formulations sur 28
+ * rendaient HALAL sans preuve. Le défaut était identique ici.
  */
+const MENTIONS_ABSENCE =
+  /non renseign\w*|non sp[ée]cifi\w*|non communiqu\w*|non disponibles?|pas d'informations?|aucune information|liste non disponible|ingr[ée]dients? non disponibles?|[àa] compl[ée]ter|[àa] renseigner|voir (?:sur )?(?:l'|le )?emballage|see (?:the )?packaging|not available|no information|unknown/gi;
+
 function texteAnalysable(texte: string): boolean {
-  return (texte.match(/[a-zà-öø-ÿ]/gi) || []).length >= 12;
+  const sansMentions = texte.replace(MENTIONS_ABSENCE, " ");
+  return (sansMentions.match(/[a-zà-öø-ÿ]/gi) || []).length >= 12;
 }
 
 export function analyserCosmetique(entree: {

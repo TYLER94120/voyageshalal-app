@@ -93,9 +93,65 @@ une explication honnête, jamais un verdict inventé.
    le lien partagé. Une capture d'écran suffit. C'est le seul point de cette
    file où sa capture d'écran est utile plutôt que subie.
 
+7. **Un produit sans composition mais avec un additif anodin ressort HALAL.**
+   *Preuve, mesurée le 12 août :* `analyserProduit({ ingredientsTexte: null,
+   additifs: ["en:e330"] })` → **HALAL, 0 alerte**. La règle actuelle dit qu'on
+   a « des données » dès que la base fournit au moins un code additif, même
+   sans une seule ligne d'ingrédients.
+   *Pourquoi j'hésite plutôt que de corriger :* durcir ferait basculer en
+   INCONNU des produits dont la fiche est probablement correcte, et « un moteur
+   qui doute de tout est aussi inutile qu'un moteur aveugle » — c'est la
+   doctrine que garde `sonde:faux-positifs`. Je ne sais pas combien de produits
+   réels sont dans ce cas : la mesure demanderait Open Food Facts, injoignable
+   depuis l'atelier (élément 3).
+   *Ce qu'il faut :* soit l'accès à Open Food Facts pour compter, soit la
+   position de Mohamed. Lié à l'élément 3 ; je ne tranche pas seul un critère
+   qui décide de la couleur d'un verdict.
+
 ---
 
 ## Fait
+
+- **16 façons d'écrire « on ne sait pas » rendaient HALAL** *(12 août)* — audit
+  de cycle : les 6 éléments de la file étaient tous bloqués sur Mohamed ou sur
+  la politique réseau, donc j'ai mesuré au lieu d'attendre.
+
+  Question posée au moteur : **que rend-il quand l'étiquette est absente ou
+  inutilisable ?** C'est le cas le plus fréquent des bases mondiales, et le
+  plus dangereux — un verdict rendu sans preuve est un verdict inventé.
+
+  | | avant | après |
+  |---|---|---|
+  | formulations d'absence testées | 28 | 28 |
+  | qui rendaient **HALAL sans aucune preuve** | **16** | **0** |
+
+  Parmi elles : « non renseigné » (12 lettres, **pile le seuil**),
+  « information non disponible », « aucune information », « voir l'emballage »,
+  « see packaging », « ingrédients non disponibles », « not available ».
+
+  **La cause :** le garde-fou comptait les lettres latines — 12 minimum — sans
+  regarder ce qu'elles disaient. Une phrase qui dit « on ne sait pas » est
+  faite de lettres, donc elle passait pour une composition lisible, donc
+  « aucune alerte » devenait « halal ». Les rares qui échappaient n'échappaient
+  que par leur longueur : « azertyuiop » sortait INCONNU à 10 lettres et serait
+  passé HALAL à 12.
+
+  Concrètement : une charcuterie dont la base ne connaît pas la composition
+  ressortait **verte**.
+
+  **Le correctif retire ces mentions avant de compter**, plutôt que de rejeter
+  le texte entier — sinon on tombe dans l'excès inverse. Vérifié :
+  « Sucre, cacao maigre, noisettes. Voir emballage pour les allergènes. » garde
+  25 lettres utiles et reste HALAL ; « Voir emballage. Contient du lard fumé. »
+  reste HARAM. Même défaut, même correctif dans le moteur cosmétique.
+
+  Gelé dans `sonde:faux-negatifs` (section D, en CI depuis ce matin) : **30 → 66
+  cas**. Sabotage de contrôle — garde-fou retiré : 15/15 repassent HALAL, la
+  sonde vire au rouge.
+
+  *Ce que je n'ai pas tranché :* un produit **sans texte** mais avec un seul
+  additif sans risque (`additives_tags: ["en:e330"]`) ressort HALAL. C'est
+  peut-être trop généreux — voir élément 7.
 
 - **Deux gardes-fous sur cinq étaient des feux verts — et l'un cachait un vrai
   défaut** *(12 août)* — élément 6 de la file. Chacune des cinq sondes d'écran

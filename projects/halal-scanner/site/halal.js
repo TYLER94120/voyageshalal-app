@@ -355,9 +355,28 @@ function normaliser(texte) {
  *
  * Le seuil de 12 lettres latines est celui déjà utilisé à l'affichage pour
  * décider si l'on peut retirer l'arabe d'une étiquette bilingue.
+ *
+ * DEUXIÈME GARDE-FOU, 12 août 2026 : compter les lettres ne suffisait pas.
+ * Une phrase qui dit « on ne sait pas » est faite de lettres, et passait donc
+ * pour une composition lisible. Mesuré sur 28 formulations : **16 rendaient
+ * HALAL sans la moindre preuve**, dont « non renseigné » (12 lettres, pile le
+ * seuil), « information non disponible », « voir l'emballage », « see
+ * packaging », « ingrédients non disponibles ».
+ *
+ * C'est le pire défaut possible pour ce produit : un verdict inventé à partir
+ * d'une absence de données. Une charcuterie dont la base ne connaît pas la
+ * composition ressortait verte. Les rares qui échappaient — « à compléter »,
+ * « unknown » — n'échappaient que par leur longueur : « azertyuiop » sortait
+ * INCONNU à 10 lettres et serait passé HALAL à 12.
+ *
+ * On retire ces mentions AVANT de compter. Retirer plutôt que rejeter en bloc
+ * évite l'excès inverse : « Sucre, cacao. Voir emballage pour les allergènes »
+ * garde 25 lettres utiles et reste une vraie composition.
  */
+const MENTIONS_ABSENCE = /non renseign\w*|non sp[ée]cifi\w*|non communiqu\w*|non disponibles?|pas d'informations?|aucune information|liste non disponible|ingr[ée]dients? non disponibles?|[àa] compl[ée]ter|[àa] renseigner|voir (?:sur )?(?:l'|le )?emballage|see (?:the )?packaging|not available|no information|unknown/gi;
 function texteAnalysable(texte) {
-    return (texte.match(/[a-zà-öø-ÿ]/gi) || []).length >= 12;
+    const sansMentions = texte.replace(MENTIONS_ABSENCE, " ");
+    return (sansMentions.match(/[a-zà-öø-ÿ]/gi) || []).length >= 12;
 }
 /**
  * Récupère les codes E écrits en toutes lettres dans la composition.

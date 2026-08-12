@@ -85,9 +85,36 @@ const motManques = MOTS.filter(([m]) => parTexte(m).alertes.length === 0);
 console.log(`${MOTS.length} testés, ${MOTS.length - motManques.length} détectés, ${motManques.length} ignorés :`);
 for (const [m, p] of motManques) console.log(`  ✗ « ${m} » — ${p}`);
 
+console.log("\n=== D. etiquettes qui disent qu'il n'y a PAS d'etiquette ===");
+// Le pire verdict possible n'est pas un interdit manque : c'est un HALAL
+// fabrique a partir d'une absence de donnees. Mesure du 12 aout, avant
+// correctif : 16 formulations sur 28 ressortaient HALAL, dont « non
+// renseigne » (12 lettres, pile le seuil) et « voir l'emballage ». Le moteur
+// comptait les lettres sans regarder ce qu'elles disaient.
+const RIEN_A_LIRE = [
+  "non renseigné", "non renseignée", "Non renseigne", "non communiqué",
+  "information non disponible", "aucune information", "pas d'information",
+  "liste non disponible", "ingrédients non disponibles",
+  "voir emballage", "voir l'emballage", "voir sur l'emballage",
+  "see packaging", "not available", "no information",
+];
+const inventes = RIEN_A_LIRE.filter((t) => analyserProduit({ ingredientsTexte: t, additifs: [] }).statut === "halal");
+console.log(`${RIEN_A_LIRE.length} formulations testées, ${inventes.length} rendent HALAL sans preuve :`);
+for (const t of inventes) console.log(`  ✗ « ${t} » → HALAL alors qu'on ne sait rien`);
+
+// Et l'exces inverse : une VRAIE composition qui mentionne l'emballage doit
+// rester lisible. Retirer la mention plutot que rejeter le texte entier.
+const VRAIES = [
+  "Sucre, cacao maigre, noisettes. Voir emballage pour les allergènes.",
+  "Farine de blé, eau, sel. Information non disponible sur les traces.",
+];
+const perdues = VRAIES.filter((t) => analyserProduit({ ingredientsTexte: t, additifs: [] }).statut === "inconnu");
+for (const t of perdues) console.log(`  ✗ « ${t.slice(0, 46)}… » → INCONNU alors que la composition est là`);
+if (!perdues.length) console.log(`${VRAIES.length} vraies compositions mentionnant l'emballage : toujours lues.`);
+
 // Le verdict. Un seul manque suffit : chacune de ces entrées est un aliment
 // qu'on servirait comme licite à quelqu'un qui nous a crus.
-const manques = codeManques.length + texteManques.length + motManques.length;
+const manques = codeManques.length + texteManques.length + motManques.length + inventes.length + perdues.length;
 if (manques > 0) {
   console.log(`\n✗ ${manques} FAUX NÉGATIF(S) — de l'interdit passe pour licite. Le moteur n'est pas publiable.`);
   process.exit(1);
@@ -95,5 +122,5 @@ if (manques > 0) {
 // Compté, pas écrit à la main : le jour où quelqu'un ajoute un cas, cette
 // ligne se met à jour toute seule. Une sonde qui annonce un chiffre faux
 // abîme la confiance exactement comme une page qui en annonce un.
-const total = codes.length * 2 + MOTS.length;
-console.log(`\n✓ Aucun faux négatif : les ${total} cas à risque sont tous attrapés.`);
+const total = codes.length * 2 + MOTS.length + RIEN_A_LIRE.length + VRAIES.length;
+console.log(`\n✓ Aucun faux négatif ni verdict inventé : les ${total} cas à risque sont tous tenus.`);
