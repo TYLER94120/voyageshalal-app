@@ -11,6 +11,10 @@
  *
  * Un site qui annonce un chiffre faux sur sa page d'accueil abîme la confiance
  * exactement comme un verdict faux : c'est la même promesse.
+ *
+ * Depuis le 12 août, ce contrôle couvre aussi les DATES du sitemap. C'est
+ * celle-là que Google lit pour décider s'il revient : elle datait de deux
+ * jours sur 4 pages sur 4, le jour même où le plus de corrections partaient.
  */
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -59,8 +63,31 @@ for (const [nom, texte, motif, attendu] of controles) {
   );
 }
 
+// Le sitemap doit annoncer la même date que la page elle-même.
+const PAGES = [
+  ["index.html", "/"],
+  ["scan.html", "/scan.html"],
+  ["additifs.html", "/additifs.html"],
+  ["mentions-legales.html", "/mentions-legales.html"],
+];
+const sitemap = readFileSync(join(PROJET, "site", "sitemap.xml"), "utf8");
+console.log("");
+for (const [fichier, chemin] of PAGES) {
+  const html = readFileSync(join(PROJET, "site", fichier), "utf8");
+  const surLaPage = (html.match(/<meta name="last-modified" content="([^"]{10})/) || [])[1];
+  const motif = new RegExp(
+    "<loc>https://halalcheck\\.fr" + chemin.replace(/\//g, "\\/") + "</loc>\\s*<lastmod>([^<]*)</lastmod>"
+  );
+  const dansLeSitemap = (sitemap.match(motif) || [])[1];
+  const ok = surLaPage && dansLeSitemap === surLaPage;
+  if (!ok) fautes += 1;
+  console.log(
+    `  ${ok ? "✓" : "✗"} sitemap : ${fichier.padEnd(22)} page = ${surLaPage || "?"}, sitemap = ${dansLeSitemap || "absent"}`
+  );
+}
+
 if (fautes > 0) {
-  console.log(`\n✗ ${fautes} nombre(s) faux. Relance : npm run build:additifs`);
+  console.log(`\n✗ ${fautes} affirmation(s) fausse(s). Relance : npm run build:additifs && npm run seo:dates`);
   process.exit(1);
 }
-console.log("\n✓ Tous les nombres annoncés correspondent au moteur.");
+console.log("\n✓ Nombres et dates annoncés : tout correspond à la source.");

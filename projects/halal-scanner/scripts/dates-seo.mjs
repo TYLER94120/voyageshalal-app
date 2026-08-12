@@ -79,3 +79,37 @@ for (const page of PAGES) {
   }
 }
 console.log(`\n${modifiees} page(s) mise(s) à jour avec des dates réelles.`);
+
+// ---------------------------------------------------------------------------
+// Le sitemap annonce lui aussi une date de modification, et c'est CELLE-LÀ que
+// Google lit pour décider s'il revient. Elle était écrite à la main : mesurée
+// le 11 août, elle datait de deux jours sur 4 pages sur 4, alors que les
+// pages, elles, déclaraient bien le jour même. Résultat : on disait au moteur
+// « rien n'a bougé » le jour où le plus de corrections partaient en ligne.
+const SITEMAP = join(SITE, "sitemap.xml");
+if (existsSync(SITEMAP)) {
+  const avant = readFileSync(SITEMAP, "utf8");
+  let xml = avant;
+  let recalees = 0;
+  for (const page of PAGES) {
+    const iso = dateGit(join(SITE, page));
+    if (!iso) continue;
+    const jour = iso.slice(0, 10);
+    // L'accueil est référencé par « / », pas par « /index.html ».
+    const fin = page === "index.html" ? "/" : "/" + page;
+    const motif = new RegExp(
+      "(<loc>https://halalcheck\\.fr" + fin.replace(/\//g, "\\/") +
+        "</loc>\\s*<lastmod>)([^<]*)(</lastmod>)"
+    );
+    const trouve = xml.match(motif);
+    if (trouve && trouve[2] !== jour) recalees += 1;
+    xml = xml.replace(motif, `$1${jour}$3`);
+  }
+  if (xml !== avant) {
+    writeFileSync(SITEMAP, xml);
+    console.log(`\nsitemap.xml : ${recalees} date(s) remise(s) à la vraie date`);
+  } else {
+    console.log("\nsitemap.xml : dates déjà justes");
+  }
+}
+

@@ -85,6 +85,31 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Le sitemap disait à Google que rien n'avait bougé depuis deux jours**
+  *(12 août)* — le jour où le plus de corrections sont parties en ligne.
+
+  Le `lastmod` du sitemap est ce que Google lit pour décider s'il revient
+  recharger une page. Il était écrit à la main, indépendant des pages :
+
+  | Page | Date déclarée par la page | Date annoncée au moteur |
+  |---|---|---|
+  | accueil | 11 août | **9 août** |
+  | scan | 11 août | **9 août** |
+  | additifs | 11 août | **10 août** |
+  | mentions légales | 11 août | **9 août** |
+
+  **4 sur 4 en retard**, de un à deux jours. `seo:dates` mettait bien à jour la
+  date *dans* chaque page — meta, données structurées, mention visible — mais
+  ignorait le sitemap. On corrigeait un verdict faux le matin et on demandait
+  au moteur de ne pas revenir voir.
+
+  Réparé au même endroit que le reste : `npm run seo:dates` recale désormais
+  le sitemap depuis l'historique git, page par page. Mesure après :
+  **4 dates sur 4 identiques** à celles des pages.
+
+  Le contrôle `npm run verif:chiffres` couvre maintenant les deux familles
+  d'affirmations vérifiables — les nombres et les dates : 5 + 4 contrôles.
+
 - **Le panneau des messages caméra était écrit en noir sur fond noir**
   *(11 août)* — premier audit d'accessibilité du site : ce que reçoit
   quelqu'un qui écoute la page avec un lecteur d'écran, ou qui lit mal les
