@@ -81,21 +81,40 @@ une explication honnête, jamais un verdict inventé.
    (`t.replace(/vinaigre de vin/g, "vinaigre")`). Ce n'était pas un oubli mais
    une décision déjà prise ; le vinaigre d'alcool la rejoint (voir « Fait »).
 
-6. **Installer l'app puis partir en magasin sans avoir scanné une seule fois :
-   sur iPhone, aucun lecteur.**
-   *Preuve, mesurée le 12 août :* le lecteur de codes-barres des navigateurs
-   sans détecteur natif pèse **96 Ko compressés** et n'est **volontairement pas**
-   dans les 12 fichiers pré-chargés à l'installation — pour ne pas l'imposer à
-   Chrome et Edge, qui n'y touchent jamais. Il entre dans le cache au premier
-   scan réel. Le trou : quelqu'un qui installe l'app, ne scanne rien, puis se
-   retrouve sans réseau en rayon n'a pas de lecteur. Vérifié : à la deuxième
-   visite *après* un scan, tout marche (`npm run sonde:iphone`, scène D).
-   *Le choix à faire :* imposer 96 Ko à l'installation de tout le monde, ou
-   laisser ce trou. Petite population, coût réel : à trancher, pas à deviner.
-
 ---
 
 ## Fait
+
+- **Le lecteur de codes-barres se met de côté pendant qu'on lit l'accueil**
+  *(12 août)* — l'élément 6 de la file, refermé sans imposer le choix qu'il
+  annonçait.
+
+  Le problème posé : sur Safari iOS et Firefox, le scanner doit télécharger un
+  lecteur de 96 Ko compressés, absent des 12 fichiers pré-chargés. Quelqu'un
+  qui installe l'app, ne scanne rien, puis se retrouve sans réseau en rayon n'a
+  pas de lecteur. L'alternative annoncée était : imposer 96 Ko à tout le monde,
+  ou laisser le trou.
+
+  **Il y avait une troisième voie, et elle ne coûte rien à personne :** la page
+  d'accueil sait si le navigateur a un lecteur intégré. S'il n'en a pas, elle
+  met le fichier de côté tranquillement pendant qu'on lit la page
+  (`requestIdleCallback`), et le service worker le garde.
+
+  | Après une simple visite de l'accueil | Fichiers en cache | Lecteur présent |
+  |---|---|---|
+  | Chrome, Edge *(lecteur intégré)* | 12 | **non — ils ne paient rien** |
+  | Safari iOS, Firefox | **13** | **oui** |
+
+  *Ce que je n'ai pas pu mesurer :* la conséquence hors ligne elle-même.
+  `setOffline` de l'outil de test ne s'applique **pas** aux requêtes émises par
+  le service worker — vérifié : hors ligne, une requête de la page échoue bien,
+  mais celle du service worker passe. Huitième instrument pris en défaut
+  aujourd'hui. Je mesure donc ce qui est mesurable — le fichier est dans le
+  cache — et j'en déduis le reste sans le prétendre observé.
+
+  Garde-fou : le chemin du fichier est écrit à la main dans deux pages, avec
+  son numéro de version. `npm run verif:chiffres` refuse désormais de passer si
+  ce fichier n'existe pas, ou si les deux pages ne nomment pas la même version.
 
 - **Deux audits, aucun défaut — et c'est aussi une mesure** *(12 août)* :
   le poids des pages et le fonctionnement complet sans réseau.

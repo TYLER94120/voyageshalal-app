@@ -10,7 +10,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://halalcheck.fr/" />
   <link rel="canonical" href="https://halalcheck.fr/" />
-  <meta name="last-modified" content="2026-08-12T00:58:33+00:00" />
+  <meta name="last-modified" content="2026-08-12T02:52:03+00:00" />
   <meta name="theme-color" content="#FDFAF3" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
@@ -324,7 +324,7 @@
         "Alternatives sans ingrédient à risque"
       ],
       "isAccessibleForFree": true,
-      "dateModified": "2026-08-12T00:58:33+00:00"
+      "dateModified": "2026-08-12T02:52:03+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -595,6 +595,21 @@
 
   <script>
     if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(function () {});
+
+    /* Safari sur iPhone et Firefox n'ont pas de lecteur de codes-barres intégré :
+       le scanner doit en télécharger un (96 Ko compressés). Quelqu'un qui
+       installe l'app depuis cette page, ne scanne rien, puis se retrouve sans
+       réseau en rayon ne l'aurait jamais. On le met de côté tranquillement
+       pendant qu'il lit l'accueil — et JAMAIS sur Chrome ou Edge, qui n'en ont
+       aucun besoin. Le service worker le garde ensuite en cache.
+       Si le fichier bouge, `npm run verif:chiffres` refuse de passer. */
+    if (!("BarcodeDetector" in window)) {
+      var mettreDeCote = function () {
+        fetch("./vendor/zxing-0.21.3.min.js", { cache: "force-cache" }).catch(function () {});
+      };
+      if ("requestIdleCallback" in window) requestIdleCallback(mettreDeCote, { timeout: 5000 });
+      else setTimeout(mettreDeCote, 3000);
+    }
   </script>
 </body>
 </html>

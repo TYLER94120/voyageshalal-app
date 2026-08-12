@@ -16,7 +16,7 @@
  * celle-là que Google lit pour décider s'il revient : elle datait de deux
  * jours sur 4 pages sur 4, le jour même où le plus de corrections partaient.
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -84,6 +84,26 @@ for (const [fichier, chemin] of PAGES) {
   console.log(
     `  ${ok ? "✓" : "✗"} sitemap : ${fichier.padEnd(22)} page = ${surLaPage || "?"}, sitemap = ${dansLeSitemap || "absent"}`
   );
+}
+
+// Les chemins de fichiers écrits à la main dans les pages doivent exister.
+// L'accueil et le scanner nomment tous deux le lecteur de codes-barres, avec
+// son numéro de version : le jour où on le met à jour, un des deux peut être
+// oublié, et personne ne le verrait avant qu'un iPhone ne scanne rien.
+console.log("");
+const chemins = new Set();
+for (const f of ["index.html", "scan.html"]) {
+  const html = readFileSync(join(PROJET, "site", f), "utf8");
+  for (const m of html.matchAll(/\.\/(vendor\/[\w.@-]+\.js)/g)) chemins.add(m[1]);
+}
+for (const c of chemins) {
+  const existe = existsSync(join(PROJET, "site", c));
+  if (!existe) fautes += 1;
+  console.log(`  ${existe ? "✓" : "✗"} fichier référencé : ${c}${existe ? "" : "  ← INTROUVABLE"}`);
+}
+if (chemins.size !== 1) {
+  console.log(`  ✗ ${chemins.size} versions différentes du lecteur référencées — elles doivent être identiques`);
+  fautes += 1;
 }
 
 if (fautes > 0) {
