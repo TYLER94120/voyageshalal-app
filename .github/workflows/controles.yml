@@ -90,6 +90,95 @@ jobs:
       - name: Les etiquettes en arabe
         run: npm run sonde:arabe
 
+      # Ces deux-la existaient depuis des jours, savaient deja virer au rouge,
+      # et ne tournaient nulle part. Elles ne demandent pas de navigateur : les
+      # ajouter coute deux secondes.
+      - name: Cosmetiques — les noms INCI qui passaient a travers
+        run: npm run sonde:inci
+
+      - name: Les nombres et les dates annonces sur le site
+        run: npm run verif:chiffres
+
+  # ── L'ECRAN, pas le moteur ────────────────────────────────────────────────
+  #
+  # Le moteur peut avoir raison et l'ecran mentir : un badge vert fige dans
+  # l'historique, un texte illisible sur fond sombre, une camera qui tourne
+  # dans le vide, un pays nomme « au France ». Le robot de la ronde ne voit
+  # rien de tout cela — ses 16 controles s'arretent a l'enveloppe HTML, avant
+  # que le JavaScript ne s'execute. Verifie le 12 aout : « halalcheck.fr
+  # 7 pages · 0 defauts », un site de 4 pages dont toute la valeur vient
+  # d'apres.
+  #
+  # C'est donc ICI que se trouvaient les defauts que Mohamed remontait en
+  # capture d'ecran. Ces huit sondes existaient deja ; elles ne tournaient
+  # qu'a la main, le jour ou quelqu'un y pensait.
+  #
+  # Duree mesuree dans l'atelier : environ 5 minutes pour les huit. Le travail
+  # tourne a cote de « moteur », il ne le retarde pas.
+  ecran:
+    name: L'ecran, dans un vrai navigateur
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/halal-scanner
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      - name: Preparer Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Playwright en global, comme TypeScript plus haut, et pour la meme
+      # raison : `npm ci` ici installerait Expo et React Native pour ouvrir
+      # une page. scripts/playwright-atelier.mjs sait le retrouver via
+      # `npm root -g`, et laisse Playwright choisir son propre Chromium quand
+      # celui de l'atelier est absent — ce qui est le cas sur un runner.
+      # Version figee sur celle de l'atelier, ou les huit sondes passent —
+      # relevee avec `npm root -g`, pas choisie de memoire. `playwright` est
+      # sur le PATH une fois installe en global : pas de `npx`, qui
+      # telechargerait une seconde copie et pourrait installer le navigateur
+      # d'une autre version que la bibliotheque.
+      - name: Installer Playwright et Chromium
+        run: |
+          npm install -g playwright@1.56.1
+          playwright install --with-deps chromium
+
+      # Le site servi aux sondes est celui de site/, compile depuis lib/.
+      - name: Construire le site
+        run: |
+          npm install -g typescript@5.3.3
+          npm run build:site
+
+      - name: La camera et le lecteur de codes-barres
+        run: npm run sonde:iphone
+
+      - name: La saisie a la main quand la camera ne suffit pas
+        run: npm run sonde:saisie
+
+      - name: Les six ecrans de verdict disent une seule chose
+        run: npm run sonde:verdicts
+
+      # Un verdict vert fige dans l'historique alors que le moteur a change
+      # d'avis : le defaut le plus grave qu'on ait corrige sur l'ecran.
+      - name: L'historique suit le moteur
+        run: npm run sonde:historique
+
+      - name: Les 24 pays sont nommes avec la bonne preposition
+        run: npm run sonde:pays
+
+      - name: Le contraste des textes
+        run: npm run sonde:contraste
+
+      - name: Le site tient sans reseau
+        run: npm run sonde:hors-ligne
+
+      # La derniere, et la plus lente : elle fabrique une photo de 4032x3024 et
+      # joue les six facons dont la lecture d'etiquette peut echouer.
+      - name: La lecture d'etiquette par photo
+        run: npm run sonde:photo
+
   robots:
     name: Les robots de surveillance
     runs-on: ubuntu-latest

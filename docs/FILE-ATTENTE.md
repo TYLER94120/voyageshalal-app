@@ -81,22 +81,68 @@ une explication honnête, jamais un verdict inventé.
    (`t.replace(/vinaigre de vin/g, "vinaigre")`). Ce n'était pas un oubli mais
    une décision déjà prise ; le vinaigre d'alcool la rejoint (voir « Fait »).
 
-6. **Les 10 sondes qui ouvrent un vrai navigateur ne tournent qu'à la main.**
-   *Preuve :* `.github/workflows/controles.yml` lance 5 étapes, toutes sur le
-   moteur de texte. Les sondes caméra, saisie, pays, INCI, verdicts,
-   historique, contraste, hors-ligne, photo, iPhone n'y figurent pas — leur
-   absence est d'ailleurs écrite noir sur blanc dans l'en-tête du fichier.
-   *Pourquoi ça compte :* c'est exactement la couche où vivent les captures
-   d'écran de Mohamed. Le moteur peut être juste et l'écran illisible, la
-   caméra bloquée, le bouton muet. Depuis le 12 août les contrôles de moteur
-   savent enfin virer au rouge ; ceux de l'écran, non.
-   *Ce qu'il faut :* Chromium sur le runner GitHub, et vérifier que chaque
-   sonde sort bien en erreur — la moitié d'entre elles n'ont jamais été
-   éprouvées contre une régression volontaire. À faire moi-même, pas bloqué.
+6. **Cinq sondes d'écran sur huit n'ont jamais été éprouvées.**
+   *Preuve :* `sonde:saisie`, `sonde:verdicts`, `sonde:historique`,
+   `sonde:pays` et `sonde:hors-ligne` tournent depuis le 12 août à chaque envoi
+   de code et passent toutes. Mais aucune n'a été confrontée à une régression
+   volontaire : je sais qu'elles disent « oui », je ne sais pas si elles savent
+   dire « non ».
+   *Pourquoi ça compte :* c'est mot pour mot le défaut trouvé ce matin sur
+   trois sondes de moteur et sur `sonde:photo` — un garde-fou qui n'a jamais
+   été attaqué ne prouve rien. Trois l'ont été (photo ×2, contraste) et les
+   trois ont viré au rouge ; les cinq autres sont une supposition.
+   *Ce qu'il faut :* un sabotage ciblé par sonde, dans les deux directions.
+   À faire moi-même, pas bloqué.
 
 ---
 
 ## Fait
+
+- **L'écran est enfin contrôlé tout seul, et pas seulement le moteur**
+  *(12 août)* — élément 6 de la file, ouvert et refermé le même jour. Suite
+  directe de l'entrée ci-dessous : ce matin les contrôles de moteur ont appris
+  à virer au rouge ; ceux de l'écran ne tournaient nulle part.
+
+  | | avant | après |
+  |---|---|---|
+  | étapes de contrôle au push | 5 | **17** |
+  | sondes qui ouvrent un navigateur, lancées automatiquement | **0 / 8** | 8 / 8 |
+  | sondes sans navigateur oubliées hors CI | 2 | 0 |
+
+  *Correction de ce que j'ai écrit ce matin :* j'avais annoncé « 10 sondes qui
+  ouvrent un vrai navigateur ». **C'est faux, elles sont 8.** Les deux autres —
+  `sonde:inci` (noms INCI cosmétiques) et `verif:chiffres` (les nombres et les
+  dates annoncés sur le site) — ne demandent aucun navigateur, savaient déjà
+  sortir en erreur, et ne tournaient nulle part depuis des jours. Deux lignes
+  de workflow, deux secondes d'exécution.
+
+  **La sonde photo ne pouvait pas échouer non plus.** Elle jouait six façons de
+  rater la lecture d'étiquette et n'en comparait aucune. Deux promesses gelées,
+  celles qui comptent :
+
+  - *« Ce n'est pas ta photo »* sur une panne de service (500, réponse
+    illisible, JSON sans verdict). C'est littéralement la plainte de Mohamed le
+    10 août — l'app le renvoyait à sa photo alors que la panne était chez nous.
+  - *La photo est compressée avant l'envoi :* **2,97 Mo → 0,20 Mo**. Sans ça,
+    3 Mo à envoyer depuis un rayon en 3G.
+
+  **Éprouvé contre des régressions volontaires**, parce qu'un garde-fou jamais
+  attaqué ne prouve rien :
+
+  | Sabotage | Résultat |
+  |---|---|
+  | redimensionnement retiré | **rouge** — 1,07 Mo envoyés au lieu de 0,20 |
+  | « Ce n'est pas ta photo » remplacé par « reprends la photo » | **rouge** — scène 3 |
+  | `--creme` passée en gris (#6B6B63) | **rouge** — 3,3 < 4,5 sur « Caméra indisponible ici » |
+
+  *Ce que je n'ai pas fait, et je ne le revendique pas :* cinq des huit sondes
+  (saisie, verdicts, historique, pays, hors-ligne) n'ont **pas** été éprouvées
+  contre une régression volontaire. Elles contiennent bien un `process.exit(1)`
+  et passent aujourd'hui ; je n'ai pas vérifié qu'elles savent virer au rouge.
+  C'est exactement l'erreur que je viens de corriger ailleurs — à faire.
+
+  *Durée mesurée :* environ 5 minutes pour les huit dans l'atelier. Le travail
+  tourne à côté de « moteur », il ne le retarde pas.
 
 - **Trois contrôles automatiques sur cinq ne pouvaient pas virer au rouge**
   *(12 août)* — réponse à Mohamed : « je n'arrête pas de remonter des
