@@ -10,7 +10,7 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-11T20:55:11+00:00" />
+  <meta name="last-modified" content="2026-08-11T22:52:53+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -37,7 +37,7 @@
       --carte: #FFFFFF;
       --texte: #12261A;
       --texte-doux: rgba(18, 38, 26, 0.62);
-      --texte-tres-doux: rgba(18, 38, 26, 0.42);
+      --texte-tres-doux: rgba(18, 38, 26, 0.66);
       --bordure: rgba(18, 38, 26, 0.10);
       --or-lisible: #7A5F1C;
       --ombre-douce: 0 2px 10px rgba(18, 38, 26, 0.06);
@@ -111,6 +111,13 @@
     .etat-camera {
       position: absolute; z-index: 3; left: 16px; right: 16px; bottom: 16px;
       background: rgba(11, 26, 15, 0.85);
+      /* Ce panneau a un fond presque noir mais n'avait aucune couleur de texte :
+         il héritait du texte sombre de la page. Contraste mesuré le 11 août :
+         1,1 — autant dire invisible. C'est pourtant le panneau qui porte TOUS
+         les messages de la caméra, y compris « Caméra refusée » et « saisis les
+         chiffres ci-dessous ». Le bouton torche juste à côté, lui, déclarait
+         bien sa couleur. */
+      color: var(--creme);
       border-radius: 14px;
       padding: 12px 16px;
       font-size: 15px; font-weight: 600;
@@ -632,7 +639,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-11T20:55:11+00:00"
+      "dateModified": "2026-08-11T22:52:53+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -1838,7 +1845,7 @@
         etat.style.color = alerte.niveau === "haram" ? "#B23A3A" : "#9A6416";
       } else {
         etat.textContent = "Aucun risque connu";
-        etat.style.color = "rgba(18, 38, 26, 0.45)";
+        etat.style.color = "rgba(18, 38, 26, 0.66)";
       }
       bloc.appendChild(etat);
 
@@ -2856,7 +2863,7 @@
     }
   </script>
 
-  <footer class="pied" style="text-align: center; padding: 26px 16px calc(30px + env(safe-area-inset-bottom, 0px)); font-size: 14px; color: rgba(18, 38, 26, 0.55); line-height: 2.2; border-top: 1px solid rgba(18, 38, 26, 0.10); margin-top: 28px;">
+  <footer class="pied" style="text-align: center; padding: 26px 16px calc(30px + env(safe-area-inset-bottom, 0px)); font-size: 14px; color: rgba(18, 38, 26, 0.66); line-height: 2.2; border-top: 1px solid rgba(18, 38, 26, 0.10); margin-top: 28px;">
     <span style="display:block; margin-bottom:6px; font-size:13px;">Mis à jour le <span class="date-maj">11 août 2026</span> · <a href="./additifs.html" style="color:#7A5F1C; text-decoration:none;">Additifs surveillés</a> · <a href="./mentions-legales.html" style="color:#7A5F1C; text-decoration:none;">Mentions légales</a></span>
     Un doute sur un ingrédient ?
     <a href="https://halalgpt.fr?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=pied-scanner" style="color: #7A5F1C; text-decoration: none; padding: 4px 6px; font-weight: 700;">🌙 Demande à HalalGPT</a>

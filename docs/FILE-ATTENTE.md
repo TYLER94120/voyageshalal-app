@@ -85,6 +85,47 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Le panneau des messages caméra était écrit en noir sur fond noir**
+  *(11 août)* — premier audit d'accessibilité du site : ce que reçoit
+  quelqu'un qui écoute la page avec un lecteur d'écran, ou qui lit mal les
+  gris clairs.
+
+  **Ce qui était déjà bon, mesuré sur les 4 pages :** 0 bouton ou lien sans
+  nom accessible, 0 image sans `alt`, 0 champ atteignable sans étiquette,
+  `lang="fr"` partout, et **un seul h1 visible à la fois** sur scan.html —
+  une affirmation que j'avais notée en août sans jamais la vérifier ; elle est
+  maintenant mesurée, et le h1 porte bien le nom du produit sur l'écran de
+  verdict.
+
+  **Le défaut, et il est visible à l'œil nu :** `.etat-camera` pose un fond
+  presque noir mais ne déclarait **aucune couleur de texte** — il héritait donc
+  du texte sombre de la page. **Contraste 1,1 sur 4,5 requis.** C'est le
+  panneau qui porte *tous* les messages de la caméra, y compris « Caméra
+  refusée — autorise-la » et « saisis les chiffres ci-dessous » : ceux-là mêmes
+  que j'ai réécrits toute la journée pour qu'ils soient justes. Ils étaient
+  justes et illisibles. Le bouton torche juste à côté, lui, déclarait bien sa
+  couleur.
+
+  | | Textes au-dessus du seuil WCAG |
+  |---|---|
+  | Avant | 681 / 755 |
+  | Après | **750 / 750** (+ 5 posés sur un dégradé, non mesurables) |
+
+  Corrigés au passage : les gris à 0,42 et 0,45 d'opacité (fils d'Ariane,
+  dates, « Mots repérés », « Aucun risque connu ») montaient à 2,5 seulement —
+  passés à 0,66, soit 5,1 ; et le vert des textes « doute mineur » (3,5) a reçu
+  sa variante lisible, sur le modèle de `--or-lisible` déjà utilisé ailleurs.
+
+  *Note de méthode :* la sonde a menti **deux fois**. D'abord des contrastes
+  **négatifs** — mathématiquement impossibles : elle lisait le troisième nombre
+  de `rgb(18,38,26)` comme une opacité de 26. Puis 4 faux défauts « blanc sur
+  crème, contraste 1,0 » : un dégradé ne se lit pas avec `backgroundColor`, le
+  navigateur y répond « transparent ». Elle compte désormais ces cas à part au
+  lieu de les accuser. Cinquième et sixième instrument fautif de la journée.
+
+  Sonde conservée : `npm run sonde:contraste`, 750 textes, sortie en erreur au
+  premier passage sous le seuil.
+
 - **Sept chiffres écrits à la main sur l'accueil, qu'aucun contrôle ne tenait
   à jour** *(11 août)* — audit des promesses de la page d'accueil : chaque
   affirmation chiffrée confrontée au moteur.

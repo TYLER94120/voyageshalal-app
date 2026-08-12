@@ -324,6 +324,9 @@ const html = `<!DOCTYPE html>
     :root {
       --nuit: #0B1A0F; --foret: #1B4332; --or: #C9A84C; --creme: #FDFAF3;
       --douteux: #E08E3C; --haram: #C0392B; --halal: #3E9B4F;
+      /* Le vert des pastilles est trop clair pour du texte : 3,5 sur blanc,
+         sous le seuil de 4,5. Même idée que --or-lisible ailleurs sur le site. */
+      --halal-lisible: #1B7A4B;
       --fond: #FDFAF3; --carte: #FFFFFF; --texte: #12261A;
       --texte-doux: rgba(18, 38, 26, 0.62); --bordure: rgba(18, 38, 26, 0.10);
       --or-lisible: #7A5F1C; --ombre-douce: 0 2px 10px rgba(18, 38, 26, 0.06);
@@ -357,14 +360,14 @@ const html = `<!DOCTYPE html>
     }
     .fil-ariane {
       max-width: 820px; margin: 0 auto; padding: 0 20px 6px;
-      font-size: 13px; color: rgba(18, 38, 26, 0.42);
+      font-size: 13px; color: rgba(18, 38, 26, 0.66);
       display: flex; align-items: center; gap: 8px;
     }
     .fil-ariane a { color: var(--texte-doux); text-decoration: none; }
     main { max-width: 820px; margin: 0 auto; padding: 10px 20px 40px; }
     h1 { font-family: "Playfair Display", Georgia, serif; font-size: 31px; font-weight: 800; line-height: 1.15; margin-bottom: 10px; }
     .intro { color: var(--texte-doux); margin-bottom: 4px; }
-    .date { font-size: 14px; color: rgba(18, 38, 26, 0.42); margin-bottom: 20px; }
+    .date { font-size: 14px; color: rgba(18, 38, 26, 0.66); margin-bottom: 20px; }
 
     .recherche { position: sticky; top: 0; z-index: 5; padding: 10px 0 14px; background: linear-gradient(var(--fond) 78%, rgba(253,250,243,0)); }
     .recherche input {
@@ -421,9 +424,9 @@ const html = `<!DOCTYPE html>
     .carte.haram .code { background: rgba(192, 57, 43, 0.12); color: #8E2A20; }
     .carte h3 { font-size: 16px; font-weight: 700; }
     .raison { color: var(--texte-doux); font-size: 15px; margin-top: 7px; }
-    .nuance { font-size: 14px; color: var(--halal); margin-top: 6px; font-weight: 600; }
+    .nuance { font-size: 14px; color: var(--halal-lisible); margin-top: 6px; font-weight: 600; }
     .mots { margin-top: 10px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .mots-titre { font-size: 12px; color: rgba(18, 38, 26, 0.42); }
+    .mots-titre { font-size: 12px; color: rgba(18, 38, 26, 0.66); }
     .mot {
       font-size: 12px; background: rgba(18, 38, 26, 0.05);
       border-radius: 999px; padding: 3px 9px; color: var(--texte-doux);
