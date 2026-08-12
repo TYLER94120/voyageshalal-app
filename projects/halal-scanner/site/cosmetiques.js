@@ -257,11 +257,21 @@ function texteAnalysable(texte) {
     const sansMentions = texte.replace(MENTIONS_ABSENCE, " ");
     return (sansMentions.match(/[a-zà-öø-ÿ]/gi) || []).length >= 12;
 }
+/**
+ * Même piège que dans le moteur alimentaire, et même correctif : « non-halal »
+ * contient « halal ». Voir le commentaire détaillé de `NEGATION` dans
+ * `halal.ts` — huit étiquettes qui nient le halal étaient lues comme une
+ * certification. En cas d'ambiguïté, on NE certifie PAS.
+ */
+const NEGATION = /(^|[-_\s:])(non|not|no|sans|without)([-_\s]|$)/;
+function affirme(label, motif) {
+    return motif.test(label) && !NEGATION.test(label);
+}
 export function analyserCosmetique(entree) {
     var _a, _b, _c, _d, _e;
     const labels = ((_a = entree.labels) !== null && _a !== void 0 ? _a : []).map((l) => l.toLowerCase());
-    const certifieHalal = labels.some((l) => l.includes("halal"));
-    const vegan = labels.some((l) => l.includes("vegan") || l.includes("vegetalien"));
+    const certifieHalal = labels.some((l) => affirme(l, /halal/));
+    const vegan = labels.some((l) => affirme(l, /vegan|vegetalien/));
     const texte = normaliser((_b = entree.ingredientsTexte) !== null && _b !== void 0 ? _b : "");
     const alertes = [];
     const vues = new Set();

@@ -112,9 +112,38 @@ const perdues = VRAIES.filter((t) => analyserProduit({ ingredientsTexte: t, addi
 for (const t of perdues) console.log(`  ✗ « ${t.slice(0, 46)}… » → INCONNU alors que la composition est là`);
 if (!perdues.length) console.log(`${VRAIES.length} vraies compositions mentionnant l'emballage : toujours lues.`);
 
+console.log("\n=== E. etiquettes qui NIENT le halal ===");
+// « en:non-halal » contient « halal ». Le test etait un simple includes() :
+// huit etiquettes qui nient explicitement le halal etaient donc lues comme une
+// certification, et une composition a la gelatine ressortait HALAL, certifie.
+// C'est l'inversion la plus grave possible — le produit affirmait le contraire
+// de ce que la base disait.
+const NIENT = [
+  "en:non-halal", "en:not-halal", "fr:non-halal", "en:halal-not-certified",
+  "en:no-halal-certification", "fr:sans-certification-halal",
+  "en:non-vegan", "fr:non-vegetalien",
+];
+const AVEC_GELATINE = "eau, sucre, gélatine, arôme";
+const inversees = NIENT.filter(
+  (l) => analyserProduit({ ingredientsTexte: AVEC_GELATINE, additifs: [], labels: [l] }).statut === "halal"
+);
+console.log(`${NIENT.length} étiquettes négatives testées, ${inversees.length} lues comme une certification :`);
+for (const l of inversees) console.log(`  ✗ « ${l} » → HALAL, alors que l'étiquette dit le contraire`);
+
+// L'exces inverse : une vraie certification doit encore certifier.
+const AFFIRMENT = ["en:halal", "fr:halal", "en:certified-halal", "fr:certifie-halal",
+  "en:halal-certified", "fr:viande-halal", "en:vegan", "fr:vegetalien"];
+const perduesLabel = AFFIRMENT.filter(
+  (l) => analyserProduit({ ingredientsTexte: AVEC_GELATINE, additifs: [], labels: [l] }).statut !== "halal"
+);
+for (const l of perduesLabel) console.log(`  ✗ « ${l} » ne certifie plus rien`);
+if (!perduesLabel.length) console.log(`${AFFIRMENT.length} vraies certifications : toujours reconnues.`);
+
 // Le verdict. Un seul manque suffit : chacune de ces entrées est un aliment
 // qu'on servirait comme licite à quelqu'un qui nous a crus.
-const manques = codeManques.length + texteManques.length + motManques.length + inventes.length + perdues.length;
+const manques =
+  codeManques.length + texteManques.length + motManques.length +
+  inventes.length + perdues.length + inversees.length + perduesLabel.length;
 if (manques > 0) {
   console.log(`\n✗ ${manques} FAUX NÉGATIF(S) — de l'interdit passe pour licite. Le moteur n'est pas publiable.`);
   process.exit(1);
@@ -122,5 +151,7 @@ if (manques > 0) {
 // Compté, pas écrit à la main : le jour où quelqu'un ajoute un cas, cette
 // ligne se met à jour toute seule. Une sonde qui annonce un chiffre faux
 // abîme la confiance exactement comme une page qui en annonce un.
-const total = codes.length * 2 + MOTS.length + RIEN_A_LIRE.length + VRAIES.length;
+const total =
+  codes.length * 2 + MOTS.length + RIEN_A_LIRE.length + VRAIES.length +
+  NIENT.length + AFFIRMENT.length;
 console.log(`\n✓ Aucun faux négatif ni verdict inventé : les ${total} cas à risque sont tous tenus.`);

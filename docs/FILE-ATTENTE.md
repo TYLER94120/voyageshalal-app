@@ -112,6 +112,50 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **« non-halal » était lu comme une certification halal** *(12 août)* — audit
+  de cycle, les 7 éléments de la file étant tous bloqués sur Mohamed ou sur la
+  politique réseau.
+
+  Question posée : **sur quoi repose l'affirmation « certifié halal ✓ » ?**
+  C'est la plus forte que ce produit fasse. Réponse trouvée dans le code :
+  `labels.some(l => l.includes("halal"))`. Or **« en:non-halal » contient
+  « halal »**.
+
+  | Étiquette de la base, sur une composition à la gélatine | avant | après |
+  |---|---|---|
+  | `en:non-halal` | **HALAL, certifié ✓** | DOUTEUX |
+  | `en:not-halal` | **HALAL, certifié ✓** | DOUTEUX |
+  | `fr:non-halal` | **HALAL, certifié ✓** | DOUTEUX |
+  | `en:halal-not-certified` | **HALAL, certifié ✓** | DOUTEUX |
+  | `en:no-halal-certification` | **HALAL, certifié ✓** | DOUTEUX |
+  | `fr:sans-certification-halal` | **HALAL, certifié ✓** | DOUTEUX |
+  | `en:non-vegan` | **HALAL** *(raccourci végane)* | DOUTEUX |
+  | `fr:non-vegetalien` | **HALAL** *(raccourci végane)* | DOUTEUX |
+
+  **8 sur 8 → 0.** C'est l'inversion la plus grave possible : le produit
+  affirmait le contraire de ce que la base disait, et l'affichait avec le
+  sceau. Même famille de défaut que « lardons » attrapé par `\blard\b` — une
+  sous-chaîne qui ne regarde pas le mot autour.
+
+  **Le doute penche désormais toujours du même côté** : en cas d'ambiguïté, on
+  ne certifie pas. Une certification manquée affiche DOUTEUX avec une
+  explication ; une certification inventée fait manger du porc.
+
+  Et parce que se taire serait aussi un mensonge : une composition **propre**
+  portant `en:non-halal` ne ressort plus HALAL en silence, elle porte
+  l'alerte « La base indique que ce produit n'est PAS halal. Cette information
+  vient de contributeurs, pas d'un organisme : à vérifier sur l'emballage. » —
+  ce que la base dit, sans en faire un interdit inventé.
+
+  Contrecoup vérifié : les 8 vraies certifications (`en:halal`, `fr:halal`,
+  `en:certified-halal`, `fr:certifie-halal`, `en:halal-certified`,
+  `fr:viande-halal`, `en:vegan`, `fr:vegetalien`) certifient toujours. Même
+  correctif dans le moteur cosmétique.
+
+  Gelé dans `sonde:faux-negatifs` (section E) : **66 → 82 cas**. Sabotage de
+  contrôle — `includes()` naïf remis : 6/8 repassent HALAL, la sonde vire au
+  rouge.
+
 - **16 façons d'écrire « on ne sait pas » rendaient HALAL** *(12 août)* — audit
   de cycle : les 6 éléments de la file étaient tous bloqués sur Mohamed ou sur
   la politique réseau, donc j'ai mesuré au lieu d'attendre.

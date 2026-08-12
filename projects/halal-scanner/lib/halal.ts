@@ -448,16 +448,58 @@ function codesEDuTexte(texte: string): string[] {
   return [...trouves];
 }
 
+/**
+ * Une étiquette qui NIE — et le piège qu'elle tendait.
+ *
+ * Mesuré le 12 août 2026 : `certifieHalal` était un simple
+ * `label.includes("halal")`. Or « en:non-halal » contient « halal ». Huit
+ * étiquettes qui nient explicitement le halal étaient donc lues comme une
+ * certification, et une composition à la gélatine ressortait **HALAL, certifié
+ * ✓** : en:non-halal, en:not-halal, fr:non-halal, en:halal-not-certified,
+ * en:no-halal-certification, fr:sans-certification-halal — plus en:non-vegan
+ * et fr:non-vegetalien, qui activaient le raccourci végane.
+ *
+ * C'est l'inversion la plus grave possible : le produit affirmait le contraire
+ * de ce que la base disait. Même famille de défaut que « lardons » attrapé par
+ * `\blard\b` — une sous-chaîne qui ne regarde pas le mot autour.
+ *
+ * Les étiquettes d'Open Food Facts sont libres et écrites par des
+ * contributeurs. Le doute penche donc toujours du même côté : en cas
+ * d'ambiguïté on NE certifie PAS. Une certification manquée affiche DOUTEUX
+ * avec une explication ; une certification inventée fait manger du porc.
+ */
+const NEGATION = /(^|[-_\s:])(non|not|no|sans|without)([-_\s]|$)/;
+
+function nie(label: string): boolean {
+  return NEGATION.test(label);
+}
+
+function affirme(label: string, motif: RegExp): boolean {
+  return motif.test(label) && !nie(label);
+}
+
 export function analyserProduit(entree: {
   ingredientsTexte?: string | null;
   additifs?: string[] | null;
   labels?: string[] | null;
 }): Verdict {
   const labels = (entree.labels ?? []).map((l) => l.toLowerCase());
-  const certifieHalal = labels.some((l) => l.includes("halal"));
-  const vegan = labels.some((l) => l.includes("vegan") || l.includes("vegetalien"));
+  const certifieHalal = labels.some((l) => affirme(l, /halal/));
+  const vegan = labels.some((l) => affirme(l, /vegan|vegetalien/));
+  // Une étiquette qui NIE le halal ne doit pas passer sous silence.
+  const declareNonHalal = labels.some((l) => nie(l) && /halal/.test(l));
 
   const alertes: Alerte[] = [];
+
+  if (declareNonHalal && !certifieHalal) {
+    alertes.push({
+      element: "Étiquette « non halal »",
+      niveau: "douteux",
+      raison:
+        "La base indique que ce produit n'est PAS halal. Cette information vient de contributeurs, pas d'un organisme : à vérifier sur l'emballage.",
+      famille: "label-non-halal",
+    });
+  }
 
   const texte = normaliser(entree.ingredientsTexte ?? "");
 
