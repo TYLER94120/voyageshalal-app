@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-08-12 11:03 UTC.**
+**Dernier changement constate le 2026-08-12 12:25 UTC.**
 
-⚠️ **Cette ronde a regarde 128 pages sur 1965 — environ 7 %.**
+⚠️ **Cette ronde a regarde 130 pages sur 1965 — environ 7 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -17,12 +17,9 @@ que rien de nouveau n'est casse, pas que le robot dort.
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 1 | il la recoit, mais elle le dessert |
+| 🟠 defaut | 0 | il la recoit, mais elle le dessert |
 | 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
 
-## 🟠 defaut — 1
+## Rien a signaler
 
-### gohalaltravel.com (1)
-
-- **description en francais sur le domaine anglais** — mots francais : mosquee, une  
-  `https://www.gohalaltravel.com/contact`
+Les quatre sites repondent et les pages vues sont correctes.

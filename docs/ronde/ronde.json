@@ -1,13 +1,5 @@
 {
-  "ronde_du": "2026-08-12 11:03 UTC",
-  "pages_vues": 128,
-  "defauts": [
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/contact",
-      "quoi": "description en francais sur le domaine anglais",
-      "detail": "mots francais : mosquee, une"
-    }
-  ]
+  "ronde_du": "2026-08-12 12:25 UTC",
+  "pages_vues": 130,
+  "defauts": []
 }
