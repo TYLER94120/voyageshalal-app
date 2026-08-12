@@ -206,12 +206,18 @@ def main():
 
     morts, bloques, suspects = [], [], []
     total_liens = 0
+    # Ce que ce tour a REELLEMENT regarde, par rapport a ce qui existe. Sans
+    # ces deux compteurs, le rapport annonce un nombre de liens morts comme
+    # s'il valait pour le site entier — voir la note de couverture plus bas.
+    pages_vues = pages_connues = 0
 
     for site in sites:
         pages = urls_du_sitemap(site["base"])
+        pages_connues += len(pages)
         if len(pages) > PAGES_PAR_TOUR:
             depart = (tour * PAGES_PAR_TOUR) % len(pages)
             pages = (pages + pages)[depart:depart + PAGES_PAR_TOUR]
+        pages_vues += len(pages)
 
         internes, externes = set(), set()
         with ThreadPoolExecutor(max_workers=PARALLELE) as pool:
@@ -269,15 +275,35 @@ def main():
     os.makedirs("docs/ronde", exist_ok=True)
     with open("docs/ronde/liens-morts.json", "w", encoding="utf-8") as f:
         json.dump({"verifie_le": horodatage, "liens_controles": total_liens,
+                   "pages_vues": pages_vues, "pages_connues": pages_connues,
                    "morts": morts, "bloques": bloques,
                    "innocentes_au_controle_calme": innocentes},
                   f, ensure_ascii=False, indent=2)
         f.write("\n")
 
+    part = round(100 * pages_vues / pages_connues) if pages_connues else 0
     lignes = [
         "# Les liens qui ne menent nulle part",
         "",
         f"Releve du **{horodatage}** · {total_liens} liens controles.",
+        "",
+        # La note de couverture. Ajoutee le 12 aout apres avoir regarde la suite
+        # des relevés : 46 · 0 · 4 · 4 · 4 · 42. On croirait le site en train de
+        # casser et de se reparer toutes les quatre heures. Il ne se passait
+        # rien de tel — ce robot regarde 120 pages par site et par tour, en
+        # tournant, et le nombre de liens controles allait de 1 336 a 2 889
+        # d'un releve a l'autre. On comparait deux tranches differentes.
+        #
+        # C'est exactement le defaut corrige la veille sur la ronde des sites.
+        # Je ne l'avais pas corrige ici : un instrument reparé ne repare pas
+        # son voisin.
+        f"⚠️ **Ce tour a regarde {pages_vues} pages sur {pages_connues} — "
+        f"environ {part} %.**",
+        "",
+        "Le nombre ci-dessous vaut pour CETTE TRANCHE, pas pour le site entier.",
+        "Un releve a 4 puis un a 42 ne veut pas dire que 38 liens ont casse dans",
+        "la nuit : la rotation est simplement passee sur d'autres pages. Le vrai",
+        "total du site est au moins celui-ci, jamais moins.",
         "",
         "Un guide de voyage vit de ses liens. Un lien mort, c'est un lecteur qui",
         "arrive sur une erreur au moment precis ou il faisait confiance au guide.",
