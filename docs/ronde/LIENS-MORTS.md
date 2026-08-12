@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-08-11 21:05 UTC** · 1396 liens controles.
+Releve du **2026-08-12 02:45 UTC** · 2889 liens controles.
 
 Un guide de voyage vit de ses liens. Un lien mort, c'est un lecteur qui
 arrive sur une erreur au moment precis ou il faisait confiance au guide.
@@ -15,23 +15,30 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-✅ **4 lien(s) sauve(s) du controle calme.** Ils n'avaient rendu
+✅ **11 lien(s) sauve(s) du controle calme.** Ils n'avaient rendu
 aucun code de reponse pendant le balayage — ce qui ne veut pas dire « mort »,
 mais « l'hote ne repond plus a NOTRE robot ». Rejuges un par un, machine calme,
 ils repondent tres bien. Sans cette etape, on serait alle reparer des pages saines.
 
-- `https://www.voyageshalal.fr/hotels/taza` *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/miami` *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/horaires-priere?lat=2.1896&lng=102.2501&lieu=Malacca&pays=Malaisie` *(sur voyageshalal.fr)*
-- `https://halalgpt.fr/e/E476?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://www.gohalaltravel.com/hotels/irbid` *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/la-haye` *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/hotels/maputo` *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/mosquee-proche?lat=45.0703&lng=7.6869&lieu=Turin&pays=Italie` *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/priere/quito` *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/halalgpt` *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/mosquee-proche?lat=-20.1609&lng=57.5012&lieu=Port-Louis&pays=Maurice` *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/alicante` *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/tabuk` *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/qibla?lat=34.3853&lng=132.4553&lieu=Hiroshima&pays=Japon` *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/communaute/ajouter?ville=faro` *(sur gohalaltravel.com)*
 
 ## 🔴 Liens internes morts — 4
 
-- `https://www.voyageshalal.fr/destinations/greenssuite2021@gmail.com` — code 404  
+- `https://www.voyageshalal.fr/destinations/www.hotelvakhsh.tj` — code 404  
   *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/grouplehahotels.com` — code 404  
+- `https://www.voyageshalal.fr/destinations/toyoko-inn.com` — code 404  
   *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/hotel-Medina.com` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/www.darfatima.com` — code 404  
-  *(sur voyageshalal.fr)*
+- `https://www.gohalaltravel.com/destinations/toyoko-inn.com` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/www.hotelvakhsh.tj` — code 404  
+  *(sur gohalaltravel.com)*

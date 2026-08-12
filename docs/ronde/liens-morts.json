@@ -1,56 +1,98 @@
 {
-  "verifie_le": "2026-08-11 21:05 UTC",
-  "liens_controles": 1396,
+  "verifie_le": "2026-08-12 02:45 UTC",
+  "liens_controles": 2889,
   "morts": [
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/greenssuite2021@gmail.com",
+      "url": "https://www.voyageshalal.fr/destinations/www.hotelvakhsh.tj",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/grouplehahotels.com",
+      "url": "https://www.voyageshalal.fr/destinations/toyoko-inn.com",
       "detail": "code 404"
     },
     {
-      "site": "voyageshalal.fr",
+      "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/hotel-Medina.com",
+      "url": "https://www.gohalaltravel.com/destinations/toyoko-inn.com",
       "detail": "code 404"
     },
     {
-      "site": "voyageshalal.fr",
+      "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/www.darfatima.com",
+      "url": "https://www.gohalaltravel.com/destinations/www.hotelvakhsh.tj",
       "detail": "code 404"
     }
   ],
   "bloques": [],
   "innocentes_au_controle_calme": [
     {
-      "site": "voyageshalal.fr",
+      "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/hotels/taza",
+      "url": "https://www.gohalaltravel.com/hotels/irbid",
       "detail": "URLError — aucun code de reponse"
     },
     {
-      "site": "voyageshalal.fr",
+      "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/miami",
+      "url": "https://www.gohalaltravel.com/destinations/la-haye",
       "detail": "URLError — aucun code de reponse"
     },
     {
-      "site": "voyageshalal.fr",
+      "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/horaires-priere?lat=2.1896&lng=102.2501&lieu=Malacca&pays=Malaisie",
+      "url": "https://www.gohalaltravel.com/hotels/maputo",
       "detail": "URLError — aucun code de reponse"
     },
     {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E476?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/mosquee-proche?lat=45.0703&lng=7.6869&lieu=Turin&pays=Italie",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/priere/quito",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/halalgpt",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/mosquee-proche?lat=-20.1609&lng=57.5012&lieu=Port-Louis&pays=Maurice",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/alicante",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/tabuk",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/qibla?lat=34.3853&lng=132.4553&lieu=Hiroshima&pays=Japon",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/communaute/ajouter?ville=faro",
       "detail": "URLError — aucun code de reponse"
     }
   ]
