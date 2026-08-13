@@ -136,7 +136,7 @@ dire(any(s["langue"] == "fr" for s in robot.SITES)
 # produit. C'est le seul moyen de vérifier ce que GitHub Actions écrira
 # vraiment — le reste du test ne contrôle que des morceaux.
 print()
-import os as _os, tempfile
+import json as _json, os as _os, tempfile
 
 PAGES = {"https://gohalaltravel.com/p%d" % i for i in range(60)}
 
@@ -198,6 +198,76 @@ dire("BALAYAGE-COMPLET.md" in rapport,
 dire("de ce matin" in rapport or "vieux de" in rapport or "jamais fait" in rapport,
      "et il dit l'AGE de ce releve, pour qu'on sache ce qu'on lit",
      [l for l in rapport.splitlines() if "BALAYAGE-COMPLET.md" in l][:1])
+
+
+# ─── Un site propre doit prouver qu'il a ete regarde ─────────────────────────
+#
+# Mesure du 13 aout 2026 : le balayage complet annoncait « 1976 pages
+# regardees » et ne listait de defauts que pour deux sites sur quatre. Rien
+# dans le rapport ne permettait de savoir si les deux autres avaient ete
+# regardes et etaient propres, ou s'ils n'avaient jamais ete ouverts. Le
+# chiffre par site etait pourtant calcule — il partait dans les journaux de
+# GitHub, que personne ne lit. Une heure a ete perdue a le reconstituer.
+#
+# On monte donc deux sites : un propre, un tombe. Le rapport doit montrer le
+# compte des DEUX, pour que « absent de la liste des defauts » cesse de
+# vouloir dire deux choses opposees.
+
+print()
+
+_TOMBE = "https://tombe.fr"
+
+
+def _page_selective(url, methode="GET", delai=None):
+    if url.startswith(_TOMBE):
+        return (0, b"", 0.0, "connexion refusee")
+    return _fausse_page(url, methode, delai)
+
+
+robot.urls_du_sitemap = _faux_sitemap
+robot.chercher = _page_selective
+robot.SITES = [
+    {"nom": "gohalaltravel.com", "base": "https://gohalaltravel.com", "langue": "en"},
+    {"nom": "tombe.fr", "base": _TOMBE, "langue": "fr"},
+]
+
+_avant_compte = _os.getcwd()
+with tempfile.TemporaryDirectory() as dossier:
+    _os.chdir(dossier)
+    _os.environ.pop("RONDE_COMPLETE", None)
+    _os.environ["GITHUB_RUN_NUMBER"] = "2"
+    _os.makedirs("docs/ronde", exist_ok=True)
+    with open("docs/ronde/balayage-complet.json", "w", encoding="utf-8") as f:
+        f.write('{"ronde_du": "%s", "pages_vues": 1959, "defauts": []}'
+                % _dt.now(_tz.utc).strftime("%Y-%m-%d %H:%M UTC"))
+    try:
+        robot.main()
+    except SystemExit:
+        pass
+    rapport_compte = open("docs/ronde/RONDE.md", encoding="utf-8").read()
+    donnees_compte = _json.load(open("docs/ronde/ronde.json", encoding="utf-8"))
+    _os.chdir(_avant_compte)
+
+_ligne = lambda nom: [l for l in rapport_compte.splitlines()
+                      if l.startswith("| " + nom + " |")]
+
+dire("site par site" in rapport_compte,
+     "le rapport dit ce qu'il a regarde, site par site")
+dire(_ligne("gohalaltravel.com") != [],
+     "un site SANS defaut figure quand meme au tableau — c'est tout l'objet",
+     _ligne("gohalaltravel.com")[:1])
+dire(_ligne("tombe.fr") != [] and "| 0 |" in (_ligne("tombe.fr") or [""])[0],
+     "un site tombe montre zero page vue",
+     _ligne("tombe.fr")[:1])
+# Le site tombe est deja signale GRAVE par ailleurs : le tableau ne redouble
+# pas cette alarme, il donne seulement de quoi la recouper.
+dire("le site entier ne repond pas" in rapport_compte,
+     "et il reste signale GRAVE, sans second avertissement qui dirait la meme chose")
+dire([c for c in donnees_compte.get("pages_par_site", [])
+      if c["site"] == "tombe.fr" and c["pages"] == 0] != [],
+     "le detail par site est aussi dans le JSON, pour qui veut le relire")
+
+robot.chercher = _fausse_page
 
 
 # ─── Le rattrapage du balayage complet ───────────────────────────────────────

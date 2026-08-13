@@ -565,12 +565,30 @@ def main():
         print("Balayage COMPLET : toutes les pages, doucement (2 a la fois).\n")
 
     tous, vues, connues = [], 0, 0
+    # Le detail par site, garde pour le rapport et pas seulement pour la console.
+    #
+    # Mesure du 13 aout : le balayage complet annoncait « 1976 pages regardees »
+    # et ne listait de defauts que pour deux sites sur quatre. Impossible d'y
+    # lire la difference entre « halalgpt.fr a ete regarde et il est propre » et
+    # « halalgpt.fr n'a jamais ete atteint ». Le chiffre par site existait — il
+    # etait calcule ici et imprime juste en dessous — mais il mourait dans les
+    # journaux de GitHub, que personne ne lit.
+    #
+    # Ce que ce tableau ne fait PAS, et pourquoi : la premiere version ajoutait
+    # un avertissement « ce site n'a rendu aucune page ». Verification faite
+    # dans `ronde_du_site`, zero page n'arrive que lorsque l'accueil ne repond
+    # pas — cas qui inscrit deja un defaut GRAVE, « le site entier ne repond
+    # pas », plus precis que l'avertissement. Deux alarmes pour un fait, ce
+    # n'est pas deux fois plus sur, c'est une de trop. Le tableau se contente
+    # donc de montrer ce qui a ete regarde.
+    compte_par_site = []
     for site in sites:
         defauts, n, total = ronde_du_site(site, tour, complet)
         tous += defauts
         vues += n
         connues += total
         graves = sum(1 for d in defauts if d["niveau"] == GRAVE)
+        compte_par_site.append({"site": site["nom"], "pages": n, "defauts": len(defauts)})
         print(f"{site['nom']:22} {n:3} pages · {len(defauts):3} defauts "
               f"dont {graves} graves")
 
@@ -608,7 +626,8 @@ def main():
 
     if not inchange:
         with open(fichier_json, "w", encoding="utf-8") as f:
-            json.dump({"ronde_du": horodatage, "pages_vues": vues, "defauts": tous},
+            json.dump({"ronde_du": horodatage, "pages_vues": vues,
+                       "pages_par_site": compte_par_site, "defauts": tous},
                       f, ensure_ascii=False, indent=2)
             f.write("\n")
 
@@ -669,10 +688,28 @@ def main():
             f"| 🟠 defaut | {len(par_niveau[DEFAUT])} | il la recoit, mais elle le dessert |",
             f"| 🟡 a surveiller | {len(par_niveau[SURVEILLER])} | pas urgent, a ne pas laisser grossir |",
             "",
+            "### Ce que cette ronde a regarde, site par site",
+            "",
+            "Un site sans defaut plus bas a bien ete regarde : cette ligne le "
+            "prouve.",
+            "Sans elle, « absent de la liste » et « jamais ouvert » se lisaient "
+            "pareil.",
+            "",
+            "| Site | Pages vues | Defauts |",
+            "|---|---|---|",
         ]
+        lignes += [
+            f"| {c['site']} | {c['pages']} | {c['defauts']} |"
+            for c in compte_par_site
+        ]
+        lignes += [""]
         if not tous:
+            # « Les quatre sites repondent » etait ecrit en dur, donc vrai meme
+            # quand un site n'avait rendu aucune page. On compte maintenant.
+            debout = [c for c in compte_par_site if c["pages"] > 0]
             lignes += ["## Rien a signaler", "",
-                       "Les quatre sites repondent et les pages vues sont correctes.", ""]
+                       f"{len(debout)} site(s) sur {len(compte_par_site)} ont rendu des "
+                       "pages, et celles-ci sont correctes.", ""]
         for niveau in (GRAVE, DEFAUT, SURVEILLER):
             liste = par_niveau[niveau]
             if not liste:
