@@ -112,6 +112,55 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **L'adresse IP de chaque visiteur partait chez Google, sans que les mentions
+  légales le disent** *(13 août)* — audit de cycle, les 7 éléments de la file
+  étant tous bloqués.
+
+  Question posée : **le site dit-il la vérité sur ce qu'il envoie ?** Les
+  claims de l'accueil sont sobres et exacts (« gratuit, sans compte », « tes
+  scans restent sur ton téléphone » — c'est du `localStorage`, c'est vrai).
+  Mais en comparant les hôtes réellement contactés à ceux que la page
+  « mentions légales » déclare :
+
+  | Hôte contacté | déclaré ? |
+  |---|---|
+  | `world.openfoodfacts.org`, `world.openbeautyfacts.org` | oui |
+  | `halalgpt.fr` | oui |
+  | GitHub Pages *(hébergeur)* | oui |
+  | **`fonts.googleapis.com`, `fonts.gstatic.com`** | **non** |
+
+  Les 4 pages sur 4 chargeaient DM Sans et Playfair Display chez Google. Le
+  mot « Google » apparaissait bien 3 fois dans `mentions-legales.html` — mais
+  **les 3 occurrences étaient ses propres balises `<link>` dans le `<head>`**.
+  Pas un mot dans le corps de la page.
+
+  Même décision que pour le lecteur ZXing le 12 août, pour la même raison : on
+  sert les fichiers nous-mêmes.
+
+  | | avant | après |
+  |---|---|---|
+  | hôtes tiers à l'ouverture de l'accueil | **2** | **0** |
+  | idem, page additifs et mentions légales | **2** | **0** |
+  | hôtes tiers sur le scanner | 3 | **1** — `halalgpt.fr`, déclaré |
+  | polices disponibles hors ligne | non | oui |
+
+  Récupérées depuis **npm** (`@fontsource/*`), pas depuis un site : sous-ensemble
+  latin, graisse normale, 7 fichiers, 148 Ko — mais un navigateur ne télécharge
+  que les graisses qu'il **affiche**. Elles ne sont donc pas dans la liste
+  pré-chargée du service worker : elles entrent dans le cache à la première
+  utilisation réelle, comme ZXing. Empreintes SHA-256 et procédure de mise à
+  jour dans `site/vendor/polices/README.md`. Licence OFL, qui autorise
+  explicitement l'auto-hébergement.
+
+  *Ce que la mesure a corrigé chez moi :* j'allais retirer Playfair 900 pour
+  économiser 22 Ko. La mesure des requêtes réelles montre que **l'accueil le
+  charge** — il est utilisé. Gardé.
+
+  Gelé dans `verif:chiffres` (en CI) : aucune page ne peut charger depuis
+  `fonts.googleapis`, `fonts.gstatic`, jsDelivr, unpkg ou cdnjs, et tout
+  fichier de police nommé doit exister. Sabotage de contrôle — un `<link>`
+  Google remis sur l'accueil : sortie en erreur.
+
 - **32 secondes d'écran de chargement en rayon** *(12 août)* — audit de cycle,
   les 7 éléments de la file étant tous bloqués. Cette fois le défaut n'est pas
   un verdict faux : c'est un verdict qui n'arrive jamais.

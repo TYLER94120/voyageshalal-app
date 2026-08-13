@@ -14,13 +14,62 @@
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Polices chargées sans bloquer l'affichage : le scanner démarre tout de
-       suite, même sur connexion lente. La graisse 900 (mot « HALAL ») est
-       désormais réellement chargée au lieu d'être synthétisée. -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800;900&family=Playfair+Display:wght@800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800;900&family=Playfair+Display:wght@800;900&display=swap" /></noscript>
+  <!-- Polices servies depuis notre domaine. Elles venaient de
+       fonts.googleapis.com : l'adresse IP de chaque visiteur partait chez un
+       tiers a chaque ouverture de page, et le mot « Google » n'apparaissait
+       nulle part dans les mentions legales. Meme decision que pour le lecteur
+       ZXing. Provenance et empreintes : vendor/polices/README.md -->
+  <style>
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-400-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-600-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-700-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 800;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-800-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 900;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-900-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Playfair Display";
+      font-style: normal;
+      font-weight: 800;
+      font-display: swap;
+      src: url("./vendor/polices/playfair-display-latin-800-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Playfair Display";
+      font-style: normal;
+      font-weight: 900;
+      font-display: swap;
+      src: url("./vendor/polices/playfair-display-latin-900-normal.woff2") format("woff2");
+    }
+  </style>
   <style>
     :root {
       /* Palette famille (inchangée) */
