@@ -54,6 +54,16 @@ const cas = [
   ["Sans alcool (faux positif neutralisé)", { ingredientsTexte: "boisson maltee sans alcool, eau, malt", additifs: [] }, "halal", 0],
   ["Brioche E471", { ingredientsTexte: "farine, oeufs, émulsifiant : e471", additifs: ["en:e471"] }, "douteux", null],
   ["Végane avec E471", { ingredientsTexte: "farine, émulsifiant : e471", additifs: ["en:e471"], labels: ["en:vegan"] }, "halal", null],
+  // Mesuré le 13 août : l'étiquette « végane » servait de laissez-passer. Elle
+  // rendait HALAL tout ce qui n'était pas franchement interdit, en affichant le
+  // doute juste en dessous. Une étiquette de contributeur ne répond qu'aux
+  // doutes dont « végétale » est une issue possible — E471 ci-dessus, oui ;
+  // les trois cas suivants, non.
+  ["Végane + étiquette « non halal » : deux données contraires = doute", { ingredientsTexte: "eau, sucre", labels: ["en:non-halal", "en:vegan"] }, "douteux", 1],
+  ["Végane + gélatine : la seule issue nommée est une mention halal", { ingredientsTexte: "sucre, gelatine", labels: ["en:vegan"] }, "douteux", 1],
+  ["Végane + carmin : extrait d'insectes, l'étiquette se contredit", { ingredientsTexte: "sucre", additifs: ["en:e120"], labels: ["en:vegan"] }, "douteux", 1],
+  ["Végane + alcool reste interdit", { ingredientsTexte: "sucre, alcool", labels: ["en:vegan"] }, "haram", 1],
+  ["Végane seul, composition lisible et muette", { ingredientsTexte: "eau, sucre", labels: ["en:vegan"] }, "halal", 0],
   ["Carmin (E120 + texte → 1 seule alerte)", { ingredientsTexte: "sucre, colorant : carmin", additifs: ["en:e120"] }, "douteux", 1],
   ["Aucune donnée", {}, "inconnu", 0],
   ["E1000 — acide cholique (bile animale)", { ingredientsTexte: "sucre", additifs: ["en:e1000"] }, "haram", 1],
