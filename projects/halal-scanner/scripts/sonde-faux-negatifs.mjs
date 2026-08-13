@@ -130,20 +130,47 @@ const inversees = NIENT.filter(
 console.log(`${NIENT.length} étiquettes négatives testées, ${inversees.length} lues comme une certification :`);
 for (const l of inversees) console.log(`  ✗ « ${l} » → HALAL, alors que l'étiquette dit le contraire`);
 
-// L'exces inverse : une vraie certification doit encore certifier.
+// L'exces inverse : une vraie certification doit encore certifier. Sur une
+// composition a la gelatine, une CERTIFICATION halal repond au doute — c'est
+// exactement ce que la regle « sauf mention halal certifiee » annonce.
 const AFFIRMENT = ["en:halal", "fr:halal", "en:certified-halal", "fr:certifie-halal",
-  "en:halal-certified", "fr:viande-halal", "en:vegan", "fr:vegetalien"];
+  "en:halal-certified", "fr:viande-halal"];
 const perduesLabel = AFFIRMENT.filter(
   (l) => analyserProduit({ ingredientsTexte: AVEC_GELATINE, additifs: [], labels: [l] }).statut !== "halal"
 );
 for (const l of perduesLabel) console.log(`  ✗ « ${l} » ne certifie plus rien`);
 if (!perduesLabel.length) console.log(`${AFFIRMENT.length} vraies certifications : toujours reconnues.`);
 
+// ATTENDU CORRIGE LE 13 AOUT, PAS LE CODE CONTOURNE.
+//
+// « en:vegan » et « fr:vegetalien » etaient dans la liste du dessus, donc
+// censes rendre HALAL sur une composition a la gelatine. C'etait faux, et
+// c'est le controle qui l'a dit : une correction de la nuit precedente a
+// retire a l'etiquette vegane son role de laissez-passer. Une etiquette
+// vegane ne repond QU'AUX doutes dont « vegetale » est une issue nommee —
+// « origine vegetale ou animale non precisee », comme E471. Elle ne repond ni
+// a la gelatine, dont la seule issue nommee est une mention halal, ni au
+// carmin, extrait d'insectes par definition.
+//
+// Ces deux etiquettes ont donc leur propre attente, plus exigeante.
+const VEGANE = ["en:vegan", "fr:vegetalien"];
+const veganeFautif = [];
+for (const l of VEGANE) {
+  const surGelatine = analyserProduit({ ingredientsTexte: AVEC_GELATINE, additifs: [], labels: [l] }).statut;
+  const surE471 = analyserProduit({ ingredientsTexte: "farine, sucre, emulsifiant E471", additifs: [], labels: [l] }).statut;
+  if (surGelatine !== "douteux") veganeFautif.push(`« ${l} » + gélatine → ${surGelatine.toUpperCase()}, attendu DOUTEUX`);
+  if (surE471 !== "halal") veganeFautif.push(`« ${l} » + E471 → ${surE471.toUpperCase()}, attendu HALAL`);
+}
+for (const m of veganeFautif) console.log(`  ✗ ${m}`);
+if (!veganeFautif.length)
+  console.log(`${VEGANE.length} étiquettes véganes : lèvent le doute sur E471, pas sur la gélatine.`);
+
 // Le verdict. Un seul manque suffit : chacune de ces entrées est un aliment
 // qu'on servirait comme licite à quelqu'un qui nous a crus.
 const manques =
   codeManques.length + texteManques.length + motManques.length +
-  inventes.length + perdues.length + inversees.length + perduesLabel.length;
+  inventes.length + perdues.length + inversees.length + perduesLabel.length +
+  veganeFautif.length;
 if (manques > 0) {
   console.log(`\n✗ ${manques} FAUX NÉGATIF(S) — de l'interdit passe pour licite. Le moteur n'est pas publiable.`);
   process.exit(1);
@@ -153,5 +180,5 @@ if (manques > 0) {
 // abîme la confiance exactement comme une page qui en annonce un.
 const total =
   codes.length * 2 + MOTS.length + RIEN_A_LIRE.length + VRAIES.length +
-  NIENT.length + AFFIRMENT.length;
+  NIENT.length + AFFIRMENT.length + VEGANE.length * 2;
 console.log(`\n✓ Aucun faux négatif ni verdict inventé : les ${total} cas à risque sont tous tenus.`);
