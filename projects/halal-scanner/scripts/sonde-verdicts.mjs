@@ -38,6 +38,53 @@ for (const [nom, rep, attendus] of CAS) {
     (manquants.length ? "  ← manque : " + manquants.join(", ") : ""));
   await c.close();
 }
+// ── « C'est surement de l'arabe » : une cause jamais verifiee ────────────
+//
+// Le 13 aout, Mohamed a photographie une bouteille d'eau Cristaline :
+// composition « Eau de source », en francais, parfaitement lisible. L'app
+// affichait INCONNU, et expliquait que l'etiquette n'etait « pas ecrite dans
+// une langue que notre analyse sait lire — de l'arabe, le plus souvent ».
+//
+// Deux fautes sur le meme ecran : un verdict refuse a de l'eau de source, et
+// une cause inventee. Affirmer ce qu'on n'a pas verifie est exactement ce que
+// « ne jamais inventer » interdit — et ca decredibilise tout le reste.
+console.log("\nLa phrase « c'est de l'arabe » ne sort que devant de l'arabe :");
+// La troisieme ligne est celle qui compte pour ce controle-ci : un texte
+// LATIN mais illisible. Les deux premieres ne peuvent pas prendre la phrase en
+// defaut — depuis que le moteur les tranche, l'ecran « inconnu » ou la phrase
+// vit n'est meme plus atteint. Sans ce cas-la, ce controle serait decoratif.
+const ECRITURE = [
+  ["eau de source, en français", "Eau de source", "halal", false],
+  ["riz, en français", "Riz", "halal", false],
+  ["latin mais illisible", "a b c d e f", "inconnu", false],
+  ["arabe seul, produit banal", "المكونات: ماء، سكر، ملح", "inconnu", true],
+];
+for (const [nom, texte, statutAttendu, phraseAttendue] of ECRITURE) {
+  const c = await n.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: "block" });
+  const p = await c.newPage();
+  await p.route(/openfoodfacts\.org|openbeautyfacts\.org/, (r) =>
+    r.fulfill({ status: 200, contentType: "application/json",
+      body: JSON.stringify(fiche({ ingredients_text_fr: texte })) }));
+  await p.route(/halalgpt\.fr/, (r) => r.fulfill({ status: 204, body: "" }));
+  await p.goto(`${base}/scan.html?code=3017620422003`, { waitUntil: "domcontentloaded" });
+  await p.waitForTimeout(4000);
+  const vu = await p.evaluate(() => {
+    const e = document.getElementById("ecran-resultat");
+    return {
+      classe: document.getElementById("verdict").className,
+      texte: e && !e.hidden ? e.innerText : "",
+    };
+  });
+  const statutJuste = vu.classe.includes("verdict-" + statutAttendu);
+  const parleArabe = /de l'arabe/i.test(vu.texte);
+  const ok = statutJuste && parleArabe === phraseAttendue;
+  if (!ok) fautes++;
+  console.log(`  ${ok ? "✓" : "✗"} ${nom.padEnd(30)} ${statutAttendu.toUpperCase().padEnd(8)}` +
+    (statutJuste ? "" : `  ← verdict ${vu.classe}`) +
+    (parleArabe === phraseAttendue ? "" : parleArabe ? "  ← invente « de l'arabe »" : "  ← ne dit plus pourquoi"));
+  await c.close();
+}
+
 // ── Une liste INCI rangee du mauvais cote ────────────────────────────────
 //
 // L'aiguillage se fait sur la BASE d'origine : cosmetique si le produit vient

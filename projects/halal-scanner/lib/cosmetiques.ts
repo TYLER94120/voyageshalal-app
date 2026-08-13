@@ -289,11 +289,19 @@ function normaliser(texte: string): string {
  * rendaient HALAL sans preuve. Le défaut était identique ici.
  */
 const MENTIONS_ABSENCE =
-  /non renseign\w*|non sp[ée]cifi\w*|non communiqu\w*|non disponibles?|pas d'informations?|aucune information|liste non disponible|ingr[ée]dients? non disponibles?|[àa] compl[ée]ter|[àa] renseigner|voir (?:sur )?(?:l'|le )?emballage|see (?:the )?packaging|not available|no information|unknown/gi;
+  /non renseign\w*|non sp[ée]cifi\w*|non communiqu\w*|informations? non disponibles?|non disponibles?|pas d'informations?|aucune information|liste non disponible|ingr[ée]dients? non disponibles?|[àa] compl[ée]ter|[àa] renseigner|voir (?:sur )?(?:l'|le )?emballage|see (?:the )?packaging|not available|no information|unknown/gi;
 
+/**
+ * Même critère que dans `halal.ts`, changé le 13 août pour la même raison : le
+ * seuil de douze lettres déclarait illisibles des compositions parfaitement
+ * lisibles — « Eau de source », onze lettres, photographiée par Mohamed avec
+ * un verdict INCONNU. La bonne question n'est pas « combien de lettres » mais
+ * « avons-nous eu une chance de lire », et un mot latin de trois lettres suffit
+ * à répondre oui.
+ */
 function texteAnalysable(texte: string): boolean {
   const sansMentions = texte.replace(MENTIONS_ABSENCE, " ");
-  return (sansMentions.match(/[a-zà-öø-ÿ]/gi) || []).length >= 12;
+  return /[a-zà-öø-ÿ]{3,}/i.test(sansMentions);
 }
 
 /**

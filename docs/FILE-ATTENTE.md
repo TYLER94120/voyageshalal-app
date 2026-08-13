@@ -47,12 +47,21 @@ une explication honnête, jamais un verdict inventé.
    sont validés que par 51 tests écrits à la main — écrits par nous, donc ils ne
    couvrent que ce à quoi nous avons pensé. On ne sait toujours pas quel
    pourcentage des produits réels tombe en « inconnu ».
-   *Piste :* constituer un jeu de fiches réelles figées dans le dépôt, capturées
-   une fois depuis le navigateur de Mohamed, pour tester hors ligne.
-   *Ce que Mohamed seul peut faire :* élargir la politique réseau de
-   l'environnement (réglages de l'environnement Claude Code) pour y autoriser
-   `world.openfoodfacts.org`. Sans cela, la seule voie reste un jeu de fiches
-   figées déposé dans le dépôt — les dépôts de paquets, eux, sont ouverts.
+   *Revérifié le 13 août à 16:05 UTC :* toujours refusé, pour
+   `world.openfoodfacts.org` comme pour `halalgpt.fr`.
+   *Ma moitié est faite (13 août).* `npm run sonde:fiches` lit
+   `fiches-reelles/`, rejoue le moteur hors ligne sur de vraies fiches et rend
+   la répartition des verdicts — dont **le pourcentage d'INCONNU**, le chiffre
+   qui manque depuis le début — plus la raison de chaque INCONNU (liste absente,
+   arabe seul, texte trop court, mentions d'absence). Éprouvée sur 6 fiches
+   d'essai puis remise à zéro ; elle sort en erreur sur un fichier illisible.
+   En CI : tant que le dossier est vide, elle dit « 0 fiche » au lieu
+   d'inventer un succès.
+   *Ce que Mohamed seul peut faire, au choix :* élargir la politique réseau de
+   l'environnement pour autoriser `world.openfoodfacts.org` — ou déposer une
+   vingtaine de fiches dans `projects/halal-scanner/fiches-reelles/`, marche à
+   suivre dans le README de ce dossier. Vingt minutes de copier-coller
+   produisent alors une mesure que trois jours de sondes n'ont pas pu produire.
 
 4. **La lecture d'étiquette n'a jamais été vérifiée contre le VRAI service.**
    *Preuve :* les six façons d'échouer ont été mesurées le 11 août avec une
@@ -111,6 +120,134 @@ une explication honnête, jamais un verdict inventé.
 ---
 
 ## Fait
+
+- **On doutait d'étiquettes qui répondaient déjà à la question** *(13 août)* —
+  suite directe de la capture de Mohamed. Le défaut Cristaline était un **excès
+  de doute sur un produit ordinaire** ; j'ai cherché la même famille ailleurs,
+  au lieu de continuer à traquer des cas adversariaux que j'invente moi-même.
+
+  | Étiquette française courante | avant | après |
+  |---|---|---|
+  | « mono- et diglycérides d'acides gras **d'origine végétale** » | **DOUTEUX** | HALAL |
+  | « stéarate de magnésium **d'origine végétale** » | **DOUTEUX** | HALAL |
+  | « **gélatine de poisson** » | **DOUTEUX** | HALAL |
+  | « **gélatine de bœuf halal** » | **DOUTEUX, 2 alertes** | HALAL |
+  | *témoin :* « émulsifiant E471 » *(sans origine)* | DOUTEUX | DOUTEUX |
+  | *témoin :* « gélatine » *(nue)* | DOUTEUX | DOUTEUX |
+
+  `E471 d'origine végétale` était déjà neutralisé ; **la même mention écrite en
+  toutes lettres ne l'était pas** — or les deux se lisent sur les mêmes paquets.
+  Et la gélatine de poisson est l'alternative halal la plus courante : la
+  signaler douteuse décourageait exactement le produit qu'on cherche, et
+  punissait les fabricants qui prennent la peine de le préciser.
+
+  **Le piège de ces garde-fous, et pourquoi je l'ai cherché :** ils sont
+  *permissifs*, donc le vrai risque est qu'ils avalent un interdit. Ma première
+  version le faisait — mesuré :
+
+  > « mono- et diglycérides d'acides gras **ANIMAUX** et huile végétale »
+  > → **HALAL**
+
+  Le motif enjambait le mot « animaux » pour atteindre « végétale ». Un
+  garde-fou trop large fabrique un faux négatif, c'est-à-dire le défaut que je
+  suis censé empêcher. Resserré pour interdire « anim » dans l'intervalle.
+  Vérifié sur 5 pièges : gélatine de porc **et** de poisson → HARAM, gélatine de
+  bœuf **non** halal → DOUTEUX, saindoux + huile végétale → HARAM.
+
+  Gelé dans `sonde:faux-positifs` : **9 étiquettes à origine précisée + 5
+  pièges**. Sabotages — garde-fous retirés : rouge ; motif ré-élargi : rouge
+  sur le faux négatif.
+
+- **Une bouteille d'eau ressortait INCONNU, avec une cause inventée**
+  *(13 août)* — capture d'écran de Mohamed. Cristaline, eau de source 0,5 L,
+  composition « **Eau de source** ». Deux fautes sur le même écran.
+
+  **1. Le verdict.** Onze lettres, seuil à douze → INCONNU. Le seuil comptait
+  les lettres latines pour décider si nous avions « eu une chance de lire ».
+
+  | Compositions réelles et complètes | avant | après |
+  |---|---|---|
+  | eau, riz, sel, sucre, miel, semoule, thé vert… | **16 / 19 INCONNU** | **0 / 19** |
+
+  Ce sont des produits de base, et précisément ceux d'une cuisine maghrébine.
+  Répondre « je ne sais pas » devant une bouteille d'eau ne protège personne :
+  ça donne l'app pour cassée, et on cesse de la croire quand elle dit vraiment
+  quelque chose.
+
+  Compter les lettres n'était pas la bonne question. La vraie question est
+  **avons-nous eu une chance de lire ?** Une étiquette en arabe seul : non, nos
+  motifs sont latins. « Eau de source » : oui, parfaitement — nous avons lu, et
+  nous n'avons rien trouvé à signaler. Le critère est donc devenu : **au moins
+  un mot latin de trois lettres**. « Eau » passe, « ab » non, l'arabe seul non.
+  Le garde-fou d'origine tient : `sonde:arabe` reste vert, 7 cas sur 7.
+
+  *Ce que ça accepte sciemment :* un texte latin sans queue ni tête de trois
+  lettres ressortira HALAL. Le risque est assumé, et se compare à ce qu'il
+  remplace — seize produits de base sur dix-neuf déclarés illisibles, tous les
+  jours, sous les yeux des gens.
+
+  **2. La cause inventée.** L'écran expliquait : « L'étiquette de ce produit
+  n'est pas écrite dans une langue que notre analyse sait lire — **de l'arabe,
+  le plus souvent** ». Devant une étiquette française parfaitement lisible.
+  Le test se déclenchait sur *tout* texte de moins de douze lettres, sans
+  jamais regarder l'alphabet. Affirmer une cause qu'on n'a pas vérifiée est
+  exactement ce que « ne jamais inventer » interdit — et ça décrédibilise tout
+  le reste de l'écran. La phrase ne sort désormais que devant une écriture
+  réellement non latine **et** sans mot latin exploitable.
+
+  *Ce que j'avais raté :* le 12 août, en auditant autre chose, j'ai vu
+  « riz, eau, sel → INCONNU » et je l'ai écarté en concluant que **mon
+  attente** était fausse. Elle ne l'était pas. J'ai regardé le défaut et je
+  l'ai expliqué au lieu de le mesurer.
+
+  Gelé : `sonde:faux-positifs` gagne 16 compositions courtes **et** 3 cas
+  vraiment illisibles qui doivent rester INCONNU ; `sonde:verdicts` gagne
+  4 scènes sur la phrase. Sabotages de contrôle — seuil de 12 remis : 16 rouges ;
+  phrase remise sur tout texte court : rouge sur « latin mais illisible ».
+  *Note :* ce dernier cas a dû être ajouté exprès — sans lui, le contrôle de la
+  phrase ne pouvait plus virer au rouge une fois le moteur corrigé, et aurait
+  été décoratif.
+
+- **Une correction du moteur était commitée mais jamais compilée — le site
+  servait encore le défaut** *(13 août)*. Le plus vicieux rencontré jusqu'ici,
+  parce qu'il **annule silencieusement n'importe quelle correction**.
+
+  Trouvé par accident : après un `git rebase`, `npm run build:site` a produit
+  un diff de 26 lignes sur `site/halal.js`. Un fichier généré qui change alors
+  que personne n'a touché à la source, c'est que le fichier servi avait
+  **divergé** de `lib/halal.ts`.
+
+  Un cycle de cette nuit avait corrigé « l'étiquette végane servait de
+  laissez-passer », avec son commit et ses explications. Mais `site/halal.js` —
+  **le fichier que le navigateur exécute** — n'avait jamais été recompilé.
+
+  | Moteur réellement en ligne | avant | après recompilation |
+  |---|---|---|
+  | végane + étiquette « non halal » | **HALAL** *(avec l'alerte affichée dessous)* | DOUTEUX |
+  | végane + gélatine | **HALAL** | DOUTEUX |
+  | végane + carmin | **HALAL** | DOUTEUX |
+  | végane + E471 *(doute que « végétal » lève)* | HALAL | HALAL, 0 alerte |
+
+  **Pourquoi aucune sonde ne l'a vu :** elles lisent toutes `site/*.js`, le
+  fichier compilé. Un build périmé leur fait donc tester l'**ancien** moteur —
+  et passer. Le commit disait « corrigé », les 17 étapes de contrôle étaient
+  vertes, et le site servait le défaut. C'est exactement la famille de défaut
+  que je traque depuis trois jours, mais un étage au-dessus : **cette fois
+  c'est la chaîne de contrôle elle-même qui mentait.**
+
+  Deux choses faites :
+  - **Le moteur en ligne est recompilé** — les trois verdicts faux sont
+    corrigés pour de vrai cette fois.
+  - **`npm run verif:build`** recompile dans un dossier à part et compare octet
+    pour octet. Placé **en première position** du travail « moteur » en CI,
+    avant les tests : il décide si les étapes suivantes mesurent quelque chose.
+    Sabotage de contrôle — fichier périmé remis : `PÉRIMÉ — 26 901 octets
+    servis, 28 266 attendus`, sortie en erreur.
+
+  *Note de méthode :* j'avais lancé la suite complète **avant** le rebase, donc
+  sur mon état à moi. C'est en la relançant après fusion que l'écart est
+  apparu. Une suite verte sur un état qui n'est pas celui qu'on pousse ne
+  prouve rien.
 
 - **Deux audits, aucun défaut — et les deux sont maintenant gelés** *(13 août)*
   — audit de cycle, les 7 éléments de la file étant tous bloqués. **Le résultat
@@ -1311,6 +1448,38 @@ une explication honnête, jamais un verdict inventé.
   **Mesure : 2 fiches inventées → 0.** Vérifié ensuite que le scanner fonctionne
   toujours avec des bases vides (verdict DOUTEUX, 2 alertes, aucune erreur JS)
   et que le code de démonstration n'affiche plus de sceau « VÉRIFIÉE ».
+
+---
+
+## Note de méthode — ma boucle de vérification annonçait « tout vert » à tort
+
+*13 août.* Deux fois de suite, les Contrôles ont viré au rouge sur un état que
+j'avais annoncé vert quelques minutes plus tôt. La cause n'était ni le moteur
+ni GitHub : **c'était ma commande de vérification.**
+
+```bash
+npm run --silent $s >/dev/null 2>&1; echo "  $(printf %-22s $s) exit $?"
+```
+
+La substitution de commande `$( … )` s'exécute **avant** que `$?` ne soit lu.
+Le code affiché était donc celui de `printf` — toujours 0 — jamais celui de la
+sonde. **Ma boucle ne pouvait pas afficher autre chose que « exit 0 ».**
+
+C'est exactement le défaut que je traque dans le produit depuis trois jours,
+appliqué à mon propre instrument : un contrôle qui ne peut pas virer au rouge
+ne contrôle rien, il rassure. Et il m'a fait écrire « suite complète verte »
+plusieurs fois sans que ce soit vérifié.
+
+Forme correcte, qui lit le code avant toute substitution :
+
+```bash
+npm run --silent "$s" >/dev/null 2>&1; c=$?; printf "  %-22s exit %s\n" "$s" "$c"
+```
+
+Dès le premier passage avec la bonne boucle, une sonde en échec est apparue
+que les précédentes annonçaient verte. **Ce que les Contrôles GitHub ont
+rattrapé deux fois, ma vérification locale ne pouvait structurellement pas le
+voir.**
 
 ---
 

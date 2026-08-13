@@ -375,6 +375,31 @@ function normaliser(texte: string): string {
   // la regle qui suit le retrouve et le garde-fou ne sert a rien.
   t = t.replace(/glycerines? vegetales?|glycerols? vegetals?|glycerine d'origine vegetale/g, " corps gras vegetal ");
   t = t.replace(/lipase microbienne|enzyme microbienne|presure microbienne/g, " enzyme microbienne ");
+  // Suite du meme principe, ajoutee le 13 aout — meme famille de defaut que
+  // l'eau de source photographiee par Mohamed : un exces de doute sur un
+  // produit ordinaire, alors que l'etiquette REPOND deja a la question.
+  //
+  // « E471 d'origine vegetale » etait deja neutralise ; la forme ecrite en
+  // toutes lettres, elle, ressortait DOUTEUX. Or les deux se lisent sur les
+  // memes paquets, en France. Idem pour les stearates des complements
+  // alimentaires. Douter d'une etiquette qui precise « vegetale » punit
+  // exactement les fabricants qui ont fait l'effort de le dire.
+  t = t.replace(
+    /(?:mono-? et diglycerides|mono-?diglycerides|stearates? de magnesium|stearates? de calcium|acides? stearique|acides? gras)(?:(?!anim)[^,;.])*?(?:d'origine\s+)?vegetale?s?/g,
+    " corps gras vegetal "
+  );
+  // La gelatine de POISSON est l'alternative halal la plus courante, et les
+  // fabricants l'ecrivent justement pour le signaler. La signaler douteuse
+  // decourage le produit meme qu'on cherche.
+  // Le mot de remplacement ne doit PAS contenir « gelatine » : la regle
+  // texte est une simple sous-chaine, elle le retrouverait aussitot. Meme
+  // piege que pour la glycerine vegetale, signale plus haut.
+  t = t.replace(/gelatines? (?:de )?(?:poisson|marine)s?|fish gelatin\w*/g, " gelifiant de poisson ");
+  // Et quand la composition dit elle-meme « halal » a cote de la gelatine, le
+  // doute que notre regle annonce — « sauf mention halal certifiee » — est
+  // leve par l'etiquette. Portee volontairement etroite : la mention doit
+  // toucher la gelatine, pas trainer n'importe ou dans le texte.
+  t = t.replace(/gelatines?(?: de)? (?:boeuf|bovine|bovin|veau)?\s*(?:certifiee?\s*)?halal/g, " gelifiant certifie ");
   // « levure de bière » est une levure séchée, sans une goutte d'alcool : le mot
   // « bière » n'y désigne que son origine industrielle. Mesuré le 11 août, le
   // moteur rendait HARAM — un interdit inventé chasse les gens d'un aliment
@@ -417,11 +442,38 @@ function normaliser(texte: string): string {
  * garde 25 lettres utiles et reste une vraie composition.
  */
 const MENTIONS_ABSENCE =
-  /non renseign\w*|non sp[ée]cifi\w*|non communiqu\w*|non disponibles?|pas d'informations?|aucune information|liste non disponible|ingr[ée]dients? non disponibles?|[àa] compl[ée]ter|[àa] renseigner|voir (?:sur )?(?:l'|le )?emballage|see (?:the )?packaging|not available|no information|unknown/gi;
+  /non renseign\w*|non sp[ée]cifi\w*|non communiqu\w*|informations? non disponibles?|non disponibles?|pas d'informations?|aucune information|liste non disponible|ingr[ée]dients? non disponibles?|[àa] compl[ée]ter|[àa] renseigner|voir (?:sur )?(?:l'|le )?emballage|see (?:the )?packaging|not available|no information|unknown/gi;
 
+/**
+ * TROISIÈME VERSION, 13 août 2026 — et cette fois le seuil lui-même était
+ * l'erreur.
+ *
+ * Mohame a photographié une bouteille d'eau Cristaline : composition
+ * « Eau de source », verdict **INCONNU**. Onze lettres, seuil à douze.
+ *
+ * Mesuré sur 19 compositions réelles et complètes : **16 ressortaient
+ * INCONNU** — eau, riz, sel, sucre, miel, farine de blé, thé vert, café,
+ * pois chiches, semoule, huile d'olive, lait entier. Ce sont des produits de
+ * base, et précisément ceux d'une cuisine maghrébine. Répondre « je ne sais
+ * pas » devant une bouteille d'eau ne protège personne : ça donne l'app pour
+ * cassée, et on cesse de la croire quand elle dit vraiment quelque chose.
+ *
+ * Compter les lettres n'a jamais été la bonne question. La vraie question est
+ * **avons-nous eu une chance de lire ?** Une étiquette en arabe seul : non,
+ * nos motifs sont latins. « Eau de source » : oui, parfaitement — nous avons
+ * lu, et nous n'avons rien trouvé à signaler. Ce n'est pas la même chose.
+ *
+ * D'où le critère : au moins un MOT latin de trois lettres. « Eau » passe,
+ * « ab » non, une composition en arabe seul non.
+ *
+ * Ce que ça accepte sciemment : un texte latin sans queue ni tête de trois
+ * lettres ou plus ressortira HALAL. Le risque existe, il est assumé, et il se
+ * compare à ce qu'on remplace — seize produits de base sur dix-neuf déclarés
+ * illisibles, tous les jours, sous les yeux des gens.
+ */
 function texteAnalysable(texte: string): boolean {
   const sansMentions = texte.replace(MENTIONS_ABSENCE, " ");
-  return (sansMentions.match(/[a-zà-öø-ÿ]/gi) || []).length >= 12;
+  return /[a-zà-öø-ÿ]{3,}/i.test(sansMentions);
 }
 
 /**

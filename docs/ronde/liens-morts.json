@@ -1,22 +1,1446 @@
 {
-  "verifie_le": "2026-08-13 13:50 UTC",
-  "liens_controles": 1629,
-  "pages_vues": 245,
-  "pages_connues": 757,
+  "verifie_le": "2026-08-13 21:05 UTC",
+  "liens_controles": 2261,
+  "pages_vues": 364,
+  "pages_connues": 1291,
   "morts": [
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/toyoko-inn.com",
+      "url": "https://www.voyageshalal.fr/destinations/turisthotel.com.tr",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/www.hotelvakhsh.tj",
+      "url": "https://www.voyageshalal.fr/destinations/www.diademcappadocia.com",
       "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.bellevue-hotels.com/en/hotels/2",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Accra",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Agadir",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Abu%20Dhabi",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Agra",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Al-Quds%20(J%C3%A9rusalem)",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Addis-Abeba",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Alger",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Alexandrie",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Almaty",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Amman",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Amsterdam",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Ankara",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=B%C3%A9ni%20Mellal",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Aqaba",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bali",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Astana",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bagdad",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Antalya",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bakou",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Banda%20Aceh",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bandar%20Seri%20Begawan",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bandung",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bangkok",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Beyrouth",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Berlin",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Barcelone",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Birmingham",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Boukhara",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bordeaux",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bruxelles",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Casablanca",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Cappadoce",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Chefchaouen",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bursa",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Chicago",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Chiraz",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Dacca",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Dakhla",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Damas",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Dakar",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Cordoue",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Dearborn",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Delhi",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Djerba",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=El%20Jadida",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Doha",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Duba%C3%AF",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Errachidia",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Essaouira",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=F%C3%A8s",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Francfort",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Grenade",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Gaziantep",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Guelmim",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Houston",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Hyderabad",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Ifrane",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Islamabad",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Ispahan",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Istanbul",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Jakarta",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Jeddah",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Johor%20Bahru",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Izmir",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/turisthotel.com.tr",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/www.diademcappadocia.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.bellevue-hotels.com/en/hotels/2",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Addis-Abeba",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Agadir",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Accra",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Abu%20Dhabi",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Agra",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Al-Quds%20(J%C3%A9rusalem)",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Alexandrie",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Alger",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Almaty",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Amman",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Amsterdam",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Antalya",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Ankara",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Aqaba",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Astana",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bagdad",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=B%C3%A9ni%20Mellal",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bakou",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bali",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bandar%20Seri%20Begawan",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Barcelone",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Berlin",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bandung",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Banda%20Aceh",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Beyrouth",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bangkok",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bordeaux",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Boukhara",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bruxelles",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bursa",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Cappadoce",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Casablanca",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Chefchaouen",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Chicago",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Cordoue",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Dakar",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Dacca",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Chiraz",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Damas",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Dakhla",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Dearborn",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Djerba",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Delhi",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Doha",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Duba%C3%AF",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Errachidia",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=F%C3%A8s",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Gaziantep",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Guelmim",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Grenade",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Houston",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Hyderabad",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Islamabad",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Ispahan",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Izmir",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Istanbul",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Jakarta",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Johor%20Bahru",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Jeddah",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Karachi",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Khiva",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Kota%20Kinabalu",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Kowe%C3%AFt%20City",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Konya",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Kuala%20Lumpur",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=La%20Mecque",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Lagos",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Lahore",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Le%20Caire",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Lisbonne",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Lombok",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Londres",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Los%20Angeles",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Louxor",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Lucknow",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Lyon",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=M%C3%A9dine",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Machhad",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Madrid",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Malacca",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Maldives",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Manama",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Marseille",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Mardin",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Marrakech",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Mascate",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Medan",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Montr%C3%A9al",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Mostar",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Multan",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Mumbai",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Nizwa",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Nairobi",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Peshawar",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=S%C3%A9ville",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Safi",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Sharjah",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Sanliurfa",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Skopje",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Surabaya",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Taza",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Tirana",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.leroyal.com/amman/",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.scotthotel.com.my/",
+      "detail": "code 500"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.dinsomonbangkok.top/",
+      "detail": "URLError (confirme machine calme)"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.bursaogretmenevi.com.tr/",
+      "detail": "URLError (confirme machine calme)"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.dinsomonbangkok.top/",
+      "detail": "URLError (confirme machine calme)"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.skybusinesshotel.com/",
+      "detail": "URLError (confirme machine calme)"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.safranotel.com/",
+      "detail": "URLError (confirme machine calme)"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.bursaogretmenevi.com.tr/",
+      "detail": "URLError (confirme machine calme)"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.pudinghotels.com/",
+      "detail": "URLError (confirme machine calme)"
     }
   ],
-  "bloques": [],
-  "innocentes_au_controle_calme": []
+  "bloques": [
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://theviewhotels.com/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.anantara.com/en/grand-hotel-krasnapolsky-amsterdam",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.deleurope.com",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.discoverasr.com/en/citadines/malaysia/citadines-waterfront-kota-kinabalu",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.discoverasr.com/en/yello?gclid=CjwKCAjw5dqgBhBNEiwA7PryaK7Mfz93SdarF-FOyXGE00bNfvYq-nLZHL-oEx7He9PVYoGqUye5cBoCEr0QAvD_BwE&gclsrc=aw.ds",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://theviewhotels.com/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.anantara.com/en/grand-hotel-krasnapolsky-amsterdam",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.deleurope.com",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.discoverasr.com/en/citadines/malaysia/citadines-waterfront-kota-kinabalu",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.discoverasr.com/en/yello?gclid=CjwKCAjw5dqgBhBNEiwA7PryaK7Mfz93SdarF-FOyXGE00bNfvYq-nLZHL-oEx7He9PVYoGqUye5cBoCEr0QAvD_BwE&gclsrc=aw.ds",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://sentrim-hotels.com/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/aladtdi-doubletree-almaty/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/alygphi-hilton-alexandria-green-plaza/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/btzhihi-hilton-bursa-convention-center-and-spa/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/berhitw-hilton-berlin/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/aqjdtdi-doubletree-aqaba/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/aytccdi-doubletree-antalya-city-centre/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/dohotdi-doubletree-doha-old-town/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/dohemes-embassy-suites-doha-old-town/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/dttdbdt-doubletree-detroit-dearborn/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/dxbaies-embassy-suites-dubai-business-bay/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/houcuqq-c-baldwin/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/jedgaqq-the-hotel-galleria-jeddah/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/jktdidi-doubletree-jakarta-diponegoro/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/kulhihi-hilton-kuala-lumpur/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/isthsqq-hagia-sofia-mansions-istanbul/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/laxdtdt-doubletree-los-angeles-downtown/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/lontsqq-the-trafalgar-st-james-london/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/makdtdi-doubletree-makkah-aziziyah/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/loslhqq-legend-hotel-lagos-airport/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/nl/hotels/amswawa-waldorf-astoria-amsterdam/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hilton.com/en/hotels/medhihi-madinah-hilton/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hyatt.com/en-US/hotel/qatar/park-hyatt-doha/dohph",
+      "detail": "code 429 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hotelnelligan.com/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hyatt.com/grand-hyatt/en-US/ammgh-grand-hyatt-amman",
+      "detail": "code 429 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hyatt.com/hyatt-regency/en-US/losrl-hyatt-regency-lagos-ikeja",
+      "detail": "code 429 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hyatt.com/hyatt-regency/en-us/hourh-hyatt-regency-houston",
+      "detail": "code 429 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hyatt.com/jdv-by-hyatt/en-US/bodjd-firstname-bordeaux",
+      "detail": "code 429 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.hyatt.com/unbound-collection/en-US/lhrub-great-scotland-yard",
+      "detail": "code 429 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.majestickl.com/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.marriott.com/dttsd",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.marriott.com/dtwtd",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.marriott.com/hotels/travel/dxbjw-jw-marriott-marquis-hotel-dubai/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.marriott.com/hotels/travel/auhsi-sheraton-abu-dhabi-hotel-and-resort/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.marriott.com/hotels/travel/yuldt-courtyard-montreal-downtown/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.marriott.com/houzd",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.marriott.com/hourd",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.radissonblu.com/en/marinahotel-newdelhi?s_cid=os.apac-IN-blu-INDNEDL-gmb",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.radissonhotels.com/en-us/hotels/radisson-collection-berlin",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    }
+  ],
+  "innocentes_au_controle_calme": [
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/qibla?lat=5.9804&lng=116.0735&lieu=Kota%20Kinabalu&pays=Malaisie",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/kolkata",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/mosquee-proche?lat=21.4858&lng=39.1925&lieu=Jeddah&pays=Arabie%20Saoudite",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/horaires-priere?lat=3.2028&lng=73.2207&lieu=Maldives&pays=Maldives",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/horaires-priere?lat=45.5017&lng=-73.5673&lieu=Montr%C3%A9al&pays=Canada",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/mosquee-proche?lat=41.0082&lng=28.9784&lieu=Istanbul&pays=Turquie",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/ras-al-khaimah",
+      "detail": "URLError — aucun code de reponse"
+    }
+  ]
 }
