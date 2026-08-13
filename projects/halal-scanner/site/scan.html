@@ -1310,9 +1310,44 @@
       return liste;
     }
 
+    /**
+     * Le sceau « ✓ VÉRIFIÉ » ne s'affiche que sur une fiche RELISIBLE.
+     *
+     * Mesuré le 12 août 2026, et c'est le défaut le plus grave trouvé jusqu'ici
+     * parce qu'il touche le moat lui-même. Une fiche vérifiée PRIME sur
+     * l'analyse : son statut s'affiche, les alertes du moteur sont effacées.
+     * Or le statut n'était jamais contrôlé, et l'écran retombait sur le vert :
+     *
+     *     $("verdict-emoji").textContent = EMOJIS[verif.statut] || "✅";
+     *
+     * Sur un pâté dont la composition dit « foie de porc, lardons », cinq
+     * fautes de saisie sur cinq affichaient ✅ avec le sceau et zéro alerte :
+     * « Halal » avec une majuscule, « halall », statut absent, statut vide,
+     * statut « oui ». Le label restait vide, donc aucun mot ne venait
+     * contredire le vert.
+     *
+     * Ce fichier est celui que Mohamed remplira à la main en transcrivant des
+     * réponses de fabricants : la faute de frappe y est le cas NORMAL.
+     *
+     * Une fiche illisible est donc traitée comme absente — on retombe sur
+     * l'analyse automatique, qui dit la vérité de la composition. Et
+     * `npm run verif:chiffres` refuse désormais de passer si une fiche du
+     * dépôt porte un statut inconnu : la faute est arrêtée avant la mise en
+     * ligne, pas rattrapée devant l'utilisateur.
+     */
+    const STATUTS_CONNUS = ["halal", "douteux", "haram", "inconnu"];
+
+    function ficheRelisible(fiche) {
+      if (!fiche || typeof fiche !== "object") return null;
+      const statut = String(fiche.statut || "").toLowerCase().trim();
+      if (!STATUTS_CONNUS.includes(statut)) return null;
+      return Object.assign({}, fiche, { statut });
+    }
+
     function chercherVerification(code) {
       for (const v of variantesCode(code)) {
-        if (VERIFS[v]) return Object.assign({ code: v }, VERIFS[v]);
+        const fiche = ficheRelisible(VERIFS[v]);
+        if (fiche) return Object.assign({ code: v }, fiche);
       }
       return null;
     }
@@ -1991,6 +2026,32 @@
       return n.charAt(0).toUpperCase() + n.slice(1);
     }
 
+    /**
+     * « Aqua » : le mot qui trahit une liste INCI rangée du mauvais côté.
+     *
+     * L'aiguillage se fait sur la BASE d'origine — cosmétique si le produit
+     * vient d'Open Beauty Facts. Or Open Food Facts est interrogé EN PREMIER,
+     * et contient des savons, dentifrices et crèmes. Ces produits partent donc
+     * au moteur alimentaire, qui ne lit pas la nomenclature INCI.
+     *
+     * Mesuré le 12 août sur sept listes INCI réalistes : **six ressortaient
+     * HALAL** par le moteur alimentaire alors que le moteur cosmétique les
+     * signalait — dont « Aqua, Adeps Suillus » (graisse de porc) et deux
+     * savons au suif.
+     *
+     * Faire tourner les deux moteurs sur TOUT serait l'erreur inverse :
+     * mesuré aussi, « glycérine végétale, eau, parfum » passe DOUTEUX chez le
+     * cosmétique alors que l'étiquette dit végétale — 1 faux positif sur 15
+     * compositions banales.
+     *
+     * D'où ce marqueur, et pas un autre : « Aqua » est le nom INCI de l'eau.
+     * Aucune étiquette alimentaire française ne l'emploie, elle écrit « eau ».
+     * Vérifié : 7 listes INCI sur 7 reconnues, 0 aliment sur 19 pris à tort.
+     */
+    const RESSEMBLE_A_UNE_INCI = /\baqua\b/i;
+
+    const RANG_STATUT = { haram: 3, douteux: 2, inconnu: 1, halal: 0 };
+
     // Aiguillage : les cosmétiques ont leur propre nomenclature (INCI) et
     // leurs propres règles — ils ne passent jamais par le moteur alimentaire.
     function analyserSelonType(produit) {
@@ -2000,11 +2061,31 @@
           labels: produit.labels,
         });
       }
-      return analyserProduit({
+      const alimentaire = analyserProduit({
         ingredientsTexte: produit.ingredientsTexte,
         additifs: produit.additifs,
         labels: produit.labels,
       });
+      const texte = String((produit && produit.ingredientsTexte) || "");
+      if (!RESSEMBLE_A_UNE_INCI.test(texte)) return alimentaire;
+
+      // Deuxième avis, et il ne peut que durcir : on garde le plus strict des
+      // deux, et les alertes des deux, sans doublon.
+      const cosmetique = analyserCosmetique({
+        ingredientsTexte: produit.ingredientsTexte,
+        labels: produit.labels,
+      });
+      if (RANG_STATUT[cosmetique.statut] <= RANG_STATUT[alimentaire.statut]) return alimentaire;
+      const vues = new Set(alimentaire.alertes.map((a) => (a.famille || a.element).toLowerCase()));
+      const ajoutees = cosmetique.alertes.filter(
+        (a) => !vues.has((a.famille || a.element).toLowerCase())
+      );
+      return {
+        statut: cosmetique.statut,
+        certifieHalal: alimentaire.certifieHalal,
+        vegan: alimentaire.vegan,
+        alertes: alimentaire.alertes.concat(ajoutees),
+      };
     }
 
     // Une étiquette écrite en arabe n'est PAS une absence d'information : c'est
@@ -2095,7 +2176,10 @@
         $("label-indicatif").hidden = true;
         $("sceau").hidden = false;
         $("verdict").className = "verdict verifie verdict-" + verif.statut;
-        $("verdict-emoji").textContent = EMOJIS[verif.statut] || "✅";
+        // Repli sur ❓ et jamais sur ✅ : un statut qu'on ne reconnaît pas
+        // n'est pas une bonne nouvelle. `ficheRelisible` filtre déjà en amont,
+        // ceci est la deuxième serrure.
+        $("verdict-emoji").textContent = EMOJIS[verif.statut] || "❓";
         $("verdict-label").textContent = LABELS[verif.statut] || "";
         $("verdict-detail").textContent = verif.titre || "";
         $("verif-detail").hidden = !verif.detail;
@@ -2409,14 +2493,95 @@
       afficherLecture(code, lecture);
     }
 
+    /**
+     * Notre moteur relit ce que le service a signalé — et ne peut que DURCIR.
+     *
+     * Mesuré le 12 août 2026. Le chemin photo affichait tel quel le verdict
+     * rendu par `halalgpt.fr/api/etiquette`. Nos règles locales — celles qui
+     * attrapent lardons, saindoux, vin — n'étaient jamais consultées sur le
+     * verdict : elles servaient uniquement à graduer la gravité, et par le
+     * moteur COSMÉTIQUE, qui ne connaît ni « Saindoux » ni « Lardons ».
+     *
+     * Ce que la personne voyait alors, réponse `{verdict:"halal",
+     * ingredients_a_risque:[{nom:"Saindoux"}]}` :
+     *
+     *     ✅ HALAL — Rien de problématique détecté.
+     *     ⚠️ Saindoux — graisse de porc
+     *
+     * Un écran vert sur du porc, avec l'aveu juste en dessous. Et la phrase
+     * « cet ingrédient existe en version végétale comme animale » collée à du
+     * saindoux, ce qui est faux : le saindoux EST de la graisse de porc.
+     *
+     * La règle posée ici ne va que dans un sens. Le service a vu l'étiquette
+     * entière, nous n'avons que les noms qu'il a signalés : nous ne pouvons
+     * donc jamais l'ADOUCIR. Mais s'il dit « halal » alors que l'un des noms
+     * qu'il nous rend est interdit chez nous, c'est le nôtre qui l'emporte.
+     * En cas de doute, le verdict le plus strict des deux.
+     *
+     * Les deux moteurs sont interrogés parce que la photo sert aussi bien une
+     * étiquette alimentaire qu'une liste INCI : « Saindoux » n'existe que pour
+     * l'un, « Sodium Tallowate » que pour l'autre.
+     */
+    function relireLocalement(ingredients) {
+      let pire = null;
+      // Vrai dès qu'un des noms est un interdit ALIMENTAIRE reconnu : du porc
+      // n'est pas un ingrédient de savon dont la saponification lèverait le
+      // problème. Le bandeau « si c'est un cosmétique » n'a alors rien à dire.
+      let interditAlimentaire = false;
+      const evaluees = (ingredients || [])
+        .filter((i) => i && i.nom)
+        .map((i) => {
+          let niveau = "douteux";
+          let gravite = "moderee";
+          try {
+            const a = analyserProduit({ ingredientsTexte: i.nom, additifs: [] }).alertes[0];
+            if (a) {
+              if (a.niveau === "haram") { niveau = "haram"; interditAlimentaire = true; }
+              if (a.gravite) gravite = a.gravite;
+            }
+          } catch (e) {
+            /* nom inconnu de la table alimentaire */
+          }
+          try {
+            const c = analyserCosmetique({ ingredientsTexte: i.nom, labels: [] }).alertes[0];
+            if (c) {
+              if (c.niveau === "haram") niveau = "haram";
+              if (c.gravite && gravite === "moderee") gravite = c.gravite;
+            }
+          } catch (e) {
+            /* nom inconnu de la table cosmétique : « douteux, modéré » */
+          }
+          if (niveau === "haram") pire = "haram";
+          else if (!pire) pire = "douteux";
+          return { element: i.nom, raison: i.raison || "", niveau, gravite };
+        });
+      return { alertes: evaluees, pire, interditAlimentaire };
+    }
+
+    function verdictLePlusStrict(duService, duMoteur) {
+      if (duMoteur === "haram") return "haram";
+      if (duMoteur === "douteux" && duService === "halal") return "douteux";
+      return duService;
+    }
+
     function afficherLecture(code, lecture) {
       const brut = String(lecture.verdict || "").toLowerCase().trim();
-      const statut = ["halal", "douteux", "haram"].includes(brut) ? brut : "inconnu";
+      const annonce = ["halal", "douteux", "haram"].includes(brut) ? brut : "inconnu";
+      const relecture = relireLocalement(lecture.ingredients_a_risque);
+      const statut = verdictLePlusStrict(annonce, relecture.pire);
 
       $("etiquette-verdict").className = "verdict verdict-" + statut;
       $("etiquette-emoji").textContent = EMOJIS[statut] || "❓";
       $("etiquette-label").textContent = LABELS[statut] || "";
-      $("etiquette-resume").textContent = lecture.resume || "";
+      // Quand nous durcissons le verdict, le résumé du service décrit l'ancien
+      // — « Rien de problématique détecté » sous un ❌ HARAM. Un écran ne dit
+      // jamais deux choses contraires : on explique l'écart au lieu de le
+      // laisser s'afficher.
+      $("etiquette-resume").textContent =
+        statut === annonce
+          ? lecture.resume || ""
+          : "Un ingrédient signalé par la lecture est interdit d'après nos règles. " +
+            "Nous retenons le verdict le plus strict.";
 
       const risques = $("etiquette-risques");
       risques.innerHTML = "";
@@ -2448,21 +2613,11 @@
         risques.appendChild(div);
       }
 
-      // Les alertes de la lecture n'ont pas de gravité : on la retrouve en
-      // repassant chaque ingrédient dans notre moteur cosmétique.
-      const alertesEvaluees = (lecture.ingredients_a_risque || [])
-        .filter((i) => i && i.nom)
-        .map((i) => {
-          let gravite = "moderee";
-          try {
-            const a = analyserCosmetique({ ingredientsTexte: i.nom, labels: [] }).alertes[0];
-            if (a && a.gravite) gravite = a.gravite;
-          } catch (e) {
-            /* ingrédient inconnu de notre table : on reste prudent */
-          }
-          return { element: i.nom, raison: i.raison || "", niveau: "douteux", gravite };
-        });
-      const conclusionLecture = conclusionPratique({ statut, alertes: alertesEvaluees });
+      // Les alertes de la lecture n'ont ni niveau ni gravité fiables : les
+      // deux viennent de la relecture locale, plus haut. C'est elle aussi qui
+      // empêche la phrase « existe en version végétale comme animale » de
+      // s'appliquer à du saindoux.
+      const conclusionLecture = conclusionPratique({ statut, alertes: relecture.alertes });
       $("etiquette-conclusion").hidden = !conclusionLecture;
       if (conclusionLecture) {
         $("etiquette-conclusion").querySelector(".conclusion-titre").textContent =
@@ -2471,8 +2626,12 @@
           conclusionLecture.texte;
       }
 
-      $("etiquette-note-cosmetique").hidden = alertesEvaluees.length === 0;
-      $("etiquette-lien-liste").hidden = alertesEvaluees.length === 0;
+      // Le bandeau « si c'est un cosmétique » explique que la transformation
+      // chimique peut lever le doute. Devant du saindoux ou des lardons, c'est
+      // hors sujet et trompeur : on le tait.
+      $("etiquette-note-cosmetique").hidden =
+        relecture.alertes.length === 0 || relecture.interditAlimentaire;
+      $("etiquette-lien-liste").hidden = relecture.alertes.length === 0;
       $("etiquette-texte").textContent = lecture.explication || "";
       $("etiquette-conseil").hidden = !lecture.conseil;
       $("etiquette-conseil").textContent = lecture.conseil ? "💡 " + lecture.conseil : "";

@@ -106,6 +106,53 @@ if (chemins.size !== 1) {
   fautes += 1;
 }
 
+// ── Les fiches vérifiées, celles qui portent le sceau ────────────────────
+//
+// Une fiche de `verifications.json` PRIME sur l'analyse : son statut s'affiche
+// et les alertes du moteur sont effacées. Mesuré le 12 août sur un pâté dont
+// la composition dit « foie de porc, lardons » : cinq fautes de saisie sur
+// cinq affichaient ✅ avec le sceau « ✓ VÉRIFIÉ » et zéro alerte — « Halal »
+// avec une majuscule, « halall », statut absent, vide, ou « oui ». L'écran
+// retombait sur le vert par défaut.
+//
+// Le scanner ignore désormais une fiche illisible. Mais mieux vaut arrêter la
+// faute AVANT la mise en ligne : ce fichier-ci est rempli à la main, en
+// recopiant des réponses de fabricants, et la faute de frappe y est normale.
+console.log("");
+const STATUTS_CONNUS = ["halal", "douteux", "haram", "inconnu"];
+for (const [fichier, cle] of [["verifications.json", "produits"], ["produits-locaux.json", "produits"]]) {
+  const chemin = join(PROJET, "site", fichier);
+  let base;
+  try {
+    base = JSON.parse(readFileSync(chemin, "utf8"));
+  } catch (e) {
+    console.log(`  ✗ ${fichier} : JSON illisible — ${e.message}`);
+    fautes += 1;
+    continue;
+  }
+  const fiches = Object.entries(base[cle] || {});
+  const mauvaises = [];
+  for (const [code, f] of fiches) {
+    if (!/^\d{8,14}$/.test(code)) mauvaises.push(`${code} : ce n'est pas un code-barres`);
+    if (!f || typeof f !== "object") { mauvaises.push(`${code} : fiche vide`); continue; }
+    // Seul verifications.json porte un statut : produits-locaux.json fournit
+    // des ingrédients, et c'est le moteur qui tranche.
+    if (fichier === "verifications.json") {
+      const s = String(f.statut || "").toLowerCase().trim();
+      if (!STATUTS_CONNUS.includes(s))
+        mauvaises.push(`${code} : statut « ${f.statut} » inconnu — attendu ${STATUTS_CONNUS.join(", ")}`);
+      if (!String(f.source || "").trim()) mauvaises.push(`${code} : aucune source`);
+      if (!String(f.date || "").trim()) mauvaises.push(`${code} : aucune date`);
+    } else if (!String(f.ingredientsTexte || f.ingredients || "").trim()) {
+      mauvaises.push(`${code} : aucun texte d'ingrédients`);
+    }
+  }
+  fautes += mauvaises.length;
+  console.log(`  ${mauvaises.length ? "✗" : "✓"} ${fichier.padEnd(22)} ${fiches.length} fiche(s)` +
+    (mauvaises.length ? "" : fiches.length ? ", toutes relisibles" : " — base encore vide"));
+  for (const m of mauvaises) console.log(`      ← ${m}`);
+}
+
 if (fautes > 0) {
   console.log(`\n✗ ${fautes} affirmation(s) fausse(s). Relance : npm run build:additifs && npm run seo:dates`);
   process.exit(1);

@@ -113,6 +113,32 @@ async function scene(nom, reponseApi, attendu) {
   if (attendu.pasTaPhoto && !/ce n'est pas ta photo/i.test(texte))
     manques.push("ne dit pas « Ce n'est pas ta photo » alors que la panne est chez nous");
 
+  // Le verdict AFFICHÉ, quand il y en a un. Notre moteur relit ce que le
+  // service a signalé et ne peut que durcir : voir `relireLocalement` dans
+  // scan.html. Sans ce contrôle, `{verdict:"halal",
+  // ingredients_a_risque:[{nom:"Saindoux"}]}` affichait ✅ HALAL.
+  if (attendu.verdict) {
+    const vu = await p.evaluate(() => {
+      const e = document.getElementById("ecran-etiquette");
+      if (!e || e.hidden) return { label: "(pas d'écran étiquette)", texte: "", cosmetique: false };
+      return {
+        label: (document.getElementById("etiquette-label").textContent || "").trim(),
+        texte: e.innerText,
+        cosmetique: !document.getElementById("etiquette-note-cosmetique").hidden,
+      };
+    });
+    if (!new RegExp(attendu.verdict, "i").test(vu.label))
+      manques.push(`verdict affiché « ${vu.label} », attendu « ${attendu.verdict} »`);
+    // Un écran ne dit jamais deux choses contraires.
+    if (/haram/i.test(vu.label) && /rien de problématique|rien de problematique/i.test(vu.texte))
+      manques.push("dit HARAM et « rien de problématique » sur le même écran");
+    // « La transformation chimique lève le problème » n'a rien à dire devant
+    // du porc : ce n'est pas un ingrédient de savon.
+    if (attendu.sansNoteCosmetique && vu.cosmetique)
+      manques.push("affiche le bandeau « si c'est un cosmétique » devant un interdit alimentaire");
+    console.log(`  verdict affiché : ${vu.label}`);
+  }
+
   if (manques.length) ecarts += manques.length;
   console.log(`${manques.length ? "✗" : "✓"} ${nom}`);
   console.log(`  écran : ${ecran}${poids ? ` | envoyé : ${(poids / 1024 / 1024).toFixed(2)} Mo` : " | rien envoyé"}`);
@@ -126,7 +152,7 @@ const json = (o) => (r) => r.fulfill({ status: 200, contentType: "application/js
 
 await scene("1. service répond correctement",
   json({ verdict: "douteux", resume: "Gélatine détectée", ingredients_a_risque: [{ nom: "Gélatine", raison: "origine non précisée" }] }),
-  { ecran: "ecran-etiquette" });
+  { ecran: "ecran-etiquette", verdict: "douteux" });
 // 429 : la panne est chez nous, mais elle est temporaire et se dit autrement
 // (« réessaie dans quelques minutes »). On n'y exige pas la phrase.
 await scene("2. service saturé (429)",
@@ -141,12 +167,33 @@ await scene("5. JSON valide mais sans verdict",
 // Réseau coupé : là, c'est bien au visiteur d'agir — vérifier sa connexion.
 // La phrase serait fausse ici, on ne l'exige pas.
 await scene("6. réseau coupé", (r) => r.abort(), { ecran: "ecran-erreur" });
+
+// ── Le service se trompe, ou se contredit ────────────────────────────────
+// Ces quatre scènes-là existent depuis le 12 août. Le chemin photo affichait
+// tel quel le verdict du service, sans jamais consulter nos règles : un
+// « halal » accompagné de « Saindoux » s'affichait ✅ HALAL.
+await scene("7. dit HALAL mais signale du saindoux",
+  json({ verdict: "halal", resume: "Rien de problématique détecté.", ingredients_a_risque: [{ nom: "Saindoux", raison: "graisse de porc" }] }),
+  { ecran: "ecran-etiquette", verdict: "haram", sansNoteCosmetique: true });
+await scene("8. dit HALAL mais signale des lardons",
+  json({ verdict: "halal", resume: "Composition simple.", ingredients_a_risque: [{ nom: "Lardons", raison: "morceaux de porc" }] }),
+  { ecran: "ecran-etiquette", verdict: "haram", sansNoteCosmetique: true });
+// On DURCIT, on n'adoucit jamais : le service a vu l'étiquette entière, nous
+// n'avons que les noms qu'il nous rend.
+await scene("9. dit HARAM, nos règles ne connaissent pas l'ingrédient",
+  json({ verdict: "haram", resume: "Ingrédient interdit relevé.", ingredients_a_risque: [{ nom: "Ingrédient inconnu de nos tables", raison: "relevé par la lecture" }] }),
+  { ecran: "ecran-etiquette", verdict: "haram" });
+// Une liste INCI passe par le même chemin : le moteur cosmétique doit compter.
+await scene("10. cosmétique — dit HALAL mais signale du Sodium Tallowate",
+  json({ verdict: "halal", resume: "Rien à signaler.", ingredients_a_risque: [{ nom: "Sodium Tallowate", raison: "graisse animale" }] }),
+  { ecran: "ecran-etiquette", verdict: "haram" });
+
 await b.close();
 await arreterLeServeur();
 rmSync(PHOTO, { force: true });
 
 if (ecarts > 0) {
-  console.log(`✗ ${ecarts} défaut(s) sur les 6 façons dont la lecture par photo peut se passer.`);
+  console.log(`✗ ${ecarts} défaut(s) sur les 10 façons dont la lecture par photo peut se passer.`);
   process.exit(1);
 }
-console.log("✓ Les 6 scènes de la lecture par photo tiennent leur promesse, panne du service comprise.");
+console.log("✓ Les 10 scènes de la lecture par photo tiennent leur promesse — panne du service, et service qui se trompe.");

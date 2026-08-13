@@ -112,6 +112,177 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Un savon au suif rangé dans la base alimentaire ressortait HALAL**
+  *(12 août)* — audit de cycle, les 7 éléments de la file étant tous bloqués.
+
+  L'aiguillage vers le moteur cosmétique se fait sur la **base d'origine** :
+  cosmétique si le produit vient d'Open Beauty Facts. Or Open Food Facts est
+  interrogé **en premier**, et contient des savons, dentifrices et crèmes. Ces
+  produits partent donc au moteur alimentaire, qui ne lit pas l'INCI.
+
+  | Liste INCI trouvée dans la base alimentaire | avant | après |
+  |---|---|---|
+  | `Sodium Tallowate, Aqua, Parfum` *(savon au suif)* | **HALAL** | HARAM |
+  | `Aqua, Adeps Suillus, Cetyl Alcohol` *(graisse de porc)* | **HALAL** | HARAM |
+  | `Aqua, Hydrolyzed Keratin, …` | **HALAL** | DOUTEUX |
+  | `Aqua, Hydrolyzed Collagen, Glycerin` | **HALAL** | DOUTEUX |
+  | `Alcohol Denat., Aqua, Parfum` | **HALAL** | DOUTEUX |
+
+  **6 listes INCI réalistes sur 7 ressortaient HALAL.**
+
+  **Ce que je n'ai pas fait, et pourquoi :** faire tourner les deux moteurs sur
+  tout serait l'erreur inverse, et je l'ai mesurée — « glycérine végétale, eau,
+  parfum » passe DOUTEUX chez le cosmétique alors que l'étiquette dit
+  *végétale*. **1 faux positif sur 15** compositions banales.
+
+  D'où un marqueur, et pas un autre : **« Aqua »**, le nom INCI de l'eau.
+  Aucune étiquette alimentaire française ne l'emploie — elle écrit « eau ».
+  Vérifié : **7 listes INCI sur 7 reconnues, 0 aliment sur 19 pris à tort.**
+  Quand le marqueur est là, le second moteur tourne et ne peut que **durcir**,
+  les alertes des deux étant fusionnées sans doublon.
+
+  Gelé dans `sonde:verdicts` : **12 → 17 scènes**, dont deux aliments témoins
+  qui doivent rester HALAL. Sabotage de contrôle — second avis retiré :
+  3 scènes repassent HALAL, la sonde vire au rouge.
+
+- **Une faute de frappe dans `verifications.json` mettait le sceau vert sur du
+  porc** *(12 août)* — audit de cycle, les 7 éléments de la file étant tous
+  bloqués. C'est le défaut le plus grave trouvé jusqu'ici : il touche le moat
+  lui-même.
+
+  Une fiche vérifiée **prime** sur l'analyse — son statut s'affiche, les
+  alertes du moteur sont effacées. Le statut n'était jamais contrôlé, et
+  l'écran retombait sur le vert :
+
+  ```js
+  $("verdict-emoji").textContent = EMOJIS[verif.statut] || "✅";
+  ```
+
+  Mesuré sur un pâté dont la composition dit « foie de porc, lardons » :
+
+  | Fiche saisie à la main | avant | après |
+  |---|---|---|
+  | `statut: "Halal"` *(majuscule)* | **✅, sceau, label vide** | ✅ HALAL, sceau |
+  | `statut: "halall"` | **✅, sceau, 0 alerte** | ❌ HARAM, pas de sceau |
+  | statut absent | **✅, sceau, 0 alerte** | ❌ HARAM, pas de sceau |
+  | statut vide | **✅, sceau, 0 alerte** | ❌ HARAM, pas de sceau |
+  | `statut: "oui"` | **✅, sceau, 0 alerte** | ❌ HARAM, pas de sceau |
+
+  **5 sur 5 → 0.** Et le label restait vide : aucun mot ne venait contredire la
+  pastille verte. La classe CSS devenait `verdict-halall`, `verdict-undefined`,
+  `verdict-oui` — sans correspondance, donc même la couleur ne signalait rien.
+
+  **C'est le fichier que Mohamed remplira à la main**, en recopiant des
+  réponses de fabricants. La faute de frappe y est le cas normal, pas le cas
+  rare — et la base est encore vide, donc le correctif arrive avant la première
+  fiche, pas après.
+
+  Deux serrures :
+  - **À l'exécution :** une fiche illisible est traitée comme absente, on
+    retombe sur l'analyse automatique, qui dit la vérité de la composition. Le
+    repli d'emoji est ❓, plus jamais ✅. Une majuscule est simplement
+    normalisée — c'est une faute sans ambiguïté.
+  - **Avant la mise en ligne :** `npm run verif:chiffres` (en CI) refuse de
+    passer si une fiche porte un statut inconnu, ou n'a ni source ni date, ou
+    si la clé n'est pas un code-barres. Vérifié en injectant deux fiches
+    fautives : 3 défauts, sortie en erreur.
+
+  Gelé dans `sonde:verdicts` : **6 → 12 scènes**. Sabotage de contrôle — filtre
+  retiré : 5 scènes repassent au sceau vert, la sonde vire au rouge.
+
+- **La lecture photo affichait ✅ HALAL sur du saindoux** *(12 août)* — audit de
+  cycle, les 7 éléments de la file étant tous bloqués.
+
+  Question posée : **le chemin photo consulte-t-il nos règles ?** Réponse :
+  non. Il affichait tel quel le verdict rendu par `halalgpt.fr/api/etiquette`.
+  Nos règles locales — celles qui attrapent lardons, saindoux, vin — n'étaient
+  jamais consultées sur le verdict. Elles servaient uniquement à graduer la
+  gravité, et **par le moteur cosmétique**, qui ne connaît ni « Saindoux » ni
+  « Lardons ».
+
+  Ce que la personne voyait, réponse `{verdict:"halal",
+  ingredients_a_risque:[{nom:"Saindoux"}]}` — mesuré sur le vrai écran :
+
+  ```
+  ✅ HALAL — Rien de problématique détecté.
+  SI C'EST UN COSMÉTIQUE — … la transformation chimique lève le problème …
+  ⚠️ Saindoux — graisse de porc
+  ```
+
+  **Trois défauts sur le même écran.** Un verdict vert sur du porc, avec
+  l'aveu juste en dessous. Un bandeau cosmétique devant une étiquette
+  alimentaire. Et, en verdict DOUTEUX, la phrase *« le point à vérifier, c'est
+  Saindoux : cet ingrédient existe en version végétale comme animale »* —
+  **factuellement fausse**, le saindoux EST de la graisse de porc.
+
+  Ce chemin est celui recommandé pour les produits maghrébins absents des
+  bases. **Le moins vérifié était celui du public visé.**
+
+  | Réponse du service | avant | après |
+  |---|---|---|
+  | `halal` + Saindoux | **✅ HALAL** | ❌ HARAM |
+  | `halal` + Lardons | **✅ HALAL** | ❌ HARAM |
+  | `halal` + Sodium Tallowate *(INCI)* | **✅ HALAL** | ❌ HARAM |
+  | `haram` + ingrédient inconnu de nos tables | ❌ HARAM | ❌ HARAM |
+
+  **La règle ne va que dans un sens.** Le service a vu l'étiquette entière,
+  nous n'avons que les noms qu'il signale : nous ne pouvons jamais l'adoucir.
+  Mais s'il dit « halal » alors qu'un de ces noms est interdit chez nous, le
+  nôtre l'emporte. Les deux moteurs sont interrogés, la photo servant aussi
+  bien une étiquette alimentaire qu'une liste INCI.
+
+  Quand nous durcissons, le résumé du service décrivait encore l'ancien verdict
+  (« Rien de problématique détecté » sous ❌ HARAM) : il est remplacé par
+  l'explication de l'écart. Et le bandeau cosmétique se tait devant un interdit
+  alimentaire.
+
+  `sonde:photo` passe de **6 à 10 scènes**. Sabotage de contrôle — confiance
+  aveugle rétablie : 3 scènes repassent HALAL, la sonde vire au rouge.
+
+- **« non-halal » était lu comme une certification halal** *(12 août)* — audit
+  de cycle, les 7 éléments de la file étant tous bloqués sur Mohamed ou sur la
+  politique réseau.
+
+  Question posée : **sur quoi repose l'affirmation « certifié halal ✓ » ?**
+  C'est la plus forte que ce produit fasse. Réponse trouvée dans le code :
+  `labels.some(l => l.includes("halal"))`. Or **« en:non-halal » contient
+  « halal »**.
+
+  | Étiquette de la base, sur une composition à la gélatine | avant | après |
+  |---|---|---|
+  | `en:non-halal` | **HALAL, certifié ✓** | DOUTEUX |
+  | `en:not-halal` | **HALAL, certifié ✓** | DOUTEUX |
+  | `fr:non-halal` | **HALAL, certifié ✓** | DOUTEUX |
+  | `en:halal-not-certified` | **HALAL, certifié ✓** | DOUTEUX |
+  | `en:no-halal-certification` | **HALAL, certifié ✓** | DOUTEUX |
+  | `fr:sans-certification-halal` | **HALAL, certifié ✓** | DOUTEUX |
+  | `en:non-vegan` | **HALAL** *(raccourci végane)* | DOUTEUX |
+  | `fr:non-vegetalien` | **HALAL** *(raccourci végane)* | DOUTEUX |
+
+  **8 sur 8 → 0.** C'est l'inversion la plus grave possible : le produit
+  affirmait le contraire de ce que la base disait, et l'affichait avec le
+  sceau. Même famille de défaut que « lardons » attrapé par `\blard\b` — une
+  sous-chaîne qui ne regarde pas le mot autour.
+
+  **Le doute penche désormais toujours du même côté** : en cas d'ambiguïté, on
+  ne certifie pas. Une certification manquée affiche DOUTEUX avec une
+  explication ; une certification inventée fait manger du porc.
+
+  Et parce que se taire serait aussi un mensonge : une composition **propre**
+  portant `en:non-halal` ne ressort plus HALAL en silence, elle porte
+  l'alerte « La base indique que ce produit n'est PAS halal. Cette information
+  vient de contributeurs, pas d'un organisme : à vérifier sur l'emballage. » —
+  ce que la base dit, sans en faire un interdit inventé.
+
+  Contrecoup vérifié : les 8 vraies certifications (`en:halal`, `fr:halal`,
+  `en:certified-halal`, `fr:certifie-halal`, `en:halal-certified`,
+  `fr:viande-halal`, `en:vegan`, `fr:vegetalien`) certifient toujours. Même
+  correctif dans le moteur cosmétique.
+
+  Gelé dans `sonde:faux-negatifs` (section E) : **66 → 82 cas**. Sabotage de
+  contrôle — `includes()` naïf remis : 6/8 repassent HALAL, la sonde vire au
+  rouge.
+
 - **16 façons d'écrire « on ne sait pas » rendaient HALAL** *(12 août)* — audit
   de cycle : les 6 éléments de la file étaient tous bloqués sur Mohamed ou sur
   la politique réseau, donc j'ai mesuré au lieu d'attendre.
