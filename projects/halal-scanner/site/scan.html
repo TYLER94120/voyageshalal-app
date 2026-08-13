@@ -2026,6 +2026,32 @@
       return n.charAt(0).toUpperCase() + n.slice(1);
     }
 
+    /**
+     * « Aqua » : le mot qui trahit une liste INCI rangée du mauvais côté.
+     *
+     * L'aiguillage se fait sur la BASE d'origine — cosmétique si le produit
+     * vient d'Open Beauty Facts. Or Open Food Facts est interrogé EN PREMIER,
+     * et contient des savons, dentifrices et crèmes. Ces produits partent donc
+     * au moteur alimentaire, qui ne lit pas la nomenclature INCI.
+     *
+     * Mesuré le 12 août sur sept listes INCI réalistes : **six ressortaient
+     * HALAL** par le moteur alimentaire alors que le moteur cosmétique les
+     * signalait — dont « Aqua, Adeps Suillus » (graisse de porc) et deux
+     * savons au suif.
+     *
+     * Faire tourner les deux moteurs sur TOUT serait l'erreur inverse :
+     * mesuré aussi, « glycérine végétale, eau, parfum » passe DOUTEUX chez le
+     * cosmétique alors que l'étiquette dit végétale — 1 faux positif sur 15
+     * compositions banales.
+     *
+     * D'où ce marqueur, et pas un autre : « Aqua » est le nom INCI de l'eau.
+     * Aucune étiquette alimentaire française ne l'emploie, elle écrit « eau ».
+     * Vérifié : 7 listes INCI sur 7 reconnues, 0 aliment sur 19 pris à tort.
+     */
+    const RESSEMBLE_A_UNE_INCI = /\baqua\b/i;
+
+    const RANG_STATUT = { haram: 3, douteux: 2, inconnu: 1, halal: 0 };
+
     // Aiguillage : les cosmétiques ont leur propre nomenclature (INCI) et
     // leurs propres règles — ils ne passent jamais par le moteur alimentaire.
     function analyserSelonType(produit) {
@@ -2035,11 +2061,31 @@
           labels: produit.labels,
         });
       }
-      return analyserProduit({
+      const alimentaire = analyserProduit({
         ingredientsTexte: produit.ingredientsTexte,
         additifs: produit.additifs,
         labels: produit.labels,
       });
+      const texte = String((produit && produit.ingredientsTexte) || "");
+      if (!RESSEMBLE_A_UNE_INCI.test(texte)) return alimentaire;
+
+      // Deuxième avis, et il ne peut que durcir : on garde le plus strict des
+      // deux, et les alertes des deux, sans doublon.
+      const cosmetique = analyserCosmetique({
+        ingredientsTexte: produit.ingredientsTexte,
+        labels: produit.labels,
+      });
+      if (RANG_STATUT[cosmetique.statut] <= RANG_STATUT[alimentaire.statut]) return alimentaire;
+      const vues = new Set(alimentaire.alertes.map((a) => (a.famille || a.element).toLowerCase()));
+      const ajoutees = cosmetique.alertes.filter(
+        (a) => !vues.has((a.famille || a.element).toLowerCase())
+      );
+      return {
+        statut: cosmetique.statut,
+        certifieHalal: alimentaire.certifieHalal,
+        vegan: alimentaire.vegan,
+        alertes: alimentaire.alertes.concat(ajoutees),
+      };
     }
 
     // Une étiquette écrite en arabe n'est PAS une absence d'information : c'est

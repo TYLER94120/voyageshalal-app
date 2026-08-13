@@ -112,6 +112,39 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Un savon au suif rangé dans la base alimentaire ressortait HALAL**
+  *(12 août)* — audit de cycle, les 7 éléments de la file étant tous bloqués.
+
+  L'aiguillage vers le moteur cosmétique se fait sur la **base d'origine** :
+  cosmétique si le produit vient d'Open Beauty Facts. Or Open Food Facts est
+  interrogé **en premier**, et contient des savons, dentifrices et crèmes. Ces
+  produits partent donc au moteur alimentaire, qui ne lit pas l'INCI.
+
+  | Liste INCI trouvée dans la base alimentaire | avant | après |
+  |---|---|---|
+  | `Sodium Tallowate, Aqua, Parfum` *(savon au suif)* | **HALAL** | HARAM |
+  | `Aqua, Adeps Suillus, Cetyl Alcohol` *(graisse de porc)* | **HALAL** | HARAM |
+  | `Aqua, Hydrolyzed Keratin, …` | **HALAL** | DOUTEUX |
+  | `Aqua, Hydrolyzed Collagen, Glycerin` | **HALAL** | DOUTEUX |
+  | `Alcohol Denat., Aqua, Parfum` | **HALAL** | DOUTEUX |
+
+  **6 listes INCI réalistes sur 7 ressortaient HALAL.**
+
+  **Ce que je n'ai pas fait, et pourquoi :** faire tourner les deux moteurs sur
+  tout serait l'erreur inverse, et je l'ai mesurée — « glycérine végétale, eau,
+  parfum » passe DOUTEUX chez le cosmétique alors que l'étiquette dit
+  *végétale*. **1 faux positif sur 15** compositions banales.
+
+  D'où un marqueur, et pas un autre : **« Aqua »**, le nom INCI de l'eau.
+  Aucune étiquette alimentaire française ne l'emploie — elle écrit « eau ».
+  Vérifié : **7 listes INCI sur 7 reconnues, 0 aliment sur 19 pris à tort.**
+  Quand le marqueur est là, le second moteur tourne et ne peut que **durcir**,
+  les alertes des deux étant fusionnées sans doublon.
+
+  Gelé dans `sonde:verdicts` : **12 → 17 scènes**, dont deux aliments témoins
+  qui doivent rester HALAL. Sabotage de contrôle — second avis retiré :
+  3 scènes repassent HALAL, la sonde vire au rouge.
+
 - **Une faute de frappe dans `verifications.json` mettait le sceau vert sur du
   porc** *(12 août)* — audit de cycle, les 7 éléments de la file étant tous
   bloqués. C'est le défaut le plus grave trouvé jusqu'ici : il touche le moat

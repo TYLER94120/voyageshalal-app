@@ -38,6 +38,44 @@ for (const [nom, rep, attendus] of CAS) {
     (manquants.length ? "  ← manque : " + manquants.join(", ") : ""));
   await c.close();
 }
+// ── Une liste INCI rangee du mauvais cote ────────────────────────────────
+//
+// L'aiguillage se fait sur la BASE d'origine : cosmetique si le produit vient
+// d'Open Beauty Facts. Or Open Food Facts est interroge EN PREMIER, et
+// contient des savons, dentifrices et cremes. Mesure du 12 aout : six listes
+// INCI realistes sur sept ressortaient HALAL par le moteur alimentaire, dont
+// « Aqua, Adeps Suillus » — de la graisse de porc.
+//
+// Les deux dernieres lignes sont la pour l'erreur inverse : faire tourner le
+// moteur cosmetique sur TOUT accuserait « glycerine vegetale » a tort.
+console.log("\nListes INCI rangées dans la base alimentaire :");
+const AIGUILLAGE = [
+  ["savon au suif", "Sodium Tallowate, Aqua, Parfum, Glycerin", "haram"],
+  ["crème à la graisse de porc", "Aqua, Adeps Suillus, Cetyl Alcohol", "haram"],
+  ["shampooing à la kératine", "Aqua, Hydrolyzed Keratin, Sodium Laureth Sulfate", "douteux"],
+  ["aliment — glycérine végétale", "glycérine végétale, eau, parfum", "halal"],
+  ["aliment — composition banale", "tomates, huile d'olive vierge extra, basilic, sel", "halal"],
+];
+for (const [nom, texte, attendu] of AIGUILLAGE) {
+  const c = await n.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: "block" });
+  const p = await c.newPage();
+  await p.route(/openfoodfacts\.org|openbeautyfacts\.org/, (r) =>
+    r.fulfill({ status: 200, contentType: "application/json",
+      body: JSON.stringify(fiche({ ingredients_text_fr: texte })) }));
+  await p.route(/halalgpt\.fr/, (r) => r.fulfill({ status: 204, body: "" }));
+  await p.goto(`${base}/scan.html?code=3017620422003`, { waitUntil: "domcontentloaded" });
+  await p.waitForTimeout(4000);
+  const vu = await p.evaluate(() => ({
+    label: (document.getElementById("verdict-label").textContent || "").trim(),
+    classe: document.getElementById("verdict").className,
+  }));
+  const ok = vu.classe.includes("verdict-" + attendu);
+  if (!ok) fautes++;
+  console.log(`  ${ok ? "✓" : "✗"} ${nom.padEnd(30)} ${vu.label.padEnd(8)}` +
+    (ok ? "" : `  ← attendu ${attendu.toUpperCase()}`));
+  await c.close();
+}
+
 // ── Le sceau « ✓ VÉRIFIÉ » sur une fiche mal saisie ──────────────────────
 //
 // Une fiche vérifiée PRIME sur l'analyse : son statut s'affiche et les alertes
@@ -96,4 +134,4 @@ for (const [nom, fiche, statutAttendu, sceauAttendu] of FICHES) {
 
 await n.close(); await arreter();
 if (fautes > 0) { console.log(`\n✗ ${fautes} écran(s) en défaut.`); process.exit(1); }
-console.log("\n✓ Les six écrans disent une seule chose à la fois, et le sceau ne s'affiche que sur une fiche relisible.");
+console.log("\n✓ Les six écrans disent une seule chose à la fois, une liste INCI est reconnue même rangée du mauvais côté, et le sceau ne s'affiche que sur une fiche relisible.");
