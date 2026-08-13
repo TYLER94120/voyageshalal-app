@@ -121,6 +121,47 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Une correction du moteur était commitée mais jamais compilée — le site
+  servait encore le défaut** *(13 août)*. Le plus vicieux rencontré jusqu'ici,
+  parce qu'il **annule silencieusement n'importe quelle correction**.
+
+  Trouvé par accident : après un `git rebase`, `npm run build:site` a produit
+  un diff de 26 lignes sur `site/halal.js`. Un fichier généré qui change alors
+  que personne n'a touché à la source, c'est que le fichier servi avait
+  **divergé** de `lib/halal.ts`.
+
+  Un cycle de cette nuit avait corrigé « l'étiquette végane servait de
+  laissez-passer », avec son commit et ses explications. Mais `site/halal.js` —
+  **le fichier que le navigateur exécute** — n'avait jamais été recompilé.
+
+  | Moteur réellement en ligne | avant | après recompilation |
+  |---|---|---|
+  | végane + étiquette « non halal » | **HALAL** *(avec l'alerte affichée dessous)* | DOUTEUX |
+  | végane + gélatine | **HALAL** | DOUTEUX |
+  | végane + carmin | **HALAL** | DOUTEUX |
+  | végane + E471 *(doute que « végétal » lève)* | HALAL | HALAL, 0 alerte |
+
+  **Pourquoi aucune sonde ne l'a vu :** elles lisent toutes `site/*.js`, le
+  fichier compilé. Un build périmé leur fait donc tester l'**ancien** moteur —
+  et passer. Le commit disait « corrigé », les 17 étapes de contrôle étaient
+  vertes, et le site servait le défaut. C'est exactement la famille de défaut
+  que je traque depuis trois jours, mais un étage au-dessus : **cette fois
+  c'est la chaîne de contrôle elle-même qui mentait.**
+
+  Deux choses faites :
+  - **Le moteur en ligne est recompilé** — les trois verdicts faux sont
+    corrigés pour de vrai cette fois.
+  - **`npm run verif:build`** recompile dans un dossier à part et compare octet
+    pour octet. Placé **en première position** du travail « moteur » en CI,
+    avant les tests : il décide si les étapes suivantes mesurent quelque chose.
+    Sabotage de contrôle — fichier périmé remis : `PÉRIMÉ — 26 901 octets
+    servis, 28 266 attendus`, sortie en erreur.
+
+  *Note de méthode :* j'avais lancé la suite complète **avant** le rebase, donc
+  sur mon état à moi. C'est en la relançant après fusion que l'écart est
+  apparu. Une suite verte sur un état qui n'est pas celui qu'on pousse ne
+  prouve rien.
+
 - **Deux audits, aucun défaut — et les deux sont maintenant gelés** *(13 août)*
   — audit de cycle, les 7 éléments de la file étant tous bloqués. **Le résultat
   honnête de ce cycle est « rien de cassé », et je ne fabrique pas une

@@ -489,11 +489,27 @@ export function analyserProduit(entree) {
     }
     const alertesUniques = [...parCle.values()];
     const aHaram = alertesUniques.some((a) => a.niveau === "haram");
-    const aDouteux = alertesUniques.some((a) => a.niveau === "douteux");
     // On ne peut conclure « halal » que sur ce qu'on a réellement su lire :
     // un texte analysable, ou des codes additifs fournis par la base.
     const brut = (_e = entree.ingredientsTexte) !== null && _e !== void 0 ? _e : "";
     const aDesDonnees = texteAnalysable(brut) || codes.length > 0 || ((_f = entree.additifs) !== null && _f !== void 0 ? _f : []).length > 0;
+    // Une étiquette « végane » vient de contributeurs, pas d'un organisme. Elle ne
+    // peut donc répondre qu'aux doutes dont « végétale » est une issue possible —
+    // ceux qui le disent eux-mêmes : « origine végétale OU animale non précisée »
+    // (E471, stéarates, glycérine). Elle ne répond pas au carmin, extrait
+    // d'insectes par définition ; pas à la gélatine, dont la seule issue nommée
+    // est une mention halal ; pas à une étiquette « non halal », qui ne parle pas
+    // d'origine du tout.
+    //
+    // Mesuré le 13 août : « non halal » + « végane » ressortait HALAL, en
+    // affichant « Étiquette non halal » juste en dessous. Idem végane + gélatine,
+    // et végane + carmin. Deux données qui se contredisent font un doute, jamais
+    // un feu vert — sinon il suffit d'une étiquette végane de contributeur pour
+    // effacer tout ce que la composition dit.
+    const leveParLeVegan = (a) => a.niveau === "douteux" &&
+        a.famille !== "label-non-halal" &&
+        /origine v[ée]g[ée]tale ou animale/i.test(a.raison);
+    const doutesRestants = alertesUniques.filter((a) => a.niveau === "douteux" && !(vegan && leveParLeVegan(a)));
     let statut;
     if (certifieHalal && !aHaram) {
         statut = "halal";
@@ -501,14 +517,10 @@ export function analyserProduit(entree) {
     else if (aHaram) {
         statut = "haram";
     }
-    else if (vegan) {
-        // Végane sans alcool détecté : les doutes d'origine animale tombent.
-        statut = "halal";
-    }
-    else if (aDouteux) {
+    else if (doutesRestants.length > 0) {
         statut = "douteux";
     }
-    else if (aDesDonnees) {
+    else if (aDesDonnees || vegan) {
         statut = "halal";
     }
     else {
@@ -524,6 +536,12 @@ export function analyserProduit(entree) {
     // reconnus à leur propre formulation. Jamais un interdit : celui-là fait
     // basculer le verdict et reste affiché.
     const leveParLeLabel = (a) => a.niveau !== "haram" && /sauf (certification|mention halal|origine halal)/i.test(a.raison);
-    const alertesAffichees = certifieHalal && !aHaram ? alertesUniques.filter((a) => !leveParLeLabel(a)) : alertesUniques;
+    let alertesAffichees = certifieHalal && !aHaram ? alertesUniques.filter((a) => !leveParLeLabel(a)) : alertesUniques;
+    // Même règle pour le végane : le doute auquel l'étiquette répond disparaît de
+    // l'écran, les autres restent — et s'il en reste un, le verdict n'est plus
+    // « halal » de toute façon.
+    if (vegan && statut === "halal") {
+        alertesAffichees = alertesAffichees.filter((a) => !leveParLeVegan(a));
+    }
     return { statut, certifieHalal, vegan, alertes: alertesAffichees };
 }

@@ -71,7 +71,20 @@ jobs:
       - name: Installer TypeScript, et rien d'autre
         run: npm install -g typescript@5.3.3
 
-      # En premier : il compile lib/ vers .test-build/, dont les sondes
+      # AVANT tout le reste : le fichier servi est-il celui qui est ecrit ?
+      #
+      # Toutes les sondes lisent site/*.js, le fichier compile. Un build perime
+      # leur fait donc tester l'ANCIEN moteur — et passer. Mesure du 13 aout :
+      # une correction ecrite dans lib/halal.ts n'avait jamais ete recompilee,
+      # et le moteur EN LIGNE rendait encore HALAL sur « vegane + gelatine »,
+      # « vegane + carmin » et « vegane + etiquette non halal ». Le commit
+      # disait « corrige », les controles etaient verts, le site servait le
+      # defaut. Ce controle-ci passe en premier parce qu'il decide si les
+      # suivants mesurent quelque chose.
+      - name: Le moteur servi est-il celui qui est ecrit ?
+        run: npm run verif:build
+
+      # Ensuite : il compile lib/ vers .test-build/, dont les sondes
       # suivantes ont besoin.
       - name: Les tests du moteur
         run: npm run test:moteur
