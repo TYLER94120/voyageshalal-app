@@ -42,9 +42,65 @@ const enregistre = await p.evaluate(() => {
   return [...lu("halalcheck.scans"), ...lu("halalcheck.gardes")].map((e) => e.statut);
 });
 console.log("Statuts reecrits dans les listes : " + enregistre.join(", "));
+// ── Et quand le stockage local n'existe pas ? ────────────────────────────
+//
+// Navigation privee, stockage plein, ou navigateur qui refuse. Safari iOS a
+// longtemps leve une exception sur setItem en navigation privee. L'historique
+// est un confort — le VERDICT, lui, ne doit jamais en dependre.
+//
+// Verifie le 13 aout : les quatre modes de panne rendaient deja le bon
+// verdict. Cette scene ne corrige rien, elle empeche que ca casse.
+console.log("\nStockage local en panne — le verdict tient-il quand meme ?");
+const PANNES = [
+  ["setItem leve (quota / prive)", () => {
+    const vrai = window.localStorage;
+    Object.defineProperty(window, "localStorage", { configurable: true, get: () => ({
+      getItem: (k) => vrai.getItem(k), setItem: () => { throw new DOMException("QuotaExceededError"); },
+      removeItem: (k) => vrai.removeItem(k), key: (i) => vrai.key(i), get length() { return vrai.length; },
+    })});
+  }],
+  ["getItem et setItem levent", () => {
+    Object.defineProperty(window, "localStorage", { configurable: true, get: () => ({
+      getItem: () => { throw new DOMException("SecurityError"); },
+      setItem: () => { throw new DOMException("SecurityError"); },
+      removeItem: () => { throw new DOMException("SecurityError"); },
+      key: () => { throw new DOMException("SecurityError"); },
+      get length() { throw new DOMException("SecurityError"); },
+    })});
+  }],
+  ["localStorage carrement absent", () => {
+    Object.defineProperty(window, "localStorage", {
+      configurable: true, get: () => { throw new DOMException("SecurityError"); } });
+  }],
+];
+let sansStockage = 0;
+for (const [nom, panne] of PANNES) {
+  const ctx = await n.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: "block" });
+  await ctx.addInitScript(panne);
+  const page = await ctx.newPage();
+  await page.route(/openfoodfacts\.org|openbeautyfacts\.org/, (r) =>
+    r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ status: 1,
+      product: { product_name: "Pate a tartiner", brands: "Essai",
+        ingredients_text_fr: "sucre, huile de palme, emulsifiant E471",
+        additives_tags: [], labels_tags: [], categories_tags: [] } }) }));
+  await page.route(/halalgpt\.fr/, (r) => r.fulfill({ status: 204, body: "" }));
+  await page.goto(`${base}/scan.html?code=3017620422003`, { waitUntil: "domcontentloaded" });
+  await page.waitForTimeout(4500);
+  const vu = await page.evaluate(() => {
+    const e = document.getElementById("ecran-resultat");
+    if (!e || e.hidden) return "(pas de verdict)";
+    return (document.getElementById("verdict-label").textContent || "").trim() || "(pastille muette)";
+  }).catch(() => "(page cassee)");
+  const ok = vu === "DOUTEUX";
+  if (!ok) sansStockage += 1;
+  console.log(`  ${ok ? "✓" : "✗"} ${nom.padEnd(32)} ${vu}${ok ? "" : "  ← attendu DOUTEUX"}`);
+  await ctx.close();
+}
+
 await n.close(); await arreter();
-if (perime || enregistre.some((st) => st !== verdictReel)) {
-  console.log("\n✗ Un verdict perime survit dans les listes.");
+if (perime || enregistre.some((st) => st !== verdictReel) || sansStockage > 0) {
+  if (perime || enregistre.some((st) => st !== verdictReel)) console.log("\n✗ Un verdict perime survit dans les listes.");
+  if (sansStockage > 0) console.log(`\n✗ ${sansStockage} panne(s) de stockage empechent le verdict.`);
   process.exit(1);
 }
-console.log("\n✓ Les listes suivent le moteur, et le statut enregistre a ete corrige.");
+console.log("\n✓ Les listes suivent le moteur, le statut enregistre a ete corrige, et le verdict tient sans stockage local.");

@@ -112,6 +112,45 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Deux audits, aucun défaut — et les deux sont maintenant gelés** *(13 août)*
+  — audit de cycle, les 7 éléments de la file étant tous bloqués. **Le résultat
+  honnête de ce cycle est « rien de cassé », et je ne fabrique pas une
+  correction pour avoir l'air utile.**
+
+  **1. Le stockage local en panne.** Navigation privée, stockage plein,
+  navigateur qui refuse — Safari iOS a longtemps levé une exception sur
+  `setItem` en navigation privée. L'historique est un confort ; le **verdict**
+  ne doit jamais en dépendre.
+
+  | Panne injectée | verdict rendu |
+  |---|---|
+  | `setItem` lève *(quota / privé)* | DOUTEUX ✓ |
+  | `getItem` **et** `setItem` lèvent | DOUTEUX ✓ |
+  | `localStorage` carrément absent | DOUTEUX ✓ |
+
+  **3 sur 3.** Les cinq écritures sont déjà dans un `try`, et aucune lecture au
+  démarrage n'est laissée nue.
+
+  **2. La caméra refusée, absente, ou occupée.** `sonde:saisie` simulait une
+  panne du **lecteur**, caméra accordée. Le refus de la **caméra** — le cas le
+  plus fréquent, on tape « Refuser » par réflexe — n'avait jamais été vérifié.
+
+  | Panne | message | champ visible | après saisie du code |
+  |---|---|---|---|
+  | `NotAllowedError` | « Caméra **refusée** — autorise-la… » | oui | verdict ✓ |
+  | `NotFoundError` | « Caméra indisponible ici… » | oui | verdict ✓ |
+  | `NotReadableError` | « Caméra indisponible ici… » | oui | verdict ✓ |
+  | pas de `mediaDevices` | « Caméra indisponible ici… » | oui | verdict ✓ |
+
+  **4 sur 4**, avec le bon message dans chaque cas — le refus est distingué de
+  l'absence, ce qui n'est pas la même action pour l'utilisateur.
+
+  **Ce que ce cycle produit :** ces six chemins ne cassent pas *aujourd'hui*,
+  mais rien ne les empêchait de casser demain. `sonde:saisie` gagne 3 scènes,
+  `sonde:historique` en gagne 3. Sabotages de contrôle : message de refus
+  remplacé par « Erreur. » → rouge ; une lecture de stockage laissée nue au
+  démarrage → 2 scènes sans verdict, rouge.
+
 - **L'adresse IP de chaque visiteur partait chez Google, sans que les mentions
   légales le disent** *(13 août)* — audit de cycle, les 7 éléments de la file
   étant tous bloqués.
