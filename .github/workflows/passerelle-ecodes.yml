@@ -1,0 +1,78 @@
+# Quatrieme robot : le fil entre HalalCheck et halalgpt.fr.
+#
+# Le 13 aout 2026, l'audit de halalgpt.fr a mesure que sur les 56 liens
+# `halalgpt.fr/e/<CODE>` publies par halalcheck.fr/additifs.html, 36 tombaient
+# sur une liste de categorie — et c'etaient exactement les codes que le scanner
+# classe « douteux ». Quelqu'un lisait E472e sur un paquet, voyait douteux,
+# appuyait pour comprendre, et recevait une page qui ne parlait pas de son code.
+#
+# Ce defaut a tenu des semaines parce qu'AUCUN controle ne pouvait le voir : le
+# scanner testait son moteur, halalgpt.fr testait ses fiches. Les deux moities
+# etaient vertes et le pont etait rompu. Personne ne testait le FIL.
+#
+# Il tourne ici et pas dans l'atelier des agents : leur sortie reseau repond 403
+# sur des sites parfaitement joignables depuis un telephone. Depuis GitHub, le
+# robot voit ce que voit un vrai lecteur.
+#
+# Deux fois par jour, et pas toutes les 30 minutes : la liste des codes ne bouge
+# qu'a chaque fiche ecrite, soit deux ou trois fois par nuit au plus.
+
+name: La passerelle des codes additifs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '35 6,18 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: passerelle-ecodes
+  cancel-in-progress: false
+
+jobs:
+  controler:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      # Le controle du robot AVANT le robot, et volontairement bloquant : un
+      # instrument qu'on n'a pas essaye de faire mentir n'est pas un
+      # instrument. Il verifie surtout qu'une panne reseau de NOTRE cote ne
+      # peut pas etre lue comme un defaut du site — le piege du 10 aout, ou
+      # quatre rapports automatiques sur quatre ont annonce des defauts qui
+      # n'existaient pas.
+      - name: Une panne du robot n'est pas un lien casse
+        run: python3 outils/test-passerelle-ecodes.py
+
+      - name: Controler la passerelle
+        id: passerelle
+        continue-on-error: true
+        run: python3 outils/passerelle-ecodes.py
+
+      - name: Afficher le constat dans le resume du travail
+        if: always()
+        run: cat docs/ronde/PASSERELLE.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+
+      - name: Deposer le constat dans le depot
+        if: always()
+        run: |
+          git config user.name  "robot-passerelle"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/ronde/
+          git diff --staged --quiet && echo "Rien de nouveau." && exit 0
+          git commit -m "Passerelle: le constat a change"
+          for essai in 1 2 3; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && break
+            sleep $((essai * 5))
+          done
+
+      - name: Conclure
+        if: steps.passerelle.outcome == 'failure'
+        run: |
+          echo "::error::Des codes additifs ne recoivent ni fiche ni aveu — le lecteur tombe sur une page qui ne parle pas de son code. Voir docs/ronde/PASSERELLE.md"
+          exit 1
