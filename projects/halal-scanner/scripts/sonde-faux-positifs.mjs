@@ -62,6 +62,51 @@ const refusees = COURTES.filter(
 console.log(`\n${COURTES.length} compositions courtes mais complètes testées.`);
 for (const t of refusees) console.log(`  ✗ « ${t} » → INCONNU alors que l'étiquette est lisible`);
 
+// ── Les étiquettes qui PRÉCISENT déjà l'origine ─────────────────────────
+//
+// Même famille que l'eau de source du 13 août : un excès de doute sur un
+// produit ordinaire, alors que l'étiquette RÉPOND déjà à la question. Douter
+// d'un paquet qui écrit « d'origine végétale » punit exactement les fabricants
+// qui ont fait l'effort de le préciser.
+const ORIGINE_DITE = [
+  "chocolat, sucre, lécithine de soja",
+  "chocolat 40% (sucre, beurre de cacao, émulsifiant : lécithines de soja)",
+  "farine, sucre, émulsifiant E471 d'origine végétale",
+  "farine, mono- et diglycérides d'acides gras d'origine végétale",
+  "comprimé, stéarate de magnésium d'origine végétale",
+  "biscuit, sucre, graisse végétale de palme",
+  "lait, présure microbienne, sel",
+  // La gélatine de poisson est l'alternative halal la plus courante, et les
+  // fabricants l'écrivent justement pour le signaler.
+  "bonbons, sucre, gélatine de poisson",
+  "bonbons, sucre, gélatine de boeuf halal",
+];
+const doutesInutiles = ORIGINE_DITE.filter(
+  (t) => analyserProduit({ ingredientsTexte: t, additifs: [] }).statut !== "halal"
+);
+console.log(`\n${ORIGINE_DITE.length} étiquettes qui précisent l'origine testées.`);
+for (const t of doutesInutiles) console.log(`  ✗ « ${t.slice(0, 52)}… » → doute alors que l'étiquette répond`);
+
+// ET LE PIÈGE DE CES GARDE-FOUS : ils sont PERMISSIFS, donc le vrai risque
+// est qu'ils avalent un interdit au passage. Mesuré le 13 août : la première
+// version rendait HALAL sur « mono- et diglycérides d'acides gras ANIMAUX et
+// huile végétale » — le motif enjambait le mot « animaux » pour atteindre
+// « végétale ». Un garde-fou trop large fabrique un faux négatif.
+const PIEGES = [
+  ["mono/diglycérides animaux + huile végétale", "mono- et diglycérides d'acides gras animaux et huile végétale", "douteux"],
+  ["gélatine de porc ET de poisson", "bonbons, gélatine de porc, gélatine de poisson", "haram"],
+  ["gélatine de boeuf NON halal", "bonbons, gélatine de boeuf non halal", "douteux"],
+  ["stéarate d'origine animale", "comprimé, stéarate de magnésium d'origine animale", "douteux"],
+  ["saindoux + huile végétale", "pate, saindoux, huile végétale", "haram"],
+];
+const avales = PIEGES.filter(
+  ([, t, attendu]) => analyserProduit({ ingredientsTexte: t, additifs: [] }).statut !== attendu
+);
+for (const [nom, , attendu] of avales)
+  console.log(`  ✗ ${nom} : le garde-fou a avalé l'interdit, attendu ${attendu.toUpperCase()}`);
+if (!doutesInutiles.length && !avales.length)
+  console.log(`  toutes tranchées halal, et les ${PIEGES.length} pièges restent attrapés.`);
+
 // Le garde-fou d'origine doit tenir : une étiquette qu'on ne sait vraiment pas
 // lire reste INCONNU. C'est pour elle que le seuil existait.
 const ILLISIBLES = [
@@ -76,12 +121,17 @@ for (const [nom] of lues) console.log(`  ✗ « ${nom} » n'est plus INCONNU —
 if (!refusees.length && !lues.length)
   console.log(`  toutes tranchées, et les ${ILLISIBLES.length} vraiment illisibles restent INCONNU.`);
 
-if (faux.length + refusees.length + lues.length > 0) {
+if (faux.length + refusees.length + lues.length + doutesInutiles.length + avales.length > 0) {
   if (faux.length)
     console.log(`\n✗ ${faux.length} composition(s) banale(s) accusée(s) à tort. Un moteur qui doute de tout ne sert plus à rien.`);
   if (refusees.length + lues.length)
     console.log(`\n✗ ${refusees.length + lues.length} composition(s) mal classée(s) entre « lisible » et « illisible ».`);
+  if (doutesInutiles.length)
+    console.log(`\n✗ ${doutesInutiles.length} étiquette(s) qui précisent l'origine et dont on doute quand même.`);
+  if (avales.length)
+    console.log(`\n✗ ${avales.length} interdit(s) avalé(s) par un garde-fou trop large. C'est un faux négatif.`);
   process.exit(1);
 }
 console.log(`\n✓ Aucun faux positif : ${DOIVENT_RESTER_HALAL.length} compositions banales restent halal,`);
-console.log(`  ${COURTES.length} compositions courtes sont tranchées, ${ILLISIBLES.length} illisibles restent INCONNU.`);
+console.log(`  ${COURTES.length} compositions courtes sont tranchées, ${ILLISIBLES.length} illisibles restent INCONNU,`);
+console.log(`  ${ORIGINE_DITE.length} étiquettes à origine précisée passent, et les ${PIEGES.length} pièges restent attrapés.`);

@@ -121,6 +121,43 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **On doutait d'étiquettes qui répondaient déjà à la question** *(13 août)* —
+  suite directe de la capture de Mohamed. Le défaut Cristaline était un **excès
+  de doute sur un produit ordinaire** ; j'ai cherché la même famille ailleurs,
+  au lieu de continuer à traquer des cas adversariaux que j'invente moi-même.
+
+  | Étiquette française courante | avant | après |
+  |---|---|---|
+  | « mono- et diglycérides d'acides gras **d'origine végétale** » | **DOUTEUX** | HALAL |
+  | « stéarate de magnésium **d'origine végétale** » | **DOUTEUX** | HALAL |
+  | « **gélatine de poisson** » | **DOUTEUX** | HALAL |
+  | « **gélatine de bœuf halal** » | **DOUTEUX, 2 alertes** | HALAL |
+  | *témoin :* « émulsifiant E471 » *(sans origine)* | DOUTEUX | DOUTEUX |
+  | *témoin :* « gélatine » *(nue)* | DOUTEUX | DOUTEUX |
+
+  `E471 d'origine végétale` était déjà neutralisé ; **la même mention écrite en
+  toutes lettres ne l'était pas** — or les deux se lisent sur les mêmes paquets.
+  Et la gélatine de poisson est l'alternative halal la plus courante : la
+  signaler douteuse décourageait exactement le produit qu'on cherche, et
+  punissait les fabricants qui prennent la peine de le préciser.
+
+  **Le piège de ces garde-fous, et pourquoi je l'ai cherché :** ils sont
+  *permissifs*, donc le vrai risque est qu'ils avalent un interdit. Ma première
+  version le faisait — mesuré :
+
+  > « mono- et diglycérides d'acides gras **ANIMAUX** et huile végétale »
+  > → **HALAL**
+
+  Le motif enjambait le mot « animaux » pour atteindre « végétale ». Un
+  garde-fou trop large fabrique un faux négatif, c'est-à-dire le défaut que je
+  suis censé empêcher. Resserré pour interdire « anim » dans l'intervalle.
+  Vérifié sur 5 pièges : gélatine de porc **et** de poisson → HARAM, gélatine de
+  bœuf **non** halal → DOUTEUX, saindoux + huile végétale → HARAM.
+
+  Gelé dans `sonde:faux-positifs` : **9 étiquettes à origine précisée + 5
+  pièges**. Sabotages — garde-fous retirés : rouge ; motif ré-élargi : rouge
+  sur le faux négatif.
+
 - **Une bouteille d'eau ressortait INCONNU, avec une cause inventée**
   *(13 août)* — capture d'écran de Mohamed. Cristaline, eau de source 0,5 L,
   composition « **Eau de source** ». Deux fautes sur le même écran.

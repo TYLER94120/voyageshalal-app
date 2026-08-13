@@ -375,6 +375,31 @@ function normaliser(texte: string): string {
   // la regle qui suit le retrouve et le garde-fou ne sert a rien.
   t = t.replace(/glycerines? vegetales?|glycerols? vegetals?|glycerine d'origine vegetale/g, " corps gras vegetal ");
   t = t.replace(/lipase microbienne|enzyme microbienne|presure microbienne/g, " enzyme microbienne ");
+  // Suite du meme principe, ajoutee le 13 aout — meme famille de defaut que
+  // l'eau de source photographiee par Mohamed : un exces de doute sur un
+  // produit ordinaire, alors que l'etiquette REPOND deja a la question.
+  //
+  // « E471 d'origine vegetale » etait deja neutralise ; la forme ecrite en
+  // toutes lettres, elle, ressortait DOUTEUX. Or les deux se lisent sur les
+  // memes paquets, en France. Idem pour les stearates des complements
+  // alimentaires. Douter d'une etiquette qui precise « vegetale » punit
+  // exactement les fabricants qui ont fait l'effort de le dire.
+  t = t.replace(
+    /(?:mono-? et diglycerides|mono-?diglycerides|stearates? de magnesium|stearates? de calcium|acides? stearique|acides? gras)(?:(?!anim)[^,;.])*?(?:d'origine\s+)?vegetale?s?/g,
+    " corps gras vegetal "
+  );
+  // La gelatine de POISSON est l'alternative halal la plus courante, et les
+  // fabricants l'ecrivent justement pour le signaler. La signaler douteuse
+  // decourage le produit meme qu'on cherche.
+  // Le mot de remplacement ne doit PAS contenir « gelatine » : la regle
+  // texte est une simple sous-chaine, elle le retrouverait aussitot. Meme
+  // piege que pour la glycerine vegetale, signale plus haut.
+  t = t.replace(/gelatines? (?:de )?(?:poisson|marine)s?|fish gelatin\w*/g, " gelifiant de poisson ");
+  // Et quand la composition dit elle-meme « halal » a cote de la gelatine, le
+  // doute que notre regle annonce — « sauf mention halal certifiee » — est
+  // leve par l'etiquette. Portee volontairement etroite : la mention doit
+  // toucher la gelatine, pas trainer n'importe ou dans le texte.
+  t = t.replace(/gelatines?(?: de)? (?:boeuf|bovine|bovin|veau)?\s*(?:certifiee?\s*)?halal/g, " gelifiant certifie ");
   // « levure de bière » est une levure séchée, sans une goutte d'alcool : le mot
   // « bière » n'y désigne que son origine industrielle. Mesuré le 11 août, le
   // moteur rendait HARAM — un interdit inventé chasse les gens d'un aliment
