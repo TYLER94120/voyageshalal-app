@@ -1140,9 +1140,9 @@
       return typeof navigator !== "undefined" && navigator.onLine === false;
     }
 
-    async function fetchCourt(url, options) {
+    async function fetchCourt(url, options, delaiMax) {
       const controleur = new AbortController();
-      const minuteur = setTimeout(() => controleur.abort(), DELAI_RESEAU);
+      const minuteur = setTimeout(() => controleur.abort(), delaiMax || DELAI_RESEAU);
       try {
         return await fetch(url, Object.assign({}, options, { signal: controleur.signal }));
       } finally {
@@ -1150,8 +1150,8 @@
       }
     }
 
-    async function requeteProduit(url) {
-      const reponse = await fetchCourt(url, { headers: { Accept: "application/json" } });
+    async function requeteProduit(url, delaiMax) {
+      const reponse = await fetchCourt(url, { headers: { Accept: "application/json" } }, delaiMax);
       if (reponse.status === 404) return null;
       if (!reponse.ok) throw new Error("HTTP " + reponse.status);
       const json = await reponse.json();
@@ -1159,8 +1159,34 @@
       return p && typeof p === "object" && Object.keys(p).length > 0 ? p : null;
     }
 
+    /**
+     * Un délai par requête ne fait pas un délai pour la recherche.
+     *
+     * Mesuré le 12 août, réseau lent (chaque réponse arrive en 10 s, le délai
+     * par requête étant de 4 s) :
+     *
+     *     code à 13 chiffres   ->  16,6 s d'écran de chargement, 4 requêtes
+     *     code à 12 chiffres   ->  32,2 s, 8 requêtes
+     *
+     * `fetchCourt` coupait bien chaque requête à 4 s, mais `chercherProduit`
+     * en enchaîne quatre par code candidat, et un code à 12 chiffres en a
+     * deux. Rien ne bornait l'ensemble. Une demi-minute devant un écran de
+     * chargement, dans un rayon, en 3G — c'est exactement le cas que la
+     * compétence `repondre-en-conditions-degradees` décrit, et le commentaire
+     * juste au-dessus de DELAI_RESEAU le disait déjà : « une requête qui traîne
+     * dix secondes est pire qu'un échec immédiat ». C'était vrai de la requête,
+     * pas de la recherche.
+     *
+     * Le budget borne l'ensemble : on n'ouvre pas une requête de plus si le
+     * temps est écoulé, et la dernière est raccourcie à ce qu'il reste. Ne rien
+     * trouver n'est pas une impasse — l'écran « produit non référencé » propose
+     * la lecture par photo, qui, elle, sait lire une étiquette maghrébine.
+     */
+    const BUDGET_RECHERCHE = 6000;
+
     async function chercherProduit(code) {
       let erreurReseau = null;
+      const finRecherche = Date.now() + BUDGET_RECHERCHE;
       for (const c of candidatsCode(code)) {
         // Alimentaire d'abord (cas le plus fréquent), puis cosmétique :
         // shampooings, crèmes et savons vivent dans une base distincte.
@@ -1171,8 +1197,12 @@
           `https://world.openbeautyfacts.org/api/v0/product/${c}.json`,
         ];
         for (const url of urls) {
+          // 250 ms : en dessous, une requête n'a aucune chance d'aboutir et ne
+          // ferait qu'ajouter de l'attente pour rien.
+          const reste = finRecherche - Date.now();
+          if (reste <= 250) return null;
           try {
-            const p = await requeteProduit(url);
+            const p = await requeteProduit(url, Math.min(DELAI_RESEAU, reste));
             if (p) {
               return {
                 code: c,
