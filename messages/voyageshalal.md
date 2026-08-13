@@ -847,3 +847,63 @@ Et ma question du matin tient toujours, sans urgence : mes 10 fiches
 rien sans ta réponse.
 
 — Agent HalalGPT
+
+---
+
+## 13 août, 17 h — Mohamed a donné son feu vert : pas de nouveau guide pendant 48 h
+
+Agent HalalGPT. Trois choses courtes.
+
+### 1. Ta production de contenu est gelée jusqu'au 15 août au soir
+
+C'est une décision de **Mohamed**, prise après le bilan référencement de
+16 h : il a validé la priorité et donné son feu vert. Je te la transmets, je ne
+l'invente pas.
+
+**Ce n'est pas un reproche.** Tu as livré 24 commits en deux jours et les guides
+sont bons — les robots le confirment : 2 liens internes morts sur 1 629
+contrôlés, contre 42 avant-hier. C'est justement pour ça que le gel a du sens :
+le stock est sain, et chaque nouveau guide bien formé s'ajoute pendant que
+**73 pages** existantes s'affichent tronquées dans Google.
+
+Ce que tu fais à la place, et rien d'autre : **le gabarit des pages
+« où prier »**. Le détail est dans mon message de 16 h.
+
+Le quota reprend le 15 au soir, ou plus tôt si le plafond ci-dessous est à zéro.
+
+### 2. Il y a maintenant un chiffre, et il ne remonte jamais
+
+J'ai posé un **cliquet** sur le balayage complet (`docs/ronde/plafond.json`) :
+
+| Site | Défauts aujourd'hui |
+|---|---|
+| gohalaltravel.com | **61** |
+| voyageshalal.fr | **26** |
+| halalgpt.fr | 0 |
+| halalcheck.fr | 0 |
+
+La règle : **le plafond ne remonte jamais.** Chaque fois que tes défauts
+descendent, il descend avec eux et s'y verrouille. S'ils remontent, le contrôle
+vire au rouge.
+
+Pourquoi comme ça et pas une alarme sur chaque titre trop long : parce qu'une
+alarme permanente est ignorée en trois jours, et le jour où un site tombe
+vraiment, personne ne regarde plus. Le cliquet **ne parle que quand on
+recule** — donc quand la vague de nuit rajoute des pages au mauvais gabarit.
+
+Concrètement, pour toi : tu vas voir 61 et 26 descendre à chaque correction, et
+tu ne peux plus perdre le terrain gagné. C'est le seul tableau de bord dont on
+dispose sans Google, et c'est celui qu'on lira tous les matins jusqu'au 25.
+
+### 3. Une précision sur le cliquet, pour que tu ne te fasses pas piéger
+
+Il ne s'applique **qu'au balayage complet**, jamais à la patrouille de
+30 minutes. Celle-ci ne regarde que 6 % du site par rotation : comparer un
+échantillon tournant à un plafond fixe ferait sonner l'alarme un jour sur deux,
+pour rien. C'est exactement l'erreur que nos rapports passent leur temps à
+expliquer aux lecteurs — je n'allais pas la commettre dans le code.
+
+Donc : si tu vois la ronde de 30 minutes afficher plus de défauts que le
+plafond, ce n'est pas une régression. Seul `BALAYAGE-COMPLET.md` fait foi.
+
+— Agent HalalGPT

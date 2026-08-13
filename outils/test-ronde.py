@@ -401,6 +401,74 @@ dire(robot.tenir_ses_promesses({"nom": "voyageshalal.fr", "base": "https://voyag
 robot.chercher = _vrai_chercher
 
 
+print()
+# ─────────────────────────────────────────────────────────────────────────────
+# LE CLIQUET — le verrou qui fait descendre les defauts sans crier au loup.
+#
+# Pose le 13 aout 2026. Ce jour-la, 87 defauts dormaient depuis des jours dans
+# un rapport parfaitement juste, et personne n'avait ete reveille. Mais la
+# raison ecrite dans le script tenait aussi : une alarme qui sonne pour chaque
+# titre trop long finit ignoree en trois jours.
+#
+# Le cliquet tranche entre les deux : il ne parle que quand le nombre REMONTE.
+# Ces verifications tiennent les deux bouts, et surtout la derniere — un
+# echantillon tournant ne doit JAMAIS etre compare a un plafond fixe.
+# ─────────────────────────────────────────────────────────────────────────────
+import shutil as _shutil
+
+_dossier = tempfile.mkdtemp()
+_avant_cwd = _os.getcwd()
+_os.chdir(_dossier)
+_os.makedirs("docs/ronde", exist_ok=True)
+
+def _sites(**kw):
+    return [{"site": n, "pages": 100, "defauts": v} for n, v in kw.items()]
+
+def _niveaux(defauts_par_site, graves=()):
+    d = []
+    for site, n in defauts_par_site.items():
+        d += [{"site": site, "niveau": robot.DEFAUT} for _ in range(n)]
+    g = [{"site": s, "niveau": robot.GRAVE} for s in graves]
+    return {robot.GRAVE: g, robot.DEFAUT: d, robot.SURVEILLER: []}
+
+# 1. Premier passage : le plafond se pose sur le compte du jour, sans alarme.
+dep, desc, plaf = robot.cliquet(_sites(a=87), _niveaux({"a": 87}))
+dire(dep == [] and plaf.get("a") == 87,
+     "premier passage : le plafond se pose, aucune alarme", f"{dep} {plaf}")
+
+# 2. Le meme compte demain : rien ne bouge, rien ne sonne.
+dep, desc, plaf = robot.cliquet(_sites(a=87), _niveaux({"a": 87}))
+dire(dep == [] and desc == [] and plaf.get("a") == 87,
+     "un defaut connu qui traine ne fait PAS sonner l'alarme", f"{dep}")
+
+# 3. Ca descend : le plafond descend avec, et se verrouille.
+dep, desc, plaf = robot.cliquet(_sites(a=40), _niveaux({"a": 40}))
+dire(dep == [] and plaf.get("a") == 40 and len(desc) == 1,
+     "les defauts descendent : le plafond descend et se verrouille", f"{plaf}")
+
+# 4. Ca remonte : LA seule chose qui doit faire virer au rouge.
+dep, desc, plaf = robot.cliquet(_sites(a=41), _niveaux({"a": 41}))
+dire(len(dep) == 1 and dep[0]["avant"] == 40 and dep[0]["maintenant"] == 41,
+     "un seul defaut de plus qu'hier fait virer le controle au rouge", f"{dep}")
+
+# 5. Le plafond n'a pas remonte pour autant.
+dire(robot.lire_plafond().get("a") == 40,
+     "un depassement ne releve jamais le plafond", robot.lire_plafond())
+
+# 6. Un site injoignable ne fait pas descendre son plafond a zero par accident.
+#    Zero page vue avec un GRAVE, c'est « je n'ai pas pu regarder », pas
+#    « il est devenu parfait ». C'est le piege du 10 aout, en plus sournois :
+#    ici le mensonge serait une BONNE nouvelle, donc personne ne le verifierait.
+_compte = [{"site": "a", "pages": 0, "defauts": 0}]
+dep, desc, plaf = robot.cliquet(_compte, _niveaux({}, graves=["a"]))
+dire(plaf.get("a") == 40 and dep == [],
+     "un site injoignable garde son plafond : zero page n'est pas zero defaut",
+     plaf)
+
+_os.chdir(_avant_cwd)
+_shutil.rmtree(_dossier, ignore_errors=True)
+
+
 print("\n" + ("✓ La ronde mesure ce que Google affiche, pas ce que le fichier contient."
               if echecs == 0 else f"✗ {echecs} echec(s)"))
 sys.exit(0 if echecs == 0 else 1)

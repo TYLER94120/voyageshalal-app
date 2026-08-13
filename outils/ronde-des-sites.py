@@ -519,6 +519,81 @@ def faut_il_rattraper(maintenant, age):
     )
 
 
+FICHIER_PLAFOND = "docs/ronde/plafond.json"
+
+
+def lire_plafond():
+    """Le nombre de defauts que chaque site a le droit d'avoir, aujourd'hui."""
+    try:
+        with open(FICHIER_PLAFOND, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
+
+def cliquet(compte_par_site, par_niveau):
+    """Le verrou qui fait descendre les defauts sans jamais crier au loup.
+
+    Pourquoi un cliquet et pas un simple seuil
+    ------------------------------------------
+    Ce script disait, et il avait raison : « seul le grave fait echouer la
+    ronde ; une alerte qui se declenche pour un titre trop long finirait
+    ignoree, et le jour ou un site tombe vraiment, personne ne regarderait
+    plus. »
+
+    Mais le 13 aout, 87 defauts dormaient depuis des jours dans un rapport
+    juste, et personne n'avait ete reveille. Les deux problemes sont le meme :
+    une alarme permanente et une alarme absente finissent toutes deux en
+    decor.
+
+    Le cliquet tranche : on n'exige pas zero demain, on interdit de remonter.
+    Chaque site part de son compte du jour. Si le compte descend, le plafond
+    descend avec lui et ne remonte plus. S'il depasse, le controle vire au
+    rouge — et cette fois c'est vrai, parce que ca veut dire qu'on a casse
+    quelque chose de neuf.
+
+    Sur un site nourri par une vague automatique chaque nuit, c'est la seule
+    forme d'alarme qui tienne : elle ne parle que quand on recule.
+
+    Ce que le cliquet ne fait PAS
+    -----------------------------
+    Il ne s'applique qu'au balayage COMPLET. La patrouille de 30 minutes ne
+    regarde que 6 % du site, par rotation : comparer un echantillon tournant a
+    un plafond fixe produirait une alarme rouge un jour sur deux, pour rien.
+    C'est exactement l'erreur que les rapports de ce dossier passent leur temps
+    a expliquer aux lecteurs.
+    """
+    plafond = lire_plafond()
+    graves = {d["site"] for d in par_niveau[GRAVE]}
+    defauts_par_site = {}
+    for d in par_niveau[DEFAUT]:
+        defauts_par_site[d["site"]] = defauts_par_site.get(d["site"], 0) + 1
+
+    depassements, descentes, nouveau = [], [], dict(plafond)
+    for ligne in compte_par_site:
+        site = ligne["site"]
+        # Un site injoignable inscrit deja un defaut GRAVE, plus precis que
+        # tout ce que le cliquet pourrait dire. On ne touche pas a son plafond
+        # avec un comptage qui n'a pas eu lieu.
+        if site in graves or ligne["pages"] == 0:
+            continue
+        combien = defauts_par_site.get(site, 0)
+        avant = plafond.get(site)
+        if avant is None:
+            nouveau[site] = combien
+        elif combien > avant:
+            depassements.append({"site": site, "avant": avant, "maintenant": combien})
+        elif combien < avant:
+            descentes.append({"site": site, "avant": avant, "maintenant": combien})
+            nouveau[site] = combien
+
+    if nouveau != plafond:
+        with open(FICHIER_PLAFOND, "w", encoding="utf-8") as f:
+            json.dump(nouveau, f, ensure_ascii=False, indent=1, sort_keys=True)
+            f.write("\n")
+    return depassements, descentes, nouveau
+
+
 def main():
     debut = datetime.now(timezone.utc)
     horodatage = debut.strftime("%Y-%m-%d %H:%M UTC")
@@ -598,6 +673,12 @@ def main():
                   for n in (GRAVE, DEFAUT, SURVEILLER)}
 
     os.makedirs("docs/ronde", exist_ok=True)
+
+    # Le cliquet, avant d'ecrire le constat pour qu'il puisse en parler, et
+    # sur le balayage complet seulement — voir la fonction pour le pourquoi.
+    depassements, descentes, plafond = [], [], lire_plafond()
+    if complet:
+        depassements, descentes, plafond = cliquet(compte_par_site, par_niveau)
 
     # Le balayage complet ecrit AILLEURS. Sinon il ecraserait le rapport que
     # les agents lisent toutes les 30 minutes, et la comparaison « qu'est-ce
@@ -695,14 +776,49 @@ def main():
             "Sans elle, « absent de la liste » et « jamais ouvert » se lisaient "
             "pareil.",
             "",
-            "| Site | Pages vues | Defauts |",
-            "|---|---|---|",
+            "| Site | Pages vues | Defauts |" + (" Plafond |" if complet else ""),
+            "|---|---|---|" + ("---|" if complet else ""),
         ]
         lignes += [
             f"| {c['site']} | {c['pages']} | {c['defauts']} |"
+            + (f" {plafond.get(c['site'], '—')} |" if complet else "")
             for c in compte_par_site
         ]
         lignes += [""]
+        if complet:
+            lignes += [
+                "**Le plafond ne remonte jamais.** Il part du compte du jour ou "
+                "il a ete",
+                "pose ; chaque fois que les defauts descendent, il descend avec "
+                "eux et s'y",
+                "verrouille. Si un chiffre le depasse, le controle vire au rouge "
+                "— ce qui",
+                "veut dire qu'on vient de casser quelque chose de neuf, pas "
+                "qu'un vieux",
+                "defaut traine encore.",
+                "",
+                "C'est voulu ainsi : une alarme qui sonnerait pour chaque titre "
+                "trop long",
+                "serait ignoree en trois jours, et le jour ou un site tombe "
+                "vraiment,",
+                "personne ne regarderait plus. Le cliquet ne parle que quand on "
+                "recule.",
+                "",
+            ]
+            if descentes:
+                lignes += ["✅ **Le plafond vient de descendre :**", ""]
+                for d in descentes:
+                    lignes.append(
+                        f"- {d['site']} : {d['avant']} → **{d['maintenant']}**")
+                lignes.append("")
+            if depassements:
+                lignes += ["🔴 **On a recule — c'est ce qui fait echouer ce "
+                           "controle :**", ""]
+                for d in depassements:
+                    lignes.append(
+                        f"- {d['site']} : plafond {d['avant']}, "
+                        f"compte **{d['maintenant']}**")
+                lignes.append("")
         if not tous:
             # « Les quatre sites repondent » etait ecrit en dur, donc vrai meme
             # quand un site n'avait rendu aucune page. On compte maintenant.
@@ -737,10 +853,22 @@ def main():
     print(f"\n🔴 {len(par_niveau[GRAVE])}  🟠 {len(par_niveau[DEFAUT])}  "
           f"🟡 {len(par_niveau[SURVEILLER])}")
 
-    # Seul le grave fait echouer la ronde. Une alerte qui se declenche pour
-    # un titre trop long finirait ignoree, et le jour ou un site tombe
-    # vraiment, personne ne regarderait plus.
-    return 1 if par_niveau[GRAVE] else 0
+    if complet:
+        total = sum(plafond.get(l["site"], 0) for l in compte_par_site)
+        print(f"\nPlafond : {total} defauts toleres au total.")
+        for d in descentes:
+            print(f"  ↓ {d['site']} : {d['avant']} → {d['maintenant']}, "
+                  "le plafond descend et ne remontera pas.")
+        for d in depassements:
+            print(f"  ✗ {d['site']} : {d['avant']} → {d['maintenant']} — "
+                  "on a recule.")
+
+    # Seul le grave fait echouer la ronde — plus, depuis le 13 aout, le
+    # franchissement du cliquet. La raison d'origine tient toujours : une
+    # alerte qui sonne pour chaque titre trop long finirait ignoree. Le cliquet
+    # ne sonne pas pour les defauts connus, il sonne quand leur nombre REMONTE.
+    # Il ne parle donc que d'une chose : on vient de casser quelque chose.
+    return 1 if par_niveau[GRAVE] or depassements else 0
 
 
 if __name__ == "__main__":
