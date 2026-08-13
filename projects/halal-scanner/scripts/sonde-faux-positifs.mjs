@@ -39,8 +39,49 @@ console.log(`Restées halal : ${DOIVENT_RESTER_HALAL.length - faux.length}`);
 console.log(`FAUX POSITIFS : ${faux.length}`);
 for (const [t, a] of faux) console.log(`  ✗ « ${t} » → alerte : ${a}`);
 
-if (faux.length > 0) {
-  console.log(`\n✗ ${faux.length} composition(s) banale(s) accusée(s) à tort. Un moteur qui doute de tout ne sert plus à rien.`);
+// ── Les compositions COURTES, mais complètes ────────────────────────────
+//
+// Le 13 août, Mohamed a photographié une bouteille d'eau Cristaline :
+// composition « Eau de source », verdict INCONNU. Onze lettres, seuil à
+// douze. Mesuré alors sur 19 compositions réelles : SEIZE ressortaient
+// INCONNU — eau, riz, sel, sucre, miel, farine, thé, café, pois chiches,
+// semoule, huile d'olive, lait entier.
+//
+// Un « je ne sais pas » devant une bouteille d'eau ne protège personne : il
+// donne l'app pour cassée, et on cesse de la croire quand elle dit vraiment
+// quelque chose. C'est un faux positif d'un autre genre — pas une accusation,
+// un refus de répondre.
+const COURTES = [
+  "Eau de source", "Eau", "Riz", "Sel", "Sucre", "Miel", "Semoule",
+  "Thé vert", "Sel de mer", "Lait entier", "Farine de blé", "Café arabica",
+  "Pois chiches", "Huile d'olive", "riz, eau, sel", "Eau, sucre",
+];
+const refusees = COURTES.filter(
+  (t) => analyserProduit({ ingredientsTexte: t, additifs: [] }).statut === "inconnu"
+);
+console.log(`\n${COURTES.length} compositions courtes mais complètes testées.`);
+for (const t of refusees) console.log(`  ✗ « ${t} » → INCONNU alors que l'étiquette est lisible`);
+
+// Le garde-fou d'origine doit tenir : une étiquette qu'on ne sait vraiment pas
+// lire reste INCONNU. C'est pour elle que le seuil existait.
+const ILLISIBLES = [
+  ["arabe seul", "المكونات: ماء، سكر، ملح"],
+  ["deux lettres", "ab"],
+  ["texte vide", ""],
+];
+const lues = ILLISIBLES.filter(
+  ([, t]) => analyserProduit({ ingredientsTexte: t, additifs: [] }).statut !== "inconnu"
+);
+for (const [nom] of lues) console.log(`  ✗ « ${nom} » n'est plus INCONNU — le garde-fou a sauté`);
+if (!refusees.length && !lues.length)
+  console.log(`  toutes tranchées, et les ${ILLISIBLES.length} vraiment illisibles restent INCONNU.`);
+
+if (faux.length + refusees.length + lues.length > 0) {
+  if (faux.length)
+    console.log(`\n✗ ${faux.length} composition(s) banale(s) accusée(s) à tort. Un moteur qui doute de tout ne sert plus à rien.`);
+  if (refusees.length + lues.length)
+    console.log(`\n✗ ${refusees.length + lues.length} composition(s) mal classée(s) entre « lisible » et « illisible ».`);
   process.exit(1);
 }
-console.log("\n✓ Aucun faux positif : les 15 compositions banales restent halal.");
+console.log(`\n✓ Aucun faux positif : ${DOIVENT_RESTER_HALAL.length} compositions banales restent halal,`);
+console.log(`  ${COURTES.length} compositions courtes sont tranchées, ${ILLISIBLES.length} illisibles restent INCONNU.`);

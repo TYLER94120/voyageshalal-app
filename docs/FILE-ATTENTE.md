@@ -121,6 +121,56 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Une bouteille d'eau ressortait INCONNU, avec une cause inventée**
+  *(13 août)* — capture d'écran de Mohamed. Cristaline, eau de source 0,5 L,
+  composition « **Eau de source** ». Deux fautes sur le même écran.
+
+  **1. Le verdict.** Onze lettres, seuil à douze → INCONNU. Le seuil comptait
+  les lettres latines pour décider si nous avions « eu une chance de lire ».
+
+  | Compositions réelles et complètes | avant | après |
+  |---|---|---|
+  | eau, riz, sel, sucre, miel, semoule, thé vert… | **16 / 19 INCONNU** | **0 / 19** |
+
+  Ce sont des produits de base, et précisément ceux d'une cuisine maghrébine.
+  Répondre « je ne sais pas » devant une bouteille d'eau ne protège personne :
+  ça donne l'app pour cassée, et on cesse de la croire quand elle dit vraiment
+  quelque chose.
+
+  Compter les lettres n'était pas la bonne question. La vraie question est
+  **avons-nous eu une chance de lire ?** Une étiquette en arabe seul : non, nos
+  motifs sont latins. « Eau de source » : oui, parfaitement — nous avons lu, et
+  nous n'avons rien trouvé à signaler. Le critère est donc devenu : **au moins
+  un mot latin de trois lettres**. « Eau » passe, « ab » non, l'arabe seul non.
+  Le garde-fou d'origine tient : `sonde:arabe` reste vert, 7 cas sur 7.
+
+  *Ce que ça accepte sciemment :* un texte latin sans queue ni tête de trois
+  lettres ressortira HALAL. Le risque est assumé, et se compare à ce qu'il
+  remplace — seize produits de base sur dix-neuf déclarés illisibles, tous les
+  jours, sous les yeux des gens.
+
+  **2. La cause inventée.** L'écran expliquait : « L'étiquette de ce produit
+  n'est pas écrite dans une langue que notre analyse sait lire — **de l'arabe,
+  le plus souvent** ». Devant une étiquette française parfaitement lisible.
+  Le test se déclenchait sur *tout* texte de moins de douze lettres, sans
+  jamais regarder l'alphabet. Affirmer une cause qu'on n'a pas vérifiée est
+  exactement ce que « ne jamais inventer » interdit — et ça décrédibilise tout
+  le reste de l'écran. La phrase ne sort désormais que devant une écriture
+  réellement non latine **et** sans mot latin exploitable.
+
+  *Ce que j'avais raté :* le 12 août, en auditant autre chose, j'ai vu
+  « riz, eau, sel → INCONNU » et je l'ai écarté en concluant que **mon
+  attente** était fausse. Elle ne l'était pas. J'ai regardé le défaut et je
+  l'ai expliqué au lieu de le mesurer.
+
+  Gelé : `sonde:faux-positifs` gagne 16 compositions courtes **et** 3 cas
+  vraiment illisibles qui doivent rester INCONNU ; `sonde:verdicts` gagne
+  4 scènes sur la phrase. Sabotages de contrôle — seuil de 12 remis : 16 rouges ;
+  phrase remise sur tout texte court : rouge sur « latin mais illisible ».
+  *Note :* ce dernier cas a dû être ajouté exprès — sans lui, le contrôle de la
+  phrase ne pouvait plus virer au rouge une fois le moteur corrigé, et aurait
+  été décoratif.
+
 - **Une correction du moteur était commitée mais jamais compilée — le site
   servait encore le défaut** *(13 août)*. Le plus vicieux rencontré jusqu'ici,
   parce qu'il **annule silencieusement n'importe quelle correction**.

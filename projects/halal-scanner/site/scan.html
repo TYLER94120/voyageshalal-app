@@ -2171,10 +2171,31 @@
     // une information que nos règles, écrites en français et en anglais, ne
     // savent pas lire. Le dire ainsi, et proposer la lecture par photo qui,
     // elle, sait la lire.
+    /**
+     * « C'est sûrement de l'arabe » était une invention.
+     *
+     * Ce test décidait d'afficher : « L'étiquette de ce produit n'est pas
+     * écrite dans une langue que notre analyse sait lire — de l'arabe, le plus
+     * souvent. » Il se déclenchait sur TOUT texte de moins de douze lettres.
+     *
+     * Mohamed a photographié le résultat le 13 août : une bouteille d'eau
+     * Cristaline, composition « Eau de source », en français, parfaitement
+     * lisible — et l'app lui expliquait que c'était probablement de l'arabe.
+     * Affirmer une cause qu'on n'a pas vérifiée est exactement ce que la règle
+     * « ne jamais inventer » interdit, et ça décrédibilise tout le reste de
+     * l'écran.
+     *
+     * On ne dit donc cette phrase que devant une écriture qu'on ne sait
+     * vraiment pas lire : une autre alphabet, ET aucun mot latin exploitable.
+     */
+    const ECRITURES_NON_LATINES =
+      /[؀-ۿݐ-ݿࢠ-ࣿ֐-׿Ѐ-ӿͰ-Ͽ一-鿿぀-ヿ฀-๿ऀ-ॿ]/;
+
     function texteIllisiblePourNous(produit) {
       const t = (produit && produit.ingredientsTexte) || "";
       if (t.trim().length < 3) return false;
-      return (t.match(/[a-zà-öø-ÿ]/gi) || []).length < 12;
+      const motLatin = /[a-zà-öø-ÿ]{3,}/i.test(t);
+      return !motLatin && ECRITURES_NON_LATINES.test(t);
     }
 
     function sousTitre(verdict, produit) {
