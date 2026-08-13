@@ -47,12 +47,21 @@ une explication honnête, jamais un verdict inventé.
    sont validés que par 51 tests écrits à la main — écrits par nous, donc ils ne
    couvrent que ce à quoi nous avons pensé. On ne sait toujours pas quel
    pourcentage des produits réels tombe en « inconnu ».
-   *Piste :* constituer un jeu de fiches réelles figées dans le dépôt, capturées
-   une fois depuis le navigateur de Mohamed, pour tester hors ligne.
-   *Ce que Mohamed seul peut faire :* élargir la politique réseau de
-   l'environnement (réglages de l'environnement Claude Code) pour y autoriser
-   `world.openfoodfacts.org`. Sans cela, la seule voie reste un jeu de fiches
-   figées déposé dans le dépôt — les dépôts de paquets, eux, sont ouverts.
+   *Revérifié le 13 août à 16:05 UTC :* toujours refusé, pour
+   `world.openfoodfacts.org` comme pour `halalgpt.fr`.
+   *Ma moitié est faite (13 août).* `npm run sonde:fiches` lit
+   `fiches-reelles/`, rejoue le moteur hors ligne sur de vraies fiches et rend
+   la répartition des verdicts — dont **le pourcentage d'INCONNU**, le chiffre
+   qui manque depuis le début — plus la raison de chaque INCONNU (liste absente,
+   arabe seul, texte trop court, mentions d'absence). Éprouvée sur 6 fiches
+   d'essai puis remise à zéro ; elle sort en erreur sur un fichier illisible.
+   En CI : tant que le dossier est vide, elle dit « 0 fiche » au lieu
+   d'inventer un succès.
+   *Ce que Mohamed seul peut faire, au choix :* élargir la politique réseau de
+   l'environnement pour autoriser `world.openfoodfacts.org` — ou déposer une
+   vingtaine de fiches dans `projects/halal-scanner/fiches-reelles/`, marche à
+   suivre dans le README de ce dossier. Vingt minutes de copier-coller
+   produisent alors une mesure que trois jours de sondes n'ont pas pu produire.
 
 4. **La lecture d'étiquette n'a jamais été vérifiée contre le VRAI service.**
    *Preuve :* les six façons d'échouer ont été mesurées le 11 août avec une

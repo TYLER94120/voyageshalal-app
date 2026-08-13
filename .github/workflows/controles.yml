@@ -99,6 +99,14 @@ jobs:
       - name: Les nombres et les dates annonces sur le site
         run: npm run verif:chiffres
 
+      # Le moteur face a de VRAIS produits, figes dans fiches-reelles/. Tant
+      # que le dossier est vide, cette etape dit « 0 fiche » et passe : elle
+      # n'invente pas un succes, elle avoue qu'il n'y a rien a mesurer. Des
+      # qu'une fiche y est deposee, elle rend la repartition des verdicts —
+      # dont le pourcentage d'INCONNU, le chiffre qui manque depuis le debut.
+      - name: Les vraies fiches produit, quand il y en a
+        run: npm run sonde:fiches
+
   # ── L'ECRAN, pas le moteur ────────────────────────────────────────────────
   #
   # Le moteur peut avoir raison et l'ecran mentir : un badge vert fige dans
