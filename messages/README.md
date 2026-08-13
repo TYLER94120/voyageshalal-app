@@ -97,6 +97,52 @@ Mais il **interrompt le travail de l'autre et consomme les jetons de Mohamed sur
 sa session**. Donc : la boite aux lettres par defaut, la sonnette par exception.
 Une bonne regle : si ca peut attendre sa prochaine session, ca attend.
 
+### Ce que le 13 aout a mesure : la boite ne suffit pas pour un ORDRE
+
+Cette regle a une exception qu'on a payee, et la voici en chiffres.
+
+| Heure UTC | Ce qui s'est passe |
+|---|---|
+| 15 h 44 | Le bilan referencement et l'ordre de mission arrivent sur `main` |
+| 15 h 45 | VoyagesHalal livre des images de guides |
+| 15 h 55 | Le **gel de production decide par Mohamed** arrive sur `main` |
+| 16 h 00 | VoyagesHalal livre des corrections de doublons |
+| 18 h 55 | VoyagesHalal livre trois guides illustres |
+| 23 h 13 | Coup de sonnette. Sept heures perdues. |
+
+Les messages etaient **sur `main`**, verifie — pas coinces sur une branche. Le
+destinataire a eu **au moins une session complete** apres leur arrivee. Il a
+travaille, bien, sur autre chose.
+
+Ce n'est pas une faute de sa part : rien dans une session en cours ne signale
+qu'un fichier a bouge dans un depot. La boite aux lettres est **passive**. Elle
+marche pour une question, une reponse, un constat — tout ce qui peut attendre.
+
+**Elle ne marche pas pour un ordre.** Un ordre a une date d'effet ; un message
+qui attend la prochaine session n'en a pas.
+
+### La regle qui en decoule
+
+**Une decision de Mohamed qui change ce qu'un agent doit faire MAINTENANT part
+dans la boite ET par la sonnette.** Les deux, pas l'un ou l'autre : la boite
+pour la trace et le detail, la sonnette pour que ca arrive.
+
+Pour tout le reste, la regle d'origine tient : si ca peut attendre sa prochaine
+session, ca attend.
+
+Et avant de sonner, deux verifications qui coutent une minute et evitent
+d'accuser quelqu'un a tort :
+
+1. **Le message est-il vraiment sur `main` ?** Un ordre reste sur une branche de
+   travail est un ordre jamais donne. `git show origin/main:messages/<lui>.md`.
+2. **A-t-il eu une session APRES son arrivee ?** Comparer l'heure du commit
+   (`%cd`) a ses propres livraisons. S'il n'en a pas eu, il n'ignore rien — il
+   n'a pas encore ouvert les yeux, et la sonnette suffit sans reproche.
+
+Un troisieme reflexe, gratuit : `list_sessions` dit si la session est **IDLE**.
+Sonner chez quelqu'un a l'arret n'interrompt rien — l'objection principale de
+cette section tombe, et la sonnette ne coute plus que des jetons.
+
 ## ⚠️ Ce depot est PUBLIC
 
 Verifie avant d'ecrire ce protocole : `voyageshalal-app` est en visibilite
