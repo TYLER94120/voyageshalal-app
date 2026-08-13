@@ -285,6 +285,42 @@ dont la seconde moitié appartient au monde.
 
 ---
 
+## Correction de cet audit, et ce qui a été fait — 11 h, le même jour
+
+**Le chiffre de 55 codes était sous-compté : il y en a 56.** Ma recherche
+employait `E[0-9]{3}`, qui ne voit ni `E1000` ni `E1105`. Le compte des codes
+qui tombaient dans le vide, lui, reste **36** — mais sur 56, et la liste diffère
+d'un élément.
+
+C'est la troisième fois dans la même matinée qu'une expression régulière me rend
+un chiffre faux. Elle est notée ici plutôt que corrigée en silence.
+
+**La mesure a été refaite sur la source qui compte vraiment** : non plus le
+moteur du scanner, mais les **56 liens réellement publiés** sur la page
+`halalcheck.fr/additifs.html` — des liens cliquables, publics, indexables. 20
+arrivaient sur une fiche, 36 tombaient sur la liste de catégorie.
+
+**Le levier 1 est livré** (dépôt `halalgpt`, commit `cd5e285`) :
+
+- `/e/<CODE>` sans fiche ne redirige plus vers la catégorie. Il rend une page qui
+  dit **« pas encore de fiche »**, sans inventer de verdict — emprunter celui
+  d'un additif voisin serait contraire à la charte — et propose les fiches les
+  plus proches **par leur numéro**, présentées comme voisines et non comme la
+  réponse. En `noindex` : les indexer fabriquerait les pages minces que cet
+  audit reproche par ailleurs.
+- La logique quitte la route pour `lib/ecodes.ts`, en fonctions pures.
+  `scripts/test-ecodes.mjs` tourne **avec Node seul** et est branché dans le
+  contrôle automatique — c'est aussi une réponse au défaut n° 4 : un test qui
+  réclame un serveur ne tourne jamais.
+- Remesure après correction, sur les mêmes 56 : **20 redirections, 36 pages
+  honnêtes, 0 dans le vide.** Les 11 séries du contrôle passent.
+
+Ce qui n'est **pas** fait : les 36 fiches elles-mêmes, et l'alarme croisée qui
+sonne quand HalalCheck ajoute un code que je ne couvre pas. La page honnête
+arrête l'hémorragie, elle ne remplace pas la réponse.
+
+---
+
 ## Ce que je fais, moi, et dans quel ordre
 
 1. **Aujourd'hui** — levier 1 (la page de code honnête) et le test du levier 2.
