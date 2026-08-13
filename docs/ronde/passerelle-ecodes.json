@@ -1,0 +1,407 @@
+{
+ "releve": "2026-08-13 15:40",
+ "base": "https://halalgpt.fr",
+ "publies": 56,
+ "moteur": 57,
+ "resultats": [
+  {
+   "code": "E1000",
+   "url": "https://halalgpt.fr/e/E1000",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E1105",
+   "url": "https://halalgpt.fr/e/E1105",
+   "etat": "fiche",
+   "detail": "/q/e1105-lysozyme-halal",
+   "publie": true
+  },
+  {
+   "code": "E120",
+   "url": "https://halalgpt.fr/e/E120",
+   "etat": "fiche",
+   "detail": "/q/e120-halal",
+   "publie": true
+  },
+  {
+   "code": "E153",
+   "url": "https://halalgpt.fr/e/E153",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E270",
+   "url": "https://halalgpt.fr/e/E270",
+   "etat": "fiche",
+   "detail": "/q/e270-acide-lactique-halal",
+   "publie": true
+  },
+  {
+   "code": "E322",
+   "url": "https://halalgpt.fr/e/E322",
+   "etat": "fiche",
+   "detail": "/q/lecithine-e322-halal",
+   "publie": true
+  },
+  {
+   "code": "E325",
+   "url": "https://halalgpt.fr/e/E325",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E326",
+   "url": "https://halalgpt.fr/e/E326",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E327",
+   "url": "https://halalgpt.fr/e/E327",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E400",
+   "url": "https://halalgpt.fr/e/E400",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": false
+  },
+  {
+   "code": "E422",
+   "url": "https://halalgpt.fr/e/E422",
+   "etat": "fiche",
+   "detail": "/q/e422-glycerine-halal",
+   "publie": true
+  },
+  {
+   "code": "E430",
+   "url": "https://halalgpt.fr/e/E430",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E431",
+   "url": "https://halalgpt.fr/e/E431",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E432",
+   "url": "https://halalgpt.fr/e/E432",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E433",
+   "url": "https://halalgpt.fr/e/E433",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E434",
+   "url": "https://halalgpt.fr/e/E434",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E435",
+   "url": "https://halalgpt.fr/e/E435",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E436",
+   "url": "https://halalgpt.fr/e/E436",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E441",
+   "url": "https://halalgpt.fr/e/E441",
+   "etat": "fiche",
+   "detail": "/q/e441-gelatine-halal",
+   "publie": true
+  },
+  {
+   "code": "E442",
+   "url": "https://halalgpt.fr/e/E442",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E470a",
+   "url": "https://halalgpt.fr/e/E470a",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E470b",
+   "url": "https://halalgpt.fr/e/E470b",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E471",
+   "url": "https://halalgpt.fr/e/E471",
+   "etat": "fiche",
+   "detail": "/q/e471-halal",
+   "publie": true
+  },
+  {
+   "code": "E472a",
+   "url": "https://halalgpt.fr/e/E472a",
+   "etat": "fiche",
+   "detail": "/q/e472-halal",
+   "publie": true
+  },
+  {
+   "code": "E472b",
+   "url": "https://halalgpt.fr/e/E472b",
+   "etat": "fiche",
+   "detail": "/q/e472-halal",
+   "publie": true
+  },
+  {
+   "code": "E472c",
+   "url": "https://halalgpt.fr/e/E472c",
+   "etat": "fiche",
+   "detail": "/q/e472-halal",
+   "publie": true
+  },
+  {
+   "code": "E472d",
+   "url": "https://halalgpt.fr/e/E472d",
+   "etat": "fiche",
+   "detail": "/q/e472-halal",
+   "publie": true
+  },
+  {
+   "code": "E472e",
+   "url": "https://halalgpt.fr/e/E472e",
+   "etat": "fiche",
+   "detail": "/q/e472-halal",
+   "publie": true
+  },
+  {
+   "code": "E472f",
+   "url": "https://halalgpt.fr/e/E472f",
+   "etat": "fiche",
+   "detail": "/q/e472-halal",
+   "publie": true
+  },
+  {
+   "code": "E473",
+   "url": "https://halalgpt.fr/e/E473",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E474",
+   "url": "https://halalgpt.fr/e/E474",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E475",
+   "url": "https://halalgpt.fr/e/E475",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E476",
+   "url": "https://halalgpt.fr/e/E476",
+   "etat": "fiche",
+   "detail": "/q/e476-halal",
+   "publie": true
+  },
+  {
+   "code": "E477",
+   "url": "https://halalgpt.fr/e/E477",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E478",
+   "url": "https://halalgpt.fr/e/E478",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E479b",
+   "url": "https://halalgpt.fr/e/E479b",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E481",
+   "url": "https://halalgpt.fr/e/E481",
+   "etat": "fiche",
+   "detail": "/q/e481-halal",
+   "publie": true
+  },
+  {
+   "code": "E482",
+   "url": "https://halalgpt.fr/e/E482",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E483",
+   "url": "https://halalgpt.fr/e/E483",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E484",
+   "url": "https://halalgpt.fr/e/E484",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E485",
+   "url": "https://halalgpt.fr/e/E485",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E491",
+   "url": "https://halalgpt.fr/e/E491",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E492",
+   "url": "https://halalgpt.fr/e/E492",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E493",
+   "url": "https://halalgpt.fr/e/E493",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E494",
+   "url": "https://halalgpt.fr/e/E494",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E495",
+   "url": "https://halalgpt.fr/e/E495",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E542",
+   "url": "https://halalgpt.fr/e/E542",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E570",
+   "url": "https://halalgpt.fr/e/E570",
+   "etat": "fiche",
+   "detail": "/q/e570-halal",
+   "publie": true
+  },
+  {
+   "code": "E572",
+   "url": "https://halalgpt.fr/e/E572",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E627",
+   "url": "https://halalgpt.fr/e/E627",
+   "etat": "fiche",
+   "detail": "/q/e631-e627-halal",
+   "publie": true
+  },
+  {
+   "code": "E631",
+   "url": "https://halalgpt.fr/e/E631",
+   "etat": "fiche",
+   "detail": "/q/e631-e627-halal",
+   "publie": true
+  },
+  {
+   "code": "E635",
+   "url": "https://halalgpt.fr/e/E635",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E640",
+   "url": "https://halalgpt.fr/e/E640",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E904",
+   "url": "https://halalgpt.fr/e/E904",
+   "etat": "fiche",
+   "detail": "/q/e904-halal",
+   "publie": true
+  },
+  {
+   "code": "E920",
+   "url": "https://halalgpt.fr/e/E920",
+   "etat": "fiche",
+   "detail": "/q/e920-halal",
+   "publie": true
+  },
+  {
+   "code": "E921",
+   "url": "https://halalgpt.fr/e/E921",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  },
+  {
+   "code": "E966",
+   "url": "https://halalgpt.fr/e/E966",
+   "etat": "honnete",
+   "detail": "page « pas encore de fiche »",
+   "publie": true
+  }
+ ]
+}
