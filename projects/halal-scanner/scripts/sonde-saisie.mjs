@@ -174,6 +174,61 @@ const nomCoupe = await chercherParNom("nutella", (r) => r.abort("failed"));
 console.log(`  ${nomCoupe.ecran !== "ecran-chargement" ? "✓" : "✗"} service injoignable → ${nomCoupe.ecran}${nomCoupe.titreErreur ? ` (« ${nomCoupe.titreErreur} »)` : ""}`);
 if (nomCoupe.ecran === "ecran-chargement") fautes++;
 
+// ── 4. La CAMERA refusee, absente, ou occupee ────────────────────────────
+//
+// Les scenes du dessus simulent une panne du LECTEUR, camera accordee. Le
+// refus de la CAMERA elle-meme n'avait jamais ete verifie — c'est pourtant le
+// cas le plus frequent : on tape « Refuser » par reflexe, ou une autre app
+// tient deja l'objectif.
+//
+// Verifie le 13 aout : les quatre modes de panne repondaient deja
+// correctement. Ces scenes ne corrigent rien, elles empechent que ca casse.
+console.log("\n### 4. La caméra refusée, absente, ou occupée");
+const PANNES_CAMERA = [
+  ["refusée (NotAllowedError)", "NotAllowedError", /refusée/i],
+  ["absente (NotFoundError)", "NotFoundError", /indisponible/i],
+  ["occupée (NotReadableError)", "NotReadableError", /indisponible/i],
+];
+for (const [nom, erreur, attendu] of PANNES_CAMERA) {
+  const contexte = await navigateur.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: "block" });
+  await contexte.addInitScript((e) => {
+    navigator.mediaDevices.getUserMedia = () =>
+      Promise.reject(Object.assign(new Error("panne"), { name: e }));
+  }, erreur);
+  const page = await contexte.newPage();
+  await page.route(/openfoodfacts\.org|openbeautyfacts\.org/, (r) =>
+    r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(FICHE) }));
+  await page.route(/halalgpt\.fr/, (r) => r.fulfill({ status: 204, body: "" }));
+  await page.goto(BASE + "/scan.html", { waitUntil: "domcontentloaded" });
+  await page.waitForTimeout(3500);
+
+  const vu = await page.evaluate(() => {
+    const e = document.getElementById("etat-camera");
+    const s = document.getElementById("saisie");
+    const b = s ? s.getBoundingClientRect() : null;
+    return {
+      message: e && !e.hidden ? e.textContent.trim() : "",
+      visible: !!b && b.width > 0 && b.top >= 0 && b.bottom <= window.innerHeight,
+    };
+  });
+  // Taper un code doit encore mener quelque part : un message honnete qui
+  // debouche sur un champ mort ne vaut rien.
+  await page.fill("#saisie", "3017620422003").catch(() => {});
+  await page.press("#saisie", "Enter").catch(() => {});
+  await page.waitForTimeout(3000);
+  const apres = await page.evaluate(() =>
+    ["ecran-resultat", "ecran-erreur", "ecran-recherche"].find(
+      (i) => document.getElementById(i) && !document.getElementById(i).hidden) || "(aucun)");
+
+  const messageJuste = attendu.test(vu.message);
+  const ok = messageJuste && vu.visible && apres !== "(aucun)";
+  if (!ok) fautes++;
+  console.log(`  ${ok ? "✓" : "✗"} caméra ${nom.padEnd(28)} → ${apres}` +
+    (messageJuste ? "" : `  ← message « ${vu.message || "(aucun)"} »`) +
+    (vu.visible ? "" : "  ← champ hors de l'écran"));
+  await contexte.close();
+}
+
 await navigateur.close();
 await arreterLeServeur();
 
@@ -181,5 +236,6 @@ if (fautes > 0) {
   console.log(`\n✗ ${fautes} défaut(s) sur le repli. On y envoie des gens : il doit marcher.`);
   process.exit(1);
 }
-console.log("\n✓ Le champ est visible sur les deux écrans, et les quatre façons d'écrire");
-console.log("  un code-barres aboutissent au verdict.");
+console.log("\n✓ Le champ est visible sur les deux écrans, les quatre façons d'écrire");
+console.log("  un code-barres aboutissent au verdict, et les trois pannes de caméra");
+console.log("  renvoient vers un repli qui marche.");

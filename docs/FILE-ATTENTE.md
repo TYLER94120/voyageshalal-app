@@ -112,6 +112,94 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Deux audits, aucun défaut — et les deux sont maintenant gelés** *(13 août)*
+  — audit de cycle, les 7 éléments de la file étant tous bloqués. **Le résultat
+  honnête de ce cycle est « rien de cassé », et je ne fabrique pas une
+  correction pour avoir l'air utile.**
+
+  **1. Le stockage local en panne.** Navigation privée, stockage plein,
+  navigateur qui refuse — Safari iOS a longtemps levé une exception sur
+  `setItem` en navigation privée. L'historique est un confort ; le **verdict**
+  ne doit jamais en dépendre.
+
+  | Panne injectée | verdict rendu |
+  |---|---|
+  | `setItem` lève *(quota / privé)* | DOUTEUX ✓ |
+  | `getItem` **et** `setItem` lèvent | DOUTEUX ✓ |
+  | `localStorage` carrément absent | DOUTEUX ✓ |
+
+  **3 sur 3.** Les cinq écritures sont déjà dans un `try`, et aucune lecture au
+  démarrage n'est laissée nue.
+
+  **2. La caméra refusée, absente, ou occupée.** `sonde:saisie` simulait une
+  panne du **lecteur**, caméra accordée. Le refus de la **caméra** — le cas le
+  plus fréquent, on tape « Refuser » par réflexe — n'avait jamais été vérifié.
+
+  | Panne | message | champ visible | après saisie du code |
+  |---|---|---|---|
+  | `NotAllowedError` | « Caméra **refusée** — autorise-la… » | oui | verdict ✓ |
+  | `NotFoundError` | « Caméra indisponible ici… » | oui | verdict ✓ |
+  | `NotReadableError` | « Caméra indisponible ici… » | oui | verdict ✓ |
+  | pas de `mediaDevices` | « Caméra indisponible ici… » | oui | verdict ✓ |
+
+  **4 sur 4**, avec le bon message dans chaque cas — le refus est distingué de
+  l'absence, ce qui n'est pas la même action pour l'utilisateur.
+
+  **Ce que ce cycle produit :** ces six chemins ne cassent pas *aujourd'hui*,
+  mais rien ne les empêchait de casser demain. `sonde:saisie` gagne 3 scènes,
+  `sonde:historique` en gagne 3. Sabotages de contrôle : message de refus
+  remplacé par « Erreur. » → rouge ; une lecture de stockage laissée nue au
+  démarrage → 2 scènes sans verdict, rouge.
+
+- **L'adresse IP de chaque visiteur partait chez Google, sans que les mentions
+  légales le disent** *(13 août)* — audit de cycle, les 7 éléments de la file
+  étant tous bloqués.
+
+  Question posée : **le site dit-il la vérité sur ce qu'il envoie ?** Les
+  claims de l'accueil sont sobres et exacts (« gratuit, sans compte », « tes
+  scans restent sur ton téléphone » — c'est du `localStorage`, c'est vrai).
+  Mais en comparant les hôtes réellement contactés à ceux que la page
+  « mentions légales » déclare :
+
+  | Hôte contacté | déclaré ? |
+  |---|---|
+  | `world.openfoodfacts.org`, `world.openbeautyfacts.org` | oui |
+  | `halalgpt.fr` | oui |
+  | GitHub Pages *(hébergeur)* | oui |
+  | **`fonts.googleapis.com`, `fonts.gstatic.com`** | **non** |
+
+  Les 4 pages sur 4 chargeaient DM Sans et Playfair Display chez Google. Le
+  mot « Google » apparaissait bien 3 fois dans `mentions-legales.html` — mais
+  **les 3 occurrences étaient ses propres balises `<link>` dans le `<head>`**.
+  Pas un mot dans le corps de la page.
+
+  Même décision que pour le lecteur ZXing le 12 août, pour la même raison : on
+  sert les fichiers nous-mêmes.
+
+  | | avant | après |
+  |---|---|---|
+  | hôtes tiers à l'ouverture de l'accueil | **2** | **0** |
+  | idem, page additifs et mentions légales | **2** | **0** |
+  | hôtes tiers sur le scanner | 3 | **1** — `halalgpt.fr`, déclaré |
+  | polices disponibles hors ligne | non | oui |
+
+  Récupérées depuis **npm** (`@fontsource/*`), pas depuis un site : sous-ensemble
+  latin, graisse normale, 7 fichiers, 148 Ko — mais un navigateur ne télécharge
+  que les graisses qu'il **affiche**. Elles ne sont donc pas dans la liste
+  pré-chargée du service worker : elles entrent dans le cache à la première
+  utilisation réelle, comme ZXing. Empreintes SHA-256 et procédure de mise à
+  jour dans `site/vendor/polices/README.md`. Licence OFL, qui autorise
+  explicitement l'auto-hébergement.
+
+  *Ce que la mesure a corrigé chez moi :* j'allais retirer Playfair 900 pour
+  économiser 22 Ko. La mesure des requêtes réelles montre que **l'accueil le
+  charge** — il est utilisé. Gardé.
+
+  Gelé dans `verif:chiffres` (en CI) : aucune page ne peut charger depuis
+  `fonts.googleapis`, `fonts.gstatic`, jsDelivr, unpkg ou cdnjs, et tout
+  fichier de police nommé doit exister. Sabotage de contrôle — un `<link>`
+  Google remis sur l'accueil : sortie en erreur.
+
 - **32 secondes d'écran de chargement en rayon** *(12 août)* — audit de cycle,
   les 7 éléments de la file étant tous bloqués. Cette fois le défaut n'est pas
   un verdict faux : c'est un verdict qui n'arrive jamais.

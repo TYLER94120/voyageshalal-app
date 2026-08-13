@@ -1,74 +1,20 @@
 {
-  "verifie_le": "2026-08-13 05:49 UTC",
-  "liens_controles": 2840,
-  "pages_vues": 364,
-  "pages_connues": 1291,
+  "verifie_le": "2026-08-13 13:50 UTC",
+  "liens_controles": 1629,
+  "pages_vues": 245,
+  "pages_connues": 757,
   "morts": [
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/hotel-marmar.com",
+      "url": "https://www.voyageshalal.fr/destinations/toyoko-inn.com",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/www.darfatima.com",
+      "url": "https://www.voyageshalal.fr/destinations/www.hotelvakhsh.tj",
       "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/www.hotelbellevue.ma",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/turisthotel.com.tr",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/www.diademcappadocia.com",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/hotel-marmar.com",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/www.hotelbellevue.ma",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/turisthotel.com.tr",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/www.darfatima.com",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/www.diademcappadocia.com",
-      "detail": "code 404"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://world.openfoodfacts.org",
-      "detail": "code 502"
     }
   ],
   "bloques": [],

@@ -106,6 +106,37 @@ if (chemins.size !== 1) {
   fautes += 1;
 }
 
+// ── Aucun hôte tiers dans une page ───────────────────────────────────────
+//
+// Mesuré le 13 août : les 4 pages chargeaient DM Sans et Playfair Display
+// depuis fonts.googleapis.com et fonts.gstatic.com. L'adresse IP de chaque
+// visiteur partait donc chez un tiers à chaque ouverture — alors que la page
+// « mentions légales » déclare soigneusement GitHub Pages, Open Food Facts et
+// HalalGPT, et que le mot « Google » n'y apparaissait nulle part : les trois
+// occurrences trouvées étaient les balises <link> du <head> elles-mêmes.
+//
+// Les polices sont maintenant servies depuis notre domaine. Ce contrôle
+// empêche qu'elles y reviennent — c'est en collant un bloc de <head> d'une
+// page à l'autre que ça se reproduit.
+const HOTES_INTERDITS = /fonts\.googleapis\.com|fonts\.gstatic\.com|cdn\.jsdelivr\.net|unpkg\.com|cdnjs\.cloudflare\.com/;
+const POLICES = new Set();
+for (const f of PAGES.map(([n]) => n)) {
+  const html = readFileSync(join(PROJET, "site", f), "utf8");
+  // Le commentaire qui explique POURQUOI ces hôtes sont partis nomme
+  // forcément l'un d'eux : on ne regarde donc pas les commentaires.
+  const sansCommentaires = html.replace(/<!--[\s\S]*?-->/g, "");
+  const fautif = HOTES_INTERDITS.test(sansCommentaires);
+  if (fautif) fautes += 1;
+  console.log(`  ${fautif ? "✗" : "✓"} ${f.padEnd(22)} ${fautif ? "charge depuis un hôte tiers" : "aucun hôte tiers"}`);
+  for (const m of html.matchAll(/\.\/(vendor\/polices\/[\w.-]+\.woff2)/g)) POLICES.add(m[1]);
+}
+for (const c of POLICES) {
+  const existe = existsSync(join(PROJET, "site", c));
+  if (!existe) fautes += 1;
+  if (!existe) console.log(`  ✗ police référencée introuvable : ${c}`);
+}
+console.log(`  ✓ ${POLICES.size} fichiers de police référencés, tous présents`);
+
 // ── Les fiches vérifiées, celles qui portent le sceau ────────────────────
 //
 // Une fiche de `verifications.json` PRIME sur l'analyse : son statut s'affiche

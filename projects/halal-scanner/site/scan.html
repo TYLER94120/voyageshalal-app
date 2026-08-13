@@ -10,17 +10,66 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-12T02:52:03+00:00" />
+  <meta name="last-modified" content="2026-08-13T10:01:25+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Polices chargées sans bloquer l'affichage : le scanner démarre tout de
-       suite, même sur connexion lente. La graisse 900 (mot « HALAL ») est
-       désormais réellement chargée au lieu d'être synthétisée. -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800;900&family=Playfair+Display:wght@800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800;900&family=Playfair+Display:wght@800;900&display=swap" /></noscript>
+  <!-- Polices servies depuis notre domaine. Elles venaient de
+       fonts.googleapis.com : l'adresse IP de chaque visiteur partait chez un
+       tiers a chaque ouverture de page, et le mot « Google » n'apparaissait
+       nulle part dans les mentions legales. Meme decision que pour le lecteur
+       ZXing. Provenance et empreintes : vendor/polices/README.md -->
+  <style>
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-400-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-600-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-700-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 800;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-800-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 900;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-900-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Playfair Display";
+      font-style: normal;
+      font-weight: 800;
+      font-display: swap;
+      src: url("./vendor/polices/playfair-display-latin-800-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Playfair Display";
+      font-style: normal;
+      font-weight: 900;
+      font-display: swap;
+      src: url("./vendor/polices/playfair-display-latin-900-normal.woff2") format("woff2");
+    }
+  </style>
   <style>
     :root {
       /* Palette famille (inchangée) */
@@ -639,7 +688,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-12T02:52:03+00:00"
+      "dateModified": "2026-08-13T10:01:25+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -3053,7 +3102,7 @@
   </script>
 
   <footer class="pied" style="text-align: center; padding: 26px 16px calc(30px + env(safe-area-inset-bottom, 0px)); font-size: 14px; color: rgba(18, 38, 26, 0.66); line-height: 2.2; border-top: 1px solid rgba(18, 38, 26, 0.10); margin-top: 28px;">
-    <span style="display:block; margin-bottom:6px; font-size:13px;">Mis à jour le <span class="date-maj">12 août 2026</span> · <a href="./additifs.html" style="color:#7A5F1C; text-decoration:none;">Additifs surveillés</a> · <a href="./mentions-legales.html" style="color:#7A5F1C; text-decoration:none;">Mentions légales</a></span>
+    <span style="display:block; margin-bottom:6px; font-size:13px;">Mis à jour le <span class="date-maj">13 août 2026</span> · <a href="./additifs.html" style="color:#7A5F1C; text-decoration:none;">Additifs surveillés</a> · <a href="./mentions-legales.html" style="color:#7A5F1C; text-decoration:none;">Mentions légales</a></span>
     Un doute sur un ingrédient ?
     <a href="https://halalgpt.fr?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=pied-scanner" style="color: #7A5F1C; text-decoration: none; padding: 4px 6px; font-weight: 700;">🌙 Demande à HalalGPT</a>
     <span aria-hidden>·</span>
