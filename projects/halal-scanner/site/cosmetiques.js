@@ -252,7 +252,7 @@ function normaliser(texte) {
  * Voir le commentaire détaillé dans `halal.ts` — 16 formulations sur 28
  * rendaient HALAL sans preuve. Le défaut était identique ici.
  */
-const MENTIONS_ABSENCE = /non renseign\w*|non sp[ée]cifi\w*|non communiqu\w*|non disponibles?|pas d'informations?|aucune information|liste non disponible|ingr[ée]dients? non disponibles?|[àa] compl[ée]ter|[àa] renseigner|voir (?:sur )?(?:l'|le )?emballage|see (?:the )?packaging|not available|no information|unknown/gi;
+const MENTIONS_ABSENCE = /non renseign\w*|non sp[ée]cifi\w*|non communiqu\w*|informations? non disponibles?|non disponibles?|pas d'informations?|aucune information|liste non disponible|ingr[ée]dients? non disponibles?|[àa] compl[ée]ter|[àa] renseigner|voir (?:sur )?(?:l'|le )?emballage|see (?:the )?packaging|not available|no information|unknown/gi;
 /**
  * Même critère que dans `halal.ts`, changé le 13 août pour la même raison : le
  * seuil de douze lettres déclarait illisibles des compositions parfaitement

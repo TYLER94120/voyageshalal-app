@@ -108,7 +108,19 @@ const cas = [
   ["Bilingue, risque SEULEMENT du côté arabe → détecté", { ingredientsTexte: "ماء، سكر، جيلاتين / eau, sucre, arome", additifs: [] }, "douteux", 1],
   ["Arabe + codes additifs fournis par la base → analysable", { ingredientsTexte: "المكونات: ماء، سكر", additifs: ["en:e441"] }, "douteux", 1],
   ["Bilingue avec un côté français lisible → analysé", { ingredientsTexte: "ماء، سكر، جيلاتين / eau, sucre, gélatine", additifs: [] }, "douteux", 1],
-  ["Texte latin trop court pour conclure → inconnu", { ingredientsTexte: "sel", additifs: [] }, "inconnu", 0],
+  // ATTENDU CORRIGÉ LE 13 AOÛT, PAS LE CODE CONTOURNÉ.
+  //
+  // « sel » était rangé ici comme « trop court pour conclure ». C'est
+  // précisément le défaut que Mohamed a photographié : une composition
+  // complète et parfaitement lisible déclarée illisible. Un paquet de sel
+  // porte « Sel » et rien d'autre — et 16 compositions réelles sur 19
+  // ressortaient INCONNU pour la même raison.
+  //
+  // La question n'est pas « combien de lettres » mais « avons-nous eu une
+  // chance de lire ». Un mot latin de trois lettres suffit à répondre oui.
+  ["Composition courte mais lisible → tranchée", { ingredientsTexte: "sel", additifs: [] }, "halal", 0],
+  // Le garde-fou reste : deux lettres ne sont pas une composition.
+  ["Texte latin vraiment illisible → inconnu", { ingredientsTexte: "ab", additifs: [] }, "inconnu", 0],
 
   // --- GARDE-FOUS : une origine annoncée lève le doute ------------------------
   ["Glycérine végétale reste halal", { ingredientsTexte: "eau, glycérine végétale, parfum", additifs: [] }, "halal", 0],

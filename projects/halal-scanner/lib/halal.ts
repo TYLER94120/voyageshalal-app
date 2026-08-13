@@ -417,7 +417,7 @@ function normaliser(texte: string): string {
  * garde 25 lettres utiles et reste une vraie composition.
  */
 const MENTIONS_ABSENCE =
-  /non renseign\w*|non sp[ée]cifi\w*|non communiqu\w*|non disponibles?|pas d'informations?|aucune information|liste non disponible|ingr[ée]dients? non disponibles?|[àa] compl[ée]ter|[àa] renseigner|voir (?:sur )?(?:l'|le )?emballage|see (?:the )?packaging|not available|no information|unknown/gi;
+  /non renseign\w*|non sp[ée]cifi\w*|non communiqu\w*|informations? non disponibles?|non disponibles?|pas d'informations?|aucune information|liste non disponible|ingr[ée]dients? non disponibles?|[àa] compl[ée]ter|[àa] renseigner|voir (?:sur )?(?:l'|le )?emballage|see (?:the )?packaging|not available|no information|unknown/gi;
 
 /**
  * TROISIÈME VERSION, 13 août 2026 — et cette fois le seuil lui-même était

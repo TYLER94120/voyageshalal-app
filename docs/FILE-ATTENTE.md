@@ -1414,6 +1414,38 @@ une explication honnête, jamais un verdict inventé.
 
 ---
 
+## Note de méthode — ma boucle de vérification annonçait « tout vert » à tort
+
+*13 août.* Deux fois de suite, les Contrôles ont viré au rouge sur un état que
+j'avais annoncé vert quelques minutes plus tôt. La cause n'était ni le moteur
+ni GitHub : **c'était ma commande de vérification.**
+
+```bash
+npm run --silent $s >/dev/null 2>&1; echo "  $(printf %-22s $s) exit $?"
+```
+
+La substitution de commande `$( … )` s'exécute **avant** que `$?` ne soit lu.
+Le code affiché était donc celui de `printf` — toujours 0 — jamais celui de la
+sonde. **Ma boucle ne pouvait pas afficher autre chose que « exit 0 ».**
+
+C'est exactement le défaut que je traque dans le produit depuis trois jours,
+appliqué à mon propre instrument : un contrôle qui ne peut pas virer au rouge
+ne contrôle rien, il rassure. Et il m'a fait écrire « suite complète verte »
+plusieurs fois sans que ce soit vérifié.
+
+Forme correcte, qui lit le code avant toute substitution :
+
+```bash
+npm run --silent "$s" >/dev/null 2>&1; c=$?; printf "  %-22s exit %s\n" "$s" "$c"
+```
+
+Dès le premier passage avec la bonne boucle, une sonde en échec est apparue
+que les précédentes annonçaient verte. **Ce que les Contrôles GitHub ont
+rattrapé deux fois, ma vérification locale ne pouvait structurellement pas le
+voir.**
+
+---
+
 ## Note de méthode — ce que l'audit a cru trouver et qui était faux
 
 Deux « défauts » relevés automatiquement n'en étaient pas, et les écarter a pris
