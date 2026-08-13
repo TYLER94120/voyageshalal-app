@@ -112,6 +112,42 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **32 secondes d'écran de chargement en rayon** *(12 août)* — audit de cycle,
+  les 7 éléments de la file étant tous bloqués. Cette fois le défaut n'est pas
+  un verdict faux : c'est un verdict qui n'arrive jamais.
+
+  En rayon, le réseau n'est pas absent, il est **lent** — le cas que la
+  compétence `repondre-en-conditions-degradees` décrit, et le commentaire du
+  code disait déjà « une requête qui traîne dix secondes est pire qu'un échec
+  immédiat ». C'était vrai de la **requête**, pas de la **recherche**.
+
+  `fetchCourt` coupe bien chaque requête à 4 s. Mais `chercherProduit` en
+  enchaîne **quatre par code candidat** (Open Food Facts v2 et v0, puis Open
+  Beauty Facts v2 et v0), et un code à 12 chiffres a **deux** candidats. Rien
+  ne bornait l'ensemble.
+
+  Mesuré, chaque réponse arrivant en 10 s :
+
+  | | avant | après |
+  |---|---|---|
+  | code à 13 chiffres | **16,6 s**, 4 requêtes | **6,3 s**, 2 requêtes |
+  | code à 12 chiffres | **32,2 s**, 8 requêtes | **6,2 s**, 2 requêtes |
+  | témoin, réseau normal | 0,3 s, 4 requêtes | 0,4 s, 4 requêtes |
+
+  Une demi-minute devant un écran de chargement, dans un rayon, en 3G — après
+  quoi la personne repose le produit.
+
+  Un **budget de 6 s borne la recherche entière** : on n'ouvre pas une requête
+  de plus si le temps est écoulé, et la dernière est raccourcie à ce qu'il
+  reste. Le chemin normal est intact : les quatre adresses sont toujours
+  essayées quand elles répondent vite. Et ne rien trouver n'est pas une
+  impasse — l'écran « produit non référencé » propose la lecture par photo, qui
+  sait lire une étiquette maghrébine.
+
+  Gelé dans `sonde:hors-ligne`, qui couvre maintenant les deux conditions
+  dégradées — réseau lent **et** réseau coupé. Sabotage de contrôle — budget
+  retiré : 16,3 s et 32,2 s, la sonde vire au rouge.
+
 - **Un savon au suif rangé dans la base alimentaire ressortait HALAL**
   *(12 août)* — audit de cycle, les 7 éléments de la file étant tous bloqués.
 

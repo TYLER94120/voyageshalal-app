@@ -23,6 +23,50 @@ import { servirLeSite } from "./serveur-atelier.mjs";
 const { chromium } = await chargerPlaywright();
 const { base, arreter, couper } = await servirLeSite();
 const n = await chromium.launch({ executablePath: cheminChromium(), args: ["--no-proxy-server","--use-fake-ui-for-media-stream","--use-fake-device-for-media-stream"] });
+
+let fautes = 0;
+
+// ── 1. Le reseau LENT, avant le reseau absent ────────────────────────────
+//
+// En rayon, le reseau n'est pas absent : il est lent. `fetchCourt` coupe
+// chaque requete a 4 s, mais `chercherProduit` en enchaine QUATRE par code
+// candidat, et un code a 12 chiffres en a deux. Rien ne bornait l'ensemble.
+//
+// Mesure du 12 aout, avant correctif, chaque reponse arrivant en 10 s :
+//   code a 13 chiffres  ->  16,6 s d'ecran de chargement, 4 requetes
+//   code a 12 chiffres  ->  32,2 s, 8 requetes
+//
+// Une demi-minute devant un ecran de chargement, dans un rayon, en 3G. Le
+// budget borne desormais la recherche entiere.
+const PLAFOND = 9; // secondes : le budget est de 6 s, on laisse la marge du navigateur
+console.log("Reseau LENT (reponses en 10 s, delai par requete 4 s) :");
+for (const [nom, code] of [["code a 13 chiffres", "3017620422003"], ["code a 12 chiffres", "017620422003"]]) {
+  const ctx = await n.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: "block" });
+  const page = await ctx.newPage();
+  await page.route(/openfoodfacts\.org|openbeautyfacts\.org/, async (r) => {
+    await new Promise((ok) => setTimeout(ok, 10000));
+    await r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ status: 0 }) }).catch(() => {});
+  });
+  await page.route(/halalgpt\.fr/, (r) => r.fulfill({ status: 204, body: "" }));
+  const t0 = Date.now();
+  await page.goto(`${base}/scan.html?code=${code}`, { waitUntil: "domcontentloaded" });
+  let ecran = null;
+  for (let i = 0; i < 200 && !ecran; i++) {
+    ecran = await page.evaluate(() =>
+      ["ecran-resultat", "ecran-erreur", "ecran-recherche"].find(
+        (id) => document.getElementById(id) && !document.getElementById(id).hidden) || null
+    ).catch(() => null);
+    if (!ecran) await page.waitForTimeout(250);
+  }
+  const secondes = (Date.now() - t0) / 1000;
+  const ok = !!ecran && secondes <= PLAFOND;
+  if (!ok) fautes += 1;
+  console.log(`  ${ok ? "✓" : "✗"} ${nom.padEnd(20)} ${ecran || "(rien)"} apres ${secondes.toFixed(1)} s` +
+    (ok ? "" : `  ← plus de ${PLAFOND} s d'attente`));
+  await ctx.close();
+}
+console.log("");
+
 const c = await n.newContext({ viewport:{width:390,height:844}, permissions:["camera"] });
 const p = await c.newPage();
 
@@ -58,7 +102,7 @@ const coupureReelle = await p.evaluate(
 );
 console.log(`  ${coupureReelle ? "✓" : "✗"} controle : une adresse jamais visitee est bien injoignable`);
 
-let fautes = coupureReelle ? 0 : 1;
+if (!coupureReelle) fautes += 1;
 for (const [nom, url] of [["accueil","index.html"], ["scanner","scan.html"],
                           ["additifs","additifs.html"], ["mentions legales","mentions-legales.html"]]) {
   let servie = true;
@@ -86,5 +130,5 @@ console.log(`\n  ${r.ecran === "ecran-resultat" ? "✓" : "✗"} produit deja sc
 if (r.texte) console.log(`      ${r.texte}`);
 if (r.ecran !== "ecran-resultat") fautes += 1;
 await n.close(); await arreter();
-if (fautes > 0) { console.log(`\n✗ ${fautes} defaut(s) hors ligne.`); process.exit(1); }
-console.log("\n✓ Les 4 pages et le verdict d'un produit deja scanne tiennent sans reseau — serveur arrete, rien ne pouvait venir d'ailleurs que du cache.");
+if (fautes > 0) { console.log(`\n✗ ${fautes} defaut(s) en conditions degradees.`); process.exit(1); }
+console.log("\n✓ Reseau lent : reponse en moins de " + PLAFOND + " s. Reseau coupe : les 4 pages et le verdict d'un produit deja scanne tiennent, serveur arrete.");
