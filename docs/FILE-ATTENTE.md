@@ -21,9 +21,20 @@ une explication honnête, jamais un verdict inventé.
    répondre ni « combien de gens scannent », ni « est-ce que la passerelle vers
    HalalGPT amène quelqu'un », ni « quelle page fait revenir ». J'ai participé
    au brainstorm du 10 août les mains vides pour cette seule raison.
-   *Bloqué sur :* la balise de vérification Search Console, que Mohamed doit
-   récupérer depuis son ordinateur. Le compteur `/api/passerelle` de HalalGPT
-   accepte déjà `halalcheck` comme source.
+   *Bloqué sur :* la vérification Search Console, que Mohamed doit poser
+   depuis son ordinateur. Le compteur `/api/passerelle` de HalalGPT accepte
+   déjà `halalcheck` comme source.
+   *Point du 14 août :* il a choisi la méthode **DNS** (propriété de domaine),
+   meilleure que la balise HTML — elle couvre d'un coup le domaine nu, `www`,
+   http et https. L'enregistrement TXT est à ajouter chez OVH, sans écraser le
+   SPF existant. **Je sais désormais lire le DNS** (`dnspython`, PyPI passe le
+   proxy) : dès qu'il l'aura posé, je confirme que Google le verra, au lieu
+   qu'il clique « Valider » à l'aveugle. Relevé le 14 août : pas encore
+   présent.
+   *Et ce que la vérification ne donnera PAS :* Search Console dit ce que
+   Google affiche et ce sur quoi les gens cliquent — pas combien de
+   codes-barres sont scannés. Elle s'arrête à la porte du site. Ne pas
+   confondre les deux au moment de lire les chiffres.
 
 2. **Les deux bases de données sont vides.**
    *Preuve :* `verifications.json` et `produits-locaux.json` contiennent
@@ -120,6 +131,39 @@ une explication honnête, jamais un verdict inventé.
 ---
 
 ## Fait
+
+- **Je peux lire le DNS — et la configuration du domaine est saine** *(14 août)*.
+  Capacité nouvelle, trouvée en répondant à Mohamed : le proxy de l'atelier
+  refuse le web, mais **PyPI est ouvert**, donc `dnspython` s'installe et les
+  requêtes DNS passent. Tout ce que je déclarais « invérifiable sur le domaine
+  réel » ne l'est plus.
+
+  Premier usage : le point de défaillance unique. GitHub Pages demande
+  **quatre** adresses A sur le domaine nu ; avec une seule, le site tombe quand
+  cette adresse a un incident — pour un produit dont la promesse est « ça
+  marche en rayon », ce serait grave.
+
+  | Contrôle | Résultat |
+  |---|---|
+  | adresses A GitHub Pages sur `halalcheck.fr` | **4 / 4** |
+  | `www.halalcheck.fr` | CNAME vers `tyler94120.github.io` ✓ |
+  | enregistrement CAA | **aucun** — rien ne bloquera le renouvellement du certificat |
+  | serveurs de noms | OVH (`ns106`, `dns106`) |
+
+  **Aucun défaut.** C'est une mesure, pas un cycle vide : la question
+  « le site peut-il tomber à cause d'une seule adresse ? » a maintenant une
+  réponse chiffrée, et elle est non.
+
+  *Ce que je n'automatise PAS, et pourquoi :* mettre ce contrôle en CI ferait
+  dépendre chaque envoi de code d'une résolution DNS extérieure. Un contrôle
+  qui vire au rouge pour une raison étrangère à ce qu'il mesure, c'est
+  exactement l'instrument que je passe mes journées à corriger. La zone ne
+  change que quand Mohamed la change, délibérément.
+
+  *Ce que ça débloque pour de bon :* quand il aura posé le TXT de Search
+  Console, **je peux le vérifier moi-même** au lieu qu'il clique « Valider » à
+  l'aveugle. Vérifié à l'instant : pas encore posé (2 TXT présents, SPF OVH et
+  redirection `www`).
 
 - **Le générateur remettait les liens Google que j'avais retirés à la main**
   *(13 août)* — et c'est **mon propre garde-fou de la veille qui l'a attrapé**,
