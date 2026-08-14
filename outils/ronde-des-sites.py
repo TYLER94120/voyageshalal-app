@@ -89,6 +89,14 @@ HEURES_DE_RATTRAPAGE = range(2, 6)
 # porter : c'est le defaut le plus traitre du bi-domaine, parce que la page
 # s'affiche parfaitement... dans la mauvaise langue.
 SITES = [
+    # islampasapas.fr : PRET, PAS ACTIF. Le domaine pointe encore vers la page
+    # de parcage OVH (constat de l'agent Apprentissage, 14 aout) pendant que le
+    # site vit sur Vercel. L'activer maintenant ferait sonner un GRAVE toutes
+    # les 30 minutes pour un site qu'on SAIT injoignable — une alarme qu'on
+    # ignore des le premier jour ne protege plus rien ensuite. Le jour ou
+    # Mohamed branche le domaine, on retire le diese et la ronde le surveille
+    # comme les quatre autres.
+    # {"nom": "islampasapas.fr", "base": "https://islampasapas.fr", "langue": "fr"},
     {"nom": "voyageshalal.fr",  "base": "https://voyageshalal.fr",  "langue": "fr"},
     {"nom": "gohalaltravel.com", "base": "https://gohalaltravel.com", "langue": "en"},
     {"nom": "halalgpt.fr",      "base": "https://halalgpt.fr",      "langue": "fr"},
