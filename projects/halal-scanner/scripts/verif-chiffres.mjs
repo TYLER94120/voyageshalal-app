@@ -137,6 +137,52 @@ for (const c of POLICES) {
 }
 console.log(`  ✓ ${POLICES.size} fichiers de police référencés, tous présents`);
 
+// ── Ce que Google affichera de nous ──────────────────────────────────────
+//
+// Un titre au-delà d'environ 60 caractères et une description au-delà
+// d'environ 160 sont COUPÉS par Google, au milieu d'un mot. Le texte reste
+// juste dans le code source : le défaut n'existe que dans le résultat de
+// recherche, là où personne chez nous ne va le lire.
+//
+// Mesuré le 14 août, le jour où l'indexation a commencé : la description de
+// scan.html faisait 164 caractères. Aucun contrôle ne regardait ces
+// longueurs, c'est pour ça qu'elle est passée. Ramenée à 155.
+//
+// Le moment de corriger, c'est AVANT le premier passage de Google : après,
+// il faut attendre un nouveau parcours pour que l'affichage change.
+//
+// On vérifie aussi qu'aucune page ne recopie le titre ou la description
+// d'une autre. Deux pages qui se présentent pareil se font concurrence dans
+// les résultats, et Google en écarte une.
+const LIMITE_TITRE = 60;
+const LIMITE_DESCRIPTION = 160;
+console.log("");
+const vusTitre = new Map();
+const vusDescription = new Map();
+for (const [fichier] of PAGES) {
+  const html = readFileSync(join(PROJET, "site", fichier), "utf8");
+  const titre = (html.match(/<title>([^<]*)<\/title>/) || [])[1] || "";
+  const description = (html.match(/<meta name="description" content="([^"]*)"/) || [])[1] || "";
+
+  const soucis = [];
+  if (!titre) soucis.push("titre absent");
+  else if (titre.length > LIMITE_TITRE) soucis.push(`titre ${titre.length} > ${LIMITE_TITRE}, coupé par Google`);
+  if (!description) soucis.push("description absente");
+  else if (description.length > LIMITE_DESCRIPTION)
+    soucis.push(`description ${description.length} > ${LIMITE_DESCRIPTION}, coupée par Google`);
+
+  if (titre && vusTitre.has(titre)) soucis.push(`titre identique à ${vusTitre.get(titre)}`);
+  else if (titre) vusTitre.set(titre, fichier);
+  if (description && vusDescription.has(description)) soucis.push(`description identique à ${vusDescription.get(description)}`);
+  else if (description) vusDescription.set(description, fichier);
+
+  if (soucis.length) fautes += 1;
+  console.log(
+    `  ${soucis.length ? "✗" : "✓"} ${fichier.padEnd(22)} titre ${String(titre.length).padStart(3)}, description ${String(description.length).padStart(3)}` +
+      (soucis.length ? `  ← ${soucis.join(" ; ")}` : "")
+  );
+}
+
 // ── La gravité des doutes, cohérente avec ce que la table en dit ─────────
 //
 // Le champ `gravite` sépare « presque toujours végétal aujourd'hui » de

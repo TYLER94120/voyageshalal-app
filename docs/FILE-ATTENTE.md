@@ -158,6 +158,54 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Une des 4 pages allait sortir coupée dans Google** *(14 août, corrigé le
+  jour où l'indexation a démarré)*.
+
+  Mohamed a soumis le sitemap, puis a écrit « on indexe ». Avant qu'il ne
+  demande l'indexation page par page, j'ai relevé ce que Google afficherait
+  réellement de nous. Résultat : **1 page sur 4 en défaut**.
+
+  | Page | Titre | Description | |
+  |---|---|---|---|
+  | index.html | 54 | 140 | ok |
+  | additifs.html | 52 | 151 | ok |
+  | mentions-legales.html | 50 | 141 | ok |
+  | scan.html | 54 | **164** | **coupée** (limite ≈ 160) |
+
+  `scan.html` est la page du scanner — celle qui compte. Sa description était
+  tranchée au milieu de « lecture d'étiquette en photo ». Ramenée à **155**
+  caractères, et réécrite au passage pour contenir le mot qui manquait :
+  **verdict**. L'ancienne version énumérait des fonctions sans jamais dire ce
+  que le produit rend. Les 4 fonctions annoncées ont été vérifiées présentes
+  dans la page avant d'être décrites (verdict, photo, alternatives,
+  code-barres) — on ne décrit pas une fonction qu'on n'a pas.
+
+  *Le reste du contrôle d'indexabilité, mesuré en même temps :* 4 fichiers
+  livrés, 4 URL au sitemap, **0 page orpheline**, 4 canoniques identiques à
+  l'URL du sitemap, `lang="fr"` partout, **aucune balise `noindex`**, aucun
+  titre ni description en double. Rien d'autre ne bloquait.
+
+  *Pourquoi ça passait :* aucun contrôle ne regardait ces longueurs. Le défaut
+  n'existe **pas** dans le code source — le texte y est entier. Il n'apparaît
+  que dans le résultat de recherche, c'est-à-dire à l'endroit où personne chez
+  nous ne va jamais le lire. Garde-fou ajouté à `verif:chiffres` : titre ≤ 60,
+  description ≤ 160, présence obligatoire, et interdiction que deux pages se
+  présentent avec le même titre ou la même description.
+
+  *Sabotage — 4 tentatives, 4 rouges :* description rallongée à 246 → rouge ;
+  titre poussé à 115 → rouge ; `additifs.html` recopiant le titre de
+  `scan.html` → rouge ; description supprimée → rouge. Restauration revérifiée
+  verte. 17 sondes sur 17 au vert après correction.
+
+  *Ce que je n'ai PAS fait, et c'est délibéré :* pas de réécriture des 3 autres
+  pages. Le site a **zéro impression** — la propriété vient d'être validée.
+  Retravailler des titres pour gagner des clics quand personne ne voit encore
+  la page, c'est du travail sans destinataire. Ici la correction se justifiait
+  autrement : elle est mécanique, et faite **avant** le premier passage de
+  Google elle est gratuite. Après, il aurait fallu attendre un nouveau
+  parcours pour que l'affichage change. Le vrai chantier des titres attendra
+  d'avoir des requêtes réelles dans Search Console.
+
 - **Je peux lire le DNS — mais PAS choisir qui me répond** *(14 août)*.
   Capacité nouvelle, trouvée en répondant à Mohamed : le proxy de l'atelier
   refuse le web, mais **PyPI est ouvert**, donc `dnspython` s'installe et les
