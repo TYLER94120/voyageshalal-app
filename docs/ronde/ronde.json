@@ -1,11 +1,11 @@
 {
-  "ronde_du": "2026-08-14 17:30 UTC",
-  "pages_vues": 170,
+  "ronde_du": "2026-08-14 19:01 UTC",
+  "pages_vues": 169,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
       "pages": 41,
-      "defauts": 8
+      "defauts": 9
     },
     {
       "site": "voyageshalal.fr",
@@ -24,7 +24,7 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 6,
+      "pages": 5,
       "defauts": 0
     }
   ],
@@ -83,6 +83,13 @@
       "site": "islampasapas.fr",
       "url": "https://islampasapas.fr/sourates.html",
       "quoi": "description trop courte (41 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/lecon-sourate-al-ma-un.html",
+      "quoi": "description trop courte (27 car.)",
       "detail": ""
     }
   ]

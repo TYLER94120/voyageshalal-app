@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-08-14 17:30 UTC.**
+**Dernier changement constate le 2026-08-14 19:01 UTC.**
 
-⚠️ **Cette ronde a regarde 170 pages sur 2010 — environ 8 %.**
+⚠️ **Cette ronde a regarde 169 pages sur 2010 — environ 8 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -18,7 +18,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 0 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 8 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 9 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -27,15 +27,15 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 
 | Site | Pages vues | Tous niveaux |
 |---|---|---|
-| islampasapas.fr | 41 | 8 |
+| islampasapas.fr | 41 | 9 |
 | voyageshalal.fr | 41 | 0 |
 | gohalaltravel.com | 41 | 0 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 6 | 0 |
+| halalcheck.fr | 5 | 0 |
 
-## 🟡 surveiller — 8
+## 🟡 surveiller — 9
 
-### islampasapas.fr (8)
+### islampasapas.fr (9)
 
 - **description trop courte (11 car.)**  
   `https://www.islampasapas.fr/`
@@ -53,3 +53,5 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
   `https://islampasapas.fr/lecon-alphabet-arabe.html`
 - **description trop courte (41 car.)**  
   `https://islampasapas.fr/sourates.html`
+- **description trop courte (27 car.)**  
+  `https://islampasapas.fr/lecon-sourate-al-ma-un.html`
