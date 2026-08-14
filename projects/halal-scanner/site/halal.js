@@ -14,33 +14,52 @@ export const ADDITIFS_A_RISQUE = {
         nom: "E153 — Charbon",
         raison: "Peut être d'origine végétale ou issu d'os d'animaux.",
     },
+    // GRAVITE RENSEIGNEE LE 13 AOUT. Le champ `gravite` existait depuis
+    // l'origine, et AUCUNE des 56 entrees ni des 24 regles texte ne le portait.
+    // La branche rassurante de `conclusionPratique` — « le doute est theorique »
+    // — ne pouvait donc jamais s'afficher : un chocolat signale pour sa
+    // lecithine recevait le meme « Le point a verifier, c'est… » qu'un paquet de
+    // bonbons a la gelatine. Mesure : 7 produits ordinaires sur 20 ressortent
+    // DOUTEUX, 0 alerte de gravite faible.
+    //
+    // Les cinq entrees marquees faibles ne sont pas choisies par gout : ce sont
+    // celles dont la RAISON, ecrite avant moi, dit deja que le doute est faible
+    // (« presque toujours », « generalement vegetale », « le plus souvent par
+    // fermentation vegetale »). On rend la donnee coherente avec ce qu'elle
+    // affirme, on ne tranche pas une question nouvelle. Le VERDICT ne change
+    // pas — seule l'explication cesse d'alarmer autant pour tout.
     e270: {
         niveau: "douteux",
         nom: "E270 — Acide lactique",
         raison: "Obtenu le plus souvent par fermentation végétale, mais une origine animale reste possible.",
+        gravite: "faible",
     },
     e322: {
         niveau: "douteux",
         nom: "E322 — Lécithines",
         raison: "Presque toujours de soja ou de tournesol ; une lécithine d'œuf est possible mais rare.",
+        gravite: "faible",
         famille: "lecithine",
     },
     e325: {
         niveau: "douteux",
         nom: "E325 — Lactate de sodium",
         raison: "Dérivé de l'acide lactique — origine généralement végétale, à confirmer.",
+        gravite: "faible",
         famille: "lactates",
     },
     e326: {
         niveau: "douteux",
         nom: "E326 — Lactate de potassium",
         raison: "Dérivé de l'acide lactique — origine généralement végétale, à confirmer.",
+        gravite: "faible",
         famille: "lactates",
     },
     e327: {
         niveau: "douteux",
         nom: "E327 — Lactate de calcium",
         raison: "Dérivé de l'acide lactique — origine généralement végétale, à confirmer.",
+        gravite: "faible",
         famille: "lactates",
     },
     e422: {
@@ -554,6 +573,7 @@ export function analyserProduit(entree) {
                 niveau: infos.niveau,
                 raison: infos.raison,
                 famille: infos.famille,
+                gravite: infos.gravite,
             });
         }
     }

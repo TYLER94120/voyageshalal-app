@@ -121,6 +121,42 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Le champ qui distingue un vrai doute d'un doute théorique n'était rempli
+  nulle part** *(13 août)*. Première mesure de ce qu'un passage en caisse donne
+  vraiment : **7 produits ordinaires sur 20 ressortent DOUTEUX** — chocolat au
+  lait, pain de mie, margarine, glace, barre chocolatée, chewing-gum, bonbons.
+
+  Sur ces 7, **0 alerte de gravité faible**. Le champ `gravite` existe depuis
+  l'origine du moteur ; **aucune des 56 entrées ni des 24 règles texte ne le
+  portait**. Conséquence sur l'écran, vérifiée dans le navigateur :
+
+  | Produit | avant | après |
+  |---|---|---|
+  | chocolat, **lécithine E322** seule | « **Le point à vérifier**, c'est E322… » | « Aucun ingrédient réellement problématique… le doute est théorique » |
+  | pain de mie, **E471** | « Le point à vérifier… » | « Le point à vérifier… » |
+  | bonbons, **gélatine** | « Le point à vérifier… » | « Le point à vérifier… » |
+
+  L'écran a bien deux branches — l'une rassurante, l'autre alarmante — mais la
+  rassurante ne pouvait **jamais** s'afficher. Un chocolat signalé pour sa
+  lécithine recevait donc le même avertissement qu'un paquet de bonbons à la
+  gélatine. À force de tout signaler pareil, on n'est plus cru sur rien.
+
+  **Les 5 entrées marquées faibles ne sont pas choisies par goût** — je ne
+  tranche aucune question nouvelle. Ce sont exactement celles dont la *raison*,
+  écrite avant moi, dit déjà que le doute est faible : E270 « le plus souvent
+  par fermentation végétale », E322 « presque toujours de soja ou de
+  tournesol », E325/E326/E327 « origine généralement végétale ». On rend la
+  donnée cohérente avec ce qu'elle affirme.
+
+  **Le verdict ne change pas** : les trois restent DOUTEUX. Seule l'explication
+  cesse d'alarmer autant pour tout.
+
+  Gelé deux fois : `verif:chiffres` refuse une table incohérente avec elle-même
+  — une raison qui dit « presque toujours végétale » doit porter la gravité
+  faible, et l'inverse ; `sonde:verdicts` vérifie les deux branches sur l'écran
+  réel, en contrôlant au passage que le verdict reste DOUTEUX. Sabotages :
+  gravité retirée de E322 → rouge ; gravité non transmise à l'alerte → rouge.
+
 - **« Peut contenir des traces de porc » rendait le même verdict qu'un pâté de
   campagne** *(13 août)* — troisième passage dans la veine ouverte par la
   capture de Mohamed : le verdict faux sur un produit ordinaire. Celui-ci est

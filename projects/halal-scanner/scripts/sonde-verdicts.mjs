@@ -38,6 +38,50 @@ for (const [nom, rep, attendus] of CAS) {
     (manquants.length ? "  ← manque : " + manquants.join(", ") : ""));
   await c.close();
 }
+// ── Tous les doutes ne se valent pas ─────────────────────────────────────
+//
+// `conclusionPratique` a deux branches : « le doute est theorique » quand
+// TOUTES les alertes sont de gravite faible, « Le point a verifier, c'est… »
+// sinon. Mesure du 13 aout : le champ `gravite` n'etait renseigne nulle part,
+// donc la premiere branche ne pouvait jamais s'afficher. Un chocolat signale
+// pour sa lecithine recevait le meme avertissement qu'un paquet de bonbons a
+// la gelatine.
+//
+// Le VERDICT ne change pas — les trois restent DOUTEUX. C'est l'explication
+// qui cesse d'alarmer autant pour tout.
+console.log("\nLe ton de l'explication suit la gravite du doute :");
+const GRAVITE = [
+  ["chocolat, lécithine E322 seule", ["en:e322"], /doute est théorique|réellement problématique/i],
+  ["pain de mie, E471", ["en:e471"], /point à vérifier/i],
+  ["bonbons à la gélatine", ["en:e441"], /point à vérifier/i],
+];
+for (const [nom, additifs, attendu] of GRAVITE) {
+  const c = await n.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: "block" });
+  const p = await c.newPage();
+  await p.route(/openfoodfacts\.org|openbeautyfacts\.org/, (r) =>
+    r.fulfill({ status: 200, contentType: "application/json",
+      body: JSON.stringify(fiche({ ingredients_text_fr: "sucre, farine, émulsifiant", additives_tags: additifs })) }));
+  await p.route(/halalgpt\.fr/, (r) => r.fulfill({ status: 204, body: "" }));
+  await p.goto(`${base}/scan.html?code=3017620422003`, { waitUntil: "domcontentloaded" });
+  await p.waitForTimeout(4000);
+  const vu = await p.evaluate(() => {
+    const e = document.getElementById("conclusion");
+    return {
+      verdict: document.getElementById("verdict").className,
+      texte: e && !e.hidden ? (e.querySelector(".conclusion-texte").textContent || "").trim() : "",
+    };
+  });
+  // Le verdict doit rester DOUTEUX dans les trois cas : on n'a pas adouci un
+  // verdict, seulement la phrase qui l'explique.
+  const douteux = vu.verdict.includes("verdict-douteux");
+  const bonneBranche = attendu.test(vu.texte);
+  const ok = douteux && bonneBranche;
+  if (!ok) fautes++;
+  console.log(`  ${ok ? "✓" : "✗"} ${nom.padEnd(32)} ${douteux ? "DOUTEUX" : vu.verdict}` +
+    (bonneBranche ? "" : `  ← « ${vu.texte.slice(0, 46)}… »`));
+  await c.close();
+}
+
 // ── « C'est surement de l'arabe » : une cause jamais verifiee ────────────
 //
 // Le 13 aout, Mohamed a photographie une bouteille d'eau Cristaline :

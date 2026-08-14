@@ -137,6 +137,38 @@ for (const c of POLICES) {
 }
 console.log(`  ✓ ${POLICES.size} fichiers de police référencés, tous présents`);
 
+// ── La gravité des doutes, cohérente avec ce que la table en dit ─────────
+//
+// Le champ `gravite` sépare « presque toujours végétal aujourd'hui » de
+// « réellement d'origine animale ». Mesuré le 13 août : il existait depuis
+// l'origine et **aucune** des 56 entrées ne le portait. La branche rassurante
+// de l'écran — « le doute est théorique » — ne pouvait donc jamais s'afficher,
+// et un chocolat signalé pour sa lécithine recevait le même avertissement
+// qu'un paquet de bonbons à la gélatine.
+//
+// Ce contrôle ne juge pas quelles substances méritent l'indulgence : il
+// vérifie que la table est d'accord avec elle-même. Une raison qui dit
+// « presque toujours végétale » doit porter la gravité faible, et une gravité
+// faible doit être justifiée par sa propre raison.
+console.log("");
+const DIT_FAIBLE = /presque toujours|generalement vegetale|généralement végétale|le plus souvent par fermentation|mais rare|reste possible|possible mais rare/i;
+const incoherentes = [];
+for (const [code, infos] of Object.entries(ADDITIFS_A_RISQUE)) {
+  const raisonFaible = DIT_FAIBLE.test(infos.raison);
+  const marqueFaible = infos.gravite === "faible";
+  if (raisonFaible && !marqueFaible)
+    incoherentes.push(`${code.toUpperCase()} : sa raison dit que le doute est faible, mais la gravité ne l'est pas`);
+  if (marqueFaible && !raisonFaible)
+    incoherentes.push(`${code.toUpperCase()} : marqué faible sans que sa raison le justifie`);
+}
+const nbFaibles = Object.values(ADDITIFS_A_RISQUE).filter((i) => i.gravite === "faible").length;
+fautes += incoherentes.length;
+console.log(
+  `  ${incoherentes.length ? "✗" : "✓"} gravité des doutes      ${nbFaibles} additif(s) de gravité faible sur ${nbAdditifs}` +
+    (incoherentes.length ? "" : ", tous justifiés par leur raison")
+);
+for (const m of incoherentes) console.log(`      ← ${m}`);
+
 // ── Les fiches vérifiées, celles qui portent le sceau ────────────────────
 //
 // Une fiche de `verifications.json` PRIME sur l'analyse : son statut s'affiche
