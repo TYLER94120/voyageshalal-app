@@ -1,185 +1,101 @@
 {
-  "verifie_le": "2026-08-14 02:47 UTC",
-  "liens_controles": 3009,
+  "verifie_le": "2026-08-14 05:47 UTC",
+  "liens_controles": 2784,
   "pages_vues": 364,
   "pages_connues": 1296,
   "morts": [
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/hotel-marmar.com",
+      "url": "https://www.voyageshalal.fr/destinations/grouplehahotels.com",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/www.darfatima.com",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/www.hotelbellevue.ma",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/hotel-Medina.com",
+      "url": "https://www.voyageshalal.fr/destinations/greenssuite2021@gmail.com",
       "detail": "code 404"
     },
     {
       "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/hotel-Medina.com",
+      "url": "https://www.gohalaltravel.com/destinations/toyoko-inn.com",
       "detail": "code 404"
     },
     {
       "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/www.hotelbellevue.ma",
+      "url": "https://www.gohalaltravel.com/destinations/grouplehahotels.com",
       "detail": "code 404"
     },
     {
       "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/hotel-marmar.com",
+      "url": "https://www.gohalaltravel.com/destinations/greenssuite2021@gmail.com",
       "detail": "code 404"
     },
     {
       "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/www.darfatima.com",
+      "genre": "externe",
+      "url": "https://nobelbelgrade.business.site/",
       "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://mercosuruniversitas.com/",
+      "detail": "URLError (confirme machine calme)"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://terrabiohotel.com/",
+      "detail": "URLError (confirme machine calme)"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://taipei.metropolitan.tw/",
+      "detail": "URLError (confirme machine calme)"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://ushalexushotels.com",
+      "detail": "URLError (confirme machine calme)"
     }
   ],
-  "bloques": [],
-  "innocentes_au_controle_calme": [
+  "bloques": [
     {
       "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/fezouane",
-      "detail": "URLError — aucun code de reponse"
+      "genre": "externe",
+      "url": "https://nomada-republic.com/nomada-hotel-panama-city/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
     },
     {
       "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/horaires-priere?lat=53.4808&lng=-2.2426&lieu=Manchester&pays=Royaume-Uni",
-      "detail": "URLError — aucun code de reponse"
+      "genre": "externe",
+      "url": "https://petitbeijers.com/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
     },
     {
       "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/mosquee-proche?lat=-6.9175&lng=107.6191&lieu=Bandung&pays=Indon%C3%A9sie",
-      "detail": "URLError — aucun code de reponse"
+      "genre": "externe",
+      "url": "https://taipei.grand.hyatt.com/",
+      "detail": "code 429 — refuse les robots, pas forcement mort"
     },
     {
       "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/horaires-priere?lat=32.2994&lng=-9.2372&lieu=Safi&pays=Maroc",
-      "detail": "URLError — aucun code de reponse"
+      "genre": "externe",
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
     },
     {
       "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/al-hoceima",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/priere/seville",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/horaires-priere?lat=41.1579&lng=-8.6291&lieu=Porto&pays=Portugal",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/mosquee-proche?lat=41.1579&lng=-8.6291&lieu=Porto&pays=Portugal",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/mosquee-proche?lat=34.0151&lng=71.5249&lieu=Peshawar&pays=Pakistan",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/kuala-lumpur",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/qibla?lat=55.9533&lng=-3.1883&lieu=%C3%89dimbourg&pays=Royaume-Uni",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/fes",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/hyderabad-inde",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/hotels/dakhla",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/hotels/essaouira",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/priere/salalah",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/communaute/ajouter?ville=beni-mellal",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/priere/malacca",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/marrakech",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/priere/zurich",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/mosquee-proche?lat=30.9335&lng=-6.937&lieu=Ouarzazate&pays=Maroc",
-      "detail": "URLError — aucun code de reponse"
+      "genre": "externe",
+      "url": "https://waldorfastoria3.hilton.com/en/hotels/china/waldorf-astoria-beijing-BJSWAWA/index.html",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
     }
-  ]
+  ],
+  "innocentes_au_controle_calme": []
 }
