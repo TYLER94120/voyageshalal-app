@@ -2236,7 +2236,12 @@
         return {
           titre: "Ce qu'il faut retenir",
           texte:
-            "Aucun ingrédient réellement problématique. Ceux qui sont signalés (glycérine, stéarates…) sont aujourd'hui presque toujours d'origine végétale chez les fabricants européens : le doute est théorique. En cas d'exigence stricte, demande confirmation à la marque.",
+            // Les exemples cités doivent être ceux que le moteur juge VRAIMENT
+            // mineurs. « glycérine, stéarates » était faux : dans le moteur
+            // alimentaire, leur raison dit « origine végétale ou animale non
+            // précisée » — un doute réel. Les cinq entrées de gravité faible
+            // sont les lécithines, les lactates et l'acide lactique.
+            "Aucun ingrédient réellement problématique. Ceux qui sont signalés (lécithines, lactates…) sont aujourd'hui presque toujours d'origine végétale chez les fabricants européens : le doute est théorique. En cas d'exigence stricte, demande confirmation à la marque.",
         };
       }
       const noms = serieuses.slice(0, 2).map((a) => a.element).join(" et ");

@@ -121,6 +121,44 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Le générateur remettait les liens Google que j'avais retirés à la main**
+  *(13 août)* — et c'est **mon propre garde-fou de la veille qui l'a attrapé**,
+  une régénération plus tard.
+
+  J'avais retiré `fonts.googleapis.com` des 4 pages. Mais `additifs.html` est
+  **généré** : la correction avait été faite sur le fichier produit, pas sur
+  `scripts/page-additifs.mjs`. À la première régénération, les deux `<link>`
+  sont revenus — et avec eux l'adresse IP de chaque visiteur partant chez un
+  tiers, sur une page sur quatre.
+
+  | | avant régénération | après régénération | après correctif |
+  |---|---|---|---|
+  | `additifs.html`, hôtes tiers | 0 | **2** | 0 |
+
+  `npm run verif:chiffres` est sorti en erreur : « additifs.html charge depuis
+  un hôte tiers ». **Sans ce contrôle ajouté hier, la fuite serait repartie en
+  ligne sans que personne ne le voie.** Le générateur porte maintenant les
+  `@font-face` locaux, donc la correction survit à la régénération.
+
+  *Deux autres incohérences page/app, corrigées dans la foulée :*
+
+  - La page des additifs affichait les 5 doutes mineurs (lécithines, lactates,
+    acide lactique) **comme n'importe quel autre doute**. Le générateur savait
+    pourtant écrire la nuance « doute mineur » — mais seulement pour les règles
+    texte, jamais pour les additifs. **9 → 14 nuances** sur la page ; l'app et
+    la page disent enfin la même chose.
+  - La phrase rassurante de l'écran citait « glycérine, stéarates… » comme
+    exemples de doutes théoriques. **C'est faux dans le moteur alimentaire** :
+    leur raison y dit « origine végétale ou animale non précisée », un doute
+    réel. Les 5 vraies entrées faibles sont les lécithines et les lactates —
+    la phrase les nomme désormais.
+
+  *Ce que j'ai refusé de faire :* marquer les règles texte alimentaires comme
+  faibles pour aligner sur les 9 règles cosmétiques qui le sont. Vérifié une
+  par une : **aucune des 24 ne décrit un doute faible dans sa propre raison**.
+  L'asymétrie est justifiée, pas accidentelle — et l'aligner aurait été
+  inventer un adoucissement doctrinal.
+
 - **Le champ qui distingue un vrai doute d'un doute théorique n'était rempli
   nulle part** *(13 août)*. Première mesure de ce qu'un passage en caisse donne
   vraiment : **7 produits ordinaires sur 20 ressortent DOUTEUX** — chocolat au

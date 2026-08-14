@@ -164,9 +164,17 @@ function carteAdditif(cle, infos) {
     ? `<a class="fiche" href="https://halalgpt.fr/e/${encodeURIComponent(code)}?${UTM}" target="_blank" rel="noopener">Comprendre le ${echapper(code)} →</a>`
     : "";
   const cherchable = sansAccents(`${badge} ${titre} ${infos.raison}`.toLowerCase());
+  // La nuance « doute mineur » existait pour les regles texte, pas pour les
+  // additifs — alors que le champ `gravite` a ete renseigne sur cinq d'entre
+  // eux le 13 aout. La page disait donc autre chose que l'app : celle-ci
+  // annonce « le doute est theorique » pour une lecithine, la page la
+  // presentait comme n'importe quel autre doute.
+  const faible = infos.gravite === "faible"
+    ? `\n        <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>`
+    : "";
   return `      <article class="carte ${infos.niveau}" data-cherche="${echapper(cherchable)}">
         <div class="entete"><span class="code">${echapper(badge)}</span><h3>${echapper(titre)}</h3></div>
-        <p class="raison">${echapper(infos.raison)}</p>
+        <p class="raison">${echapper(infos.raison)}</p>${faible}
         ${lien}
       </article>`;
 }
@@ -290,10 +298,62 @@ const html = `<!DOCTYPE html>
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&amp;family=Playfair+Display:wght@800&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&amp;family=Playfair+Display:wght@800&amp;display=swap" /></noscript>
+  <!-- Polices servies depuis notre domaine, comme sur les trois autres pages.
+       LE GENERATEUR AVAIT ETE OUBLIE le 13 aout : la page etait corrigee a la
+       main, et la premiere regeneration remettait les liens vers Google —
+       donc l'adresse IP de chaque visiteur repartait chez un tiers. C'est
+       npm run verif:chiffres qui l'a attrape, une regeneration plus tard. -->
+  <style>
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-400-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-600-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-700-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 800;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-800-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "DM Sans";
+      font-style: normal;
+      font-weight: 900;
+      font-display: swap;
+      src: url("./vendor/polices/dm-sans-latin-900-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Playfair Display";
+      font-style: normal;
+      font-weight: 800;
+      font-display: swap;
+      src: url("./vendor/polices/playfair-display-latin-800-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Playfair Display";
+      font-style: normal;
+      font-weight: 900;
+      font-display: swap;
+      src: url("./vendor/polices/playfair-display-latin-900-normal.woff2") format("woff2");
+    }
+  </style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",

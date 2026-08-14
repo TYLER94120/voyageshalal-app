@@ -10,42 +10,16 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://halalcheck.fr/additifs.html" />
   <link rel="canonical" href="https://halalcheck.fr/additifs.html" />
-  <meta name="last-modified" content="2026-08-13T10:01:25+00:00" />
+  <meta name="last-modified" content="2026-08-13T10:01:36+00:00" />
   <meta name="theme-color" content="#FDFAF3" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "@id": "https://halalcheck.fr/additifs.html#page",
-        "url": "https://halalcheck.fr/additifs.html",
-        "name": "Additifs halal ou haram : les 56 additifs surveillés",
-        "inLanguage": "fr",
-        "description": "E120, E441, E471… la liste complète des additifs et ingrédients que HalalCheck repère, avec la raison du doute pour chacun. Alimentaire et cosmétiques.",
-        "isPartOf": { "@id": "https://halalcheck.fr/#application" },
-        "publisher": { "@id": "https://halalcheck.fr/#editeur" },
-        "dateModified": "2026-08-13T10:01:25+00:00"
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://halalcheck.fr/additifs.html#fil",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://halalcheck.fr/" },
-          { "@type": "ListItem", "position": 2, "name": "Additifs surveillés", "item": "https://halalcheck.fr/additifs.html" }
-        ]
-      }
-    ]
-  }
-  </script>
-  <!-- Polices servies depuis notre domaine. Elles venaient de
-       fonts.googleapis.com : l'adresse IP de chaque visiteur partait chez un
-       tiers a chaque ouverture de page, et le mot « Google » n'apparaissait
-       nulle part dans les mentions legales. Meme decision que pour le lecteur
-       ZXing. Provenance et empreintes : vendor/polices/README.md -->
+  <!-- Polices servies depuis notre domaine, comme sur les trois autres pages.
+       LE GENERATEUR AVAIT ETE OUBLIE le 13 aout : la page etait corrigee a la
+       main, et la premiere regeneration remettait les liens vers Google —
+       donc l'adresse IP de chaque visiteur repartait chez un tiers. C'est
+       npm run verif:chiffres qui l'a attrape, une regeneration plus tard. -->
   <style>
     @font-face {
       font-family: "DM Sans";
@@ -97,6 +71,32 @@
       src: url("./vendor/polices/playfair-display-latin-900-normal.woff2") format("woff2");
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://halalcheck.fr/additifs.html#page",
+        "url": "https://halalcheck.fr/additifs.html",
+        "name": "Additifs halal ou haram : les 56 additifs surveillés",
+        "inLanguage": "fr",
+        "description": "E120, E441, E471… la liste complète des additifs et ingrédients que HalalCheck repère, avec la raison du doute pour chacun. Alimentaire et cosmétiques.",
+        "isPartOf": { "@id": "https://halalcheck.fr/#application" },
+        "publisher": { "@id": "https://halalcheck.fr/#editeur" },
+        "dateModified": "2026-08-13T10:01:36+00:00"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://halalcheck.fr/additifs.html#fil",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://halalcheck.fr/" },
+          { "@type": "ListItem", "position": 2, "name": "Additifs surveillés", "item": "https://halalcheck.fr/additifs.html" }
+        ]
+      }
+    ]
+  }
+  </script>
   <style>
     :root {
       --nuit: #0B1A0F; --foret: #1B4332; --or: #C9A84C; --creme: #FDFAF3;
@@ -312,26 +312,31 @@
       <article class="carte douteux" data-cherche="e270 acide lactique obtenu le plus souvent par fermentation vegetale, mais une origine animale reste possible.">
         <div class="entete"><span class="code">E270</span><h3>Acide lactique</h3></div>
         <p class="raison">Obtenu le plus souvent par fermentation végétale, mais une origine animale reste possible.</p>
+        <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E270?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E270 →</a>
       </article>
       <article class="carte douteux" data-cherche="e322 lecithines presque toujours de soja ou de tournesol ; une lecithine d'oeuf est possible mais rare.">
         <div class="entete"><span class="code">E322</span><h3>Lécithines</h3></div>
         <p class="raison">Presque toujours de soja ou de tournesol ; une lécithine d'œuf est possible mais rare.</p>
+        <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E322?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E322 →</a>
       </article>
       <article class="carte douteux" data-cherche="e325 lactate de sodium derive de l'acide lactique — origine generalement vegetale, a confirmer.">
         <div class="entete"><span class="code">E325</span><h3>Lactate de sodium</h3></div>
         <p class="raison">Dérivé de l'acide lactique — origine généralement végétale, à confirmer.</p>
+        <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E325?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E325 →</a>
       </article>
       <article class="carte douteux" data-cherche="e326 lactate de potassium derive de l'acide lactique — origine generalement vegetale, a confirmer.">
         <div class="entete"><span class="code">E326</span><h3>Lactate de potassium</h3></div>
         <p class="raison">Dérivé de l'acide lactique — origine généralement végétale, à confirmer.</p>
+        <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E326?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E326 →</a>
       </article>
       <article class="carte douteux" data-cherche="e327 lactate de calcium derive de l'acide lactique — origine generalement vegetale, a confirmer.">
         <div class="entete"><span class="code">E327</span><h3>Lactate de calcium</h3></div>
         <p class="raison">Dérivé de l'acide lactique — origine généralement végétale, à confirmer.</p>
+        <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E327?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E327 →</a>
       </article>
       <article class="carte douteux" data-cherche="e422 glycerol origine vegetale ou animale (parfois porcine) non precisee.">
