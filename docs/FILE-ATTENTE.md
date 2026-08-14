@@ -29,8 +29,17 @@ une explication honnête, jamais un verdict inventé.
    http et https. L'enregistrement TXT est à ajouter chez OVH, sans écraser le
    SPF existant. **Je sais désormais lire le DNS** (`dnspython`, PyPI passe le
    proxy) : dès qu'il l'aura posé, je confirme que Google le verra, au lieu
-   qu'il clique « Valider » à l'aveugle. Relevé le 14 août : pas encore
-   présent.
+   qu'il clique « Valider » à l'aveugle.
+   *Posé et vérifié le 14 août.* Mohamed a créé l'entrée chez OVH (sous-domaine
+   `@`). Relevé immédiatement après, sur **5 résolveurs sur 5** — les deux
+   autoritaires OVH (`ns106`, `dns106`), plus Google 8.8.8.8, Cloudflare
+   1.1.1.1 et Quad9 9.9.9.9 : `google-site-verification=HkEz8Uf…` présent
+   partout, TTL 3600 s. Les deux TXT préexistants sont intacts (SPF OVH et
+   `1|www.halalcheck.fr`) — il a bien **ajouté** sans écraser. Reste à sa
+   charge : cliquer « Valider » dans Search Console. Ce point ne me bloque plus
+   sur le DNS ; il reste ouvert tant que la propriété n'est pas validée et que
+   les données ne s'accumulent pas (Search Console n'est pas rétroactive :
+   le compteur part de zéro à la validation, ce n'est pas un défaut).
    *Et ce que la vérification ne donnera PAS :* Search Console dit ce que
    Google affiche et ce sur quoi les gens cliquent — pas combien de
    codes-barres sont scannés. Elle s'arrête à la porte du site. Ne pas
@@ -162,8 +171,20 @@ une explication honnête, jamais un verdict inventé.
 
   *Ce que ça débloque pour de bon :* quand il aura posé le TXT de Search
   Console, **je peux le vérifier moi-même** au lieu qu'il clique « Valider » à
-  l'aveugle. Vérifié à l'instant : pas encore posé (2 TXT présents, SPF OVH et
+  l'aveugle. Au moment de l'audit : pas encore posé (2 TXT présents, SPF OVH et
   redirection `www`).
+
+  *Et ça a servi le jour même.* Mohamed a posé le TXT quelques heures plus
+  tard et m'a dit « c'est fait ». Sans cette capacité, je ne pouvais que le
+  croire sur parole. Mesuré à la place : **5 résolveurs sur 5** rendent
+  `google-site-verification=HkEz8Uf…` — les deux autoritaires OVH d'abord,
+  puis Google, Cloudflare et Quad9. Détail qui compte : à la **première**
+  interrogation, Quad9 et OVH répondaient OUI, Google et Cloudflare encore
+  NON — ils servaient une réponse en cache. Une capture d'écran d'un
+  vérificateur DNS en ligne à cet instant-là aurait dit « pas propagé » et
+  envoyé Mohamed refaire une manipulation déjà correcte. La règle tient :
+  on interroge les serveurs autoritaires avant de conclure qu'une entrée
+  manque. Les 3 TXT coexistent, le SPF est intact.
 
 - **Le générateur remettait les liens Google que j'avais retirés à la main**
   *(13 août)* — et c'est **mon propre garde-fou de la veille qui l'a attrapé**,
