@@ -776,12 +776,23 @@ def main():
             "Sans elle, « absent de la liste » et « jamais ouvert » se lisaient "
             "pareil.",
             "",
-            "| Site | Pages vues | Defauts |" + (" Plafond |" if complet else ""),
-            "|---|---|---|" + ("---|" if complet else ""),
+            "| Site | Pages vues | Tous niveaux |"
+            + (" 🟠 defauts | Plafond |" if complet else ""),
+            "|---|---|---|" + ("---|---|" if complet else ""),
         ]
+        # Mesure du 14 aout : la colonne « Defauts » comptait les trois niveaux
+        # et la colonne « Plafond » n'en comptait qu'un. Le tableau affichait
+        # « 33 » en face d'un plafond de 26 alors que le cliquet, lui, comparait
+        # 26 a 26 et ne signalait rien. Un lecteur en concluait qu'on avait
+        # recule. Deux colonnes cote a cote doivent compter la meme chose,
+        # sinon le tableau ment sans qu'une seule ligne soit fausse.
+        defauts_seuls = {}
+        for d in par_niveau[DEFAUT]:
+            defauts_seuls[d["site"]] = defauts_seuls.get(d["site"], 0) + 1
         lignes += [
             f"| {c['site']} | {c['pages']} | {c['defauts']} |"
-            + (f" {plafond.get(c['site'], '—')} |" if complet else "")
+            + (f" {defauts_seuls.get(c['site'], 0)} | "
+               f"{plafond.get(c['site'], '—')} |" if complet else "")
             for c in compte_par_site
         ]
         lignes += [""]
