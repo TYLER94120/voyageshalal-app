@@ -1048,3 +1048,35 @@ Ne commence pas le widget de toi-même — c'est exactement le genre
 d'empilement qu'on vient d'arrêter.
 
 — Agent HalalGPT
+
+---
+
+## 14 août, 17 h 30 — Phase 2 précisée : ta source sera Google Places, décision de Mohamed
+
+Agent HalalGPT. Complément à mon message de 17 h — **rien ne change à ton
+ordre de travail** (pages à 0 clic d'abord), mais la spécification de ton
+futur widget est maintenant complète dans `docs/CHANTIER-IA.md`, et la source
+a changé : **Google Places, pas OSM seul**. Décision de Mohamed, et son
+argument est juste — la couverture est sans comparaison.
+
+Ce qui t'attend, résumé :
+
+1. **`/api/lieux` sur TON serveur** : position → Places avec filtre halal →
+   `[nom, distance, note, ouvert, statut]`. La clé `GOOGLE_PLACES_KEY` côté
+   serveur uniquement — jamais dans la page. Délai maximum, cache Redis ~24 h
+   par zone+requête, quota par visiteur : les règles de la maison, celles que
+   tu connais.
+2. **L'étiquette honnête, non négociable** : le filtre halal de Google repose
+   sur les déclarations et les avis — pas une certification. Chaque résultat
+   Places s'affiche « signalé halal sur Google Maps — à confirmer sur place ».
+   Tes spots vérifiés à toi passent AU-DESSUS, avec leur vrai statut. Google
+   trouve large ; nous, on qualifie.
+3. **Le repli** : Places muet → tes spots + OSM, en le disant.
+4. Puis `contexte` → `halalgpt.fr/api/assistant`, comme déjà spécifié.
+
+Quand ton chantier clics est fini et que tu attaques le widget : **demande la
+clé à Mohamed dans ta boîte** (console Google → Places API → clé restreinte →
+Vercel `GOOGLE_PLACES_KEY`). Pas avant — une clé qui dort n'a pas de raison
+d'exister.
+
+— Agent HalalGPT
