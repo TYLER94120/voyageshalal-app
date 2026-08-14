@@ -30,16 +30,23 @@ une explication honnête, jamais un verdict inventé.
    SPF existant. **Je sais désormais lire le DNS** (`dnspython`, PyPI passe le
    proxy) : dès qu'il l'aura posé, je confirme que Google le verra, au lieu
    qu'il clique « Valider » à l'aveugle.
-   *Posé et vérifié le 14 août.* Mohamed a créé l'entrée chez OVH (sous-domaine
-   `@`). Relevé immédiatement après, sur **5 résolveurs sur 5** — les deux
-   autoritaires OVH (`ns106`, `dns106`), plus Google 8.8.8.8, Cloudflare
-   1.1.1.1 et Quad9 9.9.9.9 : `google-site-verification=HkEz8Uf…` présent
-   partout, TTL 3600 s. Les deux TXT préexistants sont intacts (SPF OVH et
-   `1|www.halalcheck.fr`) — il a bien **ajouté** sans écraser. Reste à sa
-   charge : cliquer « Valider » dans Search Console. Ce point ne me bloque plus
-   sur le DNS ; il reste ouvert tant que la propriété n'est pas validée et que
-   les données ne s'accumulent pas (Search Console n'est pas rétroactive :
-   le compteur part de zéro à la validation, ce n'est pas un défaut).
+   *Posé le 14 août, et la validation a échoué — de ma faute.* Mohamed a créé
+   l'entrée chez OVH (sous-domaine `@`) et je l'ai relevée sur **5 résolveurs
+   sur 5** — les deux autoritaires OVH (`ns106`, `dns106`), plus Google
+   8.8.8.8, Cloudflare 1.1.1.1 et Quad9 9.9.9.9, TTL 3600 s, les deux TXT
+   préexistants intacts. Je lui ai dit « vas-y, clique Valider ». Search
+   Console a répondu **« Impossible de trouver le jeton de validation »** en
+   recopiant les 3 enregistrements qu'il avait pourtant bien lus.
+   *Le vrai défaut, mesuré :* le jeton posé fait **39 caractères** là où les
+   jetons DNS de Google en font **43**. Quatre caractères manquent à la fin.
+   Origine : j'ai lu ce jeton sur une **capture d'écran** qu'il m'avait
+   envoyée et je le lui ai recopié. Une photo d'écran ne restitue pas 43
+   caractères de façon fiable.
+   *Correction du protocole :* il recopie le jeton avec le **bouton
+   « Copier »** de Search Console, **modifie** l'entrée existante chez OVH au
+   lieu d'en ajouter une seconde, et me colle le jeton **en texte** avant
+   d'aller chez OVH — je compte les caractères en dix secondes, avant qu'il ne
+   touche à sa zone. Ce point reste ouvert.
    *Et ce que la vérification ne donnera PAS :* Search Console dit ce que
    Google affiche et ce sur quoi les gens cliquent — pas combien de
    codes-barres sont scannés. Elle s'arrête à la porte du site. Ne pas
@@ -174,17 +181,39 @@ une explication honnête, jamais un verdict inventé.
   l'aveugle. Au moment de l'audit : pas encore posé (2 TXT présents, SPF OVH et
   redirection `www`).
 
-  *Et ça a servi le jour même.* Mohamed a posé le TXT quelques heures plus
-  tard et m'a dit « c'est fait ». Sans cette capacité, je ne pouvais que le
-  croire sur parole. Mesuré à la place : **5 résolveurs sur 5** rendent
-  `google-site-verification=HkEz8Uf…` — les deux autoritaires OVH d'abord,
-  puis Google, Cloudflare et Quad9. Détail qui compte : à la **première**
-  interrogation, Quad9 et OVH répondaient OUI, Google et Cloudflare encore
-  NON — ils servaient une réponse en cache. Une capture d'écran d'un
-  vérificateur DNS en ligne à cet instant-là aurait dit « pas propagé » et
-  envoyé Mohamed refaire une manipulation déjà correcte. La règle tient :
-  on interroge les serveurs autoritaires avant de conclure qu'une entrée
-  manque. Les 3 TXT coexistent, le SPF est intact.
+  *Et ça a servi le jour même — à moitié.* Mohamed a posé le TXT quelques
+  heures plus tard et m'a dit « c'est fait ». Mesuré au lieu de le croire sur
+  parole : **5 résolveurs sur 5** rendent `google-site-verification=HkEz8Uf…`
+  — les deux autoritaires OVH d'abord, puis Google, Cloudflare et Quad9. À la
+  **première** interrogation, Quad9 et OVH répondaient OUI, Google et
+  Cloudflare encore NON : ils servaient une réponse en cache. Une capture
+  d'écran d'un vérificateur DNS en ligne à cet instant-là aurait dit « pas
+  propagé » et envoyé Mohamed refaire une manipulation déjà correcte. On
+  interroge les serveurs autoritaires avant de conclure qu'une entrée manque.
+
+- **Ma vérification DNS répondait à une question que personne ne posait**
+  *(14 août, dans la foulée)* — et c'est le genre de faute que je dois garder
+  écrite, parce qu'elle est invisible de l'intérieur.
+
+  Après avoir constaté les 5 résolveurs sur 5, j'ai écrit à Mohamed : « c'est
+  bon, tu peux cliquer Valider ». Search Console a refusé. Motif : **jeton
+  introuvable** — tout en recopiant dans son message d'erreur les 3
+  enregistrements qu'il avait parfaitement lus.
+
+  Mon contrôle vérifiait qu'un enregistrement était **publié**. Il ne
+  vérifiait à aucun moment qu'il était **juste**. Mes cinq résolveurs étaient
+  exacts et sans valeur : ils confirmaient unanimement qu'une mauvaise valeur
+  s'était bien propagée partout. Le jeton posé fait **39 caractères**, les
+  jetons DNS de Google en font **43** — je l'avais transcrit depuis une
+  **capture d'écran** et j'en avais perdu quatre.
+
+  *Ce que j'en retiens, applicable bien au-delà du DNS :* une chaîne de plus
+  de quelques caractères lue sur une photo d'écran est une **donnée non
+  vérifiée**, au même titre qu'une composition de produit lue sur une photo
+  floue. Elle ne se recopie pas, elle se redemande à sa source — presse-papier
+  ou texte. Et un contrôle qui rend « vert » doit dire **ce qu'il a vérifié**,
+  pas seulement qu'il est vert : « publié sur 5 résolveurs » n'est pas
+  « valide ».
 
 - **Le générateur remettait les liens Google que j'avais retirés à la main**
   *(13 août)* — et c'est **mon propre garde-fou de la veille qui l'a attrapé**,
