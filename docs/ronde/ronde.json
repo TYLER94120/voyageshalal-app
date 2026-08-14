@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-08-14 14:58 UTC",
-  "pages_vues": 129,
+  "ronde_du": "2026-08-14 15:38 UTC",
+  "pages_vues": 128,
   "pages_par_site": [
     {
       "site": "voyageshalal.fr",
@@ -10,7 +10,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 1
+      "defauts": 0
     },
     {
       "site": "halalgpt.fr",
@@ -19,31 +19,9 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 6,
-      "defauts": 2
+      "pages": 5,
+      "defauts": 0
     }
   ],
-  "defauts": [
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/contact",
-      "quoi": "description en francais sur le domaine anglais",
-      "detail": "mots francais : mosquee, une"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "halalcheck.fr",
-      "url": "https://halalcheck.fr/mentions-legales.html",
-      "quoi": "description trop courte (1 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "halalcheck.fr",
-      "url": "https://halalcheck.fr/mentions-legales.html",
-      "quoi": "description trop courte (1 car.)",
-      "detail": ""
-    }
-  ]
+  "defauts": []
 }
