@@ -195,6 +195,14 @@ jobs:
       - name: Le site tient sans reseau
         run: npm run sonde:hors-ligne
 
+      # Le hors-ligne ne s'arrete pas aux pages. Mesure du 14 aout : les 7
+      # polices rapatriees sur notre domaine le 13 n'etaient pas pre-chargees,
+      # et le service worker ne controle pas la page qui l'installe — un
+      # visiteur arrive une seule fois puis prive de reseau ouvrait le scanner
+      # avec la police de secours. 0/7 avant correction, 7/7 apres.
+      - name: Les polices survivent a la coupure
+        run: npm run sonde:polices
+
       # La derniere, et la plus lente : elle fabrique une photo de 4032x3024 et
       # joue les six facons dont la lecture d'etiquette peut echouer.
       - name: La lecture d'etiquette par photo

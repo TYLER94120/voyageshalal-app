@@ -1,6 +1,6 @@
-// Service worker HalalCheck v0.10 — cache l'app web pour un démarrage instantané.
+// Service worker HalalCheck v0.11 — cache l'app web pour un démarrage instantané.
 // Déploiement : GitHub Pages via .github/workflows/deploy-halalcheck.yml
-const CACHE = "halalcheck-v10";
+const CACHE = "halalcheck-v11";
 
 // En rayon, le réseau n'est pas absent : il est LENT. Au-delà de ce délai, une
 // copie en cache vaut mieux qu'une page fraîche qui n'arrive jamais.
@@ -19,6 +19,30 @@ const FICHIERS = [
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
+  // Les polices, rapatriées sur notre domaine le 13 août pour cesser d'envoyer
+  // l'adresse IP des visiteurs chez Google. Ajoutées ici le 14 août : elles y
+  // manquaient, et le trou n'était visible qu'à la PREMIÈRE visite.
+  //
+  // Mesuré avant correction, serveur réel, cache réellement inspecté :
+  //   première visite  → 0/7 polices en cache
+  //   deuxième vue     → 7/7
+  //
+  // Le service worker ne contrôle pas la page qui l'installe : les requêtes
+  // de police de cette première page lui passent sous le nez. Le visiteur qui
+  // découvre le site, l'installe, puis descend au parking du supermarché
+  // ouvrait donc le scanner avec la police de secours.
+  //
+  // Pourquoi ELLES et pas le lecteur de codes-barres (328 Ko, volontairement
+  // hors liste) : 115 Ko au total, réclamées par les QUATRE pages, sur TOUS
+  // les navigateurs, dès le premier écran. Le lecteur ne sert qu'aux iPhone
+  // et seulement au moment d'un scan.
+  "./vendor/polices/dm-sans-latin-400-normal.woff2",
+  "./vendor/polices/dm-sans-latin-600-normal.woff2",
+  "./vendor/polices/dm-sans-latin-700-normal.woff2",
+  "./vendor/polices/dm-sans-latin-800-normal.woff2",
+  "./vendor/polices/dm-sans-latin-900-normal.woff2",
+  "./vendor/polices/playfair-display-latin-800-normal.woff2",
+  "./vendor/polices/playfair-display-latin-900-normal.woff2",
 ];
 
 self.addEventListener("install", (evt) => {

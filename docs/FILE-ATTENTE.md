@@ -158,6 +158,59 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **Les polices manquaient au hors-ligne de la première visite** *(14 août)*.
+
+  Aucun élément de la file n'était déblocable — les 7 attendent Mohamed ou la
+  politique réseau. J'ai donc audité, en partant de l'hypothèse la plus
+  plausible : les 7 fichiers de police rapatriés sur notre domaine le 13 août
+  ont-ils été ajoutés au pré-chargement du service worker ?
+
+  Non. **12 fichiers pré-chargés, 15 ressources réclamées par les pages, 0
+  police sur 7 dans la liste.**
+
+  *Ce que ça faisait vraiment, mesuré dans un vrai navigateur avec inspection
+  du cache :*
+
+  | Moment | Polices en cache |
+  |---|---|
+  | première visite | **0 / 7** |
+  | deuxième vue (rechargement ou page suivante) | 7 / 7 |
+
+  La cause n'est pas le cache : le service worker garde bien une copie de tout
+  ce qui passe. C'est qu'**il ne contrôle pas la page qui l'installe**. Les
+  requêtes de police de cette toute première page lui passent sous le nez. Le
+  visiteur qui découvre le site, l'installe, puis descend au parking du
+  supermarché ouvrait donc le scanner avec la police de secours.
+
+  *Correction :* les 7 polices ajoutées à `FICHIERS`, cache passé en `v11`.
+  **0/7 → 7/7 dès la première visite.** 115 Ko ajoutés à l'installation — et
+  l'écart avec le lecteur de codes-barres (328 Ko, volontairement hors liste)
+  est écrit dans le code : les polices servent aux 4 pages, sur tous les
+  navigateurs, dès le premier écran ; le lecteur ne sert qu'aux iPhone et
+  seulement au moment d'un scan.
+
+  *Garde-fou :* `npm run sonde:polices`, branchée dans le job « écran » du
+  contrôle continu — 18 → **19 contrôles**. Sabotage 2 sur 2 rouge : une
+  police retirée du pré-chargement → 6/7, rouge ; un fichier disparu du disque
+  → rouge immédiat, avant même d'ouvrir un navigateur, parce qu'un `addAll`
+  qui échoue fait perdre **tout** le hors-ligne, pas seulement une police.
+  Restauration revérifiée verte.
+
+  *Et j'ai refait une faute déjà écrite dans ce fichier.* Ma première version
+  de la sonde annonçait « le scanner ne s'ouvre pas hors ligne — défaut
+  grave ». C'était faux, et ça contredisait une sonde déjà verte. J'avais
+  navigué avec `page.goto` vers un serveur coupé — exactement l'erreur du 12
+  août. Mesuré au même instant, sur la même page :
+
+  | Méthode | Ce qu'on reçoit |
+  |---|---|
+  | `page.goto("./scan.html")` | 345 caractères — la page d'erreur du navigateur |
+  | `fetch("./scan.html")` | **129 795 caractères** — le vrai scanner, servi par le cache |
+
+  Une leçon écrite dans le journal ne suffit pas à ne pas la refaire : elle
+  est maintenant écrite **dans la sonde elle-même**, à la ligne où la faute se
+  commet.
+
 - **Une des 4 pages allait sortir coupée dans Google** *(14 août, corrigé le
   jour où l'indexation a démarré)*.
 
