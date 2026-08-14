@@ -477,6 +477,54 @@ function texteAnalysable(texte: string): boolean {
 }
 
 /**
+ * « Peut contenir des traces de porc » n'est pas « contient du porc ».
+ *
+ * Mesuré le 13 août : « biscuit, sucre. Peut contenir des traces de porc. »
+ * ressortait **HARAM** — le même verdict qu'un pâté de campagne. Idem pour
+ * « Fabriqué dans un atelier qui utilise du porc ».
+ *
+ * Deux raisons de refuser ce verdict-là :
+ *
+ *  · **Il est faux sur la composition.** Le produit ne contient pas de porc ;
+ *    le fabricant avertit d'une contamination accidentelle possible. Dire
+ *    « interdit » décrit un produit qui n'existe pas.
+ *
+ *  · **Il tranche une question qui ne m'appartient pas.** Les traces
+ *    accidentelles relèvent d'un désaccord entre écoles, comme « arôme
+ *    naturel ». Un HARAM inventé chasse quelqu'un d'un aliment permis, et
+ *    abîme la confiance autant qu'un HALAL faux.
+ *
+ * La clause est donc séparée de la composition : ce qu'on y trouve devient un
+ * DOUTEUX de gravité faible, avec une explication qui dit exactement ce qui a
+ * été lu. Se taire serait l'autre faute — la personne a le droit de savoir.
+ *
+ * La portée est étroite : un ingrédient trouvé dans la composition garde son
+ * niveau. « Graisse de porc » + « traces de lait » reste HARAM.
+ */
+const DEBUT_DES_TRACES =
+  /(?:peut contenir|peuvent contenir|traces? eventuelles?|traces? possibles?|traces? de|fabrique dans un (?:atelier|etablissement)|susceptible de contenir|presence possible)/;
+
+function separerLesTraces(texte: string): { composition: string; traces: string } {
+  const m = texte.match(DEBUT_DES_TRACES);
+  if (!m || m.index === undefined) return { composition: texte, traces: "" };
+  let traces = texte.slice(m.index);
+  let composition = texte.slice(0, m.index);
+  // La clause de traces se termine si la composition REPREND derrière. Les
+  // bases sont remplies par des contributeurs : l'ordre habituel est
+  // ingrédients puis traces, mais l'inverse arrive. Sans ce retour en
+  // arrière, « Peut contenir des traces de lait. Ingrédients : graisse de
+  // porc » aurait traité la graisse de porc comme une trace — un faux négatif
+  // fabriqué par le garde-fou lui-même.
+  const reprise = traces.slice(m[0].length).match(/ingredients?\s*:?/);
+  if (reprise && reprise.index !== undefined) {
+    const coupe = m[0].length + reprise.index;
+    composition += " " + traces.slice(coupe);
+    traces = traces.slice(0, coupe);
+  }
+  return { composition, traces };
+}
+
+/**
  * Récupère les codes E écrits en toutes lettres dans la composition.
  *
  * Pourquoi c'est indispensable : les codes ne nous arrivent normalement que par
@@ -574,13 +622,26 @@ export function analyserProduit(entree: {
   }
 
   if (texte.trim().length > 0) {
+    const { composition, traces } = separerLesTraces(texte);
     for (const regle of [...REGLES_HARAM.map((r) => ({ ...r, niveau: "haram" as const })), ...REGLES_DOUTEUX.map((r) => ({ ...r, niveau: "douteux" as const }))]) {
-      if (regle.motif.test(texte)) {
+      if (regle.motif.test(composition)) {
         alertes.push({
           element: regle.element,
           niveau: regle.niveau,
           raison: regle.raison,
           famille: regle.famille,
+        });
+      } else if (traces && regle.motif.test(traces)) {
+        // Trouvé UNIQUEMENT dans la clause de traces : ce n'est pas un
+        // ingrédient. On le dit, sans trancher à la place de la personne.
+        alertes.push({
+          element: "Traces possibles — " + regle.element,
+          niveau: "douteux",
+          raison:
+            "L'étiquette signale des traces possibles, pas un ingrédient : le produit n'en contient pas. " +
+            "Les avis divergent sur les traces accidentelles — à toi de décider selon ton école.",
+          famille: regle.famille,
+          gravite: "faible",
         });
       }
     }

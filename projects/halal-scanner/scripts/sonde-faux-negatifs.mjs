@@ -165,12 +165,37 @@ for (const m of veganeFautif) console.log(`  ✗ ${m}`);
 if (!veganeFautif.length)
   console.log(`${VEGANE.length} étiquettes véganes : lèvent le doute sur E471, pas sur la gélatine.`);
 
+console.log("\n=== F. la clause « peut contenir des traces de » ===");
+// « Peut contenir des traces de porc » n'est pas « contient du porc ». Mesuré
+// le 13 aout : les deux rendaient HARAM, le meme verdict qu'un pate de
+// campagne. C'est faux sur la composition, et ca tranche une question d'ecole
+// qui ne nous appartient pas. Ces alertes sont desormais DOUTEUX.
+//
+// Mais la separation est PERMISSIVE : le vrai risque est qu'elle avale un
+// ingredient reel. C'est ce que cette section garde.
+const TRACES = [
+  ["traces de porc → doute, pas interdit", "biscuit, sucre. Peut contenir des traces de porc.", "douteux"],
+  ["atelier utilisant du porc → doute", "biscuit, sucre. Fabriqué dans un atelier qui utilise du porc.", "douteux"],
+  ["traces sans rien d'interdit → halal", "biscuit, sucre. Peut contenir des traces de fruits à coque.", "halal"],
+  // Les quatre pieges : un ingredient REEL ne doit jamais devenir une trace.
+  ["porc dans la compo + traces de lait", "pate, graisse de porc, sel. Peut contenir des traces de lait.", "haram"],
+  ["compo qui REPREND apres la clause", "biscuit. Peut contenir des traces de lait. Ingredients : graisse de porc", "haram"],
+  ["lardons dans la compo", "quiche, lardons, creme", "haram"],
+  ["gélatine compo + traces de porc", "bonbons, gélatine. Peut contenir des traces de porc.", "douteux"],
+];
+const tracesFautives = TRACES.filter(
+  ([, t, attendu]) => analyserProduit({ ingredientsTexte: t, additifs: [] }).statut !== attendu
+);
+console.log(`${TRACES.length} étiquettes avec clause de traces testées, ${tracesFautives.length} mal classée(s) :`);
+for (const [nom, , attendu] of tracesFautives)
+  console.log(`  ✗ ${nom} — attendu ${attendu.toUpperCase()}`);
+
 // Le verdict. Un seul manque suffit : chacune de ces entrées est un aliment
 // qu'on servirait comme licite à quelqu'un qui nous a crus.
 const manques =
   codeManques.length + texteManques.length + motManques.length +
   inventes.length + perdues.length + inversees.length + perduesLabel.length +
-  veganeFautif.length;
+  veganeFautif.length + tracesFautives.length;
 if (manques > 0) {
   console.log(`\n✗ ${manques} FAUX NÉGATIF(S) — de l'interdit passe pour licite. Le moteur n'est pas publiable.`);
   process.exit(1);
@@ -180,5 +205,5 @@ if (manques > 0) {
 // abîme la confiance exactement comme une page qui en annonce un.
 const total =
   codes.length * 2 + MOTS.length + RIEN_A_LIRE.length + VRAIES.length +
-  NIENT.length + AFFIRMENT.length + VEGANE.length * 2;
+  NIENT.length + AFFIRMENT.length + VEGANE.length * 2 + TRACES.length;
 console.log(`\n✓ Aucun faux négatif ni verdict inventé : les ${total} cas à risque sont tous tenus.`);

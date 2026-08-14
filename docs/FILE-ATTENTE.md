@@ -121,6 +121,49 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
+- **« Peut contenir des traces de porc » rendait le même verdict qu'un pâté de
+  campagne** *(13 août)* — troisième passage dans la veine ouverte par la
+  capture de Mohamed : le verdict faux sur un produit ordinaire. Celui-ci est
+  un **HARAM inventé**, le miroir exact des faux HALAL des jours précédents.
+
+  | Étiquette | avant | après |
+  |---|---|---|
+  | « biscuit, sucre. **Peut contenir des traces de porc.** » | **HARAM** | DOUTEUX, gravité faible |
+  | « **Fabriqué dans un atelier qui utilise du porc.** » | **HARAM** | DOUTEUX, gravité faible |
+  | *témoin :* « biscuit, sucre, **graisse de porc** » | HARAM | HARAM |
+
+  **Deux raisons de refuser ce HARAM-là.** Il est **faux sur la composition** :
+  le produit ne contient pas de porc, le fabricant avertit d'une contamination
+  possible ; dire « interdit » décrit un produit qui n'existe pas. Et il
+  **tranche une question qui ne m'appartient pas** — les traces accidentelles
+  relèvent d'un désaccord entre écoles, comme « arôme naturel » (élément 5).
+  Un interdit inventé chasse quelqu'un d'un aliment permis.
+
+  Se taire aurait été l'autre faute : l'alerte reste affichée, avec ce qui a
+  été lu et pourquoi on ne tranche pas — « à toi de décider selon ton école ».
+
+  **Le piège, cherché exprès :** la séparation est permissive, donc elle peut
+  avaler un vrai ingrédient. Deux versions ont été mesurées avant de garder la
+  bonne. La première traitait **tout** ce qui suit la clause comme des traces —
+  or les bases sont remplies par des contributeurs, et l'ordre s'inverse
+  parfois :
+
+  > « biscuit. Peut contenir des traces de lait. **Ingrédients : graisse de
+  > porc** » → **HALAL** *(la graisse de porc lue comme une trace)*
+
+  Corrigé : la clause s'arrête si la composition reprend derrière. Vérifié sur
+  7 étiquettes, dont 4 pièges — porc dans la composition + traces de lait reste
+  HARAM.
+
+  Gelé dans `sonde:faux-negatifs`, section F : **84 → 91 cas**. Sabotages —
+  séparation retirée : 3 rouges ; retour en arrière retiré : rouge sur le faux
+  négatif.
+
+  *Vérifié aussi, sans rien trouver :* la mise en forme réelle des bases —
+  MAJUSCULES, préfixe « Ingrédients : », marqueurs d'allergènes `_lait_`,
+  balises HTML, retours à la ligne, pourcentages, astérisques bio. **9 formes
+  sur 9 correctement lues.**
+
 - **On doutait d'étiquettes qui répondaient déjà à la question** *(13 août)* —
   suite directe de la capture de Mohamed. Le défaut Cristaline était un **excès
   de doute sur un produit ordinaire** ; j'ai cherché la même famille ailleurs,
