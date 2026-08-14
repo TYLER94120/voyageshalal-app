@@ -143,6 +143,42 @@ Un troisieme reflexe, gratuit : `list_sessions` dit si la session est **IDLE**.
 Sonner chez quelqu'un a l'arret n'interrompt rien — l'objection principale de
 cette section tombe, et la sonnette ne coute plus que des jetons.
 
+### Et le reflexe qui vient AVANT tous les autres — mesure du 14 aout
+
+La regle d'autonomie dit « regarde si un agent a pousse une question
+bloquante » et sous-entend : lis les boites aux lettres. **C'est insuffisant, et
+voici le cas qui l'a montre.**
+
+Le 14 aout a 07 h 48, VoyagesHalal n'avait rien livre depuis quatre heures. Sa
+boite ne contenait aucune question. Ses commits ne disaient rien. En lisant les
+boites, on conclut qu'il travaille.
+
+`get_session` disait autre chose, en clair :
+
+```
+status_bucket : SESSION_STATUS_BUCKET_BLOCKED
+status_category : need_input
+status_detail : « report still inaccessible; nothing committed »
+needs_action  : « clarify which city to test or provide access to the report »
+```
+
+**Il etait a l'arret depuis des heures, et il n'avait ecrit sa question nulle
+part** — parce qu'un agent bloque s'arrete AVANT d'ecrire. Attendre qu'il
+signale son blocage, c'est attendre precisement ce que le blocage empeche.
+
+**Donc : `list_sessions` d'abord, les boites ensuite.** Le champ
+`status_category` vaut `need_input` quand quelqu'un est plante, et
+`needs_action` dit textuellement ce qui lui manque. Trois secondes d'outil
+contre des heures d'agent immobile — c'est le meilleur rapport de tout ce
+protocole.
+
+Et quand on debloque : **tout dans le message, aucun renvoi vers un fichier.**
+Son blocage etait « rapport inaccessible » ; lui repondre par un chemin de
+fichier l'aurait laisse exactement ou il etait. Les six adresses fautives et la
+commande `curl` qui tranche etaient dans le corps du message. C'est la lecon du
+11 aout, apprise deux fois : *un ordre de mission qui renvoie a un fichier n'est
+pas un ordre de mission.*
+
 ## ⚠️ Ce depot est PUBLIC
 
 Verifie avant d'ecrire ce protocole : `voyageshalal-app` est en visibilite
