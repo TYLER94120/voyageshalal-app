@@ -55,16 +55,25 @@ l'empire. Le reste soutient ou s'écarte.
 
 ## 3. Un chantier par agent. Un seul.
 
-### 🥇 VoyagesHalal — **il porte l'objectif**
+### 🥇 VoyagesHalal — **le widget IA + Google Maps** *(réordonné par Mohamed le 14 août au soir)*
 
-Faire monter le taux de clic de voyageshalal.fr de 1,1 % à 2,0 %.
+> **Mohamed : « La priorité est Google Maps. »**
 
-Ordre de travail : les pages qui ont **déjà des impressions et zéro clic** — le
-blog et l'accueil pèsent à eux deux 704 impressions pour **0 clic**, c'est le
-plus gros gâchis mesuré. Puis les 11 défauts qui restent sur gohalaltravel.com.
+Son chantier est le widget « manger halal près de moi » : `/api/lieux` sur son
+serveur (Google Places, filtre halal, clé côté serveur, cache 24 h, délai
+maximum, repli spots+OSM), l'étiquette honnête « signalé halal sur Google
+Maps — à confirmer sur place », ses spots vérifiés au-dessus, puis la porte
+`halalgpt.fr/api/assistant`. Spécification : `docs/CHANTIER-IA.md`.
 
-**Ce qu'il ne fait pas :** aucun nouveau guide, aucune image, aucun moteur
-d'hôtels, aucun mode hors ligne, aucune compétence à écrire.
+Le widget se construit **prêt-pour-la-clé** : tout fonctionne en repli tant
+que `GOOGLE_PLACES_KEY` n'est pas posée dans Vercel, et s'allume tout seul
+quand elle arrive.
+
+Les pages à 0 clic (704 impressions blog+accueil) passent **juste après** —
+elles restent le levier clics n° 1 du mois.
+
+**Ce qu'il ne fait pas :** aucun nouveau guide, aucune image, aucune
+compétence à écrire.
 
 ### 🥈 HalalCheck — **la mesure vient d'arriver, il attend qu'elle parle**
 

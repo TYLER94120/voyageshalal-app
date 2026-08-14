@@ -59,7 +59,7 @@ disperser personne :
 | Phase | Qui | Quoi | Quand |
 |---|---|---|---|
 | 1 ✅ | HalalGPT | La porte, les garde-fous, les tests | **en ligne** |
-| 2 | VoyagesHalal | Le widget sur voyageshalal.fr, branché sur SA base spots/OSM | **après** ses pages à 0 clic — ou tout de suite si Mohamed le décide |
+| 2 | VoyagesHalal | Le widget « manger halal près de moi » (Places + assistant) | **MAINTENANT** — réordonné par Mohamed le 14 août au soir |
 | 3 | Apprentissage | Le tuteur sur islampasapas.fr | après le branchement du domaine |
 | 4 | HalalCheck | « Pose une question sur ce produit » | après ses premières données Search Console |
 | 5 | Mohamed | La clé Google Places, au démarrage de la phase 2 | 10 minutes, voir ci-dessous |
