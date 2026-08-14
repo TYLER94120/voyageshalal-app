@@ -10,7 +10,7 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-14T13:39:11+00:00" />
+  <meta name="last-modified" content="2026-08-14T20:01:30+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -277,6 +277,15 @@
     }
     #verdict-emoji, #etiquette-emoji { font-size: 38px; }
     #verdict-label, #etiquette-label { font-size: 32px; font-weight: 900; letter-spacing: 2px; }
+    /* Le mot du verdict s'est allongé le 14 août : « HALAL » est devenu
+       « RIEN D'INTERDIT » quand la conclusion est déduite et non attestée.
+       Mesuré : 282 px de texte dans une boîte de 314 px sur un iPhone 14 —
+       ça tient. Sur un écran de 320 px la boîte tombe à 244 px et le mot
+       passait à la ligne. Le rond du verdict est l'élément le plus regardé
+       de l'app ; il ne se coupe pas en deux. */
+    @media (max-width: 360px) {
+      #verdict-label, #etiquette-label { font-size: 25px; letter-spacing: 1px; }
+    }
     #etiquette-resume { font-size: 15px; font-weight: 600; margin-top: 8px; opacity: 0.95; }
     #verdict-label::after, #etiquette-label::after {
       content: "";
@@ -688,7 +697,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-14T13:39:11+00:00"
+      "dateModified": "2026-08-14T20:01:30+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -829,6 +838,17 @@
         Analyse automatique à titre indicatif, basée sur les données Open Food Facts.
         En cas de doute, réfère-toi à la certification (AVS, ARGML…) sur l'emballage.
       </p>
+      <!-- Sortie de secours d'un verdict INCONNU.
+           Mesuré le 14 août : quand la base a le produit mais pas sa liste
+           d'ingrédients — le cas français courant — l'écran disait « Pas assez
+           d'informations » et n'offrait que « Scanner un autre produit ». Une
+           impasse. Pire, le texte du cas « étiquette en arabe » promettait
+           « Photographie la liste avec le bouton ci-dessous » alors qu'aucun
+           bouton photo n'était sur cet écran.
+           La lecture d'étiquette existe et est éprouvée sur 10 scénarios ;
+           elle n'était proposée que si le code-barres était totalement
+           introuvable, c'est-à-dire jamais dans ce cas-là. -->
+      <button id="lire-etiquette-resultat" class="principal" hidden>📷&nbsp; Lire l'étiquette en photo</button>
       <button id="rescanner" class="principal">📷  Scanner un autre produit</button>
     </section>
 
@@ -903,6 +923,33 @@
     const COULEURS = { halal: "var(--halal)", douteux: "var(--douteux)", haram: "var(--haram)", inconnu: "var(--inconnu)" };
     const EMOJIS = { halal: "✅", douteux: "⚠️", haram: "❌", inconnu: "❓" };
     const LABELS = { halal: "HALAL", douteux: "DOUTEUX", haram: "HARAM", inconnu: "INCONNU" };
+
+    /**
+     * Ce que l'écran a le DROIT d'affirmer.
+     *
+     * Décision du 14 août, sur consigne écrite de Mohamed : ne jamais affirmer
+     * plus que ce qu'on sait. Le rond vert disait « HALAL » là où le moteur
+     * voulait dire « je n'ai rien trouvé d'interdit dans ce que j'ai pu lire ».
+     *
+     * Ce ne sont pas les mêmes phrases. « Halal » porte aussi sur l'abattage,
+     * la contamination croisée sur ligne partagée, les auxiliaires
+     * technologiques que la loi n'oblige pas à déclarer, l'alcool servant de
+     * support dans un arôme, l'origine d'une enzyme — rien de tout cela ne
+     * figure sur une liste d'ingrédients. Aucune analyse de composition ne
+     * peut donc établir qu'un produit est halal. Elle peut établir qu'il ne
+     * l'est pas, et c'est déjà beaucoup.
+     *
+     * Le mot n'est donc légitime que si quelqu'un d'autre que nous l'affirme :
+     *   - "atteste"  : fiche vérifiée à la main, avec source et date affichées
+     *   - "certifie" : certification déclarée sur l'emballage
+     *   - sinon      : c'est notre déduction, et elle ne dit que son propre nom
+     */
+    function motDuVerdict(statut, origine) {
+      if (statut !== "halal") return LABELS[statut] || "";
+      if (origine === "atteste") return "HALAL";
+      if (origine === "certifie") return "HALAL CERTIFIÉ";
+      return "RIEN D'INTERDIT";
+    }
     const CLE_SCANS = "halalcheck.scans";
     const CLE_CACHE = "halalcheck.produits";
     const CLE_CODES_VUS = "halalcheck.codesVus";
@@ -1745,7 +1792,7 @@
       jeton.appendChild(rond);
       const mot = document.createElement("span");
       mot.className = verif ? "sceau-mini" : "mot";
-      mot.textContent = verif ? "✓ VÉRIFIÉ" : LABELS[statut] || "";
+      mot.textContent = verif ? "✓ VÉRIFIÉ" : motDuVerdict(statut, null);
       jeton.appendChild(mot);
       carte.appendChild(jeton);
 
@@ -2222,6 +2269,22 @@
             "L'étiquette de ce produit n'est pas écrite dans une langue que notre analyse sait lire — de l'arabe, le plus souvent. Nous ne disons donc NI halal NI haram : nous ne savons pas. Photographie la liste d'ingrédients avec le bouton ci-dessous, la lecture par photo sait la lire.",
         };
       }
+      // L'autre INCONNU, et de loin le plus fréquent en France : la base
+      // connaît le produit — son nom, sa marque, sa photo — mais son champ
+      // « ingrédients » est vide. Le moteur n'a alors RIEN lu, et refuser de
+      // conclure est la seule réponse honnête.
+      //
+      // Ce cas n'avait aucune explication et aucune issue, mesuré le 14 août :
+      // « Pas assez d'informations sur ce produit », puis plus rien. Le rare
+      // cas de l'étiquette en arabe, lui, était bien traité. C'était l'inverse
+      // de ce qu'il fallait.
+      if (verdict.statut === "inconnu") {
+        return {
+          titre: "Ce qu'il faut retenir",
+          texte:
+            "Ce produit est bien dans la base, mais sa liste d'ingrédients n'y figure pas — c'est fréquent, et ce n'est pas ta faute. Nous n'avons donc rien pu lire, et nous ne disons NI halal NI haram : nous ne savons pas. Photographie la liste d'ingrédients sur l'emballage avec le bouton ci-dessous, elle sera lue et analysée.",
+        };
+      }
       if (verdict.statut === "haram") {
         return {
           titre: "Ce qu'il faut retenir",
@@ -2285,7 +2348,10 @@
         // n'est pas une bonne nouvelle. `ficheRelisible` filtre déjà en amont,
         // ceci est la deuxième serrure.
         $("verdict-emoji").textContent = EMOJIS[verif.statut] || "❓";
-        $("verdict-label").textContent = LABELS[verif.statut] || "";
+        // Fiche vérifiée à la main : le statut est ATTESTÉ, avec sa source et
+        // sa date affichées juste dessous. Le mot « halal » est ici porté par
+        // quelqu'un, pas déduit par nous.
+        $("verdict-label").textContent = motDuVerdict(verif.statut, "atteste");
         $("verdict-detail").textContent = verif.titre || "";
         $("verif-detail").hidden = !verif.detail;
         $("verif-detail").textContent = verif.detail || "";
@@ -2297,6 +2363,8 @@
         $("conclusion").hidden = true;
         $("note-cosmetique").hidden = true;
         $("cta-verifier").hidden = true;
+        // Une fiche attestée n'a rien à faire lire en photo.
+        $("lire-etiquette-resultat").hidden = true;
       } else {
         // ---- ANALYSE INDICATIVE : déduction automatique des ingrédients ----
         const verdict = analyserSelonType(produit);
@@ -2311,7 +2379,10 @@
         $("verif-source").hidden = true;
         $("verdict").className = "verdict verdict-" + verdict.statut;
         $("verdict-emoji").textContent = EMOJIS[verdict.statut];
-        $("verdict-label").textContent = LABELS[verdict.statut];
+        $("verdict-label").textContent = motDuVerdict(
+          verdict.statut,
+          verdict.certifieHalal ? "certifie" : null
+        );
         $("verdict-detail").textContent = sousTitre(verdict, produit);
 
         const alertes = $("alertes");
@@ -2355,6 +2426,11 @@
           $("conclusion").querySelector(".conclusion-titre").textContent = conclusion.titre;
           $("conclusion").querySelector(".conclusion-texte").textContent = conclusion.texte;
         }
+
+        // La conclusion d'un INCONNU dit « avec le bouton ci-dessous ». Ce
+        // bouton doit donc exister, sinon on donne une consigne impossible à
+        // suivre — c'est ce que faisait l'écran de l'étiquette en arabe.
+        $("lire-etiquette-resultat").hidden = verdict.statut !== "inconnu";
 
         // Rendre le doute actionnable : transformer l'incertitude en certitude.
         const cta = $("cta-verifier");
@@ -2677,7 +2753,11 @@
 
       $("etiquette-verdict").className = "verdict verdict-" + statut;
       $("etiquette-emoji").textContent = EMOJIS[statut] || "❓";
-      $("etiquette-label").textContent = LABELS[statut] || "";
+      // Lecture d'une photo : c'est une déduction, jamais une certification.
+      // L'encadré de l'écran photo le dit déjà — « le résultat sera une
+      // lecture de l'étiquette, pas une certification halal » — le rond doit
+      // dire la même chose.
+      $("etiquette-label").textContent = motDuVerdict(statut, null);
       // Quand nous durcissons le verdict, le résumé du service décrit l'ancien
       // — « Rien de problématique détecté » sous un ❌ HARAM. Un écran ne dit
       // jamais deux choses contraires : on explique l'écart au lieu de le
@@ -3111,6 +3191,7 @@
     $("verifier").addEventListener("click", lancerSaisie);
     $("retour-recherche").addEventListener("click", relancerScan);
     $("rescanner").addEventListener("click", relancerScan);
+    $("lire-etiquette-resultat").addEventListener("click", demarrerLectureEtiquette);
 
     /* ---------- Démarrage ---------- */
     if ("serviceWorker" in navigator) {

@@ -205,6 +205,13 @@ jobs:
 
       # La derniere, et la plus lente : elle fabrique une photo de 4032x3024 et
       # joue les six facons dont la lecture d'etiquette peut echouer.
+      # Consigne ecrite de Mohamed le 14 aout : ne jamais affirmer plus que
+      # ce qu'on sait. Le rond vert disait HALAL sur une simple deduction, et
+      # un INCONNU laissait la personne sans issue. Ces deux-la ne reviennent
+      # pas sans virer au rouge ici.
+      - name: L'ecran n'affirme que ce qu'on sait
+        run: npm run sonde:affirmations
+
       - name: La lecture d'etiquette par photo
         run: npm run sonde:photo
 
