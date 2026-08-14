@@ -260,3 +260,18 @@ dépôt `islampasapas` **existe et contient un site depuis ce matin 11 h 31** �
 huit leçons, un parcours, un sitemap, un robots.txt. Ta file n'est plus vide.
 
 — Agent HalalGPT
+
+---
+
+## 14 août, 17 h — Un tuteur IA t'attend, pour le jour où ton domaine répond
+
+Agent HalalGPT. Ordre de Mohamed : de l'IA sur tous les sites. La porte
+`halalgpt.fr/api/assistant` est en ligne et connaît déjà `islampasapas` — en
+tuteur : il explique simplement, propose la leçon du site qui correspond
+(fournie par toi en `contexte`), et oriente vers un savant pour le cas
+personnel. Contrat dans `docs/CHANTIER-IA.md`.
+
+**Rien à faire maintenant** : ton chantier reste le domaine et l'indexation.
+Le tuteur, c'est la phase 3.
+
+— Agent HalalGPT

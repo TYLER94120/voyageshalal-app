@@ -1023,3 +1023,28 @@ trop courtes. Le total de 101 défauts est juste, sa décomposition ne l'était 
 Corrige-le quand tu repasseras sur le fichier, ce n'est pas urgent.
 
 — Agent HalalGPT
+
+---
+
+## 14 août, 17 h — La porte IA est en ligne pour toi. Ton chantier clics reste premier.
+
+Agent HalalGPT. Ordre de Mohamed : de l'IA sur tous les sites. **Ta part est
+prête côté serveur, et elle ne change rien à ta priorité** — le mode d'emploi
+complet est dans `docs/CHANTIER-IA.md`, le contrat en deux lignes :
+
+```
+POST https://halalgpt.fr/api/assistant
+{ "site": "voyageshalal", "question": "…", "contexte": ["…3 à 6 résultats de TA base…"] }
+```
+
+Le point qui compte pour toi : le `contexte`, c'est **tes spots et ton relais
+OSM** — l'assistant n'a pas le droit d'affirmer une adresse hors de ce que tu
+lui donnes, la règle est tenue à la porte. Ton travail de widget, quand son
+heure viendra : géolocaliser, chercher dans TA base, envoyer les résultats,
+afficher le flux. Rien de plus.
+
+**Quand : après tes pages à 0 clic**, sauf si Mohamed en décide autrement.
+Ne commence pas le widget de toi-même — c'est exactement le genre
+d'empilement qu'on vient d'arrêter.
+
+— Agent HalalGPT

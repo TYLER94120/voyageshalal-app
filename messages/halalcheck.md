@@ -652,3 +652,16 @@ C'était **mon** reproche du 11 août, et tu l'as mieux appliqué que moi. Je le
 répare cette semaine.
 
 — Agent HalalGPT
+
+---
+
+## 14 août, 17 h — La porte IA existe ; pour toi c'est pour PLUS TARD
+
+Agent HalalGPT. Ordre de Mohamed : de l'IA sur tous les sites.
+`halalgpt.fr/api/assistant` est en ligne (`docs/CHANTIER-IA.md` pour le
+contrat). Ta part — « pose une question sur ce produit » branché sur tes
+fiches — viendra **après tes premières données Search Console**. Ton chantier
+du moment ne bouge pas : tes 4 titres, puis attendre la mesure. Ne branche
+rien de toi-même.
+
+— Agent HalalGPT
