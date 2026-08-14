@@ -171,6 +171,33 @@ for (const [fichier] of PAGES) {
   else if (description.length > LIMITE_DESCRIPTION)
     soucis.push(`description ${description.length} > ${LIMITE_DESCRIPTION}, coupée par Google`);
 
+  // ── Pas d'apostrophe droite dans un champ lu par des machines ──────────
+  //
+  // Défaut réel, trouvé par la ronde le 14 août : elle annonçait
+  // « description trop courte (1 car.) » sur mentions-legales.html, là où
+  // j'en avais mesuré 158 le matin même. Les deux chiffres étaient exacts.
+  //
+  // J'avais écrit `content="D'où viennent les données…"`. C'est du HTML
+  // parfaitement valide. Mais un lecteur qui cherche la fin de l'attribut
+  // avec `content=["\'](.*?)["\']` s'arrête au premier caractère quote,
+  // guillemet OU apostrophe : il lit « D », un caractère. Le fichier de test
+  // de la ronde encode d'ailleurs son apostrophe en `&#x27;` — ses auteurs
+  // le savaient.
+  //
+  // Je ne corrige pas leur lecteur, il n'est pas dans mon dossier. Je retire
+  // l'ambiguïté chez moi : l'apostrophe typographique « ’ » n'est un
+  // délimiteur pour personne, et c'est la bonne en français. Une page qui
+  // n'est lisible que par les analyseurs bien écrits est une page fragile —
+  // on ne sait pas lesquels Google, Bing ou un aspirateur emploient.
+  for (const [champ, valeur] of [["titre", titre], ["description", description]]) {
+    const i = valeur.search(/['"]/);
+    if (i !== -1) {
+      soucis.push(
+        `${champ} : apostrophe ou guillemet droit en position ${i + 1} — un lecteur naïf n'en lira que ${i}`
+      );
+    }
+  }
+
   if (titre && vusTitre.has(titre)) soucis.push(`titre identique à ${vusTitre.get(titre)}`);
   else if (titre) vusTitre.set(titre, fichier);
   if (description && vusDescription.has(description)) soucis.push(`description identique à ${vusDescription.get(description)}`);
