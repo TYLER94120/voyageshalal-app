@@ -279,8 +279,19 @@ const sommaire = sections
   )
   .join("\n");
 
-const TITRE = `Additifs halal ou haram : les ${nbAdditifs} additifs surveillés`;
-const DESCRIPTION = `E120, E441, E471… la liste complète des additifs et ingrédients que HalalCheck repère, avec la raison du doute pour chacun. Alimentaire et cosmétiques.`;
+// Le titre commence par des CODES, pas par le mot « additifs ».
+//
+// Personne ne tape « additifs halal » devant un paquet de bonbons : on tape le
+// code lu sur l'étiquette — « e471 halal », « e120 haram », « e441 c'est
+// quoi ». Google met en gras les mots exacts de la requête, et il les met en
+// gras d'autant plus fort qu'ils sont en tête. L'ancienne version disait deux
+// fois « additifs » et pas un seul code.
+//
+// Les trois codes cités sont vérifiés présents dans le moteur (E471 mono- et
+// diglycérides, E120 carmin, E441 gélatine) — on ne met pas dans un titre un
+// code que la page ne traiterait pas.
+const TITRE = `E471, E120, E441 : les ${nbAdditifs} additifs halal ou haram`;
+const DESCRIPTION = `E471 mono- et diglycérides, E120 carmin, E441 gélatine : les ${nbAdditifs} additifs à surveiller et, pour chacun, la raison exacte du doute. Aliments et cosmétiques.`;
 
 const html = `<!DOCTYPE html>
 <html lang="fr">
