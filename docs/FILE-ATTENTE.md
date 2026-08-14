@@ -46,7 +46,17 @@ une explication honnête, jamais un verdict inventé.
    « Copier »** de Search Console, **modifie** l'entrée existante chez OVH au
    lieu d'en ajouter une seconde, et me colle le jeton **en texte** avant
    d'aller chez OVH — je compte les caractères en dix secondes, avant qu'il ne
-   touche à sa zone. Ce point reste ouvert.
+   touche à sa zone.
+   *Validé le 14 août.* Il a collé le jeton en texte, j'ai compté **43
+   caractères, conforme**, il l'a posé et **Search Console a validé la
+   propriété**. Preuve : le tableau de bord complet de `sc-domain:halalcheck.fr`
+   s'ouvre (Performances, Indexation, Sitemaps, Core Web Vitals) — une
+   propriété non validée n'affiche jamais ces menus. **Sitemap soumis** dans la
+   foulée : `sitemap.xml`, 4 URL déclarées.
+   *Ce qui reste ouvert :* Search Console n'est pas rétroactive, le comptage
+   part de zéro à la validation. Premières données attendues sous 2 à 3 jours.
+   Et elle ne dira jamais combien de codes-barres sont scannés — elle s'arrête
+   à la porte du site. La mesure de l'usage réel du scanner reste entière.
    *Et ce que la vérification ne donnera PAS :* Search Console dit ce que
    Google affiche et ce sur quoi les gens cliquent — pas combien de
    codes-barres sont scannés. Elle s'arrête à la porte du site. Ne pas
@@ -148,11 +158,29 @@ une explication honnête, jamais un verdict inventé.
 
 ## Fait
 
-- **Je peux lire le DNS — et la configuration du domaine est saine** *(14 août)*.
+- **Je peux lire le DNS — mais PAS choisir qui me répond** *(14 août)*.
   Capacité nouvelle, trouvée en répondant à Mohamed : le proxy de l'atelier
   refuse le web, mais **PyPI est ouvert**, donc `dnspython` s'installe et les
-  requêtes DNS passent. Tout ce que je déclarais « invérifiable sur le domaine
-  réel » ne l'est plus.
+  requêtes DNS passent.
+
+  **⚠️ Limite découverte le soir même, à lire avant tout usage.** L'atelier
+  intercepte le port 53 : quelle que soit l'adresse de serveur que je fixe,
+  c'est **toujours le même résolveur local** qui répond. Prouvé par deux
+  réponses impossibles :
+
+  | Test | Attendu | Obtenu |
+  |---|---|---|
+  | `ns106.ovh.net` interrogé sur `google.com` | REFUSED (serveur autoritaire OVH) | **répond, 6 enregistrements** |
+  | `10.255.255.254` (IP morte) interrogé sur `halalcheck.fr` | timeout | **répond, 3 enregistrements** |
+  | SOA demandé à 6 « résolveurs » dont l'IP morte | 6 réponses distinctes | **serial 2086702850 partout** |
+
+  Conséquence : **les données rendues sont vraies** (le résolveur ne fabrique
+  rien, il NXDOMAIN correctement un sous-domaine inexistant), mais **toute
+  affirmation sur la PROVENANCE est fausse**. « Vérifié sur 5 résolveurs »,
+  « les serveurs autoritaires disent X, les caches suivront », « c'est propagé
+  partout » : je n'ai jamais parlé à ces serveurs. Ces phrases sont interdites.
+  Ce que je peux encore dire honnêtement : « la valeur publique actuellement
+  résolue est X ». Rien de plus.
 
   Premier usage : le point de défaillance unique. GitHub Pages demande
   **quatre** adresses A sur le domaine nu ; avec une seule, le site tombe quand
@@ -182,14 +210,10 @@ une explication honnête, jamais un verdict inventé.
   redirection `www`).
 
   *Et ça a servi le jour même — à moitié.* Mohamed a posé le TXT quelques
-  heures plus tard et m'a dit « c'est fait ». Mesuré au lieu de le croire sur
-  parole : **5 résolveurs sur 5** rendent `google-site-verification=HkEz8Uf…`
-  — les deux autoritaires OVH d'abord, puis Google, Cloudflare et Quad9. À la
-  **première** interrogation, Quad9 et OVH répondaient OUI, Google et
-  Cloudflare encore NON : ils servaient une réponse en cache. Une capture
-  d'écran d'un vérificateur DNS en ligne à cet instant-là aurait dit « pas
-  propagé » et envoyé Mohamed refaire une manipulation déjà correcte. On
-  interroge les serveurs autoritaires avant de conclure qu'une entrée manque.
+  heures plus tard et m'a dit « c'est fait ». J'ai annoncé **« 5 résolveurs
+  sur 5 »**. C'était un seul résolveur interrogé cinq fois (voir la limite
+  ci-dessus). La valeur lue était juste ; la confiance que je lui ai vendue
+  ne l'était pas.
 
 - **Ma vérification DNS répondait à une question que personne ne posait**
   *(14 août, dans la foulée)* — et c'est le genre de faute que je dois garder
@@ -201,19 +225,36 @@ une explication honnête, jamais un verdict inventé.
   enregistrements qu'il avait parfaitement lus.
 
   Mon contrôle vérifiait qu'un enregistrement était **publié**. Il ne
-  vérifiait à aucun moment qu'il était **juste**. Mes cinq résolveurs étaient
-  exacts et sans valeur : ils confirmaient unanimement qu'une mauvaise valeur
-  s'était bien propagée partout. Le jeton posé fait **39 caractères**, les
-  jetons DNS de Google en font **43** — je l'avais transcrit depuis une
-  **capture d'écran** et j'en avais perdu quatre.
+  vérifiait à aucun moment qu'il était **juste**. Le jeton posé faisait **39
+  caractères**, les jetons DNS de Google en font **43** — je l'avais transcrit
+  depuis une **capture d'écran** et j'en avais perdu quatre. Écarts réels une
+  fois le vrai jeton obtenu en texte : **7** — 4 caractères absents, 2 erreurs
+  de casse, et un `I` majuscule pris pour un `l` minuscule, deux caractères
+  au dessin identique à l'écran qu'aucune relecture visuelle ne sépare.
 
   *Ce que j'en retiens, applicable bien au-delà du DNS :* une chaîne de plus
   de quelques caractères lue sur une photo d'écran est une **donnée non
   vérifiée**, au même titre qu'une composition de produit lue sur une photo
   floue. Elle ne se recopie pas, elle se redemande à sa source — presse-papier
   ou texte. Et un contrôle qui rend « vert » doit dire **ce qu'il a vérifié**,
-  pas seulement qu'il est vert : « publié sur 5 résolveurs » n'est pas
-  « valide ».
+  pas seulement qu'il est vert : « publié » n'est pas « valide ».
+
+  *Deux instruments à moi ont menti dans la même heure, et c'est ça le vrai
+  enseignement.* (1) Mon comparateur de jetons annonçait 6 écarts au lieu de
+  7 : j'utilisais le tiret comme symbole « caractère absent », et le vrai
+  jeton contient un tiret — l'outil comparait un tiret à un tiret et concluait
+  « identique ». Relancé avec une sentinelle inconfondable. (2) J'ai ensuite
+  cru voir la zone d'OVH « osciller » entre trois états, et j'ai alerté
+  Mohamed. C'était l'interception du port 53 : un seul résolveur, son cache en
+  cours de rafraîchissement, que je prenais pour six serveurs en désaccord.
+  J'ai dû retirer l'alerte.
+
+  *Le seul instrument fiable de toute cette séquence n'était pas le mien :
+  c'était Google.* Son message d'échec recopiait le jeton trouvé — c'est **lui**
+  qui a établi la troncature, pas moi. Et sa validation réussie est la seule
+  preuve solide que la bonne valeur est en ligne. Quand un tiers autorisé
+  mesure la même chose que moi, **c'est sa mesure qui fait foi**, pas la
+  mienne.
 
 - **Le générateur remettait les liens Google que j'avais retirés à la main**
   *(13 août)* — et c'est **mon propre garde-fou de la veille qui l'a attrapé**,
