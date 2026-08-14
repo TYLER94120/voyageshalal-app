@@ -27,7 +27,8 @@
     "sonde:historique": "node scripts/sonde-historique.mjs",
     "verif:chiffres": "node scripts/verif-chiffres.mjs",
     "sonde:contraste": "node scripts/sonde-contraste.mjs",
-    "sonde:hors-ligne": "node scripts/sonde-hors-ligne.mjs"
+    "sonde:hors-ligne": "node scripts/sonde-hors-ligne.mjs",
+    "sonde:polices": "node scripts/sonde-polices-hors-ligne.mjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
