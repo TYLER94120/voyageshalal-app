@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-08-14 19:01 UTC",
-  "pages_vues": 169,
+  "ronde_du": "2026-08-14 20:04 UTC",
+  "pages_vues": 171,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -24,7 +24,7 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 5,
+      "pages": 7,
       "defauts": 0
     }
   ],
@@ -34,13 +34,6 @@
       "site": "islampasapas.fr",
       "url": "https://www.islampasapas.fr/",
       "quoi": "description trop courte (11 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/lecon-sourate-al-ma-un.html",
-      "quoi": "description trop courte (27 car.)",
       "detail": ""
     },
     {
@@ -90,6 +83,13 @@
       "site": "islampasapas.fr",
       "url": "https://islampasapas.fr/lecon-sourate-al-ma-un.html",
       "quoi": "description trop courte (27 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/lecon-sourate-al-qari-a.html",
+      "quoi": "description trop courte (29 car.)",
       "detail": ""
     }
   ]
