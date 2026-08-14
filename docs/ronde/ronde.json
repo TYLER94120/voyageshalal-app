@@ -1,7 +1,12 @@
 {
-  "ronde_du": "2026-08-14 15:38 UTC",
-  "pages_vues": 128,
+  "ronde_du": "2026-08-14 17:30 UTC",
+  "pages_vues": 170,
   "pages_par_site": [
+    {
+      "site": "islampasapas.fr",
+      "pages": 41,
+      "defauts": 8
+    },
     {
       "site": "voyageshalal.fr",
       "pages": 41,
@@ -19,9 +24,66 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 5,
+      "pages": 6,
       "defauts": 0
     }
   ],
-  "defauts": []
+  "defauts": [
+    {
+      "niveau": "surveiller",
+      "site": "islampasapas.fr",
+      "url": "https://www.islampasapas.fr/",
+      "quoi": "description trop courte (11 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/lecon-sourate-al-ma-un.html",
+      "quoi": "description trop courte (27 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/lecon-sourate-al-qari-a.html",
+      "quoi": "description trop courte (29 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/",
+      "quoi": "description trop courte (11 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/lecon-six-piliers-foi.html",
+      "quoi": "description trop courte (27 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/lecon-priere-gestes.html",
+      "quoi": "description trop courte (1 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/lecon-alphabet-arabe.html",
+      "quoi": "description trop courte (19 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/sourates.html",
+      "quoi": "description trop courte (41 car.)",
+      "detail": ""
+    }
+  ]
 }
