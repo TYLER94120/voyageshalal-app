@@ -1,271 +1,223 @@
 {
-  "verifie_le": "2026-08-15 08:46 UTC",
-  "liens_controles": 2395,
+  "verifie_le": "2026-08-15 12:59 UTC",
+  "liens_controles": 3010,
   "pages_vues": 364,
   "pages_connues": 1296,
   "morts": [
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/turisthotel.com.tr",
+      "url": "https://www.voyageshalal.fr/destinations/www.hotelbellevue.ma",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/www.diademcappadocia.com",
+      "url": "https://www.voyageshalal.fr/destinations/hotel-Medina.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/hotel-marmar.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/www.darfatima.com",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Mostar",
+      "url": "https://mouhou-apartment.business.site/",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Mardin",
+      "url": "https://www.fontecruzhoteles.com/hotel-fontecruz-lisboa/",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Mumbai",
+      "url": "https://www.halalbooking.com/search?query=Agra",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Multan",
+      "url": "https://www.halalbooking.com/search?query=Al%20Hoce%C3%AFma",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Nizwa",
+      "url": "https://www.halalbooking.com/search?query=Al-Quds%20(J%C3%A9rusalem)",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Merzouga",
+      "url": "https://www.halalbooking.com/search?query=Asilah",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Ouarzazate",
+      "url": "https://www.halalbooking.com/search?query=Ath%C3%A8nes",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Medan",
+      "url": "https://www.halalbooking.com/search?query=B%C3%A9ni%20Mellal",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Peshawar",
+      "url": "https://www.halalbooking.com/search?query=Astana",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Sanliurfa",
+      "url": "https://www.halalbooking.com/search?query=Bandar%20Seri%20Begawan",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Taroudant",
+      "url": "https://www.halalbooking.com/search?query=Bandung",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Sharjah",
+      "url": "https://www.halalbooking.com/search?query=Birmingham",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Surabaya",
+      "url": "https://www.halalbooking.com/search?query=Berkane",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Safi",
+      "url": "https://www.halalbooking.com/search?query=Cannes",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Skopje",
+      "url": "https://www.halalbooking.com/search?query=Constantine",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=S%C3%A9ville",
+      "url": "https://www.halalbooking.com/search?query=Charm%20el-Cheikh",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Tirana",
+      "url": "https://www.halalbooking.com/search?query=Copenhague",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Zagora",
+      "url": "https://www.halalbooking.com/search?query=Budapest",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Taza",
+      "url": "https://www.halalbooking.com/search?query=Dakhla",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Tiznit",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.leroyal.com/amman/",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.scotthotel.com.my/",
-      "detail": "code 500"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://halalbooking.com/en/iberostar-waves-founty-beach-all-inclusive/p/9564",
+      "url": "https://www.halalbooking.com/search?query=Chiraz",
       "detail": "code 404"
     },
     {
       "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/www.diademcappadocia.com",
+      "url": "https://www.gohalaltravel.com/destinations/hotel-marmar.com",
       "detail": "code 404"
     },
     {
       "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/turisthotel.com.tr",
+      "url": "https://www.gohalaltravel.com/destinations/hotel-Medina.com",
       "detail": "code 404"
     },
     {
       "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://halalbooking.com/en/iberostar-waves-founty-beach-all-inclusive/p/9564",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/www.darfatima.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/www.hotelbellevue.ma",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.skybusinesshotel.com/",
+      "url": "https://www.arkadahotel.cz/",
       "detail": "URLError (confirme machine calme)"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.safranotel.com/",
+      "url": "https://www.bulgarihotels.cohttps://www.bulgarihotels.com/en_US/milan",
       "detail": "URLError (confirme machine calme)"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "http://ammarhotel.com/en/",
+      "url": "https://www.breakfree.com.au/heritage-on-little-bourke/",
       "detail": "URLError (confirme machine calme)"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://Marriot.com",
+      "url": "https://www.cityhotel.uz/",
       "detail": "URLError (confirme machine calme)"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "http://www.intercontinentaladdis.com.et/",
+      "url": "https://www.ghasrtalaee.com",
       "detail": "URLError (confirme machine calme)"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://grandnergizotelcom",
+      "url": "https://susuzluatlantis.com/",
       "detail": "URLError (confirme machine calme)"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://konyaogretmenevi.com.tr/",
+      "url": "https://www.1o1stylehotels.com/yogyakartamalioboro",
       "detail": "URLError (confirme machine calme)"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "http://www.hoteleldjazair.dz/",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://ammarhotel.com/en/",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.intercontinentaladdis.com.et/",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://Marriot.com",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://grandnergizotelcom",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://konyaogretmenevi.com.tr/",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://volidamhotel.uz",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.swissinternationalhotels.com/palace-manama/",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.hoteleldjazair.dz/",
+      "url": "https://riad-daralassad-marrakech.com/",
       "detail": "URLError (confirme machine calme)"
     }
   ],
@@ -273,250 +225,154 @@
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/aladtdi-doubletree-almaty/",
+      "url": "https://presidentastana-ru.rixos.com/",
       "detail": "code 403 — refuse les robots, pas forcement mort"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/alygphi-hilton-alexandria-green-plaza/",
+      "url": "https://sentrim-hotels.com/",
       "detail": "code 403 — refuse les robots, pas forcement mort"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/aqjdtdi-doubletree-aqaba/",
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://waldorfastoria3.hilton.com/en/hotels/israel/waldorf-astoria-jerusalem-JRSWAWA/index.html",
       "detail": "code 403 — refuse les robots, pas forcement mort"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/aytccdi-doubletree-antalya-city-centre/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/berhitw-hilton-berlin/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/dohemes-embassy-suites-doha-old-town/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/dohotdi-doubletree-doha-old-town/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/btzhihi-hilton-bursa-convention-center-and-spa/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/dttdbdt-doubletree-detroit-dearborn/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/dxbaies-embassy-suites-dubai-business-bay/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/houcuqq-c-baldwin/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/isthsqq-hagia-sofia-mansions-istanbul/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/jedgaqq-the-hotel-galleria-jeddah/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/jktdidi-doubletree-jakarta-diponegoro/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/kulhihi-hilton-kuala-lumpur/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/nl/hotels/amswawa-waldorf-astoria-amsterdam/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/makdtdi-doubletree-makkah-aziziyah/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/lontsqq-the-trafalgar-st-james-london/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hilton.com/en/hotels/loslhqq-legend-hotel-lagos-airport/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hyatt.com/grand-hyatt/en-US/ammgh-grand-hyatt-amman",
-      "detail": "code 429 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hyatt.com/hyatt-regency/en-US/losrl-hyatt-regency-lagos-ikeja",
-      "detail": "code 429 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hyatt.com/en-US/hotel/qatar/park-hyatt-doha/dohph",
-      "detail": "code 429 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hyatt.com/hyatt-regency/en-us/hourh-hyatt-regency-houston",
-      "detail": "code 429 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hyatt.com/jdv-by-hyatt/en-US/bodjd-firstname-bordeaux",
-      "detail": "code 429 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.hyatt.com/unbound-collection/en-US/lhrub-great-scotland-yard",
-      "detail": "code 429 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.majestickl.com/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.marriott.com/dttsd",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.marriott.com/dtwtd",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.marriott.com/hotels/travel/dxbjw-jw-marriott-marquis-hotel-dubai/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.marriott.com/hourd",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.marriott.com/houzd",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.radissonblu.com/en/marinahotel-newdelhi?s_cid=os.apac-IN-blu-INDNEDL-gmb",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.radissonhotels.com/en-us/hotels/radisson-collection-berlin",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.pudinghotels.com/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "http://www.aloftkualalumpursentral.com/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.westin-berlin.com/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "http://www.stregiskualalumpur.com/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.aloftmanhattandowntown.com/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.westin-berlin.com/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.stregiskualalumpur.com/",
+      "url": "https://www.duo-paris.com/",
       "detail": "code 403 — refuse les robots, pas forcement mort"
     }
   ],
   "innocentes_au_controle_calme": [
     {
       "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.squarephillips.com/",
-      "detail": "TimeoutError — aucun code de reponse"
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/priere/tirana",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/priere/taza",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/munich",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/horaires-priere?lat=35.6971&lng=-0.6308&lieu=Oran&pays=Alg%C3%A9rie",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/hotels/khiva",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/hotels/zanzibar",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/singapour",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/horaires-priere?lat=30.1575&lng=71.5249&lieu=Multan&pays=Pakistan",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/priere/mardin",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/los-angeles",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/qibla?lat=37.3122&lng=40.7351&lieu=Mardin&pays=Turquie",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/marrakech",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/qibla?lat=51.9244&lng=4.4777&lieu=Rotterdam&pays=Pays-Bas",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/berlin",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/hotels/tirana",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/milan",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/atlanta",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/kolkata",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/communaute/ajouter?ville=al-hoceima",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/communaute/ajouter?ville=tachkent",
+      "detail": "URLError — aucun code de reponse"
     }
   ]
 }
