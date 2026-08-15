@@ -1,16 +1,53 @@
 {
-  "verifie_le": "2026-08-14 13:44 UTC",
-  "liens_controles": 1427,
+  "verifie_le": "2026-08-14 20:46 UTC",
+  "liens_controles": 2807,
   "pages_vues": 364,
   "pages_connues": 1296,
   "morts": [
     {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/greenssuite2021@gmail.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/grouplehahotels.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/hotel-Medina.com",
+      "detail": "code 404"
+    },
+    {
       "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/turisthotel.com.tr",
+      "url": "https://www.gohalaltravel.com/destinations/grouplehahotels.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/greenssuite2021@gmail.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/hotel-Medina.com",
       "detail": "code 404"
     }
   ],
-  "bloques": [],
+  "bloques": [
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://koko-hotels.com/sapporo_ekimae/",
+      "detail": "code 403 — refuse les robots, pas forcement mort"
+    }
+  ],
   "innocentes_au_controle_calme": []
 }

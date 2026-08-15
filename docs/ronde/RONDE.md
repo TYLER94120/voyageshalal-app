@@ -1,13 +1,13 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-08-14 15:38 UTC.**
+**Dernier changement constate le 2026-08-14 23:51 UTC.**
 
-⚠️ **Cette ronde a regarde 128 pages sur 1977 — environ 6 %.**
+⚠️ **Cette ronde a regarde 171 pages sur 2010 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
 casse dans la nuit : la rotation est simplement passee sur d'autres pages.
-Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **de ce matin**.
+Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **vieux de 12 h**.
 
 La ronde passe **toutes les 30 minutes** sur les quatre sites et
 regarde ce qu'un visiteur recoit vraiment. Ce fichier n'est reecrit
@@ -18,7 +18,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 0 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 12 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -27,11 +27,37 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 
 | Site | Pages vues | Tous niveaux |
 |---|---|---|
+| islampasapas.fr | 41 | 12 |
 | voyageshalal.fr | 41 | 0 |
 | gohalaltravel.com | 41 | 0 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 5 | 0 |
+| halalcheck.fr | 7 | 0 |
 
-## Rien a signaler
+## 🟡 surveiller — 12
 
-4 site(s) sur 4 ont rendu des pages, et celles-ci sont correctes.
+### islampasapas.fr (12)
+
+- **description trop courte (11 car.)**  
+  `https://www.islampasapas.fr/`
+- **description trop courte (11 car.)**  
+  `https://islampasapas.fr/`
+- **description trop courte (27 car.)**  
+  `https://islampasapas.fr/lecon-six-piliers-foi.html`
+- **description trop courte (1 car.)**  
+  `https://islampasapas.fr/lecon-priere-gestes.html`
+- **description trop courte (19 car.)**  
+  `https://islampasapas.fr/lecon-alphabet-arabe.html`
+- **description trop courte (41 car.)**  
+  `https://islampasapas.fr/sourates.html`
+- **description trop courte (27 car.)**  
+  `https://islampasapas.fr/lecon-sourate-al-ma-un.html`
+- **description trop courte (29 car.)**  
+  `https://islampasapas.fr/lecon-sourate-al-qari-a.html`
+- **description trop courte (11 car.)**  
+  `https://islampasapas.fr/`
+- **description trop courte (27 car.)**  
+  `https://islampasapas.fr/lecon-six-piliers-foi.html`
+- **description trop courte (1 car.)**  
+  `https://islampasapas.fr/lecon-priere-gestes.html`
+- **description trop courte (19 car.)**  
+  `https://islampasapas.fr/lecon-alphabet-arabe.html`

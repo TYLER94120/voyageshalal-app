@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-08-14 13:44 UTC** · 1427 liens controles.
+Releve du **2026-08-14 20:46 UTC** · 2807 liens controles.
 
 ⚠️ **Ce tour a regarde 364 pages sur 1296 — environ 28 %.**
 
@@ -14,15 +14,25 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 
 | | Combien | Qui repare |
 |---|---|---|
-| 🔴 liens **internes** morts | **1** | nous, c'est notre faute |
+| 🔴 liens **internes** morts | **6** | nous, c'est notre faute |
 | 🟠 liens externes morts | 0 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 0 | personne — a ne PAS retirer |
+| ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## 🔴 Liens internes morts — 1
+## 🔴 Liens internes morts — 6
 
-- `https://www.gohalaltravel.com/destinations/turisthotel.com.tr` — code 404  
+- `https://www.voyageshalal.fr/destinations/greenssuite2021@gmail.com` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/grouplehahotels.com` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/hotel-Medina.com` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.gohalaltravel.com/destinations/grouplehahotels.com` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/greenssuite2021@gmail.com` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/hotel-Medina.com` — code 404  
   *(sur gohalaltravel.com)*
