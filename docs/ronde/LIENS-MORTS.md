@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-08-15 16:42 UTC** · 2843 liens controles.
+Releve du **2026-08-15 20:40 UTC** · 2263 liens controles.
 
 ⚠️ **Ce tour a regarde 364 pages sur 1296 — environ 28 %.**
 
@@ -14,207 +14,101 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 
 | | Combien | Qui repare |
 |---|---|---|
-| 🔴 liens **internes** morts | **6** | nous, c'est notre faute |
-| 🟠 liens externes morts | 109 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 6 | personne — a ne PAS retirer |
+| 🔴 liens **internes** morts | **44** | nous, c'est notre faute |
+| 🟠 liens externes morts | 0 | nous, en retirant le lien |
+| ⚪ bloques aux robots | 0 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-✅ **12 lien(s) sauve(s) du controle calme.** Ils n'avaient rendu
-aucun code de reponse pendant le balayage — ce qui ne veut pas dire « mort »,
-mais « l'hote ne repond plus a NOTRE robot ». Rejuges un par un, machine calme,
-ils repondent tres bien. Sans cette etape, on serait alle reparer des pages saines.
+## 🔴 Liens internes morts — 44
 
-- `https://halalgpt.fr/q/e330-halal` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/priere-avion` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/bouillon-cube-halal` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/e412-gomme-guar-halal` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/restaurant-halal-montpellier` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/souhaiter-noel-halal` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/don-organes-islam` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/restaurant-halal-nantes` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/voyage-halal-le-caire` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/categorie/voyage` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/burger-king-halal` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/voyage-halal-bali` *(sur halalgpt.fr)*
-
-## 🔴 Liens internes morts — 6
-
-- `https://www.voyageshalal.fr/destinations/grouplehahotels.com` — code 404  
+- `https://www.voyageshalal.fr/destinations/male` — code 404  
   *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/greenssuite2021@gmail.com` — code 404  
+- `https://www.voyageshalal.fr/destinations/stone-town` — code 404  
   *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/toyoko-inn.com` — code 404  
+- `https://www.voyageshalal.fr/destinations/riyad` — code 404  
   *(sur voyageshalal.fr)*
-- `https://www.gohalaltravel.com/destinations/grouplehahotels.com` — code 404  
+- `https://www.voyageshalal.fr/destinations/charm-el-cheikh` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/travnik` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/al-wakrah` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/sarande` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/www.hotelvakhsh.tj` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/nungwi` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/berat` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/atolls-nord` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/wadi-rum` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/sur` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/petra` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/alula` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/krabi` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/paje` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/gjirokaster` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/langkawi` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/koh-lanta` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/edinburgh` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/maafushi` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.gohalaltravel.com/destinations/paje` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.gohalaltravel.com/destinations/greenssuite2021@gmail.com` — code 404  
+- `https://www.gohalaltravel.com/destinations/male` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.gohalaltravel.com/destinations/toyoko-inn.com` — code 404  
+- `https://www.gohalaltravel.com/destinations/berat` — code 404  
   *(sur gohalaltravel.com)*
-
-## 🟠 Liens externes morts — 109
-
-- `https://nobelbelgrade.business.site/` — code 404  
+- `https://www.gohalaltravel.com/destinations/petra` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.domuspatrizia.com/` — code 404  
+- `https://www.gohalaltravel.com/destinations/nungwi` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.fairmont.com/pacificrim` — code 404  
+- `https://www.gohalaltravel.com/destinations/charm-el-cheikh` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Abha` — code 404  
+- `https://www.gohalaltravel.com/destinations/wadi-rum` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Ahmedabad` — code 404  
+- `https://www.gohalaltravel.com/destinations/koh-lanta` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Alicante` — code 404  
+- `https://www.gohalaltravel.com/destinations/travnik` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Austin` — code 404  
+- `https://www.gohalaltravel.com/destinations/stone-town` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Bangalore` — code 404  
+- `https://www.gohalaltravel.com/destinations/langkawi` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Auckland` — code 404  
+- `https://www.gohalaltravel.com/destinations/alula` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Bilbao` — code 404  
+- `https://www.gohalaltravel.com/destinations/edinburgh` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Belgrade` — code 404  
+- `https://www.gohalaltravel.com/destinations/maafushi` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Bogot%C3%A1` — code 404  
+- `https://www.gohalaltravel.com/destinations/sur` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Bologne` — code 404  
+- `https://www.gohalaltravel.com/destinations/gjirokaster` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Bras%C3%ADlia` — code 404  
+- `https://www.gohalaltravel.com/destinations/krabi` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Brisbane` — code 404  
+- `https://www.gohalaltravel.com/destinations/riyad` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Bratislava` — code 404  
+- `https://www.gohalaltravel.com/destinations/al-wakrah` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Bucarest` — code 404  
+- `https://www.gohalaltravel.com/destinations/atolls-nord` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Buenos%20Aires` — code 404  
+- `https://www.gohalaltravel.com/destinations/www.hotelvakhsh.tj` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Calgary` — code 404  
+- `https://www.gohalaltravel.com/destinations/sarande` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Canton` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Canc%C3%BAn` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Busan` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Caracas` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Cebu` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Chengdu` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Curitiba` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Colombo` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Chennai` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Chiang%20Mai` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Daegu` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Da%20Nang` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Cusco` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Denver` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Detroit` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Dubrovnik` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Durban` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Fukuoka` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Edmonton` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Gand` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Faro` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=G%C3%B6teborg` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Gda%C5%84sk` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=G%C3%AAnes` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Goa` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Grenoble` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Hano%C3%AF` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Guadalajara` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=H%C3%B4%20Chi%20Minh-Ville` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Guayaquil` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Hong%20Kong` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Incheon` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Hangzhou` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Hiroshima` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Kaohsiung` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Jaipur` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Kobe` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Johannesburg` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Kandy` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Katmandou` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Kolkata` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Kyoto` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Lima` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=La%20Havane` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Ljubljana` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=La%20Haye` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=La%20Paz` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=La%20Nouvelle-Orl%C3%A9ans` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Malm%C3%B6` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Macao` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Manille` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Monterrey` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Luxembourg` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Medell%C3%ADn` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Mexico` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Montevideo` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Nantes` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Minneapolis` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Nagoya` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Nashville` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Montpellier` — code 404  
-  *(sur gohalaltravel.com)*
-- … et 29 autres dans `liens-morts.json`
