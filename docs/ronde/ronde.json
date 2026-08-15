@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-08-15 14:53 UTC",
-  "pages_vues": 170,
+  "ronde_du": "2026-08-15 15:27 UTC",
+  "pages_vues": 169,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -20,21 +20,13 @@
     {
       "site": "halalgpt.fr",
       "pages": 41,
-      "defauts": 1
+      "defauts": 0
     },
     {
       "site": "halalcheck.fr",
-      "pages": 6,
+      "pages": 5,
       "defauts": 0
     }
   ],
-  "defauts": [
-    {
-      "niveau": "defaut",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/api/passerelle",
-      "quoi": "le compteur de passerelles n'est pas vivant",
-      "detail": "URLError: <urlopen error timed out> — la seule mesure que les agents peuvent lire seuls n'enregistre rien"
-    }
-  ]
+  "defauts": []
 }
