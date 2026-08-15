@@ -169,8 +169,12 @@ def mots_francais_de(texte):
     return sorted(set(m for m in re.findall(r"[a-z]+", plat) if m in MOTS_FRANCAIS))
 
 
-def balise(html, motif):
+def balise(html, motif, groupe=1):
     """Rend la valeur REELLE d'une balise, entites HTML decodees.
+
+    `groupe` sert aux motifs qui capturent d'abord le guillemet d'ouverture
+    pour refermer sur le meme caractere (voir la description ci-dessous) :
+    la valeur est alors dans le second groupe.
 
     Le 11 aout, la ronde a signale 160 titres « coupes par Google ». Mesure
     faite : 104 d'entre eux tenaient largement sous la limite. La cause tient
@@ -185,7 +189,7 @@ def balise(html, motif):
     fichier contient. Meme faute, meme correctif que dans liens-morts.py, ou
     « &amp; » dans une adresse faisait declarer morts des liens valides."""
     m = re.search(motif, html, re.I | re.S)
-    return (unescape(m.group(1)).strip() if m else None)
+    return (unescape(m.group(groupe)).strip() if m else None)
 
 
 def urls_du_sitemap(base):
@@ -276,9 +280,28 @@ def examiner(site, url):
             noter(DEFAUT, "titre en francais sur le domaine anglais",
                   f"mots francais : {', '.join(trouves[:6])} — « {titre[:56]}… »")
 
-    desc = balise(html, r'<meta[^>]+name=["\']description["\'][^>]+content=["\'](.*?)["\']')
+    # ⚠️ LE GUILLEMET DE FERMETURE DOIT ETRE CELUI DE L'OUVERTURE.
+    #
+    # 15 aout, 3 h. La ronde a rendu 12 defauts sur islampasapas.fr, dont
+    # « description trop courte (1 car.) ». Le site n'avait rien : c'est ce
+    # motif qui mentait. Ecrit `content=["\'](.*?)["\']`, il ouvre sur un
+    # guillemet et accepte de fermer sur une APOSTROPHE — donc
+    # `content="Apprendre l'islam pas a pas"` etait mesure « Apprendre l »,
+    # soit exactement les 11 caracteres rapportes. Une page dont la
+    # description commence par « L'... » tombait a 1 caractere.
+    #
+    # La veille, j'avais « corrige » ma propre description pour faire taire
+    # la meme alerte sur halalgpt.fr. Je soignais le symptome sur le site
+    # pendant que la cause vivait ici. C'est la SEPTIEME fois qu'un motif
+    # trop permissif fabrique un defaut : `E[0-9]{3}` qui ratait E1000,
+    # `(\d+) car` qui comptait les messages d'erreur, l'URL absolue qui
+    # cassait le test de prefixe... Le reflexe a garder : quand un chiffre
+    # est spectaculaire, on soupconne l'instrument AVANT le site.
+    #
+    # `(["\'])(.*?)\1` referme sur le meme caractere qu'a l'ouverture.
+    desc = balise(html, r'<meta[^>]+name=["\']description["\'][^>]+content=(["\'])(.*?)\1', groupe=2)
     if not desc:
-        desc = balise(html, r'<meta[^>]+content=["\'](.*?)["\'][^>]+name=["\']description["\']')
+        desc = balise(html, r'<meta[^>]+content=(["\'])(.*?)\1[^>]+name=["\']description["\']', groupe=2)
     if not desc:
         noter(DEFAUT, "aucune description", "Google en invente une, souvent mauvaise")
     elif len(desc.strip()) < DESC_MIN:
