@@ -1,274 +1,34 @@
 {
-  "verifie_le": "2026-08-16 08:48 UTC",
-  "liens_controles": 2801,
-  "pages_vues": 364,
-  "pages_connues": 1296,
+  "verifie_le": "2026-08-16 13:01 UTC",
+  "liens_controles": 1743,
+  "pages_vues": 245,
+  "pages_connues": 762,
   "morts": [
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/hotel-Medina.com",
+      "url": "https://www.voyageshalal.fr/destinations/www.hotelvakhsh.tj",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/greenssuite2021@gmail.com",
+      "url": "https://www.voyageshalal.fr/destinations/langkawi",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/grouplehahotels.com",
+      "url": "https://www.voyageshalal.fr/destinations/toyoko-inn.com",
       "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/grouplehahotels.com",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/greenssuite2021@gmail.com",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/hotel-Medina.com",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.sofitel.com/gb/hotel-1319-sofitel-lisbon-liberdade/index.shtml",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://barinresidence.com/ru/grand",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://grandhotelcentral.nl",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://galleriavikmilano.com/it/",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://piter-house.com/",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://sparklehotle.com.tw",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://elcortezhotellasvegas.com/",
-      "detail": "ConnectionResetError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.atlantadowntowninn.com",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.hoteldiocletian.com",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.lkpavilionpattaya.com/",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.sparrownestguesthouse.com",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.thehotelmalla.com/",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://xxx-perfume.vn",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://duomo.townhousehotels.com/",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://hotelwith.se/",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://innatmarket.com",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://ambasciatorihotelpalermo.com",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.thejeffersonwashingtondc.com/",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.tonydisco.com/Lido.html",
-      "detail": "URLError (confirme machine calme)"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://centerhotel.info/",
-      "detail": "URLError (confirme machine calme)"
     }
   ],
   "bloques": [
     {
       "site": "gohalaltravel.com",
       "genre": "externe",
-      "url": "https://www3.hilton.com/en/hotels/china/hilton-beijing-wangfujing-BJSWFHI/index.html?WT.mc_id=zELWAKN0APAC1HI2DMH3LocalSearch4DGGenericx6BJSWFHI",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www3.hilton.com/en/hotels/egypt/hilton-hurghada-plaza-HRGHITW/index.html?WT.mc_id=zELWAKN0EMEA1HI2DMH3LocalSearch4DGGenericx6HRGHITW",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.atahotels.it/concord",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.atahotels.it/principi-di-piemonte",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.hotelwestinzagreb.com/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.hotelercilla.es/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.lemeridienoran.com",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.sheratonoran.com",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.westingrandfrankfurt.com/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "http://www.wtaipei.com/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://estimarhotels.com/valencia/estimar-valencia/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://florence.baglionihotels.com/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://go-gate-hotel.reservation.jp/en/hotels/gate-kyoto",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://granhoteldelaciudaddemexico.com.mx/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://hilton.com/en/hotels/aklhihi-hilton-auckland",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://hotelcannescentreunivers.com-hotel.com/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://hotelflora.be",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://koko-hotels.com/sapporo_ekimae/",
-      "detail": "code 403 — refuse les robots, pas forcement mort"
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
     }
   ],
   "innocentes_au_controle_calme": []
