@@ -1,35 +1,130 @@
 {
-  "verifie_le": "2026-08-16 13:01 UTC",
-  "liens_controles": 1743,
-  "pages_vues": 245,
-  "pages_connues": 762,
+  "verifie_le": "2026-08-16 16:43 UTC",
+  "liens_controles": 1333,
+  "pages_vues": 364,
+  "pages_connues": 1296,
   "morts": [
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/www.hotelvakhsh.tj",
+      "url": "https://www.voyageshalal.fr/destinations/petra",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/langkawi",
+      "url": "https://www.voyageshalal.fr/destinations/stone-town",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/toyoko-inn.com",
+      "url": "https://www.voyageshalal.fr/destinations/sarande",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/riyad",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/maafushi",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/koh-lanta",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/nungwi",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/travnik",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/paje",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/edinburgh",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/alula",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/atolls-nord",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/al-wakrah",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/wadi-rum",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/sur",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/krabi",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/berat",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/male",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/charm-el-cheikh",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/gjirokaster",
       "detail": "code 404"
     }
   ],
-  "bloques": [
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://unsplash.com",
-      "detail": "code 401 — refuse les robots, pas forcement mort"
-    }
-  ],
+  "bloques": [],
   "innocentes_au_controle_calme": []
 }
