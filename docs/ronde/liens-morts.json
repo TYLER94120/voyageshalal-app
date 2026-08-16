@@ -1,16 +1,107 @@
 {
-  "verifie_le": "2026-08-16 01:58 UTC",
-  "liens_controles": 1540,
+  "verifie_le": "2026-08-16 04:50 UTC",
+  "liens_controles": 2881,
   "pages_vues": 364,
   "pages_connues": 1296,
   "morts": [
     {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/hotel-marmar.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/turisthotel.com.tr",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/www.darfatima.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/www.diademcappadocia.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/www.hotelbellevue.ma",
+      "detail": "code 404"
+    },
+    {
       "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/turisthotel.com.tr",
+      "url": "https://www.gohalaltravel.com/destinations/www.diademcappadocia.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/www.hotelbellevue.ma",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/hotel-marmar.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/www.darfatima.com",
       "detail": "code 404"
     }
   ],
   "bloques": [],
-  "innocentes_au_controle_calme": []
+  "innocentes_au_controle_calme": [
+    {
+      "site": "halalgpt.fr",
+      "genre": "interne",
+      "url": "https://halalgpt.fr/q/ferrero-rocher-halal",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalgpt.fr",
+      "genre": "interne",
+      "url": "https://halalgpt.fr/q/ice-tea-halal",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalgpt.fr",
+      "genre": "interne",
+      "url": "https://halalgpt.fr/q/tatouage-halal",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalgpt.fr",
+      "genre": "interne",
+      "url": "https://halalgpt.fr/q/prenom-musulman-obligatoire",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalgpt.fr",
+      "genre": "interne",
+      "url": "https://halalgpt.fr/q/kombucha-halal",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalgpt.fr",
+      "genre": "interne",
+      "url": "https://halalgpt.fr/categorie/alimentation",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalgpt.fr",
+      "genre": "interne",
+      "url": "https://halalgpt.fr/q/sport-ramadan",
+      "detail": "URLError — aucun code de reponse"
+    }
+  ]
 }
