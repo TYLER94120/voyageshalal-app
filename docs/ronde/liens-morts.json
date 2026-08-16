@@ -1,130 +1,161 @@
 {
-  "verifie_le": "2026-08-16 16:43 UTC",
-  "liens_controles": 1333,
+  "verifie_le": "2026-08-16 20:40 UTC",
+  "liens_controles": 2486,
   "pages_vues": 364,
   "pages_connues": 1296,
   "morts": [
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/petra",
+      "url": "https://www.voyageshalal.fr/destinations/www.diademcappadocia.com",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/stone-town",
+      "url": "https://www.voyageshalal.fr/destinations/turisthotel.com.tr",
       "detail": "code 404"
     },
     {
-      "site": "voyageshalal.fr",
+      "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/sarande",
+      "url": "https://www.gohalaltravel.com/destinations/turisthotel.com.tr",
       "detail": "code 404"
     },
     {
-      "site": "voyageshalal.fr",
+      "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/riyad",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/maafushi",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/koh-lanta",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/nungwi",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/travnik",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/paje",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/edinburgh",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/alula",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/atolls-nord",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/al-wakrah",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/wadi-rum",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/sur",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/krabi",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/berat",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/male",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/charm-el-cheikh",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/gjirokaster",
+      "url": "https://www.gohalaltravel.com/destinations/www.diademcappadocia.com",
       "detail": "code 404"
     }
   ],
   "bloques": [],
-  "innocentes_au_controle_calme": []
+  "innocentes_au_controle_calme": [
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E474?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E472b?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E472e?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E475?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E472c?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E477?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E472f?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E476?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E478?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E483?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E484?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E485?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E494?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E570?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E572?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E627?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E631?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E635?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E904?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E920?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E921?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError — aucun code de reponse"
+    }
+  ]
 }

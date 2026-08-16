@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-08-16 16:43 UTC** · 1333 liens controles.
+Releve du **2026-08-16 20:40 UTC** · 2486 liens controles.
 
 ⚠️ **Ce tour a regarde 364 pages sur 1296 — environ 28 %.**
 
@@ -14,7 +14,7 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 
 | | Combien | Qui repare |
 |---|---|---|
-| 🔴 liens **internes** morts | **20** | nous, c'est notre faute |
+| 🔴 liens **internes** morts | **4** | nous, c'est notre faute |
 | 🟠 liens externes morts | 0 | nous, en retirant le lien |
 | ⚪ bloques aux robots | 0 | personne — a ne PAS retirer |
 
@@ -22,45 +22,39 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## 🔴 Liens internes morts — 20
+✅ **21 lien(s) sauve(s) du controle calme.** Ils n'avaient rendu
+aucun code de reponse pendant le balayage — ce qui ne veut pas dire « mort »,
+mais « l'hote ne repond plus a NOTRE robot ». Rejuges un par un, machine calme,
+ils repondent tres bien. Sans cette etape, on serait alle reparer des pages saines.
 
-- `https://www.voyageshalal.fr/destinations/petra` — code 404  
+- `https://halalgpt.fr/e/E474?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E472b?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E472e?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E475?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E472c?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E477?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E472f?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E476?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E478?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E483?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E484?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E485?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E494?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E570?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E572?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E627?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E631?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E635?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E904?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E920?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` *(sur halalcheck.fr)*
+
+## 🔴 Liens internes morts — 4
+
+- `https://www.voyageshalal.fr/destinations/www.diademcappadocia.com` — code 404  
   *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/stone-town` — code 404  
+- `https://www.voyageshalal.fr/destinations/turisthotel.com.tr` — code 404  
   *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/sarande` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/riyad` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/maafushi` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/koh-lanta` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/nungwi` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/travnik` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/paje` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/edinburgh` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/alula` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/atolls-nord` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/al-wakrah` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/wadi-rum` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/sur` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/krabi` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/berat` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/male` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/charm-el-cheikh` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/gjirokaster` — code 404  
-  *(sur voyageshalal.fr)*
+- `https://www.gohalaltravel.com/destinations/turisthotel.com.tr` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/www.diademcappadocia.com` — code 404  
+  *(sur gohalaltravel.com)*
