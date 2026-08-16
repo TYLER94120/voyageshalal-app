@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-08-16 04:50 UTC** · 2881 liens controles.
+Releve du **2026-08-16 08:48 UTC** · 2801 liens controles.
 
 ⚠️ **Ce tour a regarde 364 pages sur 1296 — environ 28 %.**
 
@@ -14,44 +14,68 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 
 | | Combien | Qui repare |
 |---|---|---|
-| 🔴 liens **internes** morts | **9** | nous, c'est notre faute |
-| 🟠 liens externes morts | 0 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 0 | personne — a ne PAS retirer |
+| 🔴 liens **internes** morts | **6** | nous, c'est notre faute |
+| 🟠 liens externes morts | 20 | nous, en retirant le lien |
+| ⚪ bloques aux robots | 18 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-✅ **7 lien(s) sauve(s) du controle calme.** Ils n'avaient rendu
-aucun code de reponse pendant le balayage — ce qui ne veut pas dire « mort »,
-mais « l'hote ne repond plus a NOTRE robot ». Rejuges un par un, machine calme,
-ils repondent tres bien. Sans cette etape, on serait alle reparer des pages saines.
+## 🔴 Liens internes morts — 6
 
-- `https://halalgpt.fr/q/ferrero-rocher-halal` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/ice-tea-halal` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/tatouage-halal` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/prenom-musulman-obligatoire` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/kombucha-halal` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/categorie/alimentation` *(sur halalgpt.fr)*
-- `https://halalgpt.fr/q/sport-ramadan` *(sur halalgpt.fr)*
+- `https://www.voyageshalal.fr/destinations/hotel-Medina.com` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/greenssuite2021@gmail.com` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/grouplehahotels.com` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.gohalaltravel.com/destinations/grouplehahotels.com` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/greenssuite2021@gmail.com` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/hotel-Medina.com` — code 404  
+  *(sur gohalaltravel.com)*
 
-## 🔴 Liens internes morts — 9
+## 🟠 Liens externes morts — 20
 
-- `https://www.voyageshalal.fr/destinations/hotel-marmar.com` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/turisthotel.com.tr` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/www.darfatima.com` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/www.diademcappadocia.com` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.voyageshalal.fr/destinations/www.hotelbellevue.ma` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.gohalaltravel.com/destinations/www.diademcappadocia.com` — code 404  
+- `http://www.sofitel.com/gb/hotel-1319-sofitel-lisbon-liberdade/index.shtml` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.gohalaltravel.com/destinations/www.hotelbellevue.ma` — code 404  
+- `https://barinresidence.com/ru/grand` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.gohalaltravel.com/destinations/hotel-marmar.com` — code 404  
+- `https://grandhotelcentral.nl` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.gohalaltravel.com/destinations/www.darfatima.com` — code 404  
+- `https://galleriavikmilano.com/it/` — code 404  
+  *(sur gohalaltravel.com)*
+- `http://piter-house.com/` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `http://sparklehotle.com.tw` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `http://elcortezhotellasvegas.com/` — ConnectionResetError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `http://www.atlantadowntowninn.com` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `http://www.hoteldiocletian.com` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `http://www.lkpavilionpattaya.com/` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `http://www.sparrownestguesthouse.com` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `http://www.thehotelmalla.com/` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `http://xxx-perfume.vn` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `https://duomo.townhousehotels.com/` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `https://hotelwith.se/` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `https://innatmarket.com` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `https://ambasciatorihotelpalermo.com` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `http://www.thejeffersonwashingtondc.com/` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `http://www.tonydisco.com/Lido.html` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
+- `https://centerhotel.info/` — URLError (confirme machine calme)  
   *(sur gohalaltravel.com)*
