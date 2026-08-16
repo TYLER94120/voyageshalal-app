@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-08-16 17:24 UTC",
-  "pages_vues": 171,
+  "ronde_du": "2026-08-16 20:29 UTC",
+  "pages_vues": 169,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -24,9 +24,17 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 7,
-      "defauts": 0
+      "pages": 5,
+      "defauts": 1
     }
   ],
-  "defauts": []
+  "defauts": [
+    {
+      "niveau": "surveiller",
+      "site": "halalcheck.fr",
+      "url": "https://halalcheck.fr/mentions-legales.html",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
+    }
+  ]
 }
