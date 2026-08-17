@@ -1,19 +1,61 @@
 {
-  "verifie_le": "2026-08-17 13:07 UTC",
-  "liens_controles": 1647,
+  "verifie_le": "2026-08-17 16:47 UTC",
+  "liens_controles": 2904,
   "pages_vues": 364,
   "pages_connues": 1296,
   "morts": [
     {
-      "site": "gohalaltravel.com",
+      "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/www.diademcappadocia.com",
+      "url": "https://www.voyageshalal.fr/destinations/www.hotelbellevue.ma",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/hotel-marmar.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/www.darfatima.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/turisthotel.com.tr",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "interne",
+      "url": "https://www.voyageshalal.fr/destinations/www.diademcappadocia.com",
       "detail": "code 404"
     },
     {
       "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/turisthotel.com.tr",
+      "url": "https://www.gohalaltravel.com/destinations/www.hotelbellevue.ma",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/hotel-Medina.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/www.darfatima.com",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/hotel-marmar.com",
       "detail": "code 404"
     }
   ],

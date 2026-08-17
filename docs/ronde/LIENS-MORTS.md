@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-08-17 13:07 UTC** · 1647 liens controles.
+Releve du **2026-08-17 16:47 UTC** · 2904 liens controles.
 
 ⚠️ **Ce tour a regarde 364 pages sur 1296 — environ 28 %.**
 
@@ -14,7 +14,7 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 
 | | Combien | Qui repare |
 |---|---|---|
-| 🔴 liens **internes** morts | **2** | nous, c'est notre faute |
+| 🔴 liens **internes** morts | **9** | nous, c'est notre faute |
 | 🟠 liens externes morts | 0 | nous, en retirant le lien |
 | ⚪ bloques aux robots | 0 | personne — a ne PAS retirer |
 
@@ -22,9 +22,23 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## 🔴 Liens internes morts — 2
+## 🔴 Liens internes morts — 9
 
-- `https://www.gohalaltravel.com/destinations/www.diademcappadocia.com` — code 404  
+- `https://www.voyageshalal.fr/destinations/www.hotelbellevue.ma` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/hotel-marmar.com` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/www.darfatima.com` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/turisthotel.com.tr` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.voyageshalal.fr/destinations/www.diademcappadocia.com` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.gohalaltravel.com/destinations/www.hotelbellevue.ma` — code 404  
   *(sur gohalaltravel.com)*
-- `https://www.gohalaltravel.com/destinations/turisthotel.com.tr` — code 404  
+- `https://www.gohalaltravel.com/destinations/hotel-Medina.com` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/www.darfatima.com` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/hotel-marmar.com` — code 404  
   *(sur gohalaltravel.com)*
