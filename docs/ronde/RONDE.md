@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-08-17 08:51 UTC.**
+**Dernier changement constate le 2026-08-17 09:49 UTC.**
 
-⚠️ **Cette ronde a regarde 169 pages sur 2010 — environ 8 %.**
+⚠️ **Cette ronde a regarde 171 pages sur 2010 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -31,11 +31,11 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 | voyageshalal.fr | 41 | 0 |
 | gohalaltravel.com | 41 | 1 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 5 | 0 |
+| halalcheck.fr | 7 | 0 |
 
 ## 🟠 defaut — 1
 
 ### gohalaltravel.com (1)
 
-- **titre en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »  
-  `https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug`
+- **description en francais sur le domaine anglais** — mots francais : mosquee, une  
+  `https://www.gohalaltravel.com/contact`

@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-08-17 08:51 UTC",
-  "pages_vues": 169,
+  "ronde_du": "2026-08-17 09:49 UTC",
+  "pages_vues": 171,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -24,7 +24,7 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 5,
+      "pages": 7,
       "defauts": 0
     }
   ],
@@ -32,9 +32,9 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
+      "url": "https://www.gohalaltravel.com/contact",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : mosquee, une"
     }
   ]
 }
