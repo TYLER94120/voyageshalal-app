@@ -1,5 +1,5 @@
 {
-  "ronde_du": "2026-08-16 03:33 UTC",
+  "ronde_du": "2026-08-17 03:05 UTC",
   "pages_vues": 2013,
   "pages_par_site": [
     {
@@ -32,6 +32,20 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
+      "quoi": "description trop courte (18 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
+      "quoi": "description trop courte (42 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
       "url": "https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr",
       "quoi": "description trop courte (41 car.)",
       "detail": ""
@@ -39,15 +53,15 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd",
-      "quoi": "description trop courte (24 car.)",
+      "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
+      "quoi": "description trop courte (21 car.)",
       "detail": ""
     },
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
-      "quoi": "description trop courte (21 car.)",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd",
+      "quoi": "description trop courte (24 car.)",
       "detail": ""
     },
     {
@@ -62,20 +76,6 @@
       "site": "voyageshalal.fr",
       "url": "https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac",
       "quoi": "description trop courte (10 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
-      "quoi": "description trop courte (18 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
-      "quoi": "description trop courte (42 car.)",
       "detail": ""
     },
     {
@@ -149,13 +149,6 @@
       "detail": ""
     },
     {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd",
-      "quoi": "description trop courte (24 car.)",
-      "detail": ""
-    },
-    {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
@@ -175,6 +168,13 @@
       "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
       "quoi": "titre en francais sur le domaine anglais",
       "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd",
+      "quoi": "description trop courte (24 car.)",
+      "detail": ""
     },
     {
       "niveau": "surveiller",
