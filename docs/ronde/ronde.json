@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-08-17 09:49 UTC",
-  "pages_vues": 171,
+  "ronde_du": "2026-08-17 10:37 UTC",
+  "pages_vues": 170,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 1
+      "defauts": 0
     },
     {
       "site": "halalgpt.fr",
@@ -24,17 +24,9 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 7,
+      "pages": 6,
       "defauts": 0
     }
   ],
-  "defauts": [
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/contact",
-      "quoi": "description en francais sur le domaine anglais",
-      "detail": "mots francais : mosquee, une"
-    }
-  ]
+  "defauts": []
 }
