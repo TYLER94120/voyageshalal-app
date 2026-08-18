@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-08-18 10:34 UTC",
-  "pages_vues": 169,
+  "ronde_du": "2026-08-18 11:30 UTC",
+  "pages_vues": 171,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 1
+      "defauts": 0
     },
     {
       "site": "halalgpt.fr",
@@ -24,17 +24,9 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 5,
+      "pages": 7,
       "defauts": 0
     }
   ],
-  "defauts": [
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/saint-petersbourg",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.4 s au controle calme — a surveiller, pas a reparer"
-    }
-  ]
+  "defauts": []
 }

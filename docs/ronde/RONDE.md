@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-08-18 10:34 UTC.**
+**Dernier changement constate le 2026-08-18 11:30 UTC.**
 
-⚠️ **Cette ronde a regarde 169 pages sur 2010 — environ 8 %.**
+⚠️ **Cette ronde a regarde 171 pages sur 2010 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -18,7 +18,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 0 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 1 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -29,13 +29,10 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 |---|---|---|
 | islampasapas.fr | 41 | 0 |
 | voyageshalal.fr | 41 | 0 |
-| gohalaltravel.com | 41 | 1 |
+| gohalaltravel.com | 41 | 0 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 5 | 0 |
+| halalcheck.fr | 7 | 0 |
 
-## 🟡 surveiller — 1
+## Rien a signaler
 
-### gohalaltravel.com (1)
-
-- **page instable sous charge** — muette pendant la ronde, repond en 0.4 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/destinations/saint-petersbourg`
+5 site(s) sur 5 ont rendu des pages, et celles-ci sont correctes.
