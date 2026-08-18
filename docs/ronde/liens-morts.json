@@ -1,94 +1,47 @@
 {
-  "verifie_le": "2026-08-18 04:53 UTC",
-  "liens_controles": 1282,
-  "pages_vues": 364,
-  "pages_connues": 1296,
+  "verifie_le": "2026-08-18 08:54 UTC",
+  "liens_controles": 2258,
+  "pages_vues": 245,
+  "pages_connues": 1078,
   "morts": [
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/sarande",
+      "url": "https://www.voyageshalal.fr/destinations/www.diademcappadocia.com",
       "detail": "code 404"
     },
     {
       "site": "voyageshalal.fr",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/wadi-rum",
+      "url": "https://www.voyageshalal.fr/destinations/turisthotel.com.tr",
       "detail": "code 404"
     },
     {
-      "site": "voyageshalal.fr",
+      "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/travnik",
+      "url": "https://www.gohalaltravel.com/destinations/turisthotel.com.tr",
       "detail": "code 404"
     },
     {
-      "site": "voyageshalal.fr",
+      "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/gjirokaster",
+      "url": "https://www.gohalaltravel.com/destinations/www.diademcappadocia.com",
       "detail": "code 404"
     },
     {
-      "site": "voyageshalal.fr",
+      "site": "gohalaltravel.com",
       "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/paje",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/sur",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/stone-town",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/petra",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/al-wakrah",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/berat",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/nungwi",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/edinburgh",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/krabi",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/koh-lanta",
-      "detail": "code 404"
+      "url": "https://www.gohalaltravel.com/horaires-priere?lat=17.385&lng=78.4867&lieu=Hyderabad&pays=Inde",
+      "detail": "URLError (confirme machine calme)"
     }
   ],
   "bloques": [],
-  "innocentes_au_controle_calme": []
+  "innocentes_au_controle_calme": [
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/horaires-priere?lat=31.5204&lng=74.3587&lieu=Lahore&pays=Pakistan",
+      "detail": "URLError — aucun code de reponse"
+    }
+  ]
 }
