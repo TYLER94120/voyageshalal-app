@@ -279,18 +279,30 @@ const sommaire = sections
   )
   .join("\n");
 
-// Le titre commence par des CODES, pas par le mot « additifs ».
+// Le titre dit un GESTE, pas une question — et il garde les codes.
 //
-// Personne ne tape « additifs halal » devant un paquet de bonbons : on tape le
-// code lu sur l'étiquette — « e471 halal », « e120 haram », « e441 c'est
-// quoi ». Google met en gras les mots exacts de la requête, et il les met en
-// gras d'autant plus fort qu'ils sont en tête. L'ancienne version disait deux
-// fois « additifs » et pas un seul code.
+// Deux règles, mesurées ailleurs dans l'empire, se combinent ici.
 //
-// Les trois codes cités sont vérifiés présents dans le moteur (E471 mono- et
-// diglycérides, E120 carmin, E441 gélatine) — on ne met pas dans un titre un
-// code que la page ne traiterait pas.
-const TITRE = `E471, E120, E441 : les ${nbAdditifs} additifs halal ou haram`;
+// 1. Les codes doivent y être. Personne ne tape « additifs halal » devant un
+//    paquet de bonbons : on tape le code lu sur l'étiquette. Google met en
+//    gras les mots exacts de la requête. La version du 13 août disait deux
+//    fois « additifs » et pas un seul code ; celle du 14 a corrigé ça.
+//
+// 2. Mais elle a introduit l'autre défaut. Relevé sur 28 jours et trois sites
+//    le 17 août : **une requête d'EXPLICATION perd son clic, une requête
+//    d'ACTION le garde**. « E471 halal ou haram » appelle une explication —
+//    Google la donne lui-même en haut de page, et le clic n'a plus lieu.
+//    « Additifs à surveiller » appelle un geste : on vient chercher quoi
+//    faire, et il faut ouvrir la page pour l'avoir.
+//
+// Le mot reste « surveiller » et jamais « éviter » : notre moteur rend un
+// doute motivé, pas une interdiction. Un titre ne promet pas plus que ce que
+// la page tient — c'est la même règle que le rond du verdict.
+//
+// Le compte des « autres » se calcule, il ne s'écrit pas : trois codes sont
+// nommés, le reste suit le moteur.
+const AUTRES = nbAdditifs - 3;
+const TITRE = `Additifs à surveiller : E471, E120, E441 et ${AUTRES} autres`;
 const DESCRIPTION = `E471 mono- et diglycérides, E120 carmin, E441 gélatine : les ${nbAdditifs} additifs à surveiller et, pour chacun, la raison exacte du doute. Aliments et cosmétiques.`;
 
 const html = `<!DOCTYPE html>

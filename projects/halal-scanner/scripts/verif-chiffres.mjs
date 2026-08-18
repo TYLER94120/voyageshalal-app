@@ -198,6 +198,22 @@ for (const [fichier] of PAGES) {
     }
   }
 
+  // ── Les formules qui ne font cliquer personne ─────────────────────────
+  //
+  // Interdiction posée par Mohamed le 17 août, sur mesure : 9 810 impressions
+  // pour 99 clics sur trois sites, soit 1,0 %. Une page à 109 affichages en
+  // première page mobile avait fait ZÉRO clic en trois mois ; son titre disait
+  // « Guide Complet 2026 » — générique, aucun chiffre, aucune promesse.
+  //
+  // Ces tournures ne décrivent pas ce que la page contient, elles occupent la
+  // place d'un chiffre ou d'un bénéfice. Elles reviennent toutes seules dès
+  // qu'on écrit un titre sans y penser : d'où ce garde-fou.
+  const FORMULES_CREUSES = /guide complet|découvrez|tout savoir|le guide ultime/i;
+  for (const [champ, valeur] of [["titre", titre], ["description", description]]) {
+    const m = valeur.match(FORMULES_CREUSES);
+    if (m) soucis.push(`${champ} : formule creuse « ${m[0]} » — dire ce que la page contient, avec un chiffre`);
+  }
+
   if (titre && vusTitre.has(titre)) soucis.push(`titre identique à ${vusTitre.get(titre)}`);
   else if (titre) vusTitre.set(titre, fichier);
   if (description && vusDescription.has(description)) soucis.push(`description identique à ${vusDescription.get(description)}`);
