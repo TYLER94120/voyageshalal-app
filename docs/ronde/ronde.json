@@ -1,16 +1,16 @@
 {
-  "ronde_du": "2026-08-18 11:30 UTC",
-  "pages_vues": 171,
+  "ronde_du": "2026-08-18 22:29 UTC",
+  "pages_vues": 170,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 41,
+      "pages": 40,
       "defauts": 0
     },
     {
       "site": "voyageshalal.fr",
       "pages": 41,
-      "defauts": 0
+      "defauts": 3
     },
     {
       "site": "gohalaltravel.com",
@@ -28,5 +28,27 @@
       "defauts": 0
     }
   ],
-  "defauts": []
+  "defauts": [
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
+      "quoi": "description trop courte (21 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
+      "quoi": "description trop courte (42 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr",
+      "quoi": "description trop courte (41 car.)",
+      "detail": ""
+    }
+  ]
 }
