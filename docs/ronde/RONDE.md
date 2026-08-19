@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-08-19 11:31 UTC.**
+**Dernier changement constate le 2026-08-19 12:57 UTC.**
 
-⚠️ **Cette ronde a regarde 171 pages sur 2010 — environ 9 %.**
+⚠️ **Cette ronde a regarde 170 pages sur 2010 — environ 8 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -18,7 +18,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 0 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 2 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -29,18 +29,10 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 |---|---|---|
 | islampasapas.fr | 41 | 0 |
 | voyageshalal.fr | 41 | 0 |
-| gohalaltravel.com | 41 | 1 |
-| halalgpt.fr | 41 | 1 |
-| halalcheck.fr | 7 | 0 |
+| gohalaltravel.com | 41 | 0 |
+| halalgpt.fr | 41 | 0 |
+| halalcheck.fr | 6 | 0 |
 
-## 🟡 surveiller — 2
+## Rien a signaler
 
-### gohalaltravel.com (1)
-
-- **page lente (19.7 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.gohalaltravel.com/hotels/konya`
-
-### halalgpt.fr (1)
-
-- **page lente (20.1 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://halalgpt.fr/q/doritos-halal`
+5 site(s) sur 5 ont rendu des pages, et celles-ci sont correctes.
