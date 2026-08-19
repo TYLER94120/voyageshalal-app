@@ -1,101 +1,23 @@
 {
-  "verifie_le": "2026-08-19 16:47 UTC",
-  "liens_controles": 1037,
-  "pages_vues": 245,
-  "pages_connues": 1078,
+  "verifie_le": "2026-08-19 20:46 UTC",
+  "liens_controles": 883,
+  "pages_vues": 364,
+  "pages_connues": 1296,
   "morts": [
     {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/gjirokaster",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/koh-lanta",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/edinburgh",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/stone-town",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/krabi",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/petra",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/berat",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/sarande",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/paje",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/wadi-rum",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/nungwi",
-      "detail": "code 404"
-    },
-    {
-      "site": "halalgpt.fr",
-      "genre": "interne",
-      "url": "https://halalgpt.fr/questions",
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E472f?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "URLError (confirme machine calme)"
     }
   ],
-  "bloques": [],
-  "innocentes_au_controle_calme": [
+  "bloques": [
     {
       "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/la-mecque",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/dubai",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "halalgpt.fr",
       "genre": "externe",
-      "url": "https://www.voyageshalal.fr?utm_source=halalgpt&utm_medium=passerelle&utm_campaign=pied-famille",
-      "detail": "URLError — aucun code de reponse"
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
     }
-  ]
+  ],
+  "innocentes_au_controle_calme": []
 }
