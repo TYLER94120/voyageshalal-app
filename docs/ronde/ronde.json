@@ -1,5 +1,5 @@
 {
-  "ronde_du": "2026-08-19 01:39 UTC",
+  "ronde_du": "2026-08-19 04:09 UTC",
   "pages_vues": 170,
   "pages_par_site": [
     {
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 2
+      "defauts": 0
     },
     {
       "site": "halalgpt.fr",
@@ -28,20 +28,5 @@
       "defauts": 0
     }
   ],
-  "defauts": [
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
-      "quoi": "description trop courte (21 car.)",
-      "detail": ""
-    }
-  ]
+  "defauts": []
 }
