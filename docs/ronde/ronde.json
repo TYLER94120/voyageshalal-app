@@ -1,10 +1,10 @@
 {
-  "ronde_du": "2026-08-19 20:34 UTC",
-  "pages_vues": 167,
+  "ronde_du": "2026-08-19 21:30 UTC",
+  "pages_vues": 170,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 37,
+      "pages": 41,
       "defauts": 0
     },
     {
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 1
+      "defauts": 9
     },
     {
       "site": "halalgpt.fr",
@@ -24,7 +24,7 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 7,
+      "pages": 6,
       "defauts": 0
     }
   ],
@@ -32,280 +32,280 @@
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/bagdad",
+      "url": "https://www.voyageshalal.fr/destinations/lahore",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/bakou",
+      "url": "https://www.voyageshalal.fr/destinations/le-caire",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/bali",
+      "url": "https://www.voyageshalal.fr/destinations/lombok",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/banda-aceh",
+      "url": "https://www.voyageshalal.fr/destinations/londres",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/bangkok",
+      "url": "https://www.voyageshalal.fr/destinations/los-angeles",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/barcelone",
+      "url": "https://www.voyageshalal.fr/destinations/louxor",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/berlin",
+      "url": "https://www.voyageshalal.fr/destinations/lyon",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/beyrouth",
+      "url": "https://www.voyageshalal.fr/destinations/maldives",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/bordeaux",
+      "url": "https://www.voyageshalal.fr/destinations/manama",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/boukhara",
+      "url": "https://www.voyageshalal.fr/destinations/marrakech",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/bruxelles",
+      "url": "https://www.voyageshalal.fr/destinations/marseille",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/bursa",
+      "url": "https://www.voyageshalal.fr/destinations/mascate",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/cappadoce",
+      "url": "https://www.voyageshalal.fr/destinations/medine",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/casablanca",
+      "url": "https://www.voyageshalal.fr/destinations/montreal",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/chefchaouen",
+      "url": "https://www.voyageshalal.fr/destinations/nairobi",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/chicago",
+      "url": "https://www.voyageshalal.fr/destinations/new-york",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/cordoue",
+      "url": "https://www.voyageshalal.fr/destinations/osaka",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/dacca",
+      "url": "https://www.voyageshalal.fr/destinations/paris",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/dakar",
+      "url": "https://www.voyageshalal.fr/destinations/penang",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/dearborn",
+      "url": "https://www.voyageshalal.fr/destinations/phuket",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/delhi",
+      "url": "https://www.voyageshalal.fr/destinations/riyadh",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/djerba",
+      "url": "https://www.voyageshalal.fr/destinations/rome",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/doha",
+      "url": "https://www.voyageshalal.fr/destinations/salalah",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/dubai",
+      "url": "https://www.voyageshalal.fr/destinations/samarkand",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/fes",
+      "url": "https://www.voyageshalal.fr/destinations/sarajevo",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/gaziantep",
+      "url": "https://www.voyageshalal.fr/destinations/seoul",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/grenade",
+      "url": "https://www.voyageshalal.fr/destinations/singapour",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/houston",
+      "url": "https://www.voyageshalal.fr/destinations/tachkent",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/hyderabad-inde",
+      "url": "https://www.voyageshalal.fr/destinations/tanger",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/islamabad",
+      "url": "https://www.voyageshalal.fr/destinations/tokyo",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/istanbul",
+      "url": "https://www.voyageshalal.fr/destinations/toronto",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/jakarta",
+      "url": "https://www.voyageshalal.fr/destinations/trabzon",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/jeddah",
+      "url": "https://www.voyageshalal.fr/destinations/tunis",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/karachi",
+      "url": "https://www.voyageshalal.fr/destinations/vienne",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/konya",
+      "url": "https://www.voyageshalal.fr/destinations/yogyakarta",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/kota-kinabalu",
+      "url": "https://www.voyageshalal.fr/destinations/zanzibar",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/koweit-city",
+      "url": "https://www.voyageshalal.fr/destinations/berkane",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/kuala-lumpur",
+      "url": "https://www.voyageshalal.fr/destinations/saidia",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/la-mecque",
+      "url": "https://www.voyageshalal.fr/destinations/tafoughalt",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
     {
       "niveau": "defaut",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/lagos",
+      "url": "https://www.voyageshalal.fr/destinations/fezouane",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     },
@@ -315,6 +315,62 @@
       "url": "https://gohalaltravel.com/",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : avec, piscine, resto — « Where to pray at Resto avec piscine — Tafoughalt… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : avec, piscine, resto"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : bord, resto — « Where to pray at Resto Sidi koi Ali en bord de mer… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : bord, resto"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
+      "quoi": "description trop courte (21 car.)",
+      "detail": ""
     }
   ]
 }
