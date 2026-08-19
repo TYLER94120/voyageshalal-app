@@ -1,13 +1,13 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-08-19 19:30 UTC.**
+**Dernier changement constate le 2026-08-19 20:34 UTC.**
 
-⚠️ **Cette ronde a regarde 169 pages sur 2010 — environ 8 %.**
+⚠️ **Cette ronde a regarde 167 pages sur 2010 — environ 8 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
 casse dans la nuit : la rotation est simplement passee sur d'autres pages.
-Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **vieux de 16 h**.
+Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **vieux de 17 h**.
 
 La ronde passe **toutes les 30 minutes** sur les quatre sites et
 regarde ce qu'un visiteur recoit vraiment. Ce fichier n'est reecrit
@@ -17,8 +17,8 @@ que rien de nouveau n'est casse, pas que le robot dort.
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 12 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 1 | pas urgent, a ne pas laisser grossir |
+| 🟠 defaut | 41 | il la recoit, mais elle le dessert |
+| 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -27,44 +27,98 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 
 | Site | Pages vues | Tous niveaux |
 |---|---|---|
-| islampasapas.fr | 41 | 0 |
-| voyageshalal.fr | 41 | 13 |
-| gohalaltravel.com | 41 | 0 |
+| islampasapas.fr | 37 | 0 |
+| voyageshalal.fr | 41 | 40 |
+| gohalaltravel.com | 41 | 1 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 5 | 0 |
+| halalcheck.fr | 7 | 0 |
 
-## 🟠 defaut — 12
+## 🟠 defaut — 41
 
-### voyageshalal.fr (12)
+### voyageshalal.fr (40)
 
 - **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://www.voyageshalal.fr/destinations/abu-dhabi`
+  `https://www.voyageshalal.fr/destinations/bagdad`
 - **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://www.voyageshalal.fr/destinations/accra`
+  `https://www.voyageshalal.fr/destinations/bakou`
 - **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://www.voyageshalal.fr/destinations/addis-abeba`
+  `https://www.voyageshalal.fr/destinations/bali`
 - **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://www.voyageshalal.fr/destinations/agadir`
+  `https://www.voyageshalal.fr/destinations/banda-aceh`
 - **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://www.voyageshalal.fr/destinations/alexandrie`
+  `https://www.voyageshalal.fr/destinations/bangkok`
 - **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://www.voyageshalal.fr/destinations/alger`
+  `https://www.voyageshalal.fr/destinations/barcelone`
 - **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://www.voyageshalal.fr/destinations/almaty`
+  `https://www.voyageshalal.fr/destinations/berlin`
 - **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://www.voyageshalal.fr/destinations/amman`
+  `https://www.voyageshalal.fr/destinations/beyrouth`
 - **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://www.voyageshalal.fr/destinations/amsterdam`
+  `https://www.voyageshalal.fr/destinations/bordeaux`
 - **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://www.voyageshalal.fr/destinations/ankara`
+  `https://www.voyageshalal.fr/destinations/boukhara`
 - **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://www.voyageshalal.fr/destinations/antalya`
+  `https://www.voyageshalal.fr/destinations/bruxelles`
 - **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://www.voyageshalal.fr/destinations/aqaba`
+  `https://www.voyageshalal.fr/destinations/bursa`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/cappadoce`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/casablanca`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/chefchaouen`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/chicago`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/cordoue`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/dacca`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/dakar`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/dearborn`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/delhi`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/djerba`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/doha`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/dubai`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/fes`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/gaziantep`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/grenade`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/houston`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/hyderabad-inde`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/islamabad`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/istanbul`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/jakarta`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/jeddah`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/karachi`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/konya`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/kota-kinabalu`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/koweit-city`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/kuala-lumpur`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/la-mecque`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://www.voyageshalal.fr/destinations/lagos`
 
-## 🟡 surveiller — 1
+### gohalaltravel.com (1)
 
-### voyageshalal.fr (1)
-
-- **description trop courte (24 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://gohalaltravel.com/`
