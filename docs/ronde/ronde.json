@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-08-19 04:09 UTC",
-  "pages_vues": 170,
+  "ronde_du": "2026-08-19 11:31 UTC",
+  "pages_vues": 171,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -15,18 +15,33 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 0
+      "defauts": 1
     },
     {
       "site": "halalgpt.fr",
       "pages": 41,
-      "defauts": 0
+      "defauts": 1
     },
     {
       "site": "halalcheck.fr",
-      "pages": 6,
+      "pages": 7,
       "defauts": 0
     }
   ],
-  "defauts": []
+  "defauts": [
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/hotels/konya",
+      "quoi": "page lente (19.7 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "halalgpt.fr",
+      "url": "https://halalgpt.fr/q/doritos-halal",
+      "quoi": "page lente (20.1 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    }
+  ]
 }
