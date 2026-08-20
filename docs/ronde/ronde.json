@@ -1,10 +1,10 @@
 {
-  "ronde_du": "2026-08-20 22:33 UTC",
-  "pages_vues": 171,
+  "ronde_du": "2026-08-20 23:31 UTC",
+  "pages_vues": 168,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 41,
+      "pages": 39,
       "defauts": 0
     },
     {
@@ -15,61 +15,18 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 3
+      "defauts": 0
     },
     {
       "site": "halalgpt.fr",
       "pages": 41,
-      "defauts": 3
+      "defauts": 0
     },
     {
       "site": "halalcheck.fr",
-      "pages": 7,
+      "pages": 6,
       "defauts": 0
     }
   ],
-  "defauts": [
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/contact",
-      "quoi": "description en francais sur le domaine anglais",
-      "detail": "mots francais : mosquee, une"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/addis-abeba",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 36.2 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/amsterdam",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/questions",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "defaut",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/api/recherche",
-      "quoi": "l'index de la recherche interne ne repond pas",
-      "detail": "URLError: <urlopen error timed out> — la recherche de /questions retombe sur les titres, sans le dire"
-    },
-    {
-      "niveau": "defaut",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/api/passerelle",
-      "quoi": "le compteur de passerelles n'est pas vivant",
-      "detail": "URLError: <urlopen error timed out> — la seule mesure que les agents peuvent lire seuls n'enregistre rien"
-    }
-  ]
+  "defauts": []
 }
