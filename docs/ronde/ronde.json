@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-08-20 07:51 UTC",
-  "pages_vues": 171,
+  "ronde_du": "2026-08-20 08:47 UTC",
+  "pages_vues": 170,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 17
+      "defauts": 1
     },
     {
       "site": "halalgpt.fr",
@@ -24,7 +24,7 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 7,
+      "pages": 6,
       "defauts": 0
     }
   ],
@@ -33,118 +33,6 @@
       "niveau": "defaut",
       "site": "gohalaltravel.com",
       "url": "https://gohalaltravel.com/",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/djibouti",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/abidjan",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/ouagadougou",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/bamako",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/abuja",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/douala",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/kinshasa",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/kampala",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/kigali",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/dar-es-salaam",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/maputo",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/antananarivo",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/port-louis",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/gold-coast",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/adelaide",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/wellington",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     }
