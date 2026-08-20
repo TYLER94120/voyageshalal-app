@@ -212,6 +212,14 @@ jobs:
       - name: L'ecran n'affirme que ce qu'on sait
         run: npm run sonde:affirmations
 
+      # Test pose par l'ordre SEO du 17 aout : « desactive JavaScript et
+      # recharge. Si l'ecran est vide, ce n'est pas fait. » Mesure du 18 aout :
+      # scan.html rendait 339 caracteres sans JavaScript, contre 2 898, 4 217 et
+      # 16 513 pour les trois autres. Verifie aussi qu'aucune page n'est
+      # orpheline — deux liens internes recus au minimum.
+      - name: Ce qu'un robot lit sans JavaScript
+        run: npm run sonde:sans-js
+
       - name: La lecture d'etiquette par photo
         run: npm run sonde:photo
 
