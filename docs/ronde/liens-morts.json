@@ -1,28 +1,22 @@
 {
-  "verifie_le": "2026-08-20 13:12 UTC",
-  "liens_controles": 1442,
+  "verifie_le": "2026-08-20 16:52 UTC",
+  "liens_controles": 466,
   "pages_vues": 364,
   "pages_connues": 1296,
-  "morts": [
+  "morts": [],
+  "bloques": [
     {
-      "site": "gohalaltravel.com",
+      "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Zagora",
-      "detail": "code 404"
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
     },
     {
       "site": "gohalaltravel.com",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Tirana",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Tiznit",
-      "detail": "code 404"
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
     }
   ],
-  "bloques": [],
   "innocentes_au_controle_calme": []
 }
