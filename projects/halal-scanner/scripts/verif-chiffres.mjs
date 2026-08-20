@@ -42,6 +42,11 @@ const nbCosmetiques =
 
 const accueil = readFileSync(join(PROJET, "site", "index.html"), "utf8");
 const additifs = readFileSync(join(PROJET, "site", "additifs.html"), "utf8");
+// Le scanner annonce les mêmes nombres depuis le 18 août, dans le bloc rendu
+// par le serveur. Trois pages sur quatre les citent maintenant : sans ce
+// contrôle, celle-ci dériverait la première, parce que personne ne relit un
+// paragraphe écrit pour les robots.
+const scanner = readFileSync(join(PROJET, "site", "scan.html"), "utf8");
 
 const controles = [
   ["accueil : additifs", accueil, /(\d+) additifs/g, nbAdditifs],
@@ -49,6 +54,8 @@ const controles = [
   ["page additifs : additifs alimentaires", additifs, /(\d+) additifs alimentaires/g, nbAdditifs],
   ["page additifs : règles cosmétiques", additifs, /(\d+) règles cosmétiques/g, nbCosmetiques],
   ["page additifs : total", additifs, /(\d+) règles au total/g, nbAdditifs + nbTexte + nbCosmetiques],
+  ["scanner : additifs", scanner, /(\d+) additifs/g, nbAdditifs],
+  ["scanner : règles cosmétiques", scanner, /(\d+) règles cosmétiques/g, nbCosmetiques],
 ];
 
 let fautes = 0;

@@ -10,7 +10,7 @@
   <meta property="og:description" content="Composition détaillée, ingrédients à risque expliqués, alternatives du même rayon." />
   <meta property="og:image" content="https://halalcheck.fr/icon-512.png" />
   <link rel="canonical" href="https://halalcheck.fr/scan.html" />
-  <meta name="last-modified" content="2026-08-14T20:01:30+00:00" />
+  <meta name="last-modified" content="2026-08-20T18:03:34+00:00" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -672,6 +672,32 @@
     }
     .jeton .rond { color: #FFFFFF; }
     .jeton .sceau-mini { color: var(--or-lisible); font-size: 10px; font-weight: 800; }
+    /* Texte rendu par le SERVEUR, sous la zone visible.
+       Mesuré le 18 août, JavaScript coupé : cette page ne rendait que
+       339 caractères — « Démarrage de la caméra… », « Tes scans
+       apparaîtront ici ». Les trois autres pages en rendaient 2 898,
+       4 217 et 16 513. Un robot qui n'exécute pas le JavaScript voyait
+       donc une page dont la seule promesse était « caméra en cours ».
+       L'écran reste épuré pour la personne : ce bloc est tout en bas,
+       après les écrans de l'app. */
+    .socle {
+      max-width: 640px;
+      margin: 40px auto 0;
+      padding: 24px 20px 0;
+      border-top: 1px solid var(--bordure);
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--texte-doux);
+    }
+    .socle h2 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 19px; font-weight: 800;
+      color: var(--texte);
+      margin-bottom: 10px;
+    }
+    .socle p { margin-bottom: 12px; }
+    .socle strong { color: var(--texte); }
+    .socle a { color: var(--or-lisible); }
     .bismillah-pied {
       text-align: center;
       color: var(--or-lisible);
@@ -697,7 +723,7 @@
       "publisher": {
         "@id": "https://halalcheck.fr/#editeur"
       },
-      "dateModified": "2026-08-14T20:01:30+00:00"
+      "dateModified": "2026-08-20T18:03:34+00:00"
     },
     {
       "@type": "BreadcrumbList",
@@ -906,6 +932,35 @@
       <p id="erreur-texte"></p>
       <button id="reessayer" class="principal"></button>
       <button id="erreur-secondaire" class="secondaire" style="width: 100%; margin-top: 10px" hidden></button>
+    </section>
+
+    <!-- Rendu par le serveur : lisible sans JavaScript, contrairement à tout
+         ce qui précède. Les deux nombres sont vérifiés contre le moteur par
+         npm run verif:chiffres — ils ne peuvent pas dériver en silence. -->
+    <section class="socle">
+      <h2>Ce que fait ce scanner</h2>
+      <p>
+        Vise le code-barres d'un produit alimentaire ou d'un cosmétique : sa
+        composition est confrontée à <strong>56 additifs</strong> surveillés et
+        à <strong>29 règles cosmétiques</strong>. Chaque ingrédient à risque est
+        nommé, avec la raison exacte du doute — jamais un verdict sans sa raison.
+      </p>
+      <p>
+        Le résultat ne dit que ce qu'il sait. Un ingrédient interdit est signalé
+        comme tel ; une origine non précisée reste un doute ; et quand la liste
+        d'ingrédients manque dans la base, la réponse est « nous ne savons pas »
+        plutôt qu'une supposition. <strong>Une analyse de composition ne peut pas
+        établir qu'un produit est halal</strong> — l'abattage, la contamination
+        croisée et les auxiliaires non déclarés ne figurent sur aucune étiquette.
+        Pour cela, la certification portée sur l'emballage fait foi.
+      </p>
+      <p>
+        Sans compte, sans publicité, et utilisable hors connexion une fois la
+        page ouverte. Si un produit n'est pas dans la base, sa liste
+        d'ingrédients peut être photographiée et lue.
+        <a href="./additifs.html">Voir les additifs surveillés</a> ·
+        <a href="./mentions-legales.html">Sources et méthode</a>
+      </p>
     </section>
 
     <p class="bismillah-pied">بِسْمِ اللَّهِ</p>
@@ -3209,7 +3264,7 @@
   </script>
 
   <footer class="pied" style="text-align: center; padding: 26px 16px calc(30px + env(safe-area-inset-bottom, 0px)); font-size: 14px; color: rgba(18, 38, 26, 0.66); line-height: 2.2; border-top: 1px solid rgba(18, 38, 26, 0.10); margin-top: 28px;">
-    <span style="display:block; margin-bottom:6px; font-size:13px;">Mis à jour le <span class="date-maj">14 août 2026</span> · <a href="./additifs.html" style="color:#7A5F1C; text-decoration:none;">Additifs surveillés</a> · <a href="./mentions-legales.html" style="color:#7A5F1C; text-decoration:none;">Mentions légales</a></span>
+    <span style="display:block; margin-bottom:6px; font-size:13px;">Mis à jour le <span class="date-maj">20 août 2026</span> · <a href="./additifs.html" style="color:#7A5F1C; text-decoration:none;">Additifs surveillés</a> · <a href="./mentions-legales.html" style="color:#7A5F1C; text-decoration:none;">Mentions légales</a></span>
     Un doute sur un ingrédient ?
     <a href="https://halalgpt.fr?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=pied-scanner" style="color: #7A5F1C; text-decoration: none; padding: 4px 6px; font-weight: 700;">🌙 Demande à HalalGPT</a>
     <span aria-hidden>·</span>
