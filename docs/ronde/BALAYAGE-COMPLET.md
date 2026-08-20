@@ -1,11 +1,11 @@
 # Balayage complet
 
-**Dernier changement constate le 2026-08-20 03:02 UTC.**
+**Dernier changement constate le 2026-08-20 03:30 UTC.**
 
 **2013 pages regardees — le site entier.** Les chiffres ci-dessous
 valent donc pour tout ce que Google peut voir.
 
-Balayage commence le 2026-08-20 03:02 UTC, termine en 10 minutes. Un balayage
+Balayage commence le 2026-08-20 03:30 UTC, termine en 9 minutes. Un balayage
 complet qui rendrait la main en quelques secondes n'aurait pas eu lieu :
 c'est a cette duree qu'on le reconnait.
 
@@ -17,8 +17,8 @@ que rien de nouveau n'est casse, pas que le robot dort.
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 721 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 12 | pas urgent, a ne pas laisser grossir |
+| 🟠 defaut | 718 | il la recoit, mais elle le dessert |
+| 🟡 a surveiller | 16 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -28,8 +28,8 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 | Site | Pages vues | Tous niveaux | 🟠 defauts | Plafond |
 |---|---|---|---|---|
 | islampasapas.fr | 34 | 0 | 0 | 0 |
-| voyageshalal.fr | 871 | 361 | 354 | 0 |
-| gohalaltravel.com | 885 | 372 | 367 | 10 |
+| voyageshalal.fr | 871 | 362 | 352 | 0 |
+| gohalaltravel.com | 885 | 372 | 366 | 10 |
 | halalgpt.fr | 219 | 0 | 0 | 0 |
 | halalcheck.fr | 4 | 0 | 0 | 0 |
 
@@ -45,12 +45,12 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
 
 🔴 **On a recule — c'est ce qui fait echouer ce controle :**
 
-- voyageshalal.fr : plafond 0, compte **354**
-- gohalaltravel.com : plafond 10, compte **367**
+- voyageshalal.fr : plafond 0, compte **352**
+- gohalaltravel.com : plafond 10, compte **366**
 
-## 🟠 defaut — 721
+## 🟠 defaut — 718
 
-### voyageshalal.fr (354)
+### voyageshalal.fr (352)
 
 - **aucun titre H1** — la page n'annonce pas son sujet  
   `https://www.voyageshalal.fr/destinations/abu-dhabi`
@@ -132,9 +132,9 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
   `https://www.voyageshalal.fr/destinations/grenade`
 - **aucun titre H1** — la page n'annonce pas son sujet  
   `https://www.voyageshalal.fr/destinations/houston`
-- … et 314 autres, liste complete dans `ronde.json`
+- … et 312 autres, liste complete dans `ronde.json`
 
-### gohalaltravel.com (367)
+### gohalaltravel.com (366)
 
 - **aucun titre H1** — la page n'annonce pas son sujet  
   `https://gohalaltravel.com/`
@@ -216,12 +216,18 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
   `https://www.gohalaltravel.com/destinations/dubai`
 - **aucun titre H1** — la page n'annonce pas son sujet  
   `https://www.gohalaltravel.com/destinations/fes`
-- … et 327 autres, liste complete dans `ronde.json`
+- … et 326 autres, liste complete dans `ronde.json`
 
-## 🟡 surveiller — 12
+## 🟡 surveiller — 16
 
-### voyageshalal.fr (7)
+### voyageshalal.fr (10)
 
+- **page instable sous charge** — muette pendant la ronde, repond en 0.4 s au controle calme — a surveiller, pas a reparer  
+  `https://www.voyageshalal.fr/destinations/londres`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
+  `https://www.voyageshalal.fr/destinations/rotterdam`
+- **page lente (18.7 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.voyageshalal.fr/destinations/taipei`
 - **description trop courte (10 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
 - **description trop courte (21 car.)**  
@@ -237,15 +243,17 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
 - **description trop courte (24 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
 
-### gohalaltravel.com (5)
+### gohalaltravel.com (6)
 
-- **description trop courte (21 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
-- **description trop courte (17 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/destinations/chengdu`
 - **description trop courte (42 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
 - **description trop courte (41 car.)**  
   `https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr`
 - **description trop courte (24 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd`
+- **description trop courte (21 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
+- **description trop courte (17 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
