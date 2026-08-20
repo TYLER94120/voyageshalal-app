@@ -1,17 +1,16 @@
 {
-  "verifie_le": "2026-08-19 20:46 UTC",
-  "liens_controles": 883,
+  "verifie_le": "2026-08-20 01:57 UTC",
+  "liens_controles": 452,
   "pages_vues": 364,
   "pages_connues": 1296,
-  "morts": [
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E472f?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "URLError (confirme machine calme)"
-    }
-  ],
+  "morts": [],
   "bloques": [
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
+    },
     {
       "site": "gohalaltravel.com",
       "genre": "externe",
