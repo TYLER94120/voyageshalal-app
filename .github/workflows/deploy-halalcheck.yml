@@ -2,9 +2,22 @@ name: Déploiement du site HalalCheck
 
 on:
   push:
+    # UNIQUEMENT main. La branche de travail figurait ici depuis la creation du
+    # workflow, le 6 aout ; elle n'avait jamais tire parce que les envois
+    # passaient tous par main. Le 20 aout, un premier envoi sur la branche a
+    # revele ce qu'elle declenchait : une tentative de publication de
+    # halalcheck.fr DEPUIS UNE BRANCHE DE TRAVAIL.
+    #
+    # GitHub l'a refusee — l'environnement github-pages n'accepte que la
+    # branche par defaut, le job est mort en 2 secondes sans executer une
+    # etape. Mais c'etait la seule chose qui nous protegeait, et c'est un
+    # reglage que je ne controle pas.
+    #
+    # Un site dont toute la valeur est la confiance dans ses verdicts ne doit
+    # pas pouvoir publier un travail en cours par accident. Retirer ce
+    # declencheur ne peut rien casser : il ne fonctionnait pas.
     branches:
       - main
-      - claude/sites-mondiaux-copier-ameliorer-rtp5in
     paths:
       - "projects/halal-scanner/site/**"
       - ".github/workflows/deploy-halalcheck.yml"
