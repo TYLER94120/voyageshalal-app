@@ -163,6 +163,51 @@ console.log(`  ✓ ${POLICES.size} fichiers de police référencés, tous prése
 // les résultats, et Google en écarte une.
 const LIMITE_TITRE = 60;
 const LIMITE_DESCRIPTION = 160;
+// ── La FAQ declaree a Google doit etre CELLE DE LA PAGE ──────────────────
+//
+// L'accueil porte une FAQ deux fois : en \<details\> pour la personne, et en
+// JSON-LD pour Google — qui peut en faire un resultat enrichi, la seule
+// chance qu'a un site de 4 pages d'occuper de la place dans une page de
+// resultats.
+//
+// Google exige que la reponse declaree soit VISIBLE sur la page. Deux copies
+// tenues a la main finissent toujours par diverger, et celle-ci avait deja
+// diverge : mesure du 20 aout, 1 entree sur 9. La reponse a « Qui decide de
+// ce qui est halal ou haram ? » se terminait par un lien sur la page et par
+// une paraphrase dans le JSON-LD. Un seul ecart peut faire ecarter le bloc
+// entier — donc les neuf.
+console.log("");
+{
+  const nu = (t) =>
+    String(t)
+      .replace(/<[^>]+>/g, "")
+      .replace(/&nbsp;/g, " ")
+      .replace(/&amp;/g, "&")
+      .replace(/\s+/g, " ")
+      .replace(/[\u2019]/g, "'")
+      .trim();
+  const sansLd = accueil.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g, "");
+  const visibles = [...sansLd.matchAll(/<details>\s*<summary[^>]*>([\s\S]*?)<\/summary>\s*<p>([\s\S]*?)<\/p>/g)]
+    .map((m) => ({ q: nu(m[1]), r: nu(m[2]) }));
+  const ld = JSON.parse((accueil.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/) || [])[1]);
+  const faq = (ld["@graph"] || []).find((n) => n["@type"] === "FAQPage");
+  const declarees = faq ? faq.mainEntity : [];
+  let ecarts = 0;
+  for (const q of declarees) {
+    const vu = visibles.find((v) => v.q === nu(q.name));
+    if (!vu) { ecarts += 1; console.log(`  ✗ FAQ : « ${nu(q.name).slice(0, 46)} » declaree mais ABSENTE de la page`); }
+    else if (vu.r !== nu(q.acceptedAnswer.text)) {
+      ecarts += 1;
+      console.log(`  ✗ FAQ : « ${nu(q.name).slice(0, 46)} » — la reponse declaree differe de celle affichee`);
+    }
+  }
+  const orphelines = visibles.filter((v) => !declarees.some((q) => nu(q.name) === v.q));
+  for (const v of orphelines) console.log(`  ✗ FAQ : « ${v.q.slice(0, 46)} » visible mais non declaree a Google`);
+  ecarts += orphelines.length;
+  fautes += ecarts;
+  if (!ecarts) console.log(`  ✓ FAQ : ${declarees.length} entrees declarees, toutes identiques au texte visible`);
+}
+
 console.log("");
 const vusTitre = new Map();
 const vusDescription = new Map();
