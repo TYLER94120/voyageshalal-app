@@ -1,8 +1,8 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-08-21 13:11 UTC** · 680 liens controles.
+Releve du **2026-08-21 16:52 UTC** · 718 liens controles.
 
-⚠️ **Ce tour a regarde 364 pages sur 1697 — environ 21 %.**
+⚠️ **Ce tour a regarde 364 pages sur 1708 — environ 21 %.**
 
 Le nombre ci-dessous vaut pour CETTE TRANCHE, pas pour le site entier.
 Un releve a 4 puis un a 42 ne veut pas dire que 38 liens ont casse dans
