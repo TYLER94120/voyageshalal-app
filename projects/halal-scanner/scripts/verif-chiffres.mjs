@@ -163,6 +163,31 @@ console.log(`  ✓ ${POLICES.size} fichiers de police référencés, tous prése
 // les résultats, et Google en écarte une.
 const LIMITE_TITRE = 60;
 const LIMITE_DESCRIPTION = 160;
+// ── Chaque fiche d'additif doit avoir son adresse ────────────────────────
+//
+// Mesure du 21 aout : la page des additifs portait 109 fiches et SEULEMENT
+// 10 ancres, celles des sections. Quelqu'un qui cherche « E471 halal » ne
+// pouvait atterrir sur rien de precis — l'entree existait, noyee parmi 108
+// autres, sans adresse a elle.
+//
+// Chaque fiche a maintenant la sienne. Ce controle verifie qu'aucune n'en
+// manque et qu'aucune n'est en double : deux fiches partageant une adresse,
+// c'est un lien sur deux qui tombe sur la mauvaise. Le generateur les
+// fabrique, donc une regression y serait invisible a la lecture.
+console.log("");
+{
+  const ids = [...additifs.matchAll(/<article id="([^"]+)"/g)].map((m) => m[1]);
+  const cartes = (additifs.match(/<article /g) || []).length;
+  const doublons = ids.length - new Set(ids).size;
+  const ok = ids.length === cartes && doublons === 0 && cartes > 0;
+  if (!ok) fautes += 1;
+  console.log(
+    `  ${ok ? "✓" : "✗"} fiches adressables : ${ids.length}/${cartes}` +
+      (doublons ? `, ${doublons} adresse(s) en double` : "") +
+      (ids.length !== cartes ? "  ← des fiches n'ont pas d'adresse" : "")
+  );
+}
+
 // ── La FAQ declaree a Google doit etre CELLE DE LA PAGE ──────────────────
 //
 // L'accueil porte une FAQ deux fois : en \<details\> pour la personne, et en

@@ -10,7 +10,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://halalcheck.fr/additifs.html" />
   <link rel="canonical" href="https://halalcheck.fr/additifs.html" />
-  <meta name="last-modified" content="2026-08-20T18:03:34+00:00" />
+  <meta name="last-modified" content="2026-08-21T16:16:21+00:00" />
   <meta name="theme-color" content="#FDFAF3" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
@@ -84,7 +84,7 @@
         "description": "E471 mono- et diglycérides, E120 carmin, E441 gélatine : les 56 additifs à surveiller et, pour chacun, la raison exacte du doute. Aliments et cosmétiques.",
         "isPartOf": { "@id": "https://halalcheck.fr/#application" },
         "publisher": { "@id": "https://halalcheck.fr/#editeur" },
-        "dateModified": "2026-08-20T18:03:34+00:00"
+        "dateModified": "2026-08-21T16:16:21+00:00"
       },
       {
         "@type": "BreadcrumbList",
@@ -193,11 +193,16 @@
     }
     .carte.haram { border-left-color: var(--haram); }
     .entete { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    /* Pastille du code. C'est un <a> depuis le 21 aout — chaque fiche a son
+       adresse propre — donc on lui retire le soulignement du lien : elle doit
+       rester une pastille, pas devenir un lien de texte. */
     .code {
       font-weight: 800; font-size: 13px; letter-spacing: 0.02em;
       background: rgba(224, 142, 60, 0.14); color: #8A4F13;
       border-radius: 8px; padding: 3px 9px;
+      text-decoration: none; display: inline-block;
     }
+    .carte h3 a { color: inherit; text-decoration: none; }
     .carte.haram .code { background: rgba(192, 57, 43, 0.12); color: #8E2A20; }
     .carte h3 { font-size: 16px; font-weight: 700; }
     .raison { color: var(--texte-doux); font-size: 15px; margin-top: 7px; }
@@ -264,7 +269,7 @@
       directement depuis le moteur d'analyse&nbsp;: ce qui est écrit ici est exactement
       ce qui est détecté lors d'un scan.
     </p>
-    <p class="date">Mis à jour le <span class="date-maj">20 août 2026</span></p>
+    <p class="date">Mis à jour le <span class="date-maj">21 août 2026</span></p>
 
     <div class="recherche">
       <input id="q" type="search" inputmode="search" autocomplete="off"
@@ -289,8 +294,8 @@
     <section class="bloc" id="additifs-interdits">
       <h2>Additifs interdits <span class="compte" data-total="1">1</span></h2>
       <p class="chapeau">Leur origine est établie, pas seulement possible. Le verdict est <strong>haram</strong> sauf mention halal certifiée sur l'emballage.</p>
-      <article class="carte haram" data-cherche="e1000 acide cholique extrait de bile animale (souvent bovine ou porcine). interdit sauf origine halal certifiee.">
-        <div class="entete"><span class="code">E1000</span><h3>Acide cholique</h3></div>
+      <article id="e1000" class="carte haram" data-cherche="e1000 acide cholique extrait de bile animale (souvent bovine ou porcine). interdit sauf origine halal certifiee.">
+        <div class="entete"><a class="code" href="#e1000" title="Lien direct vers E1000">E1000</a><h3>Acide cholique</h3></div>
         <p class="raison">Extrait de bile animale (souvent bovine ou porcine). Interdit sauf origine halal certifiée.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E1000?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E1000 →</a>
       </article>
@@ -299,283 +304,283 @@
     <section class="bloc" id="additifs-verifier">
       <h2>Additifs à vérifier <span class="compte" data-total="55">55</span></h2>
       <p class="chapeau">Ces additifs existent en version végétale <em>comme</em> animale. L'étiquette ne permet pas de trancher : le verdict est <strong>douteux</strong>, et la raison exacte est affichée.</p>
-      <article class="carte douteux" data-cherche="e120 carmin (cochenille) colorant extrait d'insectes broyes, considere non halal par la majorite des avis.">
-        <div class="entete"><span class="code">E120</span><h3>Carmin (cochenille)</h3></div>
+      <article id="e120" class="carte douteux" data-cherche="e120 carmin (cochenille) colorant extrait d'insectes broyes, considere non halal par la majorite des avis.">
+        <div class="entete"><a class="code" href="#e120" title="Lien direct vers E120">E120</a><h3>Carmin (cochenille)</h3></div>
         <p class="raison">Colorant extrait d'insectes broyés, considéré non halal par la majorité des avis.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E120?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E120 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e153 charbon peut etre d'origine vegetale ou issu d'os d'animaux.">
-        <div class="entete"><span class="code">E153</span><h3>Charbon</h3></div>
+      <article id="e153" class="carte douteux" data-cherche="e153 charbon peut etre d'origine vegetale ou issu d'os d'animaux.">
+        <div class="entete"><a class="code" href="#e153" title="Lien direct vers E153">E153</a><h3>Charbon</h3></div>
         <p class="raison">Peut être d'origine végétale ou issu d'os d'animaux.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E153?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E153 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e270 acide lactique obtenu le plus souvent par fermentation vegetale, mais une origine animale reste possible.">
-        <div class="entete"><span class="code">E270</span><h3>Acide lactique</h3></div>
+      <article id="e270" class="carte douteux" data-cherche="e270 acide lactique obtenu le plus souvent par fermentation vegetale, mais une origine animale reste possible.">
+        <div class="entete"><a class="code" href="#e270" title="Lien direct vers E270">E270</a><h3>Acide lactique</h3></div>
         <p class="raison">Obtenu le plus souvent par fermentation végétale, mais une origine animale reste possible.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E270?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E270 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e322 lecithines presque toujours de soja ou de tournesol ; une lecithine d'oeuf est possible mais rare.">
-        <div class="entete"><span class="code">E322</span><h3>Lécithines</h3></div>
+      <article id="e322" class="carte douteux" data-cherche="e322 lecithines presque toujours de soja ou de tournesol ; une lecithine d'oeuf est possible mais rare.">
+        <div class="entete"><a class="code" href="#e322" title="Lien direct vers E322">E322</a><h3>Lécithines</h3></div>
         <p class="raison">Presque toujours de soja ou de tournesol ; une lécithine d'œuf est possible mais rare.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E322?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E322 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e325 lactate de sodium derive de l'acide lactique — origine generalement vegetale, a confirmer.">
-        <div class="entete"><span class="code">E325</span><h3>Lactate de sodium</h3></div>
+      <article id="e325" class="carte douteux" data-cherche="e325 lactate de sodium derive de l'acide lactique — origine generalement vegetale, a confirmer.">
+        <div class="entete"><a class="code" href="#e325" title="Lien direct vers E325">E325</a><h3>Lactate de sodium</h3></div>
         <p class="raison">Dérivé de l'acide lactique — origine généralement végétale, à confirmer.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E325?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E325 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e326 lactate de potassium derive de l'acide lactique — origine generalement vegetale, a confirmer.">
-        <div class="entete"><span class="code">E326</span><h3>Lactate de potassium</h3></div>
+      <article id="e326" class="carte douteux" data-cherche="e326 lactate de potassium derive de l'acide lactique — origine generalement vegetale, a confirmer.">
+        <div class="entete"><a class="code" href="#e326" title="Lien direct vers E326">E326</a><h3>Lactate de potassium</h3></div>
         <p class="raison">Dérivé de l'acide lactique — origine généralement végétale, à confirmer.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E326?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E326 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e327 lactate de calcium derive de l'acide lactique — origine generalement vegetale, a confirmer.">
-        <div class="entete"><span class="code">E327</span><h3>Lactate de calcium</h3></div>
+      <article id="e327" class="carte douteux" data-cherche="e327 lactate de calcium derive de l'acide lactique — origine generalement vegetale, a confirmer.">
+        <div class="entete"><a class="code" href="#e327" title="Lien direct vers E327">E327</a><h3>Lactate de calcium</h3></div>
         <p class="raison">Dérivé de l'acide lactique — origine généralement végétale, à confirmer.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E327?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E327 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e422 glycerol origine vegetale ou animale (parfois porcine) non precisee.">
-        <div class="entete"><span class="code">E422</span><h3>Glycérol</h3></div>
+      <article id="e422" class="carte douteux" data-cherche="e422 glycerol origine vegetale ou animale (parfois porcine) non precisee.">
+        <div class="entete"><a class="code" href="#e422" title="Lien direct vers E422">E422</a><h3>Glycérol</h3></div>
         <p class="raison">Origine végétale ou animale (parfois porcine) non précisée.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E422?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E422 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e430 stearate de polyoxyethylene derive d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E430</span><h3>Stéarate de polyoxyéthylène</h3></div>
+      <article id="e430" class="carte douteux" data-cherche="e430 stearate de polyoxyethylene derive d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e430" title="Lien direct vers E430">E430</a><h3>Stéarate de polyoxyéthylène</h3></div>
         <p class="raison">Dérivé d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E430?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E430 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e431 stearate de polyoxyethylene derive d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E431</span><h3>Stéarate de polyoxyéthylène</h3></div>
+      <article id="e431" class="carte douteux" data-cherche="e431 stearate de polyoxyethylene derive d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e431" title="Lien direct vers E431">E431</a><h3>Stéarate de polyoxyéthylène</h3></div>
         <p class="raison">Dérivé d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E431?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E431 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e432 polysorbate 20 derive d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E432</span><h3>Polysorbate 20</h3></div>
+      <article id="e432" class="carte douteux" data-cherche="e432 polysorbate 20 derive d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e432" title="Lien direct vers E432">E432</a><h3>Polysorbate 20</h3></div>
         <p class="raison">Dérivé d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E432?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E432 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e433 polysorbate 80 derive d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E433</span><h3>Polysorbate 80</h3></div>
+      <article id="e433" class="carte douteux" data-cherche="e433 polysorbate 80 derive d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e433" title="Lien direct vers E433">E433</a><h3>Polysorbate 80</h3></div>
         <p class="raison">Dérivé d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E433?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E433 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e434 polysorbate 40 derive d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E434</span><h3>Polysorbate 40</h3></div>
+      <article id="e434" class="carte douteux" data-cherche="e434 polysorbate 40 derive d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e434" title="Lien direct vers E434">E434</a><h3>Polysorbate 40</h3></div>
         <p class="raison">Dérivé d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E434?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E434 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e435 polysorbate 60 derive d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E435</span><h3>Polysorbate 60</h3></div>
+      <article id="e435" class="carte douteux" data-cherche="e435 polysorbate 60 derive d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e435" title="Lien direct vers E435">E435</a><h3>Polysorbate 60</h3></div>
         <p class="raison">Dérivé d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E435?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E435 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e436 polysorbate 65 derive d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E436</span><h3>Polysorbate 65</h3></div>
+      <article id="e436" class="carte douteux" data-cherche="e436 polysorbate 65 derive d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e436" title="Lien direct vers E436">E436</a><h3>Polysorbate 65</h3></div>
         <p class="raison">Dérivé d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E436?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E436 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e441 gelatine origine non precisee — souvent porcine, sauf mention halal certifiee.">
-        <div class="entete"><span class="code">E441</span><h3>Gélatine</h3></div>
+      <article id="e441" class="carte douteux" data-cherche="e441 gelatine origine non precisee — souvent porcine, sauf mention halal certifiee.">
+        <div class="entete"><a class="code" href="#e441" title="Lien direct vers E441">E441</a><h3>Gélatine</h3></div>
         <p class="raison">Origine non précisée — souvent porcine, sauf mention halal certifiée.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E441?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E441 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e442 phosphatides d'ammonium emulsifiant du chocolat, derive de corps gras — origine a confirmer.">
-        <div class="entete"><span class="code">E442</span><h3>Phosphatides d'ammonium</h3></div>
+      <article id="e442" class="carte douteux" data-cherche="e442 phosphatides d'ammonium emulsifiant du chocolat, derive de corps gras — origine a confirmer.">
+        <div class="entete"><a class="code" href="#e442" title="Lien direct vers E442">E442</a><h3>Phosphatides d'ammonium</h3></div>
         <p class="raison">Émulsifiant du chocolat, dérivé de corps gras — origine à confirmer.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E442?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E442 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e470a sels d'acides gras sels d'acides gras d'origine vegetale ou animale non precisee.">
-        <div class="entete"><span class="code">E470a</span><h3>Sels d'acides gras</h3></div>
+      <article id="e470a" class="carte douteux" data-cherche="e470a sels d'acides gras sels d'acides gras d'origine vegetale ou animale non precisee.">
+        <div class="entete"><a class="code" href="#e470a" title="Lien direct vers E470a">E470a</a><h3>Sels d'acides gras</h3></div>
         <p class="raison">Sels d'acides gras d'origine végétale ou animale non précisée.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E470a?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E470a →</a>
       </article>
-      <article class="carte douteux" data-cherche="e470b sels d'acides gras sels d'acides gras d'origine vegetale ou animale non precisee.">
-        <div class="entete"><span class="code">E470b</span><h3>Sels d'acides gras</h3></div>
+      <article id="e470b" class="carte douteux" data-cherche="e470b sels d'acides gras sels d'acides gras d'origine vegetale ou animale non precisee.">
+        <div class="entete"><a class="code" href="#e470b" title="Lien direct vers E470b">E470b</a><h3>Sels d'acides gras</h3></div>
         <p class="raison">Sels d'acides gras d'origine végétale ou animale non précisée.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E470b?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E470b →</a>
       </article>
-      <article class="carte douteux" data-cherche="e471 mono- et diglycerides emulsifiant d'origine vegetale ou animale non precisee.">
-        <div class="entete"><span class="code">E471</span><h3>Mono- et diglycérides</h3></div>
+      <article id="e471" class="carte douteux" data-cherche="e471 mono- et diglycerides emulsifiant d'origine vegetale ou animale non precisee.">
+        <div class="entete"><a class="code" href="#e471" title="Lien direct vers E471">E471</a><h3>Mono- et diglycérides</h3></div>
         <p class="raison">Émulsifiant d'origine végétale ou animale non précisée.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E471?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E471 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e472a e472a ester d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E472a</span><h3>E472a</h3></div>
+      <article id="e472a" class="carte douteux" data-cherche="e472a e472a ester d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e472a" title="Lien direct vers E472a">E472a</a><h3>E472a</h3></div>
         <p class="raison">Ester d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E472a?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E472a →</a>
       </article>
-      <article class="carte douteux" data-cherche="e472b e472b ester d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E472b</span><h3>E472b</h3></div>
+      <article id="e472b" class="carte douteux" data-cherche="e472b e472b ester d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e472b" title="Lien direct vers E472b">E472b</a><h3>E472b</h3></div>
         <p class="raison">Ester d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E472b?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E472b →</a>
       </article>
-      <article class="carte douteux" data-cherche="e472c e472c ester d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E472c</span><h3>E472c</h3></div>
+      <article id="e472c" class="carte douteux" data-cherche="e472c e472c ester d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e472c" title="Lien direct vers E472c">E472c</a><h3>E472c</h3></div>
         <p class="raison">Ester d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E472c?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E472c →</a>
       </article>
-      <article class="carte douteux" data-cherche="e472d e472d ester d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E472d</span><h3>E472d</h3></div>
+      <article id="e472d" class="carte douteux" data-cherche="e472d e472d ester d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e472d" title="Lien direct vers E472d">E472d</a><h3>E472d</h3></div>
         <p class="raison">Ester d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E472d?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E472d →</a>
       </article>
-      <article class="carte douteux" data-cherche="e472e e472e ester d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E472e</span><h3>E472e</h3></div>
+      <article id="e472e" class="carte douteux" data-cherche="e472e e472e ester d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e472e" title="Lien direct vers E472e">E472e</a><h3>E472e</h3></div>
         <p class="raison">Ester d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E472e?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E472e →</a>
       </article>
-      <article class="carte douteux" data-cherche="e472f e472f ester d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E472f</span><h3>E472f</h3></div>
+      <article id="e472f" class="carte douteux" data-cherche="e472f e472f ester d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e472f" title="Lien direct vers E472f">E472f</a><h3>E472f</h3></div>
         <p class="raison">Ester d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E472f?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E472f →</a>
       </article>
-      <article class="carte douteux" data-cherche="e473 sucroesters origine animale possible.">
-        <div class="entete"><span class="code">E473</span><h3>Sucroesters</h3></div>
+      <article id="e473" class="carte douteux" data-cherche="e473 sucroesters origine animale possible.">
+        <div class="entete"><a class="code" href="#e473" title="Lien direct vers E473">E473</a><h3>Sucroesters</h3></div>
         <p class="raison">Origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E473?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E473 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e474 sucroglycerides derive de corps gras — origine animale possible.">
-        <div class="entete"><span class="code">E474</span><h3>Sucroglycérides</h3></div>
+      <article id="e474" class="carte douteux" data-cherche="e474 sucroglycerides derive de corps gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e474" title="Lien direct vers E474">E474</a><h3>Sucroglycérides</h3></div>
         <p class="raison">Dérivé de corps gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E474?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E474 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e475 e475 esters polyglyceriques — origine animale possible.">
-        <div class="entete"><span class="code">E475</span><h3>E475</h3></div>
+      <article id="e475" class="carte douteux" data-cherche="e475 e475 esters polyglyceriques — origine animale possible.">
+        <div class="entete"><a class="code" href="#e475" title="Lien direct vers E475">E475</a><h3>E475</h3></div>
         <p class="raison">Esters polyglycériques — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E475?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E475 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e476 polyricinoleate origine animale possible.">
-        <div class="entete"><span class="code">E476</span><h3>Polyricinoléate</h3></div>
+      <article id="e476" class="carte douteux" data-cherche="e476 polyricinoleate origine animale possible.">
+        <div class="entete"><a class="code" href="#e476" title="Lien direct vers E476">E476</a><h3>Polyricinoléate</h3></div>
         <p class="raison">Origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E476?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E476 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e477 e477 esters de propylene glycol — origine animale possible.">
-        <div class="entete"><span class="code">E477</span><h3>E477</h3></div>
+      <article id="e477" class="carte douteux" data-cherche="e477 e477 esters de propylene glycol — origine animale possible.">
+        <div class="entete"><a class="code" href="#e477" title="Lien direct vers E477">E477</a><h3>E477</h3></div>
         <p class="raison">Esters de propylène glycol — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E477?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E477 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e478 esters lactyles derive de corps gras — origine animale possible.">
-        <div class="entete"><span class="code">E478</span><h3>Esters lactylés</h3></div>
+      <article id="e478" class="carte douteux" data-cherche="e478 esters lactyles derive de corps gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e478" title="Lien direct vers E478">E478</a><h3>Esters lactylés</h3></div>
         <p class="raison">Dérivé de corps gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E478?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E478 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e479b huile de soja oxydee contient des mono/diglycerides — origine a confirmer.">
-        <div class="entete"><span class="code">E479b</span><h3>Huile de soja oxydée</h3></div>
+      <article id="e479b" class="carte douteux" data-cherche="e479b huile de soja oxydee contient des mono/diglycerides — origine a confirmer.">
+        <div class="entete"><a class="code" href="#e479b" title="Lien direct vers E479b">E479b</a><h3>Huile de soja oxydée</h3></div>
         <p class="raison">Contient des mono/diglycérides — origine à confirmer.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E479b?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E479b →</a>
       </article>
-      <article class="carte douteux" data-cherche="e481 e481 stearoyl-2-lactylate — origine animale possible.">
-        <div class="entete"><span class="code">E481</span><h3>E481</h3></div>
+      <article id="e481" class="carte douteux" data-cherche="e481 e481 stearoyl-2-lactylate — origine animale possible.">
+        <div class="entete"><a class="code" href="#e481" title="Lien direct vers E481">E481</a><h3>E481</h3></div>
         <p class="raison">Stéaroyl-2-lactylate — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E481?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E481 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e482 e482 stearoyl-2-lactylate — origine animale possible.">
-        <div class="entete"><span class="code">E482</span><h3>E482</h3></div>
+      <article id="e482" class="carte douteux" data-cherche="e482 e482 stearoyl-2-lactylate — origine animale possible.">
+        <div class="entete"><a class="code" href="#e482" title="Lien direct vers E482">E482</a><h3>E482</h3></div>
         <p class="raison">Stéaroyl-2-lactylate — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E482?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E482 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e483 e483 tartrate de stearyle — origine animale possible.">
-        <div class="entete"><span class="code">E483</span><h3>E483</h3></div>
+      <article id="e483" class="carte douteux" data-cherche="e483 e483 tartrate de stearyle — origine animale possible.">
+        <div class="entete"><a class="code" href="#e483" title="Lien direct vers E483">E483</a><h3>E483</h3></div>
         <p class="raison">Tartrate de stéaryle — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E483?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E483 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e484 citrostearate de stearyle derive d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E484</span><h3>Citrostéarate de stéaryle</h3></div>
+      <article id="e484" class="carte douteux" data-cherche="e484 citrostearate de stearyle derive d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e484" title="Lien direct vers E484">E484</a><h3>Citrostéarate de stéaryle</h3></div>
         <p class="raison">Dérivé d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E484?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E484 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e485 fumarate de stearyle derive d'acides gras — origine animale possible.">
-        <div class="entete"><span class="code">E485</span><h3>Fumarate de stéaryle</h3></div>
+      <article id="e485" class="carte douteux" data-cherche="e485 fumarate de stearyle derive d'acides gras — origine animale possible.">
+        <div class="entete"><a class="code" href="#e485" title="Lien direct vers E485">E485</a><h3>Fumarate de stéaryle</h3></div>
         <p class="raison">Dérivé d'acides gras — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E485?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E485 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e491 sorbitane origine animale possible.">
-        <div class="entete"><span class="code">E491</span><h3>Sorbitane</h3></div>
+      <article id="e491" class="carte douteux" data-cherche="e491 sorbitane origine animale possible.">
+        <div class="entete"><a class="code" href="#e491" title="Lien direct vers E491">E491</a><h3>Sorbitane</h3></div>
         <p class="raison">Origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E491?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E491 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e492 sorbitane origine animale possible.">
-        <div class="entete"><span class="code">E492</span><h3>Sorbitane</h3></div>
+      <article id="e492" class="carte douteux" data-cherche="e492 sorbitane origine animale possible.">
+        <div class="entete"><a class="code" href="#e492" title="Lien direct vers E492">E492</a><h3>Sorbitane</h3></div>
         <p class="raison">Origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E492?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E492 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e493 sorbitane origine animale possible.">
-        <div class="entete"><span class="code">E493</span><h3>Sorbitane</h3></div>
+      <article id="e493" class="carte douteux" data-cherche="e493 sorbitane origine animale possible.">
+        <div class="entete"><a class="code" href="#e493" title="Lien direct vers E493">E493</a><h3>Sorbitane</h3></div>
         <p class="raison">Origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E493?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E493 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e494 sorbitane origine animale possible.">
-        <div class="entete"><span class="code">E494</span><h3>Sorbitane</h3></div>
+      <article id="e494" class="carte douteux" data-cherche="e494 sorbitane origine animale possible.">
+        <div class="entete"><a class="code" href="#e494" title="Lien direct vers E494">E494</a><h3>Sorbitane</h3></div>
         <p class="raison">Origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E494?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E494 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e495 sorbitane origine animale possible.">
-        <div class="entete"><span class="code">E495</span><h3>Sorbitane</h3></div>
+      <article id="e495" class="carte douteux" data-cherche="e495 sorbitane origine animale possible.">
+        <div class="entete"><a class="code" href="#e495" title="Lien direct vers E495">E495</a><h3>Sorbitane</h3></div>
         <p class="raison">Origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E495?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E495 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e542 phosphate d'os issu d'os d'animaux — abattage non verifiable.">
-        <div class="entete"><span class="code">E542</span><h3>Phosphate d'os</h3></div>
+      <article id="e542" class="carte douteux" data-cherche="e542 phosphate d'os issu d'os d'animaux — abattage non verifiable.">
+        <div class="entete"><a class="code" href="#e542" title="Lien direct vers E542">E542</a><h3>Phosphate d'os</h3></div>
         <p class="raison">Issu d'os d'animaux — abattage non vérifiable.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E542?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E542 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e570 acides gras origine animale possible.">
-        <div class="entete"><span class="code">E570</span><h3>Acides gras</h3></div>
+      <article id="e570" class="carte douteux" data-cherche="e570 acides gras origine animale possible.">
+        <div class="entete"><a class="code" href="#e570" title="Lien direct vers E570">E570</a><h3>Acides gras</h3></div>
         <p class="raison">Origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E570?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E570 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e572 stearate de magnesium origine animale possible.">
-        <div class="entete"><span class="code">E572</span><h3>Stéarate de magnésium</h3></div>
+      <article id="e572" class="carte douteux" data-cherche="e572 stearate de magnesium origine animale possible.">
+        <div class="entete"><a class="code" href="#e572" title="Lien direct vers E572">E572</a><h3>Stéarate de magnésium</h3></div>
         <p class="raison">Origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E572?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E572 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e627 guanylate exhausteur — origine animale possible.">
-        <div class="entete"><span class="code">E627</span><h3>Guanylate</h3></div>
+      <article id="e627" class="carte douteux" data-cherche="e627 guanylate exhausteur — origine animale possible.">
+        <div class="entete"><a class="code" href="#e627" title="Lien direct vers E627">E627</a><h3>Guanylate</h3></div>
         <p class="raison">Exhausteur — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E627?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E627 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e631 inosinate exhausteur parfois issu de viande ou de poisson.">
-        <div class="entete"><span class="code">E631</span><h3>Inosinate</h3></div>
+      <article id="e631" class="carte douteux" data-cherche="e631 inosinate exhausteur parfois issu de viande ou de poisson.">
+        <div class="entete"><a class="code" href="#e631" title="Lien direct vers E631">E631</a><h3>Inosinate</h3></div>
         <p class="raison">Exhausteur parfois issu de viande ou de poisson.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E631?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E631 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e635 ribonucleotides exhausteur — origine animale possible.">
-        <div class="entete"><span class="code">E635</span><h3>Ribonucléotides</h3></div>
+      <article id="e635" class="carte douteux" data-cherche="e635 ribonucleotides exhausteur — origine animale possible.">
+        <div class="entete"><a class="code" href="#e635" title="Lien direct vers E635">E635</a><h3>Ribonucléotides</h3></div>
         <p class="raison">Exhausteur — origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E635?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E635 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e640 glycine origine animale possible.">
-        <div class="entete"><span class="code">E640</span><h3>Glycine</h3></div>
+      <article id="e640" class="carte douteux" data-cherche="e640 glycine origine animale possible.">
+        <div class="entete"><a class="code" href="#e640" title="Lien direct vers E640">E640</a><h3>Glycine</h3></div>
         <p class="raison">Origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E640?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E640 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e904 gomme-laque (shellac) resine secretee par un insecte — avis divergents.">
-        <div class="entete"><span class="code">E904</span><h3>Gomme-laque (shellac)</h3></div>
+      <article id="e904" class="carte douteux" data-cherche="e904 gomme-laque (shellac) resine secretee par un insecte — avis divergents.">
+        <div class="entete"><a class="code" href="#e904" title="Lien direct vers E904">E904</a><h3>Gomme-laque (shellac)</h3></div>
         <p class="raison">Résine sécrétée par un insecte — avis divergents.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E904?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E904 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e920 l-cysteine parfois extraite de plumes ou de soies animales.">
-        <div class="entete"><span class="code">E920</span><h3>L-cystéine</h3></div>
+      <article id="e920" class="carte douteux" data-cherche="e920 l-cysteine parfois extraite de plumes ou de soies animales.">
+        <div class="entete"><a class="code" href="#e920" title="Lien direct vers E920">E920</a><h3>L-cystéine</h3></div>
         <p class="raison">Parfois extraite de plumes ou de soies animales.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E920?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E920 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e921 l-cystine origine animale possible.">
-        <div class="entete"><span class="code">E921</span><h3>L-cystine</h3></div>
+      <article id="e921" class="carte douteux" data-cherche="e921 l-cystine origine animale possible.">
+        <div class="entete"><a class="code" href="#e921" title="Lien direct vers E921">E921</a><h3>L-cystine</h3></div>
         <p class="raison">Origine animale possible.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E921?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E921 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e966 lactitol edulcorant derive du lactose (lait) — pas de porc, mais origine a confirmer.">
-        <div class="entete"><span class="code">E966</span><h3>Lactitol</h3></div>
+      <article id="e966" class="carte douteux" data-cherche="e966 lactitol edulcorant derive du lactose (lait) — pas de porc, mais origine a confirmer.">
+        <div class="entete"><a class="code" href="#e966" title="Lien direct vers E966">E966</a><h3>Lactitol</h3></div>
         <p class="raison">Édulcorant dérivé du lactose (lait) — pas de porc, mais origine à confirmer.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E966?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E966 →</a>
       </article>
-      <article class="carte douteux" data-cherche="e1105 lysozyme enzyme extraite du blanc d'oeuf — licite en soi, mais support et procede a confirmer.">
-        <div class="entete"><span class="code">E1105</span><h3>Lysozyme</h3></div>
+      <article id="e1105" class="carte douteux" data-cherche="e1105 lysozyme enzyme extraite du blanc d'oeuf — licite en soi, mais support et procede a confirmer.">
+        <div class="entete"><a class="code" href="#e1105" title="Lien direct vers E1105">E1105</a><h3>Lysozyme</h3></div>
         <p class="raison">Enzyme extraite du blanc d'œuf — licite en soi, mais support et procédé à confirmer.</p>
         <a class="fiche" href="https://halalgpt.fr/e/E1105?utm_source=halalcheck&amp;utm_medium=passerelle&amp;utm_campaign=liste-additifs" target="_blank" rel="noopener">Comprendre le E1105 →</a>
       </article>
@@ -584,32 +589,32 @@
     <section class="bloc" id="ingredients-interdits">
       <h2>Ingrédients interdits dans la liste <span class="compte" data-total="5">5</span></h2>
       <p class="chapeau">Repérés directement dans le texte de la composition, sans code E.</p>
-      <article class="carte haram" data-cherche="porc (خنزير) le mot « porc » figure en arabe sur l'etiquette. le porc et tous ses derives sont interdits. خنزير">
-        <div class="entete"><h3>Porc (خنزير)</h3></div>
+      <article id="porc" class="carte haram" data-cherche="porc (خنزير) le mot « porc » figure en arabe sur l'etiquette. le porc et tous ses derives sont interdits. خنزير">
+        <div class="entete"><h3><a href="#porc" title="Lien direct">Porc (خنزير)</a></h3></div>
         <p class="raison">Le mot « porc » figure en arabe sur l'étiquette. Le porc et tous ses dérivés sont interdits.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">خنزير</span></div>
       </article>
-      <article class="carte haram" data-cherche="alcool (كحول) le mot « alcool » ou « vin » figure en arabe sur l'etiquette. كحول خمر">
-        <div class="entete"><h3>Alcool (كحول)</h3></div>
+      <article id="alcool" class="carte haram" data-cherche="alcool (كحول) le mot « alcool » ou « vin » figure en arabe sur l'etiquette. كحول خمر">
+        <div class="entete"><h3><a href="#alcool" title="Lien direct">Alcool (كحول)</a></h3></div>
         <p class="raison">Le mot « alcool » ou « vin » figure en arabe sur l'étiquette.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">كحول</span><span class="mot">خمر</span></div>
       </article>
-      <article class="carte haram" data-cherche="porc / derive de porc le porc et tous ses derives sont interdits. porc porcin lard lardon saindoux couenne bacon poitrine fumee petit sale">
-        <div class="entete"><h3>Porc / dérivé de porc</h3></div>
+      <article id="porc-derive-de-porc" class="carte haram" data-cherche="porc / derive de porc le porc et tous ses derives sont interdits. porc porcin lard lardon saindoux couenne bacon poitrine fumee petit sale">
+        <div class="entete"><h3><a href="#porc-derive-de-porc" title="Lien direct">Porc / dérivé de porc</a></h3></div>
         <p class="raison">Le porc et tous ses dérivés sont interdits.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">porc</span><span class="mot">porcin</span><span class="mot">lard</span><span class="mot">lardon</span><span class="mot">saindoux</span><span class="mot">couenne</span><span class="mot">bacon</span><span class="mot">poitrine fumee</span><span class="mot">petit sale</span></div>
       </article>
-      <article class="carte haram" data-cherche="alcool presence d'alcool dans la composition. alcool ethanol">
-        <div class="entete"><h3>Alcool</h3></div>
+      <article id="alcool-2" class="carte haram" data-cherche="alcool presence d'alcool dans la composition. alcool ethanol">
+        <div class="entete"><h3><a href="#alcool-2" title="Lien direct">Alcool</a></h3></div>
         <p class="raison">Présence d'alcool dans la composition.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">alcool</span><span class="mot">ethanol</span></div>
       </article>
-      <article class="carte haram" data-cherche="alcool (vin / spiritueux) boisson alcoolisee utilisee comme ingredient. vin biere rhum whis:y / ys / ies liqueur cognac marsala calvados kirsch grand marnier porto sherry xeres madere vermouth sake cidre">
-        <div class="entete"><h3>Alcool (vin / spiritueux)</h3></div>
+      <article id="alcool-vin-spiritueux" class="carte haram" data-cherche="alcool (vin / spiritueux) boisson alcoolisee utilisee comme ingredient. vin biere rhum whis:y / ys / ies liqueur cognac marsala calvados kirsch grand marnier porto sherry xeres madere vermouth sake cidre">
+        <div class="entete"><h3><a href="#alcool-vin-spiritueux" title="Lien direct">Alcool (vin / spiritueux)</a></h3></div>
         <p class="raison">Boisson alcoolisée utilisée comme ingrédient.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">vin</span><span class="mot">biere</span><span class="mot">rhum</span><span class="mot">whis:y / ys / ies</span><span class="mot">liqueur</span><span class="mot">cognac</span><span class="mot">marsala</span><span class="mot">calvados</span><span class="mot">kirsch</span><span class="mot">grand marnier</span><span class="mot">porto</span><span class="mot">sherry</span><span class="mot">xeres</span><span class="mot">madere</span><span class="mot">vermouth</span><span class="mot">sake</span><span class="mot">cidre</span></div>
@@ -619,116 +624,116 @@
     <section class="bloc" id="ingredients-verifier">
       <h2>Ingrédients à vérifier dans la liste <span class="compte" data-total="19">19</span></h2>
       <p class="chapeau">Mots qui déclenchent un doute et une demande de vérification.</p>
-      <article class="carte douteux" data-cherche="gelatine (جيلاتين) le mot « gelatine » figure en arabe sur l'etiquette. origine non precisee — souvent porcine, sauf mention halal. جيلاتين جلاتين">
-        <div class="entete"><h3>Gélatine (جيلاتين)</h3></div>
+      <article id="gelatine" class="carte douteux" data-cherche="gelatine (جيلاتين) le mot « gelatine » figure en arabe sur l'etiquette. origine non precisee — souvent porcine, sauf mention halal. جيلاتين جلاتين">
+        <div class="entete"><h3><a href="#gelatine" title="Lien direct">Gélatine (جيلاتين)</a></h3></div>
         <p class="raison">Le mot « gélatine » figure en arabe sur l'étiquette. Origine non précisée — souvent porcine, sauf mention halal.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">جيلاتين</span><span class="mot">جلاتين</span></div>
       </article>
-      <article class="carte douteux" data-cherche="presure (إنفحة) le mot « presure » figure en arabe sur l'etiquette. coagulant souvent d'origine animale. انفحة إنفحة">
-        <div class="entete"><h3>Présure (إنفحة)</h3></div>
+      <article id="presure" class="carte douteux" data-cherche="presure (إنفحة) le mot « presure » figure en arabe sur l'etiquette. coagulant souvent d'origine animale. انفحة إنفحة">
+        <div class="entete"><h3><a href="#presure" title="Lien direct">Présure (إنفحة)</a></h3></div>
         <p class="raison">Le mot « présure » figure en arabe sur l'étiquette. Coagulant souvent d'origine animale.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">انفحة</span><span class="mot">إنفحة</span></div>
       </article>
-      <article class="carte douteux" data-cherche="viande (لحم) le mot « viande » figure en arabe sur l'etiquette. abattage halal a verifier, sauf certification. لحم">
-        <div class="entete"><h3>Viande (لحم)</h3></div>
+      <article id="viande" class="carte douteux" data-cherche="viande (لحم) le mot « viande » figure en arabe sur l'etiquette. abattage halal a verifier, sauf certification. لحم">
+        <div class="entete"><h3><a href="#viande" title="Lien direct">Viande (لحم)</a></h3></div>
         <p class="raison">Le mot « viande » figure en arabe sur l'étiquette. Abattage halal à vérifier, sauf certification.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">لحم</span></div>
       </article>
-      <article class="carte douteux" data-cherche="gelatine origine non precisee — souvent porcine, sauf mention halal. gelatine">
-        <div class="entete"><h3>Gélatine</h3></div>
+      <article id="gelatine-2" class="carte douteux" data-cherche="gelatine origine non precisee — souvent porcine, sauf mention halal. gelatine">
+        <div class="entete"><h3><a href="#gelatine-2" title="Lien direct">Gélatine</a></h3></div>
         <p class="raison">Origine non précisée — souvent porcine, sauf mention halal.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">gelatine</span></div>
       </article>
-      <article class="carte douteux" data-cherche="l-cysteine ameliorant de panification, parfois extrait de plumes ou de soies animales. l-?cysteine cysteine">
-        <div class="entete"><h3>L-cystéine</h3></div>
+      <article id="l-cysteine" class="carte douteux" data-cherche="l-cysteine ameliorant de panification, parfois extrait de plumes ou de soies animales. l-?cysteine cysteine">
+        <div class="entete"><h3><a href="#l-cysteine" title="Lien direct">L-cystéine</a></h3></div>
         <p class="raison">Améliorant de panification, parfois extrait de plumes ou de soies animales.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">l-?cysteine</span><span class="mot">cysteine</span></div>
       </article>
-      <article class="carte douteux" data-cherche="acide stearique / stearate corps gras d'origine vegetale ou animale non precisee. acide stearique stearate stearate de magnesium acide gras animaux">
-        <div class="entete"><h3>Acide stéarique / stéarate</h3></div>
+      <article id="acide-stearique-stearate" class="carte douteux" data-cherche="acide stearique / stearate corps gras d'origine vegetale ou animale non precisee. acide stearique stearate stearate de magnesium acide gras animaux">
+        <div class="entete"><h3><a href="#acide-stearique-stearate" title="Lien direct">Acide stéarique / stéarate</a></h3></div>
         <p class="raison">Corps gras d'origine végétale ou animale non précisée.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">acide stearique</span><span class="mot">stearate</span><span class="mot">stearate de magnesium</span><span class="mot">acide gras animaux</span></div>
       </article>
-      <article class="carte douteux" data-cherche="boyau naturel enveloppe des saucisses : intestin animal, souvent porcin. origine a verifier. boyau naturel boyau">
-        <div class="entete"><h3>Boyau naturel</h3></div>
+      <article id="boyau-naturel" class="carte douteux" data-cherche="boyau naturel enveloppe des saucisses : intestin animal, souvent porcin. origine a verifier. boyau naturel boyau">
+        <div class="entete"><h3><a href="#boyau-naturel" title="Lien direct">Boyau naturel</a></h3></div>
         <p class="raison">Enveloppe des saucisses : intestin animal, souvent porcin. Origine à vérifier.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">boyau naturel</span><span class="mot">boyau</span></div>
       </article>
-      <article class="carte douteux" data-cherche="presure coagulant souvent d'origine animale (fromages) — origine a verifier. presure rennet">
-        <div class="entete"><h3>Présure</h3></div>
+      <article id="presure-2" class="carte douteux" data-cherche="presure coagulant souvent d'origine animale (fromages) — origine a verifier. presure rennet">
+        <div class="entete"><h3><a href="#presure-2" title="Lien direct">Présure</a></h3></div>
         <p class="raison">Coagulant souvent d'origine animale (fromages) — origine à vérifier.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">presure</span><span class="mot">rennet</span></div>
       </article>
-      <article class="carte douteux" data-cherche="charcuterie origine de la viande et abattage a verifier (souvent porc). jambon chorizo pepperoni salami mortadelle">
-        <div class="entete"><h3>Charcuterie</h3></div>
+      <article id="charcuterie" class="carte douteux" data-cherche="charcuterie origine de la viande et abattage a verifier (souvent porc). jambon chorizo pepperoni salami mortadelle">
+        <div class="entete"><h3><a href="#charcuterie" title="Lien direct">Charcuterie</a></h3></div>
         <p class="raison">Origine de la viande et abattage à vérifier (souvent porc).</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">jambon</span><span class="mot">chorizo</span><span class="mot">pepperoni</span><span class="mot">salami</span><span class="mot">mortadelle</span></div>
       </article>
-      <article class="carte douteux" data-cherche="graisse animale origine et abattage non verifiables. graisse animale gras animal suif graisse d'origine animale tallow shortening">
-        <div class="entete"><h3>Graisse animale</h3></div>
+      <article id="graisse-animale" class="carte douteux" data-cherche="graisse animale origine et abattage non verifiables. graisse animale gras animal suif graisse d'origine animale tallow shortening">
+        <div class="entete"><h3><a href="#graisse-animale" title="Lien direct">Graisse animale</a></h3></div>
         <p class="raison">Origine et abattage non vérifiables.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">graisse animale</span><span class="mot">gras animal</span><span class="mot">suif</span><span class="mot">graisse d'origine animale</span><span class="mot">tallow</span><span class="mot">shortening</span></div>
       </article>
-      <article class="carte douteux" data-cherche="mono/diglycerides emulsifiant d'origine possiblement animale. mono et diglycerides monoglycerides diglycerides">
-        <div class="entete"><h3>Mono/diglycérides</h3></div>
+      <article id="mono-diglycerides" class="carte douteux" data-cherche="mono/diglycerides emulsifiant d'origine possiblement animale. mono et diglycerides monoglycerides diglycerides">
+        <div class="entete"><h3><a href="#mono-diglycerides" title="Lien direct">Mono/diglycérides</a></h3></div>
         <p class="raison">Émulsifiant d'origine possiblement animale.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">mono et diglycerides</span><span class="mot">monoglycerides</span><span class="mot">diglycerides</span></div>
       </article>
-      <article class="carte douteux" data-cherche="carmin (cochenille) colorant issu d'insectes — majoritairement considere non halal. carmin carmine cochenille carminic">
-        <div class="entete"><h3>Carmin (cochenille)</h3></div>
+      <article id="carmin-cochenille" class="carte douteux" data-cherche="carmin (cochenille) colorant issu d'insectes — majoritairement considere non halal. carmin carmine cochenille carminic">
+        <div class="entete"><h3><a href="#carmin-cochenille" title="Lien direct">Carmin (cochenille)</a></h3></div>
         <p class="raison">Colorant issu d'insectes — majoritairement considéré non halal.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">carmin</span><span class="mot">carmine</span><span class="mot">cochenille</span><span class="mot">carminic</span></div>
       </article>
-      <article class="carte douteux" data-cherche="enzyme d'origine possiblement animale pepsine, pancreatine et lipase sont souvent extraites d'estomac ou de pancreas ; il en existe aussi des versions microbiennes. l'etiquette ne le precise pas. pepsine pancreatine lipase trypsine">
-        <div class="entete"><h3>Enzyme d'origine possiblement animale</h3></div>
+      <article id="enzyme-d-origine-possiblement-animale" class="carte douteux" data-cherche="enzyme d'origine possiblement animale pepsine, pancreatine et lipase sont souvent extraites d'estomac ou de pancreas ; il en existe aussi des versions microbiennes. l'etiquette ne le precise pas. pepsine pancreatine lipase trypsine">
+        <div class="entete"><h3><a href="#enzyme-d-origine-possiblement-animale" title="Lien direct">Enzyme d'origine possiblement animale</a></h3></div>
         <p class="raison">Pepsine, pancréatine et lipase sont souvent extraites d'estomac ou de pancréas ; il en existe aussi des versions microbiennes. L'étiquette ne le précise pas.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">pepsine</span><span class="mot">pancreatine</span><span class="mot">lipase</span><span class="mot">trypsine</span></div>
       </article>
-      <article class="carte douteux" data-cherche="gomme laque (shellac) resine secretee par un insecte, utilisee pour lustrer. meme substance que l'additif e904. gommelaque shellac">
-        <div class="entete"><h3>Gomme laque (shellac)</h3></div>
+      <article id="gomme-laque-shellac" class="carte douteux" data-cherche="gomme laque (shellac) resine secretee par un insecte, utilisee pour lustrer. meme substance que l'additif e904. gommelaque shellac">
+        <div class="entete"><h3><a href="#gomme-laque-shellac" title="Lien direct">Gomme laque (shellac)</a></h3></div>
         <p class="raison">Résine sécrétée par un insecte, utilisée pour lustrer. Même substance que l'additif E904.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">gommelaque</span><span class="mot">shellac</span></div>
       </article>
-      <article class="carte douteux" data-cherche="collagene / elastine proteines extraites de peau, d'os ou de tissus animaux — espece et abattage non precises. collagene elastine">
-        <div class="entete"><h3>Collagène / élastine</h3></div>
+      <article id="collagene-elastine" class="carte douteux" data-cherche="collagene / elastine proteines extraites de peau, d'os ou de tissus animaux — espece et abattage non precises. collagene elastine">
+        <div class="entete"><h3><a href="#collagene-elastine" title="Lien direct">Collagène / élastine</a></h3></div>
         <p class="raison">Protéines extraites de peau, d'os ou de tissus animaux — espèce et abattage non précisés.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">collagene</span><span class="mot">elastine</span></div>
       </article>
-      <article class="carte douteux" data-cherche="glycerine origine vegetale ou animale (parfois porcine) non precisee. meme substance que l'additif e422. glycerine">
-        <div class="entete"><h3>Glycérine</h3></div>
+      <article id="glycerine" class="carte douteux" data-cherche="glycerine origine vegetale ou animale (parfois porcine) non precisee. meme substance que l'additif e422. glycerine">
+        <div class="entete"><h3><a href="#glycerine" title="Lien direct">Glycérine</a></h3></div>
         <p class="raison">Origine végétale ou animale (parfois porcine) non précisée. Même substance que l'additif E422.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">glycerine</span></div>
       </article>
-      <article class="carte douteux" data-cherche="l-cysteine parfois extraite de plumes ou de soies animales. l-cysteine">
-        <div class="entete"><h3>L-cystéine</h3></div>
+      <article id="l-cysteine-2" class="carte douteux" data-cherche="l-cysteine parfois extraite de plumes ou de soies animales. l-cysteine">
+        <div class="entete"><h3><a href="#l-cysteine-2" title="Lien direct">L-cystéine</a></h3></div>
         <p class="raison">Parfois extraite de plumes ou de soies animales.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">l-cysteine</span></div>
       </article>
-      <article class="carte douteux" data-cherche="arome / bouillon de viande origine de la viande et abattage a verifier. arome de viande bouillon de poulet / boeuf / viande / volaille fond de veau / volaille">
-        <div class="entete"><h3>Arôme / bouillon de viande</h3></div>
+      <article id="arome-bouillon-de-viande" class="carte douteux" data-cherche="arome / bouillon de viande origine de la viande et abattage a verifier. arome de viande bouillon de poulet / boeuf / viande / volaille fond de veau / volaille">
+        <div class="entete"><h3><a href="#arome-bouillon-de-viande" title="Lien direct">Arôme / bouillon de viande</a></h3></div>
         <p class="raison">Origine de la viande et abattage à vérifier.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">arome de viande</span><span class="mot">bouillon de poulet / bœuf / viande / volaille</span><span class="mot">fond de veau / volaille</span></div>
       </article>
-      <article class="carte douteux" data-cherche="viande viande detectee — abattage halal a verifier, sauf certification. viande poulet boeuf agneau dinde volaille canard veau mouton">
-        <div class="entete"><h3>Viande</h3></div>
+      <article id="viande-2" class="carte douteux" data-cherche="viande viande detectee — abattage halal a verifier, sauf certification. viande poulet boeuf agneau dinde volaille canard veau mouton">
+        <div class="entete"><h3><a href="#viande-2" title="Lien direct">Viande</a></h3></div>
         <p class="raison">Viande détectée — abattage halal à vérifier, sauf certification.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">viande</span><span class="mot">poulet</span><span class="mot">boeuf</span><span class="mot">agneau</span><span class="mot">dinde</span><span class="mot">volaille</span><span class="mot">canard</span><span class="mot">veau</span><span class="mot">mouton</span></div>
@@ -738,26 +743,26 @@
     <section class="bloc" id="cosmetiques-interdits">
       <h2>Cosmétiques — ingrédients interdits <span class="compte" data-total="4">4</span></h2>
       <p class="chapeau">Nomenclature INCI, celle imprimée au dos des shampooings, crèmes et savons.</p>
-      <article class="carte haram" data-cherche="suif (tallow) graisse de boeuf ou de mouton fondue, tres utilisee dans les savons. interdite sauf origine halal certifiee. talloww sodium tallowate potassium tallowate suif suet adeps bovis">
-        <div class="entete"><h3>Suif (Tallow)</h3></div>
+      <article id="suif-tallow" class="carte haram" data-cherche="suif (tallow) graisse de boeuf ou de mouton fondue, tres utilisee dans les savons. interdite sauf origine halal certifiee. talloww sodium tallowate potassium tallowate suif suet adeps bovis">
+        <div class="entete"><h3><a href="#suif-tallow" title="Lien direct">Suif (Tallow)</a></h3></div>
         <p class="raison">Graisse de bœuf ou de mouton fondue, très utilisée dans les savons. Interdite sauf origine halal certifiée.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">talloww</span><span class="mot">sodium tallowate</span><span class="mot">potassium tallowate</span><span class="mot">suif</span><span class="mot">suet</span><span class="mot">adeps bovis</span></div>
       </article>
-      <article class="carte haram" data-cherche="derive de porc ingredient d'origine porcine — interdit. lard porcine pork sus scrofa porc adeps suillus">
-        <div class="entete"><h3>Dérivé de porc</h3></div>
+      <article id="derive-de-porc" class="carte haram" data-cherche="derive de porc ingredient d'origine porcine — interdit. lard porcine pork sus scrofa porc adeps suillus">
+        <div class="entete"><h3><a href="#derive-de-porc" title="Lien direct">Dérivé de porc</a></h3></div>
         <p class="raison">Ingrédient d'origine porcine — interdit.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">lard</span><span class="mot">porcine</span><span class="mot">pork</span><span class="mot">sus scrofa</span><span class="mot">porc</span><span class="mot">adeps suillus</span></div>
       </article>
-      <article class="carte haram" data-cherche="placenta extrait de placenta animal — interdit. placenta placental">
-        <div class="entete"><h3>Placenta</h3></div>
+      <article id="placenta" class="carte haram" data-cherche="placenta extrait de placenta animal — interdit. placenta placental">
+        <div class="entete"><h3><a href="#placenta" title="Lien direct">Placenta</a></h3></div>
         <p class="raison">Extrait de placenta animal — interdit.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">placenta</span><span class="mot">placental</span></div>
       </article>
-      <article class="carte haram" data-cherche="carmin (ci 75470) colorant rouge extrait d'insectes broyes — considere non licite par la majorite des avis. carmine ci 75470 cochineal carminic acid">
-        <div class="entete"><h3>Carmin (CI 75470)</h3></div>
+      <article id="carmin-ci-75470" class="carte haram" data-cherche="carmin (ci 75470) colorant rouge extrait d'insectes broyes — considere non licite par la majorite des avis. carmine ci 75470 cochineal carminic acid">
+        <div class="entete"><h3><a href="#carmin-ci-75470" title="Lien direct">Carmin (CI 75470)</a></h3></div>
         <p class="raison">Colorant rouge extrait d'insectes broyés — considéré non licite par la majorité des avis.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">carmine</span><span class="mot">ci 75470</span><span class="mot">cochineal</span><span class="mot">carminic acid</span></div>
@@ -767,146 +772,146 @@
     <section class="bloc" id="cosmetiques-verifier">
       <h2>Cosmétiques — ingrédients à vérifier <span class="compte" data-total="24">24</span></h2>
       <p class="chapeau">Origine végétale ou animale selon le fabricant. Un produit certifié halal ou végane lève ce doute.</p>
-      <article class="carte douteux" data-cherche="collagene extrait de peau, d'os ou d'ecailles ; l'espece et l'abattage ne sont pas precises. collagen collagene hydrolyzed collagen soluble collagen">
-        <div class="entete"><h3>Collagène</h3></div>
+      <article id="collagene" class="carte douteux" data-cherche="collagene extrait de peau, d'os ou d'ecailles ; l'espece et l'abattage ne sont pas precises. collagen collagene hydrolyzed collagen soluble collagen">
+        <div class="entete"><h3><a href="#collagene" title="Lien direct">Collagène</a></h3></div>
         <p class="raison">Extrait de peau, d'os ou d'écailles ; l'espèce et l'abattage ne sont pas précisés.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">collagen</span><span class="mot">collagène</span><span class="mot">hydrolyzed collagen</span><span class="mot">soluble collagen</span></div>
       </article>
-      <article class="carte douteux" data-cherche="elastine proteine d'origine animale (tissus conjonctifs) — origine a confirmer. elastin elastine">
-        <div class="entete"><h3>Élastine</h3></div>
+      <article id="elastine" class="carte douteux" data-cherche="elastine proteine d'origine animale (tissus conjonctifs) — origine a confirmer. elastin elastine">
+        <div class="entete"><h3><a href="#elastine" title="Lien direct">Élastine</a></h3></div>
         <p class="raison">Protéine d'origine animale (tissus conjonctifs) — origine à confirmer.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">elastin</span><span class="mot">élastine</span></div>
       </article>
-      <article class="carte douteux" data-cherche="keratine extraite de laine, plumes, cornes ou sabots — origine et abattage non verifiables. keratin keratine hydrolyzed keratin l-?cysteine cysteine cystine">
-        <div class="entete"><h3>Kératine</h3></div>
+      <article id="keratine" class="carte douteux" data-cherche="keratine extraite de laine, plumes, cornes ou sabots — origine et abattage non verifiables. keratin keratine hydrolyzed keratin l-?cysteine cysteine cystine">
+        <div class="entete"><h3><a href="#keratine" title="Lien direct">Kératine</a></h3></div>
         <p class="raison">Extraite de laine, plumes, cornes ou sabots — origine et abattage non vérifiables.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">keratin</span><span class="mot">kératine</span><span class="mot">hydrolyzed keratin</span><span class="mot">l-?cysteine</span><span class="mot">cysteine</span><span class="mot">cystine</span></div>
       </article>
-      <article class="carte douteux" data-cherche="gelatine souvent d'origine porcine ou bovine, sauf mention halal. gelatine gelatin hydrolyzed gelatin">
-        <div class="entete"><h3>Gélatine</h3></div>
+      <article id="gelatine-3" class="carte douteux" data-cherche="gelatine souvent d'origine porcine ou bovine, sauf mention halal. gelatine gelatin hydrolyzed gelatin">
+        <div class="entete"><h3><a href="#gelatine-3" title="Lien direct">Gélatine</a></h3></div>
         <p class="raison">Souvent d'origine porcine ou bovine, sauf mention halal.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">gelatine</span><span class="mot">gelatin</span><span class="mot">hydrolyzed gelatin</span></div>
       </article>
-      <article class="carte douteux" data-cherche="acide stearique / stearates tres majoritairement d'origine vegetale (palme, coco) dans les cosmetiques europeens. origine animale rare mais possible. stearic acid acide stearique stearate glyceryl stearate sodium stearate magnesium stearate stearoyl stearamide">
-        <div class="entete"><h3>Acide stéarique / stéarates</h3></div>
+      <article id="acide-stearique-stearates" class="carte douteux" data-cherche="acide stearique / stearates tres majoritairement d'origine vegetale (palme, coco) dans les cosmetiques europeens. origine animale rare mais possible. stearic acid acide stearique stearate glyceryl stearate sodium stearate magnesium stearate stearoyl stearamide">
+        <div class="entete"><h3><a href="#acide-stearique-stearates" title="Lien direct">Acide stéarique / stéarates</a></h3></div>
         <p class="raison">Très majoritairement d'origine végétale (palme, coco) dans les cosmétiques européens. Origine animale rare mais possible.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">stearic acid</span><span class="mot">acide stéarique</span><span class="mot">stearate</span><span class="mot">glyceryl stearate</span><span class="mot">sodium stearate</span><span class="mot">magnesium stearate</span><span class="mot">stearoyl</span><span class="mot">stearamide</span></div>
       </article>
-      <article class="carte douteux" data-cherche="glycerine aujourd'hui presque toujours vegetale (palme, coco) ou synthetique en europe. le doute est theorique, sauf produit importe sans mention. glycerin glycerine glycerol">
-        <div class="entete"><h3>Glycérine</h3></div>
+      <article id="glycerine-2" class="carte douteux" data-cherche="glycerine aujourd'hui presque toujours vegetale (palme, coco) ou synthetique en europe. le doute est theorique, sauf produit importe sans mention. glycerin glycerine glycerol">
+        <div class="entete"><h3><a href="#glycerine-2" title="Lien direct">Glycérine</a></h3></div>
         <p class="raison">Aujourd'hui presque toujours végétale (palme, coco) ou synthétique en Europe. Le doute est théorique, sauf produit importé sans mention.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">glycerin</span><span class="mot">glycerine</span><span class="mot">glycerol</span></div>
       </article>
-      <article class="carte douteux" data-cherche="squalene / squalane extrait de foie de requin ou d'olive — les deux origines coexistent sur le marche. squalene squalane">
-        <div class="entete"><h3>Squalène / Squalane</h3></div>
+      <article id="squalene-squalane" class="carte douteux" data-cherche="squalene / squalane extrait de foie de requin ou d'olive — les deux origines coexistent sur le marche. squalene squalane">
+        <div class="entete"><h3><a href="#squalene-squalane" title="Lien direct">Squalène / Squalane</a></h3></div>
         <p class="raison">Extrait de foie de requin ou d'olive — les deux origines coexistent sur le marché.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">squalene</span><span class="mot">squalane</span></div>
       </article>
-      <article class="carte douteux" data-cherche="lanoline graisse issue de la laine de mouton, l'animal n'etant pas abattu : largement admise, mais l'origine reste a confirmer. lanolin lanoline lanolin alcohol cera lanae">
-        <div class="entete"><h3>Lanoline</h3></div>
+      <article id="lanoline" class="carte douteux" data-cherche="lanoline graisse issue de la laine de mouton, l'animal n'etant pas abattu : largement admise, mais l'origine reste a confirmer. lanolin lanoline lanolin alcohol cera lanae">
+        <div class="entete"><h3><a href="#lanoline" title="Lien direct">Lanoline</a></h3></div>
         <p class="raison">Graisse issue de la laine de mouton, l'animal n'étant pas abattu : largement admise, mais l'origine reste à confirmer.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">lanolin</span><span class="mot">lanoline</span><span class="mot">lanolin alcohol</span><span class="mot">cera lanae</span></div>
       </article>
-      <article class="carte douteux" data-cherche="bave d'escargot (snail secretion filtrate) secretion prelevee sur un animal vivant. les avis divergent : certains l'assimilent a un produit d'animal non abattu, d'autres l'ecartent car l'escargot n'est pas consommable. snail secretion helix aspersa mucin bave d'escargot">
-        <div class="entete"><h3>Bave d'escargot (Snail Secretion Filtrate)</h3></div>
+      <article id="bave-d-escargot-snail-secretion-filtrate" class="carte douteux" data-cherche="bave d'escargot (snail secretion filtrate) secretion prelevee sur un animal vivant. les avis divergent : certains l'assimilent a un produit d'animal non abattu, d'autres l'ecartent car l'escargot n'est pas consommable. snail secretion helix aspersa mucin bave d'escargot">
+        <div class="entete"><h3><a href="#bave-d-escargot-snail-secretion-filtrate" title="Lien direct">Bave d'escargot (Snail Secretion Filtrate)</a></h3></div>
         <p class="raison">Sécrétion prélevée sur un animal vivant. Les avis divergent : certains l'assimilent à un produit d'animal non abattu, d'autres l'écartent car l'escargot n'est pas consommable.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">snail secretion</span><span class="mot">helix aspersa</span><span class="mot">mucin</span><span class="mot">bave d'escargot</span></div>
       </article>
-      <article class="carte douteux" data-cherche="secretion animale de parfumerie castoreum, civette, musc et ambre gris sont preleves sur des animaux. les versions de synthese sont aujourd'hui majoritaires, mais l'etiquette ne le precise pas. castoreum civett musk musc ambergris ambre gris">
-        <div class="entete"><h3>Sécrétion animale de parfumerie</h3></div>
+      <article id="secretion-animale-de-parfumerie" class="carte douteux" data-cherche="secretion animale de parfumerie castoreum, civette, musc et ambre gris sont preleves sur des animaux. les versions de synthese sont aujourd'hui majoritaires, mais l'etiquette ne le precise pas. castoreum civett musk musc ambergris ambre gris">
+        <div class="entete"><h3><a href="#secretion-animale-de-parfumerie" title="Lien direct">Sécrétion animale de parfumerie</a></h3></div>
         <p class="raison">Castoréum, civette, musc et ambre gris sont prélevés sur des animaux. Les versions de synthèse sont aujourd'hui majoritaires, mais l'étiquette ne le précise pas.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">castoreum</span><span class="mot">civett</span><span class="mot">musk</span><span class="mot">musc</span><span class="mot">ambergris</span><span class="mot">ambre gris</span></div>
       </article>
-      <article class="carte douteux" data-cherche="retinol obtenu par synthese dans la quasi-totalite des cosmetiques ; historiquement extrait de foie animal. le doute est theorique. retinol retinyl palmitate">
-        <div class="entete"><h3>Rétinol</h3></div>
+      <article id="retinol" class="carte douteux" data-cherche="retinol obtenu par synthese dans la quasi-totalite des cosmetiques ; historiquement extrait de foie animal. le doute est theorique. retinol retinyl palmitate">
+        <div class="entete"><h3><a href="#retinol" title="Lien direct">Rétinol</a></h3></div>
         <p class="raison">Obtenu par synthèse dans la quasi-totalité des cosmétiques ; historiquement extrait de foie animal. Le doute est théorique.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">retinol</span><span class="mot">retinyl palmitate</span></div>
       </article>
-      <article class="carte douteux" data-cherche="cholesterol le plus souvent extrait de lanoline (laine, animal non abattu) ou produit par synthese. cholesterol cholesteryl">
-        <div class="entete"><h3>Cholestérol</h3></div>
+      <article id="cholesterol" class="carte douteux" data-cherche="cholesterol le plus souvent extrait de lanoline (laine, animal non abattu) ou produit par synthese. cholesterol cholesteryl">
+        <div class="entete"><h3><a href="#cholesterol" title="Lien direct">Cholestérol</a></h3></div>
         <p class="raison">Le plus souvent extrait de lanoline (laine, animal non abattu) ou produit par synthèse.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">cholesterol</span><span class="mot">cholesteryl</span></div>
       </article>
-      <article class="carte douteux" data-cherche="acide hyaluronique obtenu par fermentation bacterienne chez la quasi-totalite des fabricants aujourd'hui. hyaluronic acid acide hyaluronique sodium hyaluronate">
-        <div class="entete"><h3>Acide hyaluronique</h3></div>
+      <article id="acide-hyaluronique" class="carte douteux" data-cherche="acide hyaluronique obtenu par fermentation bacterienne chez la quasi-totalite des fabricants aujourd'hui. hyaluronic acid acide hyaluronique sodium hyaluronate">
+        <div class="entete"><h3><a href="#acide-hyaluronique" title="Lien direct">Acide hyaluronique</a></h3></div>
         <p class="raison">Obtenu par fermentation bactérienne chez la quasi-totalité des fabricants aujourd'hui.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">hyaluronic acid</span><span class="mot">acide hyaluronique</span><span class="mot">sodium hyaluronate</span></div>
       </article>
-      <article class="carte douteux" data-cherche="guanine (ci 75170) nacre irisante extraite d'ecailles de poisson — licite pour beaucoup, a confirmer. guanine ci 75170 pearl essence">
-        <div class="entete"><h3>Guanine (CI 75170)</h3></div>
+      <article id="guanine-ci-75170" class="carte douteux" data-cherche="guanine (ci 75170) nacre irisante extraite d'ecailles de poisson — licite pour beaucoup, a confirmer. guanine ci 75170 pearl essence">
+        <div class="entete"><h3><a href="#guanine-ci-75170" title="Lien direct">Guanine (CI 75170)</a></h3></div>
         <p class="raison">Nacre irisante extraite d'écailles de poisson — licite pour beaucoup, à confirmer.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">guanine</span><span class="mot">ci 75170</span><span class="mot">pearl essence</span></div>
       </article>
-      <article class="carte douteux" data-cherche="gomme-laque (shellac) resine secretee par un insecte — les avis divergent. shellac gommelaque ci 75100">
-        <div class="entete"><h3>Gomme-laque (Shellac)</h3></div>
+      <article id="gomme-laque-shellac-2" class="carte douteux" data-cherche="gomme-laque (shellac) resine secretee par un insecte — les avis divergent. shellac gommelaque ci 75100">
+        <div class="entete"><h3><a href="#gomme-laque-shellac-2" title="Lien direct">Gomme-laque (Shellac)</a></h3></div>
         <p class="raison">Résine sécrétée par un insecte — les avis divergent.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">shellac</span><span class="mot">gommelaque</span><span class="mot">ci 75100</span></div>
       </article>
-      <article class="carte douteux" data-cherche="chitosane extrait de carapaces de crustaces — liceite variable selon les ecoles. chitosan chitine chitin">
-        <div class="entete"><h3>Chitosane</h3></div>
+      <article id="chitosane" class="carte douteux" data-cherche="chitosane extrait de carapaces de crustaces — liceite variable selon les ecoles. chitosan chitine chitin">
+        <div class="entete"><h3><a href="#chitosane" title="Lien direct">Chitosane</a></h3></div>
         <p class="raison">Extrait de carapaces de crustacés — licéité variable selon les écoles.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">chitosan</span><span class="mot">chitine</span><span class="mot">chitin</span></div>
       </article>
-      <article class="carte douteux" data-cherche="musc animal / ambre gris le musc de chevrotain et l'ambre gris sont d'origine animale ; la version synthetique est licite. musk muscone ambergris ambre gris civet">
-        <div class="entete"><h3>Musc animal / ambre gris</h3></div>
+      <article id="musc-animal-ambre-gris" class="carte douteux" data-cherche="musc animal / ambre gris le musc de chevrotain et l'ambre gris sont d'origine animale ; la version synthetique est licite. musk muscone ambergris ambre gris civet">
+        <div class="entete"><h3><a href="#musc-animal-ambre-gris" title="Lien direct">Musc animal / ambre gris</a></h3></div>
         <p class="raison">Le musc de chevrotain et l'ambre gris sont d'origine animale ; la version synthétique est licite.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">musk</span><span class="mot">muscone</span><span class="mot">ambergris</span><span class="mot">ambre gris</span><span class="mot">civet</span></div>
       </article>
-      <article class="carte douteux" data-cherche="acide oleique / derives generalement d'origine vegetale (olive, colza) dans les cosmetiques modernes. oleic acid acide oleique oleyl oleth-">
-        <div class="entete"><h3>Acide oléique / dérivés</h3></div>
+      <article id="acide-oleique-derives" class="carte douteux" data-cherche="acide oleique / derives generalement d'origine vegetale (olive, colza) dans les cosmetiques modernes. oleic acid acide oleique oleyl oleth-">
+        <div class="entete"><h3><a href="#acide-oleique-derives" title="Lien direct">Acide oléique / dérivés</a></h3></div>
         <p class="raison">Généralement d'origine végétale (olive, colza) dans les cosmétiques modernes.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">oleic acid</span><span class="mot">acide oléique</span><span class="mot">oleyl</span><span class="mot">oleth-</span></div>
       </article>
-      <article class="carte douteux" data-cherche="acides gras (palmitique, myristique, laurique) issus de la palme ou du coco dans l'immense majorite des cas. palmitic acid myristic acid lauric acid palmitate de sodium sodium palmitate">
-        <div class="entete"><h3>Acides gras (palmitique, myristique, laurique)</h3></div>
+      <article id="acides-gras-palmitique-myristique-laurique" class="carte douteux" data-cherche="acides gras (palmitique, myristique, laurique) issus de la palme ou du coco dans l'immense majorite des cas. palmitic acid myristic acid lauric acid palmitate de sodium sodium palmitate">
+        <div class="entete"><h3><a href="#acides-gras-palmitique-myristique-laurique" title="Lien direct">Acides gras (palmitique, myristique, laurique)</a></h3></div>
         <p class="raison">Issus de la palme ou du coco dans l'immense majorité des cas.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">palmitic acid</span><span class="mot">myristic acid</span><span class="mot">lauric acid</span><span class="mot">palmitate de sodium</span><span class="mot">sodium palmitate</span></div>
       </article>
-      <article class="carte douteux" data-cherche="soie (serica) proteine issue du cocon du ver a soie — largement admise, mentionnee pour information. silk serica hydrolyzed silk sericin">
-        <div class="entete"><h3>Soie (Serica)</h3></div>
+      <article id="soie-serica" class="carte douteux" data-cherche="soie (serica) proteine issue du cocon du ver a soie — largement admise, mentionnee pour information. silk serica hydrolyzed silk sericin">
+        <div class="entete"><h3><a href="#soie-serica" title="Lien direct">Soie (Serica)</a></h3></div>
         <p class="raison">Protéine issue du cocon du ver à soie — largement admise, mentionnée pour information.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">silk</span><span class="mot">serica</span><span class="mot">hydrolyzed silk</span><span class="mot">sericin</span></div>
       </article>
-      <article class="carte douteux" data-cherche="noir animal (charbon d'os) pigment obtenu a partir d'os calcines — abattage non verifiable. carbo animalis bone char charbon animal ci 77268">
-        <div class="entete"><h3>Noir animal (charbon d'os)</h3></div>
+      <article id="noir-animal-charbon-d-os" class="carte douteux" data-cherche="noir animal (charbon d'os) pigment obtenu a partir d'os calcines — abattage non verifiable. carbo animalis bone char charbon animal ci 77268">
+        <div class="entete"><h3><a href="#noir-animal-charbon-d-os" title="Lien direct">Noir animal (charbon d'os)</a></h3></div>
         <p class="raison">Pigment obtenu à partir d'os calcinés — abattage non vérifiable.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">carbo animalis</span><span class="mot">bone char</span><span class="mot">charbon animal</span><span class="mot">ci 77268</span></div>
       </article>
-      <article class="carte douteux" data-cherche="huile animale (emeu, vison…) huile extraite d'un animal — espece et abattage a verifier. emu oil mink oil huile de vison snake oil turtle oil">
-        <div class="entete"><h3>Huile animale (émeu, vison…)</h3></div>
+      <article id="huile-animale-emeu-vison" class="carte douteux" data-cherche="huile animale (emeu, vison…) huile extraite d'un animal — espece et abattage a verifier. emu oil mink oil huile de vison snake oil turtle oil">
+        <div class="entete"><h3><a href="#huile-animale-emeu-vison" title="Lien direct">Huile animale (émeu, vison…)</a></h3></div>
         <p class="raison">Huile extraite d'un animal — espèce et abattage à vérifier.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">emu oil</span><span class="mot">mink oil</span><span class="mot">huile de vison</span><span class="mot">snake oil</span><span class="mot">turtle oil</span></div>
       </article>
-      <article class="carte douteux" data-cherche="allantoine produite par synthese dans la quasi-totalite des cosmetiques actuels ; l'origine animale historique a disparu. allantoin allantoine">
-        <div class="entete"><h3>Allantoïne</h3></div>
+      <article id="allantoine" class="carte douteux" data-cherche="allantoine produite par synthese dans la quasi-totalite des cosmetiques actuels ; l'origine animale historique a disparu. allantoin allantoine">
+        <div class="entete"><h3><a href="#allantoine" title="Lien direct">Allantoïne</a></h3></div>
         <p class="raison">Produite par synthèse dans la quasi-totalité des cosmétiques actuels ; l'origine animale historique a disparu.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">allantoin</span><span class="mot">allantoïne</span></div>
       </article>
-      <article class="carte douteux" data-cherche="uree obtenue par synthese chimique dans les cosmetiques ; l'origine animale n'est plus utilisee. ure!peroxide uree">
-        <div class="entete"><h3>Urée</h3></div>
+      <article id="uree" class="carte douteux" data-cherche="uree obtenue par synthese chimique dans les cosmetiques ; l'origine animale n'est plus utilisee. ure!peroxide uree">
+        <div class="entete"><h3><a href="#uree" title="Lien direct">Urée</a></h3></div>
         <p class="raison">Obtenue par synthèse chimique dans les cosmétiques ; l'origine animale n'est plus utilisée.</p>
         <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">ure!peroxide</span><span class="mot">urée</span></div>
@@ -916,8 +921,8 @@
     <section class="bloc" id="cosmetiques-alcool">
       <h2>Cosmétiques — alcool <span class="compte" data-total="1">1</span></h2>
       <p class="chapeau">Seul l'alcool <em>éthylique</em> est relevé. Cetyl, Cetearyl et Stearyl Alcohol sont des cires grasses, pas de l'alcool : le scanner ne les signale jamais.</p>
-      <article class="carte douteux" data-cherche="alcool ethylique (alcohol denat.) alcool non potable, servant de support ou d'antiseptique. beaucoup de savants l'autorisent en usage externe ; d'autres le deconseillent. alcohol denat denatured alcohol sd alcohol ethanol ethyl alcohol alcool denature">
-        <div class="entete"><h3>Alcool éthylique (Alcohol Denat.)</h3></div>
+      <article id="alcool-ethylique-alcohol-denat" class="carte douteux" data-cherche="alcool ethylique (alcohol denat.) alcool non potable, servant de support ou d'antiseptique. beaucoup de savants l'autorisent en usage externe ; d'autres le deconseillent. alcohol denat denatured alcohol sd alcohol ethanol ethyl alcohol alcool denature">
+        <div class="entete"><h3><a href="#alcool-ethylique-alcohol-denat" title="Lien direct">Alcool éthylique (Alcohol Denat.)</a></h3></div>
         <p class="raison">Alcool non potable, servant de support ou d'antiseptique. Beaucoup de savants l'autorisent en usage externe ; d'autres le déconseillent.</p>
         
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span><span class="mot">alcohol denat</span><span class="mot">denatured alcohol</span><span class="mot">sd alcohol</span><span class="mot">ethanol</span><span class="mot">ethyl alcohol</span><span class="mot">alcool dénaturé</span></div>

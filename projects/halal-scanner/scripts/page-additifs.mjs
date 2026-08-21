@@ -155,6 +155,34 @@ function enFrancais(iso) {
 }
 
 /* ---------- Cartes ---------- */
+/* ---------- Une adresse par entree ----------
+   Mesure du 21 aout : la page portait 109 fiches et SEULEMENT 10 ancres —
+   celles des sections. Quelqu'un qui cherche « E471 halal » ne pouvait donc
+   atterrir sur rien de precis : l'entree existait, noyee parmi 108 autres,
+   sans adresse a elle.
+
+   Chaque fiche recoit desormais la sienne : halalcheck.fr/additifs.html#e471
+   pointe sur le E471. Google sait proposer ce genre de lien direct vers une
+   section, le scanner peut y renvoyer depuis un verdict, et une personne peut
+   copier l'adresse exacte de l'ingredient qui la concerne.
+
+   Zero page nouvelle : c'est la meme page, simplement adressable. */
+const ancresPrises = new Set();
+function ancre(base) {
+  let a = sansAccents(String(base).toLowerCase())
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 48);
+  if (!a) a = "entree";
+  // Deux regles peuvent porter le meme nom court : on ne rend jamais deux
+  // fois la meme adresse, sinon un lien sur deux tombe sur la mauvaise fiche.
+  let unique = a;
+  let n = 2;
+  while (ancresPrises.has(unique)) unique = a + "-" + n++;
+  ancresPrises.add(unique);
+  return unique;
+}
+
 function carteAdditif(cle, infos) {
   const code = codeAdditif(infos.nom);
   // « E471 — Mono- et diglycérides » : le code sert de pastille, le reste de titre.
@@ -172,8 +200,9 @@ function carteAdditif(cle, infos) {
   const faible = infos.gravite === "faible"
     ? `\n        <p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>`
     : "";
-  return `      <article class="carte ${infos.niveau}" data-cherche="${echapper(cherchable)}">
-        <div class="entete"><span class="code">${echapper(badge)}</span><h3>${echapper(titre)}</h3></div>
+  const id = ancre(badge);
+  return `      <article id="${id}" class="carte ${infos.niveau}" data-cherche="${echapper(cherchable)}">
+        <div class="entete"><a class="code" href="#${id}" title="Lien direct vers ${echapper(badge)}">${echapper(badge)}</a><h3>${echapper(titre)}</h3></div>
         <p class="raison">${echapper(infos.raison)}</p>${faible}
         ${lien}
       </article>`;
@@ -186,8 +215,9 @@ function carteRegle(regle, niveau) {
     .join("");
   const faible = regle.gravite === "faible" ? `<p class="nuance">Doute mineur : dans les faits, cet ingrédient est presque toujours d'origine non animale.</p>` : "";
   const cherchable = sansAccents(`${regle.element} ${regle.raison} ${mots.join(" ")}`.toLowerCase());
-  return `      <article class="carte ${niveau}" data-cherche="${echapper(cherchable)}">
-        <div class="entete"><h3>${echapper(regle.element)}</h3></div>
+  const id = ancre(regle.element);
+  return `      <article id="${id}" class="carte ${niveau}" data-cherche="${echapper(cherchable)}">
+        <div class="entete"><h3><a href="#${id}" title="Lien direct">${echapper(regle.element)}</a></h3></div>
         <p class="raison">${echapper(regle.raison)}</p>
         ${faible}
         <div class="mots"><span class="mots-titre">Mots repérés&nbsp;:</span>${puces}</div>
@@ -499,11 +529,16 @@ const html = `<!DOCTYPE html>
     }
     .carte.haram { border-left-color: var(--haram); }
     .entete { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    /* Pastille du code. C'est un <a> depuis le 21 aout — chaque fiche a son
+       adresse propre — donc on lui retire le soulignement du lien : elle doit
+       rester une pastille, pas devenir un lien de texte. */
     .code {
       font-weight: 800; font-size: 13px; letter-spacing: 0.02em;
       background: rgba(224, 142, 60, 0.14); color: #8A4F13;
       border-radius: 8px; padding: 3px 9px;
+      text-decoration: none; display: inline-block;
     }
+    .carte h3 a { color: inherit; text-decoration: none; }
     .carte.haram .code { background: rgba(192, 57, 43, 0.12); color: #8E2A20; }
     .carte h3 { font-size: 16px; font-weight: 700; }
     .raison { color: var(--texte-doux); font-size: 15px; margin-top: 7px; }
