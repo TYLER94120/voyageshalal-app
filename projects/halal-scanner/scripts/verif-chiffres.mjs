@@ -71,18 +71,12 @@ for (const [nom, texte, motif, attendu] of controles) {
 }
 
 // Le sitemap doit annoncer la même date que la page elle-même.
-const PAGES = [
-  ["index.html", "/"],
-  ["scan.html", "/scan.html"],
-  ["additifs.html", "/additifs.html"],
-  ["mentions-legales.html", "/mentions-legales.html"],
-  // Les 3 pages rayon, ajoutees le 21 aout apres la premiere mesure reelle :
-  // 1 impression en 7 jours. Elles sont generees depuis le moteur, donc
-  // soumises aux memes controles que le reste.
-  ["bonbons.html", "/bonbons.html"],
-  ["fromage.html", "/fromage.html"],
-  ["pain-viennoiserie.html", "/pain-viennoiserie.html"],
-];
+// La liste des pages vient du MANIFESTE, ecrit par le generateur des pages
+// rayon. Elle etait recopiee ici, dans dates-seo, dans la sonde sans-JS et
+// dans le controle CI : cinq copies, cinq occasions d'en oublier une le jour
+// ou une page s'ajoute. Une page oubliee est une page que Google ne voit pas.
+const MANIFESTE = JSON.parse(readFileSync(join(ICI, "pages-du-site.json"), "utf8"));
+const PAGES = MANIFESTE.map((p) => [p.fichier, p.chemin]);
 const sitemap = readFileSync(join(PROJET, "site", "sitemap.xml"), "utf8");
 console.log("");
 for (const [fichier, chemin] of PAGES) {

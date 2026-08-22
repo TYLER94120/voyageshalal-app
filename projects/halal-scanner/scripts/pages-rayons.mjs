@@ -46,6 +46,16 @@ const moteur = await chargerMoteur("halal");
 const { REGLES_HARAM, REGLES_DOUTEUX, ADDITIFS_A_RISQUE } = moteur;
 const REGLES = [...REGLES_HARAM, ...REGLES_DOUTEUX];
 
+// Le moteur cosmetique est une table separee — 29 regles qu'aucune page ne
+// citait encore, alors que « savon halal » et « creme halal » sont des
+// recherches a part entiere, sans rapport avec l'alimentaire.
+const cosmo = await chargerMoteur("cosmetiques");
+const REGLES_COSMO = [
+  ...cosmo.REGLES_INTERDITES.map((r) => ({ ...r, niveau: "haram" })),
+  ...cosmo.REGLES_ALCOOL.map((r) => ({ ...r, niveau: r.niveau || "douteux" })),
+  ...cosmo.REGLES_DOUTEUSES.map((r) => ({ ...r, niveau: "douteux" })),
+];
+
 function echapper(t) {
   return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
     .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -73,6 +83,12 @@ function ingredient(nomExact) {
   if (!r) throw new Error(`Ingrédient absent du moteur : « ${nomExact} » — page non générée`);
   return { titre: r.element, raison: r.raison, niveau: r.niveau || "douteux" };
 }
+function cosmetique(nomExact) {
+  const r = REGLES_COSMO.find((x) => x.element === nomExact);
+  if (!r) throw new Error(`Règle cosmétique absente du moteur : « ${nomExact} » — page non générée`);
+  return { titre: r.element, raison: r.raison, niveau: r.niveau };
+}
+
 function additif(code) {
   const trouve = Object.values(ADDITIFS_A_RISQUE).find((a) => codeAdditif(a.nom) === code);
   if (!trouve) throw new Error(`Additif absent du moteur : « ${code} » — page non générée`);
@@ -85,6 +101,7 @@ function additif(code) {
 const RAYONS = [
   {
     fichier: "bonbons.html",
+    etiquette: "🍬 Bonbons et confiseries",
     slug: "bonbons",
     titre: (n) => `Quels bonbons sont halal : ${n} ingrédients à vérifier`,
     description: (n) =>
@@ -108,6 +125,7 @@ const RAYONS = [
   },
   {
     fichier: "fromage.html",
+    etiquette: "🧀 Fromage et présure",
     slug: "fromage",
     titre: (n) => `Fromage halal : la présure et ${n - 1} autres à vérifier`,
     description: () =>
@@ -126,6 +144,7 @@ const RAYONS = [
   },
   {
     fichier: "pain-viennoiserie.html",
+    etiquette: "🥐 Pain et viennoiseries",
     slug: "pain-viennoiserie",
     titre: (n) => `Pain de mie halal : ${n} ingrédients à repérer`,
     description: (n) =>
@@ -144,6 +163,74 @@ const RAYONS = [
     ],
     quoiFaire:
       "Cherche « L-cystéine », « E920 », « mono- et diglycérides » ou « E471 ». Une mention « d'origine végétale » à côté lève le doute — le scanner la reconnaît. Sans elle, l'origine n'est pas déclarée, et la loi n'oblige pas à la déclarer.",
+  },
+  {
+    fichier: "charcuterie.html",
+    etiquette: "🥓 Charcuterie et viande",
+    slug: "charcuterie",
+    titre: (n) => `Charcuterie halal : ${n} mentions à vérifier`,
+    description: () =>
+      `Boyau naturel, arôme de viande, collagène : ce que l’étiquette d’une charcuterie déclare, ce qu’elle tait, et quoi regarder. Gratuit.`,
+    besoin: "La charcuterie et la viande",
+    h1: "Charcuterie et viande : ce que l’étiquette déclare",
+    intro:
+      "Une charcuterie « de dinde » ou « de volaille » ne dit rien de l’abattage, ni de ce qui entoure la tranche. Deux mentions passent presque toujours inaperçues, et ce sont celles qui décident.",
+    risques: [
+      ingredient("Porc / dérivé de porc"),
+      ingredient("Charcuterie"),
+      ingredient("Boyau naturel"),
+      ingredient("Viande"),
+      ingredient("Arôme / bouillon de viande"),
+      ingredient("Collagène / élastine"),
+      additif("E542"),
+    ],
+    quoiFaire:
+      "Regarde deux choses. Le boyau d’abord : « boyau naturel » sans autre précision est un intestin animal, souvent porcin — « boyau végétal » ou « sans boyau » lèvent la question. L’abattage ensuite : seule une certification portée sur l’emballage y répond, la liste d’ingrédients ne le fera jamais.",
+  },
+  {
+    fichier: "alcool-aliments.html",
+    etiquette: "🍷 Alcool dans les aliments",
+    slug: "alcool-aliments",
+    titre: (n) => `Alcool caché dans les aliments : ${n} formes`,
+    description: () =>
+      `Arôme, vinaigre de vin, dessert au rhum : où l’alcool se déclare et où il se devine dans une liste d’ingrédients française. Gratuit, sans compte.`,
+    besoin: "L’alcool dans les aliments",
+    h1: "L’alcool dans les aliments : où il se cache",
+    intro:
+      "L’alcool n’apparaît pas toujours sous le mot « alcool ». Il entre dans un plat comme ingrédient, sert de support à un arôme, ou reste dans un vinaigre. Les trois se lisent différemment.",
+    risques: [
+      ingredient("Alcool"),
+      ingredient("Alcool (vin / spiritueux)"),
+      ingredient("Alcool (كحول)"),
+    ],
+    quoiFaire:
+      "Cherche « vin », « bière », « rhum », « kirsch », « liqueur » — ils sont déclarés en toutes lettres quand ils sont ingrédients. Le vinaigre de vin et le vinaigre d’alcool sont volontairement neutralisés par notre moteur : la transformation en vinaigre est admise par la majorité des avis. Un « arôme » seul, lui, ne dit pas ce qui le porte.",
+  },
+  {
+    fichier: "cosmetiques.html",
+    etiquette: "🧴 Savons et cosmétiques",
+    slug: "cosmetiques",
+    titre: (n) => `Cosmétique halal : ${n} ingrédients à repérer`,
+    description: () =>
+      `Suif, lanoline, kératine, carmin, Alcohol Denat. : ce qu’il faut chercher dans une liste INCI de savon, crème ou shampooing. Gratuit.`,
+    besoin: "Les cosmétiques",
+    h1: "Savon, crème, shampooing : lire une liste INCI",
+    intro:
+      "Un cosmétique ne se mange pas, mais il touche la peau et reste pendant la prière. Sa liste d’ingrédients est écrite en INCI, un vocabulaire latin où les origines animales sont particulièrement difficiles à voir.",
+    risques: [
+      cosmetique("Suif (Tallow)"),
+      cosmetique("Dérivé de porc"),
+      cosmetique("Placenta"),
+      cosmetique("Carmin (CI 75470)"),
+      cosmetique("Alcool éthylique (Alcohol Denat.)"),
+      cosmetique("Lanoline"),
+      cosmetique("Kératine"),
+      cosmetique("Collagène"),
+      cosmetique("Squalène / Squalane"),
+      cosmetique("Glycérine"),
+    ],
+    quoiFaire:
+      "Le mot à chercher en premier est « Tallow » : c’est du suif, et il se cache derrière Sodium Tallowate dans beaucoup de savons solides. Ensuite « Lanolin », « Keratin », « Collagen », « Squalene ». Une mention « vegetable origin » ou « plant-derived » à côté lève le doute ; sans elle, l’origine n’est pas déclarée.",
   },
 ];
 
@@ -332,4 +419,62 @@ for (const rayon of RAYONS) {
   }
   console.log(`  ✓ ${rayon.fichier.padEnd(24)} ${rayon.risques.length} risques · titre ${titre.length} car. · description ${description.length} car.`);
 }
-console.log(`\n${RAYONS.length} pages générées, chaque risque lu dans le moteur.`);
+/* ---------- Le manifeste : une seule liste, pour tout le monde ----------
+   Le 22 aout, l'ajout de 3 pages m'a fait editer la MEME liste dans cinq
+   fichiers : le sitemap, dates-seo, verif-chiffres, la sonde sans-JavaScript
+   et le controle CI. Cinq occasions d'en oublier une, et une page oubliee est
+   une page que Google ne voit pas.
+   Elle est desormais ecrite ici, a l'endroit ou les pages sont fabriquees,
+   et lue partout ailleurs. */
+const PAGES_FIXES = [
+  { fichier: "index.html", chemin: "/", priorite: "1.0" },
+  { fichier: "scan.html", chemin: "/scan.html", priorite: "0.9" },
+  { fichier: "additifs.html", chemin: "/additifs.html", priorite: "0.8" },
+  { fichier: "mentions-legales.html", chemin: "/mentions-legales.html", priorite: "0.4" },
+];
+const TOUTES = [
+  ...PAGES_FIXES,
+  ...RAYONS.map((r) => ({ fichier: r.fichier, chemin: "/" + r.fichier, priorite: "0.7", etiquette: r.etiquette })),
+];
+writeFileSync(join(ICI, "pages-du-site.json"), JSON.stringify(TOUTES, null, 2) + "\n");
+
+/* Le sitemap est REGENERE en entier, jamais complete a la main. Les dates
+   sont relues dans les pages elles-memes : c'est seo:dates qui les y pose,
+   depuis l'historique git, et une date inventee est une fausse promesse. */
+const lignes = TOUTES.map((p) => {
+  const html = readFileSync(join(SITE, p.fichier), "utf8");
+  const date = (html.match(/<meta name="last-modified" content="([^"]{10})/) || [])[1] || "";
+  return `  <url>
+    <loc>https://halalcheck.fr${p.chemin}</loc>
+    <lastmod>${date}</lastmod>
+    <priority>${p.priorite}</priority>
+  </url>`;
+});
+writeFileSync(join(SITE, "sitemap.xml"),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${lignes.join("\n")}\n</urlset>\n`);
+
+/* Les liens de l'accueil vers les rayons sont REECRITS ici, jamais tenus a
+   la main. Mesure du 22 aout : 3 pages neuves sont sorties orphelines parce
+   que j'avais ajoute les rayons sans toucher au bloc de liens. Une page
+   orpheline n'existe pas — la sonde l'a vue, mais elle ne devrait pas avoir
+   a la voir. */
+const ACCUEIL = join(SITE, "index.html");
+try {
+  const avant = readFileSync(ACCUEIL, "utf8");
+  const liens = RAYONS.map((r) => `      <a href="./${r.fichier}">${r.etiquette}</a>`).join("\n");
+  const apres = avant.replace(
+    /(<div class="rayons-liens">)[\s\S]*?(<\/div>)/,
+    `$1\n${liens}\n    $2`
+  );
+  if (apres !== avant) {
+    writeFileSync(ACCUEIL, apres);
+    console.log(`  accueil : ${RAYONS.length} liens vers les rayons réécrits`);
+  } else {
+    console.log("  accueil : liens déjà à jour");
+  }
+} catch (e) {
+  console.log("  accueil introuvable — liens non posés");
+}
+
+console.log(`\n${RAYONS.length} pages rayon générées, chaque risque lu dans le moteur.`);
+console.log(`manifeste : ${TOUTES.length} pages · sitemap régénéré`);

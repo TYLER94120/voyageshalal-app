@@ -1,0 +1,58 @@
+[
+  {
+    "fichier": "index.html",
+    "chemin": "/",
+    "priorite": "1.0"
+  },
+  {
+    "fichier": "scan.html",
+    "chemin": "/scan.html",
+    "priorite": "0.9"
+  },
+  {
+    "fichier": "additifs.html",
+    "chemin": "/additifs.html",
+    "priorite": "0.8"
+  },
+  {
+    "fichier": "mentions-legales.html",
+    "chemin": "/mentions-legales.html",
+    "priorite": "0.4"
+  },
+  {
+    "fichier": "bonbons.html",
+    "chemin": "/bonbons.html",
+    "priorite": "0.7",
+    "etiquette": "🍬 Bonbons et confiseries"
+  },
+  {
+    "fichier": "fromage.html",
+    "chemin": "/fromage.html",
+    "priorite": "0.7",
+    "etiquette": "🧀 Fromage et présure"
+  },
+  {
+    "fichier": "pain-viennoiserie.html",
+    "chemin": "/pain-viennoiserie.html",
+    "priorite": "0.7",
+    "etiquette": "🥐 Pain et viennoiseries"
+  },
+  {
+    "fichier": "charcuterie.html",
+    "chemin": "/charcuterie.html",
+    "priorite": "0.7",
+    "etiquette": "🥓 Charcuterie et viande"
+  },
+  {
+    "fichier": "alcool-aliments.html",
+    "chemin": "/alcool-aliments.html",
+    "priorite": "0.7",
+    "etiquette": "🍷 Alcool dans les aliments"
+  },
+  {
+    "fichier": "cosmetiques.html",
+    "chemin": "/cosmetiques.html",
+    "priorite": "0.7",
+    "etiquette": "🧴 Savons et cosmétiques"
+  }
+]

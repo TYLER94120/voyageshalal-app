@@ -154,6 +154,19 @@ function enFrancais(iso) {
   });
 }
 
+/* Les liens vers les pages rayon viennent du manifeste ecrit par
+   pages-rayons.mjs : ils s'ajoutent tout seuls quand un rayon s'ajoute. */
+let LIENS_RAYONS = "";
+try {
+  const manifeste = JSON.parse(readFileSync(join(ICI, "pages-du-site.json"), "utf8"));
+  LIENS_RAYONS = manifeste
+    .filter((p) => p.etiquette)
+    .map((p) => `<a href="./${p.fichier}">${p.etiquette.replace(/^\S+\s/, "")}</a>`)
+    .join(" · ");
+} catch {
+  LIENS_RAYONS = '<a href="./additifs.html">la liste complète</a>';
+}
+
 /* ---------- Cartes ---------- */
 /* ---------- Une adresse par entree ----------
    Mesure du 21 aout : la page portait 109 fiches et SEULEMENT 10 ancres —
@@ -639,11 +652,7 @@ ${sections.map((s) => s.html).join("\n\n")}
     <a class="cta" href="./scan.html">Scanner un produit →</a>
     <!-- Vers les pages rayon : elles ont besoin d'au moins deux liens
          entrants pour que Google les trouve. -->
-    <p class="vers-rayons">Devant un rayon précis :
-      <a href="./bonbons.html">bonbons</a> ·
-      <a href="./fromage.html">fromage</a> ·
-      <a href="./pain-viennoiserie.html">pain et viennoiseries</a>
-    </p>
+    <p class="vers-rayons">Devant un rayon précis : ${LIENS_RAYONS}</p>
   </main>
 
   <footer>

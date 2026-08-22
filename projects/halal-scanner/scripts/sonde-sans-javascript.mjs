@@ -23,16 +23,18 @@
  */
 import { chargerPlaywright, cheminChromium } from "./playwright-atelier.mjs";
 import { servirLeSite } from "./serveur-atelier.mjs";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const PAGES = [
-  "index.html",
-  "scan.html",
-  "additifs.html",
-  "mentions-legales.html",
-  "bonbons.html",
-  "fromage.html",
-  "pain-viennoiserie.html",
-];
+const ICI = dirname(fileURLToPath(import.meta.url));
+
+// La liste des pages vient du MANIFESTE, ecrit par le generateur des pages
+// rayon. Elle etait recopiee ici, dans dates-seo, dans la sonde sans-JS et
+// dans le controle CI : cinq copies, cinq occasions d'en oublier une le jour
+// ou une page s'ajoute. Une page oubliee est une page que Google ne voit pas.
+const MANIFESTE = JSON.parse(readFileSync(join(ICI, "pages-du-site.json"), "utf8"));
+const PAGES = MANIFESTE.map((p) => p.fichier);
 const MINIMUM = 1000;   // caractères rendus par le serveur
 const LIENS_RECUS = 2;  // liens internes venant des autres pages
 

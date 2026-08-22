@@ -16,8 +16,12 @@ const RACINE_PROJET = join(ICI, "..");
 const SITE = join(RACINE_PROJET, "site");
 const RACINE_DEPOT = join(RACINE_PROJET, "..", "..");
 
-const PAGES = ["index.html", "scan.html", "additifs.html", "mentions-legales.html",
-  "bonbons.html", "fromage.html", "pain-viennoiserie.html"];
+// La liste des pages vient du MANIFESTE, ecrit par le generateur des pages
+// rayon. Elle etait recopiee ici, dans dates-seo, dans la sonde sans-JS et
+// dans le controle CI : cinq copies, cinq occasions d'en oublier une le jour
+// ou une page s'ajoute. Une page oubliee est une page que Google ne voit pas.
+const MANIFESTE = JSON.parse(readFileSync(join(ICI, "pages-du-site.json"), "utf8"));
+const PAGES = MANIFESTE.map((p) => p.fichier);
 
 /** Date du dernier commit ayant touché ce fichier (ISO, UTC). */
 function dateGit(cheminAbsolu) {
