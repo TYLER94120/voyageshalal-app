@@ -119,11 +119,7 @@ jobs:
       # oublie une et trois pages sont sorties orphelines. On regenere, et on
       # regarde si quoi que ce soit a bouge.
       - name: Le site livre est-il celui que les generateurs produisent ?
-        run: |
-          npm run build:additifs
-          npm run build:rayons
-          git diff --exit-code --stat site/ scripts/pages-du-site.json \
-            || (echo "::error::un fichier livre differe de ce que les generateurs produisent" && exit 1)
+        run: npm run verif:generation
 
       - name: Les nombres et les dates annonces sur le site
         run: npm run verif:chiffres

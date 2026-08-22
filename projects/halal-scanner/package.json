@@ -31,7 +31,8 @@
     "sonde:polices": "node scripts/sonde-polices-hors-ligne.mjs",
     "sonde:affirmations": "node scripts/sonde-ce-qu-on-affirme.mjs",
     "sonde:sans-js": "node scripts/sonde-sans-javascript.mjs",
-    "build:rayons": "node scripts/pages-rayons.mjs"
+    "build:rayons": "node scripts/pages-rayons.mjs",
+    "verif:generation": "node scripts/verif-generation.mjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
