@@ -12,12 +12,27 @@
   </url>
   <url>
     <loc>https://halalcheck.fr/additifs.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://halalcheck.fr/mentions-legales.html</loc>
     <lastmod>2026-08-14</lastmod>
     <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://halalcheck.fr/bonbons.html</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://halalcheck.fr/fromage.html</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://halalcheck.fr/pain-viennoiserie.html</loc>
+    <lastmod>2026-08-22</lastmod>
+    <priority>0.7</priority>
   </url>
 </urlset>

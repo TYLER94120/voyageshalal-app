@@ -76,6 +76,12 @@ const PAGES = [
   ["scan.html", "/scan.html"],
   ["additifs.html", "/additifs.html"],
   ["mentions-legales.html", "/mentions-legales.html"],
+  // Les 3 pages rayon, ajoutees le 21 aout apres la premiere mesure reelle :
+  // 1 impression en 7 jours. Elles sont generees depuis le moteur, donc
+  // soumises aux memes controles que le reste.
+  ["bonbons.html", "/bonbons.html"],
+  ["fromage.html", "/fromage.html"],
+  ["pain-viennoiserie.html", "/pain-viennoiserie.html"],
 ];
 const sitemap = readFileSync(join(PROJET, "site", "sitemap.xml"), "utf8");
 console.log("");

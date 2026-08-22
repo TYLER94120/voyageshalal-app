@@ -584,6 +584,8 @@ const html = `<!DOCTYPE html>
     }
     footer p { font-size: 14px; color: rgba(253, 250, 243, 0.6); }
     @media (min-width: 700px) { h1 { font-size: 38px; } }
+    .vers-rayons { margin-top:26px; font-size:15px; }
+    .vers-rayons a { color:var(--or-lisible); font-weight:700; }
   </style>
 </head>
 <body>
@@ -635,6 +637,13 @@ ${sections.map((s) => s.html).join("\n\n")}
     </div>
 
     <a class="cta" href="./scan.html">Scanner un produit →</a>
+    <!-- Vers les pages rayon : elles ont besoin d'au moins deux liens
+         entrants pour que Google les trouve. -->
+    <p class="vers-rayons">Devant un rayon précis :
+      <a href="./bonbons.html">bonbons</a> ·
+      <a href="./fromage.html">fromage</a> ·
+      <a href="./pain-viennoiserie.html">pain et viennoiseries</a>
+    </p>
   </main>
 
   <footer>

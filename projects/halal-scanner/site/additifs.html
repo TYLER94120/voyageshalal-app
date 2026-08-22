@@ -10,7 +10,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://halalcheck.fr/additifs.html" />
   <link rel="canonical" href="https://halalcheck.fr/additifs.html" />
-  <meta name="last-modified" content="2026-08-21T16:16:21+00:00" />
+  <meta name="last-modified" content="2026-08-22T10:41:50+00:00" />
   <meta name="theme-color" content="#FDFAF3" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" href="./icon-192.png" />
@@ -84,7 +84,7 @@
         "description": "E471 mono- et diglycérides, E120 carmin, E441 gélatine : les 56 additifs à surveiller et, pour chacun, la raison exacte du doute. Aliments et cosmétiques.",
         "isPartOf": { "@id": "https://halalcheck.fr/#application" },
         "publisher": { "@id": "https://halalcheck.fr/#editeur" },
-        "dateModified": "2026-08-21T16:16:21+00:00"
+        "dateModified": "2026-08-22T10:41:50+00:00"
       },
       {
         "@type": "BreadcrumbList",
@@ -248,6 +248,8 @@
     }
     footer p { font-size: 14px; color: rgba(253, 250, 243, 0.6); }
     @media (min-width: 700px) { h1 { font-size: 38px; } }
+    .vers-rayons { margin-top:26px; font-size:15px; }
+    .vers-rayons a { color:var(--or-lisible); font-weight:700; }
   </style>
 </head>
 <body>
@@ -269,7 +271,7 @@
       directement depuis le moteur d'analyse&nbsp;: ce qui est écrit ici est exactement
       ce qui est détecté lors d'un scan.
     </p>
-    <p class="date">Mis à jour le <span class="date-maj">21 août 2026</span></p>
+    <p class="date">Mis à jour le <span class="date-maj">22 août 2026</span></p>
 
     <div class="recherche">
       <input id="q" type="search" inputmode="search" autocomplete="off"
@@ -941,6 +943,13 @@
     </div>
 
     <a class="cta" href="./scan.html">Scanner un produit →</a>
+    <!-- Vers les pages rayon : elles ont besoin d'au moins deux liens
+         entrants pour que Google les trouve. -->
+    <p class="vers-rayons">Devant un rayon précis :
+      <a href="./bonbons.html">bonbons</a> ·
+      <a href="./fromage.html">fromage</a> ·
+      <a href="./pain-viennoiserie.html">pain et viennoiseries</a>
+    </p>
   </main>
 
   <footer>

@@ -16,7 +16,8 @@ const RACINE_PROJET = join(ICI, "..");
 const SITE = join(RACINE_PROJET, "site");
 const RACINE_DEPOT = join(RACINE_PROJET, "..", "..");
 
-const PAGES = ["index.html", "scan.html", "additifs.html", "mentions-legales.html"];
+const PAGES = ["index.html", "scan.html", "additifs.html", "mentions-legales.html",
+  "bonbons.html", "fromage.html", "pain-viennoiserie.html"];
 
 /** Date du dernier commit ayant touché ce fichier (ISO, UTC). */
 function dateGit(cheminAbsolu) {

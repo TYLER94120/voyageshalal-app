@@ -24,7 +24,15 @@
 import { chargerPlaywright, cheminChromium } from "./playwright-atelier.mjs";
 import { servirLeSite } from "./serveur-atelier.mjs";
 
-const PAGES = ["index.html", "scan.html", "additifs.html", "mentions-legales.html"];
+const PAGES = [
+  "index.html",
+  "scan.html",
+  "additifs.html",
+  "mentions-legales.html",
+  "bonbons.html",
+  "fromage.html",
+  "pain-viennoiserie.html",
+];
 const MINIMUM = 1000;   // caractères rendus par le serveur
 const LIENS_RECUS = 2;  // liens internes venant des autres pages
 
