@@ -1,9 +1,16 @@
 {
-  "verifie_le": "2026-08-22 04:51 UTC",
-  "liens_controles": 1214,
-  "pages_vues": 364,
-  "pages_connues": 1708,
+  "verifie_le": "2026-08-22 08:49 UTC",
+  "liens_controles": 1138,
+  "pages_vues": 245,
+  "pages_connues": 974,
   "morts": [],
   "bloques": [],
-  "innocentes_au_controle_calme": []
+  "innocentes_au_controle_calme": [
+    {
+      "site": "halalgpt.fr",
+      "genre": "interne",
+      "url": "https://halalgpt.fr/q/voyage-halal-maldives",
+      "detail": "URLError — aucun code de reponse"
+    }
+  ]
 }
