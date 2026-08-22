@@ -91,5 +91,5 @@ for (const cible of PAGES) {
 await n.close();
 await arreter();
 console.log("");
-console.log(fautes ? `✗ ${fautes} page(s) en défaut` : "✓ Les 4 pages rendent du texte sans JavaScript, et aucune n'est orpheline.");
+console.log(fautes ? `✗ ${fautes} page(s) en défaut` : `✓ Les ${PAGES.length} pages rendent du texte sans JavaScript, et aucune n'est orpheline.`);
 process.exit(fautes ? 1 : 0);

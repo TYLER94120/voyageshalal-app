@@ -109,6 +109,16 @@ jobs:
       - name: Cosmetiques — les noms INCI qui passaient a travers
         run: npm run sonde:inci
 
+      # Les pages rayon sont GENEREES depuis le moteur. Si le fichier livre
+      # differe de ce que le generateur produit, la page ment sur une regle —
+      # meme faute que le 13 aout, ou une correction ecrite a la main avait ete
+      # effacee a la regeneration suivante.
+      - name: Les pages rayon sont-elles celles que le moteur produit ?
+        run: |
+          npm run build:rayons
+          git diff --exit-code --stat site/bonbons.html site/fromage.html site/pain-viennoiserie.html \
+            || (echo "::error::une page rayon livree differe de ce que le generateur produit" && exit 1)
+
       - name: Les nombres et les dates annonces sur le site
         run: npm run verif:chiffres
 
