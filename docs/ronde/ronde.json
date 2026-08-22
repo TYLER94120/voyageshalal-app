@@ -1,159 +1,61 @@
 {
-  "ronde_du": "2026-08-22 16:30 UTC",
-  "pages_vues": 167,
+  "ronde_du": "2026-08-22 17:26 UTC",
+  "pages_vues": 15,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 25,
-      "defauts": 18
+      "pages": 0,
+      "defauts": 1
     },
     {
       "site": "voyageshalal.fr",
-      "pages": 41,
-      "defauts": 0
+      "pages": 0,
+      "defauts": 1
     },
     {
       "site": "gohalaltravel.com",
-      "pages": 41,
-      "defauts": 0
+      "pages": 0,
+      "defauts": 1
     },
     {
       "site": "halalgpt.fr",
-      "pages": 41,
-      "defauts": 0
+      "pages": 0,
+      "defauts": 1
     },
     {
       "site": "halalcheck.fr",
-      "pages": 19,
+      "pages": 15,
       "defauts": 0
     }
   ],
   "defauts": [
     {
-      "niveau": "defaut",
+      "niveau": "grave",
       "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/le-comportement",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
+      "url": "https://www.islampasapas.fr/",
+      "quoi": "le site entier ne repond pas",
+      "detail": "code 402 — confirme au second controle"
     },
     {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/jeune-et-ramadan",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
+      "niveau": "grave",
+      "site": "voyageshalal.fr",
+      "url": "https://voyageshalal.fr/",
+      "quoi": "le site entier ne repond pas",
+      "detail": "code 402 — confirme au second controle"
     },
     {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/zakat-et-aumone",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
+      "niveau": "grave",
+      "site": "gohalaltravel.com",
+      "url": "https://gohalaltravel.com/",
+      "quoi": "le site entier ne repond pas",
+      "detail": "code 402 — confirme au second controle"
     },
     {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/le-pelerinage",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/vocabulaire-arabe",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/les-invocations",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/sens-des-sourates",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/lire-l-arabe",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/piliers-de-la-foi",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/la-priere",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/histoire-des-prophetes",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/vie-du-prophete",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/le-comportement",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/jeune-et-ramadan",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/zakat-et-aumone",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/le-pelerinage",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/vocabulaire-arabe",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/les-invocations",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
+      "niveau": "grave",
+      "site": "halalgpt.fr",
+      "url": "https://halalgpt.fr/",
+      "quoi": "le site entier ne repond pas",
+      "detail": "code 402 — confirme au second controle"
     }
   ]
 }
