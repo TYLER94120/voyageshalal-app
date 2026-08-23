@@ -1,5 +1,5 @@
 {
-  "verifie_le": "2026-08-23 08:49 UTC",
+  "verifie_le": "2026-08-23 13:03 UTC",
   "liens_controles": 87,
   "pages_vues": 13,
   "pages_connues": 13,
@@ -7,7 +7,7 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E325?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E322?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
@@ -19,13 +19,25 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E322?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E1105?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
       "site": "halalcheck.fr",
       "genre": "externe",
       "url": "https://halalgpt.fr/e/E120?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E120?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E325?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
@@ -43,31 +55,7 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E120?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E1105?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
       "url": "https://halalgpt.fr/e/E326?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E430?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E433?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
@@ -79,19 +67,19 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E434?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E433?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E430?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
       "site": "halalcheck.fr",
       "genre": "externe",
       "url": "https://halalgpt.fr/e/E422?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E422?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
@@ -109,13 +97,43 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E435?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E422?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
       "site": "halalcheck.fr",
       "genre": "externe",
       "url": "https://halalgpt.fr/e/E441?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E435?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E434?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E470a?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E442?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E441?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon",
       "detail": "code 402"
     },
     {
@@ -133,31 +151,7 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E441?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E471?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E442?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E470a?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E472a?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E471?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon",
       "detail": "code 402"
     },
     {
@@ -169,13 +163,31 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E471?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon",
+      "url": "https://halalgpt.fr/e/E471?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
       "site": "halalcheck.fr",
       "genre": "externe",
       "url": "https://halalgpt.fr/e/E472b?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E472a?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E472f?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E472e?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
@@ -193,12 +205,6 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E472e?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
       "url": "https://halalgpt.fr/e/E474?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
@@ -206,12 +212,6 @@
       "site": "halalcheck.fr",
       "genre": "externe",
       "url": "https://halalgpt.fr/e/E475?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E472f?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
@@ -229,13 +229,19 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E478?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E479b?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
       "site": "halalcheck.fr",
       "genre": "externe",
       "url": "https://halalgpt.fr/e/E481?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E478?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
@@ -253,13 +259,19 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
+      "url": "https://halalgpt.fr/e/E492?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
       "url": "https://halalgpt.fr/e/E484?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E479b?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E491?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
@@ -271,7 +283,7 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E491?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E494?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
@@ -289,37 +301,7 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E494?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E542?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E492?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E570?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
       "url": "https://halalgpt.fr/e/E542?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr/e/E627?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
@@ -331,19 +313,19 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E904?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E570?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E635?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E542?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon",
       "detail": "code 402"
     },
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E631?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E627?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
@@ -355,7 +337,13 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E920?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon",
+      "url": "https://halalgpt.fr/e/E640?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E635?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
@@ -367,13 +355,19 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E640?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E631?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E921?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E904?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-accueil",
       "detail": "code 402"
     },
     {
@@ -385,13 +379,7 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E966?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=mentions",
+      "url": "https://halalgpt.fr/e/E921?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "code 402"
     },
     {
@@ -403,13 +391,49 @@
     {
       "site": "halalcheck.fr",
       "genre": "externe",
+      "url": "https://halalgpt.fr/e/E966?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E920?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=mentions",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
       "url": "https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=verdict-douteux",
       "detail": "code 402"
     },
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-accueil",
+      "url": "https://www.gohalaltravel.com?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-accueil",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://www.gohalaltravel.com?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://www.gohalaltravel.com?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-mentions",
+      "detail": "code 402"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://www.voyageshalal.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-accueil",
       "detail": "code 402"
     },
     {
@@ -422,30 +446,6 @@
       "site": "halalcheck.fr",
       "genre": "externe",
       "url": "https://www.voyageshalal.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-mentions",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://www.gohalaltravel.com?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-mentions",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://www.gohalaltravel.com?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://www.gohalaltravel.com?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-accueil",
-      "detail": "code 402"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://www.voyageshalal.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-accueil",
       "detail": "code 402"
     },
     {
