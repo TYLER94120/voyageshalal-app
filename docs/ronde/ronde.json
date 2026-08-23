@@ -1,61 +1,243 @@
 {
-  "ronde_du": "2026-08-22 17:26 UTC",
-  "pages_vues": 15,
+  "ronde_du": "2026-08-23 19:48 UTC",
+  "pages_vues": 172,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 0,
-      "defauts": 1
+      "pages": 33,
+      "defauts": 24
     },
     {
       "site": "voyageshalal.fr",
-      "pages": 0,
-      "defauts": 1
+      "pages": 41,
+      "defauts": 0
     },
     {
       "site": "gohalaltravel.com",
-      "pages": 0,
-      "defauts": 1
+      "pages": 41,
+      "defauts": 6
     },
     {
       "site": "halalgpt.fr",
-      "pages": 0,
-      "defauts": 1
+      "pages": 41,
+      "defauts": 0
     },
     {
       "site": "halalcheck.fr",
-      "pages": 15,
+      "pages": 16,
       "defauts": 0
     }
   ],
   "defauts": [
     {
-      "niveau": "grave",
+      "niveau": "defaut",
       "site": "islampasapas.fr",
-      "url": "https://www.islampasapas.fr/",
-      "quoi": "le site entier ne repond pas",
-      "detail": "code 402 — confirme au second controle"
+      "url": "https://islampasapas.fr/section/sens-des-sourates",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
     },
     {
-      "niveau": "grave",
-      "site": "voyageshalal.fr",
-      "url": "https://voyageshalal.fr/",
-      "quoi": "le site entier ne repond pas",
-      "detail": "code 402 — confirme au second controle"
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/lire-l-arabe",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
     },
     {
-      "niveau": "grave",
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/piliers-de-la-foi",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/la-priere",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/histoire-des-prophetes",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/vie-du-prophete",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/le-comportement",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/jeune-et-ramadan",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/zakat-et-aumone",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/le-pelerinage",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/vocabulaire-arabe",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/les-invocations",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/sens-des-sourates",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/lire-l-arabe",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/piliers-de-la-foi",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/la-priere",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/histoire-des-prophetes",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/vie-du-prophete",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/le-comportement",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/jeune-et-ramadan",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/zakat-et-aumone",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/le-pelerinage",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/vocabulaire-arabe",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/les-invocations",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://gohalaltravel.com/",
-      "quoi": "le site entier ne repond pas",
-      "detail": "code 402 — confirme au second controle"
+      "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : avec, piscine, resto — « Where to pray at Resto avec piscine — Tafoughalt… »"
     },
     {
-      "niveau": "grave",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/",
-      "quoi": "le site entier ne repond pas",
-      "detail": "code 402 — confirme au second controle"
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : avec, piscine, resto"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : bord, resto — « Where to pray at Resto Sidi koi Ali en bord de mer… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : bord, resto"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel"
     }
   ]
 }

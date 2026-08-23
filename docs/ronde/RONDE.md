@@ -1,13 +1,13 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-08-22 17:26 UTC.**
+**Dernier changement constate le 2026-08-23 19:48 UTC.**
 
-⚠️ **Cette ronde a regarde 15 pages sur 10 — environ 150 %.**
+⚠️ **Cette ronde a regarde 172 pages sur 2019 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
 casse dans la nuit : la rotation est simplement passee sur d'autres pages.
-Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **vieux de 14 h**.
+Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **vieux de 16 h**.
 
 La ronde passe **toutes les 30 minutes** sur les quatre sites et
 regarde ce qu'un visiteur recoit vraiment. Ce fichier n'est reecrit
@@ -16,8 +16,8 @@ que rien de nouveau n'est casse, pas que le robot dort.
 
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
-| 🔴 grave | **4** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 0 | il la recoit, mais elle le dessert |
+| 🔴 grave | **0** | le visiteur ne recoit pas la page |
+| 🟠 defaut | 30 | il la recoit, mais elle le dessert |
 | 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
@@ -27,30 +27,76 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 
 | Site | Pages vues | Tous niveaux |
 |---|---|---|
-| islampasapas.fr | 0 | 1 |
-| voyageshalal.fr | 0 | 1 |
-| gohalaltravel.com | 0 | 1 |
-| halalgpt.fr | 0 | 1 |
-| halalcheck.fr | 15 | 0 |
+| islampasapas.fr | 33 | 24 |
+| voyageshalal.fr | 41 | 0 |
+| gohalaltravel.com | 41 | 6 |
+| halalgpt.fr | 41 | 0 |
+| halalcheck.fr | 16 | 0 |
 
-## 🔴 grave — 4
+## 🟠 defaut — 30
 
-### islampasapas.fr (1)
+### islampasapas.fr (24)
 
-- **le site entier ne repond pas** — code 402 — confirme au second controle  
-  `https://www.islampasapas.fr/`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/sens-des-sourates`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/lire-l-arabe`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/piliers-de-la-foi`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/la-priere`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/histoire-des-prophetes`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/vie-du-prophete`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/le-comportement`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/jeune-et-ramadan`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/zakat-et-aumone`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/le-pelerinage`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/vocabulaire-arabe`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/les-invocations`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/sens-des-sourates`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/lire-l-arabe`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/piliers-de-la-foi`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/la-priere`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/histoire-des-prophetes`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/vie-du-prophete`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/le-comportement`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/jeune-et-ramadan`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/zakat-et-aumone`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/le-pelerinage`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/vocabulaire-arabe`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/les-invocations`
 
-### voyageshalal.fr (1)
+### gohalaltravel.com (6)
 
-- **le site entier ne repond pas** — code 402 — confirme au second controle  
-  `https://voyageshalal.fr/`
-
-### gohalaltravel.com (1)
-
-- **le site entier ne repond pas** — code 402 — confirme au second controle  
-  `https://gohalaltravel.com/`
-
-### halalgpt.fr (1)
-
-- **le site entier ne repond pas** — code 402 — confirme au second controle  
-  `https://halalgpt.fr/`
+- **titre en francais sur le domaine anglais** — mots francais : avec, piscine, resto — « Where to pray at Resto avec piscine — Tafoughalt… »  
+  `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
+- **description en francais sur le domaine anglais** — mots francais : avec, piscine, resto  
+  `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
+- **titre en francais sur le domaine anglais** — mots francais : bord, resto — « Where to pray at Resto Sidi koi Ali en bord de mer… »  
+  `https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer`
+- **description en francais sur le domaine anglais** — mots francais : bord, resto  
+  `https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer`
+- **titre en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »  
+  `https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej`
+- **description en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel  
+  `https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej`
