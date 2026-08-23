@@ -1,11 +1,11 @@
 {
-  "ronde_du": "2026-08-23 20:54 UTC",
-  "pages_vues": 173,
+  "ronde_du": "2026-08-23 21:26 UTC",
+  "pages_vues": 161,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 33,
-      "defauts": 24
+      "pages": 25,
+      "defauts": 18
     },
     {
       "site": "voyageshalal.fr",
@@ -15,16 +15,16 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 1
+      "defauts": 0
     },
     {
       "site": "halalgpt.fr",
       "pages": 41,
-      "defauts": 6
+      "defauts": 0
     },
     {
       "site": "halalcheck.fr",
-      "pages": 17,
+      "pages": 13,
       "defauts": 0
     }
   ],
@@ -32,48 +32,6 @@
     {
       "niveau": "defaut",
       "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/sens-des-sourates",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/lire-l-arabe",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/piliers-de-la-foi",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/la-priere",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/histoire-des-prophetes",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/vie-du-prophete",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
       "url": "https://islampasapas.fr/section/le-comportement",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
@@ -196,55 +154,6 @@
       "url": "https://islampasapas.fr/section/les-invocations",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/contact",
-      "quoi": "description en francais sur le domaine anglais",
-      "detail": "mots francais : mosquee, une"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/q/philadelphia-halal",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/q/actimel-halal",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/q/buffalo-grill-halal",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/q/lu-prince-halal",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/q/isla-delice-halal",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/q/cordon-bleu-halal",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 36.0 s au controle calme — a surveiller, pas a reparer"
     }
   ]
 }
