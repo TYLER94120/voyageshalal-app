@@ -1,11 +1,11 @@
 {
-  "ronde_du": "2026-08-24 15:10 UTC",
-  "pages_vues": 174,
+  "ronde_du": "2026-08-24 16:05 UTC",
+  "pages_vues": 162,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 33,
-      "defauts": 24
+      "pages": 25,
+      "defauts": 18
     },
     {
       "site": "voyageshalal.fr",
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 4
+      "defauts": 13
     },
     {
       "site": "halalgpt.fr",
@@ -24,56 +24,14 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 18,
-      "defauts": 0
+      "pages": 14,
+      "defauts": 1
     }
   ],
   "defauts": [
     {
       "niveau": "defaut",
       "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/sens-des-sourates",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/lire-l-arabe",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/piliers-de-la-foi",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/la-priere",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/histoire-des-prophetes",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/vie-du-prophete",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
       "url": "https://islampasapas.fr/section/le-comportement",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
@@ -196,20 +154,6 @@
       "url": "https://islampasapas.fr/section/les-invocations",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : bord, resto — « Where to pray at Resto Sidi koi Ali en bord de mer… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer",
-      "quoi": "description en francais sur le domaine anglais",
-      "detail": "mots francais : bord, resto"
     },
     {
       "niveau": "defaut",
@@ -224,6 +168,90 @@
       "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
       "quoi": "description en francais sur le domaine anglais",
       "detail": "mots francais : avec, piscine, resto"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr",
+      "quoi": "description trop courte (41 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : restaura, resto — « Restaura Café chill — Halal resto in Marrakech… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
+      "quoi": "description trop courte (42 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
+      "quoi": "description trop courte (21 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
+      "quoi": "description trop courte (17 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd",
+      "quoi": "description trop courte (24 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "grave",
+      "site": "halalcheck.fr",
+      "url": "https://halalcheck.fr/additifs.html",
+      "quoi": "erreur serveur 503",
+      "detail": "le visiteur ne recoit rien"
     }
   ]
 }
