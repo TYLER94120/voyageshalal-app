@@ -1,11 +1,11 @@
 # Balayage complet
 
-**Dernier changement constate le 2026-08-24 03:09 UTC.**
+**Dernier changement constate le 2026-08-24 03:39 UTC.**
 
-**2022 pages regardees — le site entier.** Les chiffres ci-dessous
+**1790 pages regardees — le site entier.** Les chiffres ci-dessous
 valent donc pour tout ce que Google peut voir.
 
-Balayage commence le 2026-08-24 03:09 UTC, termine en 14 minutes. Un balayage
+Balayage commence le 2026-08-24 03:39 UTC, termine en 16 minutes. Un balayage
 complet qui rendrait la main en quelques secondes n'aurait pas eu lieu :
 c'est a cette duree qu'on le reconnait.
 
@@ -16,9 +16,9 @@ que rien de nouveau n'est casse, pas que le robot dort.
 
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
-| 🔴 grave | **0** | le visiteur ne recoit pas la page |
+| 🔴 grave | **2** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 23 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 48 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 51 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -28,9 +28,9 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 | Site | Pages vues | Tous niveaux | 🟠 defauts | Plafond |
 |---|---|---|---|---|
 | islampasapas.fr | 17 | 12 | 12 | 0 |
-| voyageshalal.fr | 871 | 18 | 0 | 0 |
-| gohalaltravel.com | 892 | 37 | 11 | 10 |
-| halalgpt.fr | 232 | 4 | 0 | 0 |
+| voyageshalal.fr | 871 | 13 | 0 | 0 |
+| gohalaltravel.com | 892 | 50 | 11 | 10 |
+| halalgpt.fr | 0 | 1 | 0 | 0 |
 | halalcheck.fr | 10 | 0 | 0 | 0 |
 
 **Le plafond ne remonte jamais.** Il part du compte du jour ou il a ete
@@ -46,7 +46,15 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
 🔴 **On a recule — c'est ce qui fait echouer ce controle :**
 
 - islampasapas.fr : plafond 0, compte **12**
-- gohalaltravel.com : plafond 10, compte **11**
+
+## 🔴 grave — 2
+
+### gohalaltravel.com (2)
+
+- **la page ne repond pas** — URLError: <urlopen error [Errno 104] Connection reset by peer> — confirme au second controle  
+  `https://www.gohalaltravel.com/destinations/ifrane`
+- **la page ne repond pas** — URLError: <urlopen error [Errno 111] Connection refused> — confirme au second controle  
+  `https://www.gohalaltravel.com/destinations/pays/turquie`
 
 ## 🟠 defaut — 23
 
@@ -102,89 +110,99 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
 - **titre en francais sur le domaine anglais** — mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »  
   `https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8`
 
-## 🟡 surveiller — 48
+## 🟡 surveiller — 51
 
-### voyageshalal.fr (18)
+### voyageshalal.fr (13)
 
 - **page lente (19.7 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.voyageshalal.fr/hotels/manchester`
-- **page lente (19.7 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.voyageshalal.fr/hotels/edimbourg`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.voyageshalal.fr/hotels/sapporo`
+  `https://www.voyageshalal.fr/hotels/douala`
 - **page lente (19.8 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.voyageshalal.fr/hotels/utrecht`
+  `https://www.voyageshalal.fr/blog/repas-halal-avion-moml`
 - **page lente (19.5 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.voyageshalal.fr/hotels/nashville`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
-  `https://www.voyageshalal.fr/hotels/hiroshima`
-- **page lente (19.6 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.voyageshalal.fr/hotels/taif`
-- **page lente (19.9 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.voyageshalal.fr/hotels/kampala`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer  
-  `https://www.voyageshalal.fr/guides/voyage-aid-en-famille`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.5 s au controle calme — a surveiller, pas a reparer  
-  `https://www.voyageshalal.fr/priere/marrakech/riad-essaouira`
-- **description trop courte (24 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
-- **description trop courte (18 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
+  `https://www.voyageshalal.fr/blog/restaurants-halal-berkane-guide`
+- **page lente (20.2 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.voyageshalal.fr/priere/la-haye/hotel`
+- **page lente (20.0 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.voyageshalal.fr/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer`
 - **description trop courte (10 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.5 s au controle calme — a surveiller, pas a reparer  
-  `https://www.voyageshalal.fr/spot/sp_ms28x8qb_g18zz`
 - **description trop courte (17 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt`
 - **description trop courte (21 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.6 s au controle calme — a surveiller, pas a reparer  
+  `https://www.voyageshalal.fr/spot/sp_mrt8ic21_7fovr`
 - **description trop courte (42 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa`
 - **description trop courte (41 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
+- **description trop courte (24 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
+- **description trop courte (18 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
 
-### gohalaltravel.com (26)
+### gohalaltravel.com (37)
 
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/trip-planner`
-- **page lente (19.5 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.gohalaltravel.com/contact`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/destinations/moscou`
-- **page lente (19.5 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.gohalaltravel.com/destinations/porto`
-- **page lente (19.9 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.gohalaltravel.com/destinations/hong-kong`
-- **page lente (19.8 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.gohalaltravel.com/destinations/gand`
-- **page lente (19.6 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.gohalaltravel.com/destinations/san-antonio`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/destinations/yokohama`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.4 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/destinations/taif`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/destinations/abidjan`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/hotels/paris`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/hotels/budapest`
-- **page lente (19.6 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.gohalaltravel.com/hotels/boston`
-- **page lente (19.5 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.gohalaltravel.com/hotels/lima`
-- **page lente (19.6 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.gohalaltravel.com/hotels/luxembourg`
-- **page lente (19.4 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.gohalaltravel.com/hotels/salvador-bahia`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/hotels/gold-coast`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/guides/halal-food-thailand-guide`
 - **page instable sous charge** — muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/blog/halal-travel-morocco-2026-complete-guide`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.5 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/priere/marrakech/coin-priere-dans-un-restaurant-familial`
+  `https://www.gohalaltravel.com/trip-planner`
+- **page lente (20.1 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.gohalaltravel.com/privacy`
+- **page lente (19.7 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.gohalaltravel.com/destinations/amsterdam`
+- **page lente (19.4 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.gohalaltravel.com/destinations/islamabad`
+- **page lente (19.8 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.gohalaltravel.com/destinations/penang`
+- **page lente (19.9 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.gohalaltravel.com/destinations/astana`
+- **page lente (19.8 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.gohalaltravel.com/destinations/milan`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.9 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/destinations/varsovie`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/destinations/taipei`
+- **page lente (19.7 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.gohalaltravel.com/destinations/rennes`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/destinations/calgary`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/destinations/xian`
+- **page lente (19.5 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.gohalaltravel.com/destinations/homs`
+- **page instable sous charge** — muette pendant la ronde, repond en 19.9 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/destinations/pays/royaume-uni`
+- **page instable sous charge** — muette pendant la ronde, repond en 20.2 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/hotels/bordeaux`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/hotels/multan`
+- **page lente (19.7 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.gohalaltravel.com/hotels/rennes`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/hotels/san-antonio`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/hotels/guayaquil`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/hotels/santiago`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/hotels/yangon`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/hotels/abha`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/hotels/samarcande`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/hotels/djibouti`
+- **page instable sous charge** — muette pendant la ronde, repond en 19.6 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/hotels/adelaide`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/blog/prayer-times-on-a-plane-time-zones`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/blog/where-to-pray-nice-airport`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/blog/where-to-pray-marseille-airport`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.7 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/priere/marrakech/restaura-cafe-chill`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.6 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/spot/sp_msf72qww_41c1r`
 - **description trop courte (17 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
 - **description trop courte (21 car.)**  
@@ -195,16 +213,12 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
   `https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr`
 - **description trop courte (24 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/halal-questions/is-cheese-halal-rennet`
-
-### halalgpt.fr (4)
-
-- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
-  `https://halalgpt.fr/q/nutella-halal`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
-  `https://halalgpt.fr/q/glace-extreme-halal`
-- **page lente (19.8 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://halalgpt.fr/q/cordon-bleu-halal`
 - **page instable sous charge** — muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer  
-  `https://halalgpt.fr/q/mauvais-oeil-protection`
+  `https://www.gohalaltravel.com/halal-questions/is-e471-halal`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/halal-questions/fasting-ramadan-while-travelling`
+
+### halalgpt.fr (1)
+
+- **page instable sous charge** — muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer  
+  `https://halalgpt.fr/`
