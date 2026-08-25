@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-08-25 13:02 UTC.**
+**Dernier changement constate le 2026-08-25 14:21 UTC.**
 
-⚠️ **Cette ronde a regarde 164 pages sur 2019 — environ 8 %.**
+⚠️ **Cette ronde a regarde 168 pages sur 2019 — environ 8 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -17,8 +17,8 @@ que rien de nouveau n'est casse, pas que le robot dort.
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 26 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 3 | pas urgent, a ne pas laisser grossir |
+| 🟠 defaut | 24 | il la recoit, mais elle le dessert |
+| 🟡 a surveiller | 1 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -27,16 +27,28 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 
 | Site | Pages vues | Tous niveaux |
 |---|---|---|
-| islampasapas.fr | 25 | 18 |
+| islampasapas.fr | 33 | 24 |
 | voyageshalal.fr | 41 | 0 |
-| gohalaltravel.com | 41 | 11 |
+| gohalaltravel.com | 41 | 1 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 16 | 0 |
+| halalcheck.fr | 12 | 0 |
 
-## 🟠 defaut — 26
+## 🟠 defaut — 24
 
-### islampasapas.fr (18)
+### islampasapas.fr (24)
 
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/sens-des-sourates`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/lire-l-arabe`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/piliers-de-la-foi`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/la-priere`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/histoire-des-prophetes`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/vie-du-prophete`
 - **aucun titre H1** — la page n'annonce pas son sujet  
   `https://islampasapas.fr/section/le-comportement`
 - **aucun titre H1** — la page n'annonce pas son sujet  
@@ -74,32 +86,9 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 - **aucun titre H1** — la page n'annonce pas son sujet  
   `https://islampasapas.fr/section/les-invocations`
 
-### gohalaltravel.com (8)
+## 🟡 surveiller — 1
 
-- **titre en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »  
-  `https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej`
-- **description en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel  
-  `https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej`
-- **titre en francais sur le domaine anglais** — mots francais : avec, piscine, resto — « Where to pray at Resto avec piscine — Tafoughalt… »  
-  `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
-- **description en francais sur le domaine anglais** — mots francais : avec, piscine, resto  
-  `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
-- **titre en francais sur le domaine anglais** — mots francais : bord, resto — « Where to pray at Resto Sidi koi Ali en bord de mer… »  
-  `https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer`
-- **description en francais sur le domaine anglais** — mots francais : bord, resto  
-  `https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer`
-- **titre en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »  
-  `https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug`
-- **titre en francais sur le domaine anglais** — mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »  
-  `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
+### gohalaltravel.com (1)
 
-## 🟡 surveiller — 3
-
-### gohalaltravel.com (3)
-
-- **page lente (5.6 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://gohalaltravel.com/`
-- **description trop courte (24 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd`
-- **description trop courte (21 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
+- **description trop courte (17 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
