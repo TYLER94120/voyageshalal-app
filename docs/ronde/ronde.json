@@ -1,11 +1,11 @@
 {
-  "ronde_du": "2026-08-25 11:00 UTC",
-  "pages_vues": 163,
+  "ronde_du": "2026-08-25 11:56 UTC",
+  "pages_vues": 167,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 25,
-      "defauts": 18
+      "pages": 33,
+      "defauts": 24
     },
     {
       "site": "voyageshalal.fr",
@@ -20,15 +20,57 @@
     {
       "site": "halalgpt.fr",
       "pages": 41,
-      "defauts": 2
+      "defauts": 0
     },
     {
       "site": "halalcheck.fr",
-      "pages": 15,
+      "pages": 11,
       "defauts": 0
     }
   ],
   "defauts": [
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/sens-des-sourates",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/lire-l-arabe",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/piliers-de-la-foi",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/la-priere",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/histoire-des-prophetes",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/vie-du-prophete",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
     {
       "niveau": "defaut",
       "site": "islampasapas.fr",
@@ -154,20 +196,6 @@
       "url": "https://islampasapas.fr/section/les-invocations",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/q/chicha-halal",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "defaut",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/api/passerelle",
-      "quoi": "le compteur de passerelles n'est pas vivant",
-      "detail": "URLError: <urlopen error timed out> — la seule mesure que les agents peuvent lire seuls n'enregistre rien"
     }
   ]
 }
