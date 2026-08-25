@@ -1,11 +1,11 @@
 {
-  "ronde_du": "2026-08-24 23:50 UTC",
-  "pages_vues": 170,
+  "ronde_du": "2026-08-25 01:38 UTC",
+  "pages_vues": 167,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 33,
-      "defauts": 24
+      "pages": 25,
+      "defauts": 18
     },
     {
       "site": "voyageshalal.fr",
@@ -20,11 +20,11 @@
     {
       "site": "halalgpt.fr",
       "pages": 41,
-      "defauts": 1
+      "defauts": 0
     },
     {
       "site": "halalcheck.fr",
-      "pages": 14,
+      "pages": 19,
       "defauts": 0
     }
   ],
@@ -32,48 +32,6 @@
     {
       "niveau": "defaut",
       "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/sens-des-sourates",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/lire-l-arabe",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/piliers-de-la-foi",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/la-priere",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/histoire-des-prophetes",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/vie-du-prophete",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
       "url": "https://islampasapas.fr/section/le-comportement",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
@@ -196,13 +154,6 @@
       "url": "https://islampasapas.fr/section/les-invocations",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "grave",
-      "site": "halalgpt.fr",
-      "url": "https://halalgpt.fr/q/chat-maison-islam",
-      "quoi": "la page ne repond pas",
-      "detail": "URLError: <urlopen error timed out> — confirme au second controle"
     }
   ]
 }
