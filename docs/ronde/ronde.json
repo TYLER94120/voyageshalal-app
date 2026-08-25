@@ -1,11 +1,11 @@
 {
-  "ronde_du": "2026-08-25 15:23 UTC",
-  "pages_vues": 165,
+  "ronde_du": "2026-08-25 16:09 UTC",
+  "pages_vues": 169,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 25,
-      "defauts": 18
+      "pages": 33,
+      "defauts": 24
     },
     {
       "site": "voyageshalal.fr",
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 1
+      "defauts": 0
     },
     {
       "site": "halalgpt.fr",
@@ -24,11 +24,53 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 17,
+      "pages": 13,
       "defauts": 0
     }
   ],
   "defauts": [
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/sens-des-sourates",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/lire-l-arabe",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/piliers-de-la-foi",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/la-priere",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/histoire-des-prophetes",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/vie-du-prophete",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
     {
       "niveau": "defaut",
       "site": "islampasapas.fr",
@@ -154,13 +196,6 @@
       "url": "https://islampasapas.fr/section/les-invocations",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/contact",
-      "quoi": "description en francais sur le domaine anglais",
-      "detail": "mots francais : mosquee, une"
     }
   ]
 }
