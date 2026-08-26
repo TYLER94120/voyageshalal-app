@@ -1,139 +1,19 @@
 {
-  "verifie_le": "2026-08-26 01:59 UTC",
-  "liens_controles": 1011,
+  "verifie_le": "2026-08-26 04:57 UTC",
+  "liens_controles": 899,
   "pages_vues": 251,
-  "pages_connues": 982,
+  "pages_connues": 1485,
   "morts": [
     {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/wadi-rum",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/sarande",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/berat",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/travnik",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/paje",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/stone-town",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/gjirokaster",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/edinburgh",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/atolls-nord",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/maafushi",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/male",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/charm-el-cheikh",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/al-wakrah",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/nungwi",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/riyad",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/petra",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/sur",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/langkawi",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/koh-lanta",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/alula",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "interne",
-      "url": "https://www.voyageshalal.fr/destinations/krabi",
-      "detail": "code 404"
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://halalgpt.fr/e/E1105?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "detail": "URLError (confirme machine calme)"
     },
     {
       "site": "halalcheck.fr",
       "genre": "externe",
-      "url": "https://halalgpt.fr/e/E471?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
+      "url": "https://halalgpt.fr/e/E570?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs",
       "detail": "URLError (confirme machine calme)"
     }
   ],
