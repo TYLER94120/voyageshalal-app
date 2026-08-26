@@ -1,5 +1,5 @@
 {
-  "ronde_du": "2026-08-25 03:32 UTC",
+  "ronde_du": "2026-08-26 03:11 UTC",
   "pages_vues": 2022,
   "pages_par_site": [
     {
@@ -10,17 +10,17 @@
     {
       "site": "voyageshalal.fr",
       "pages": 871,
-      "defauts": 7
+      "defauts": 47
     },
     {
       "site": "gohalaltravel.com",
       "pages": 892,
-      "defauts": 16
+      "defauts": 39
     },
     {
       "site": "halalgpt.fr",
       "pages": 232,
-      "defauts": 0
+      "defauts": 5
     },
     {
       "site": "halalcheck.fr",
@@ -116,36 +116,288 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr",
-      "quoi": "description trop courte (41 car.)",
-      "detail": ""
+      "url": "https://www.voyageshalal.fr/destinations/amman",
+      "quoi": "page lente (19.5 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
     },
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd",
-      "quoi": "description trop courte (24 car.)",
-      "detail": ""
+      "url": "https://www.voyageshalal.fr/destinations/djerba",
+      "quoi": "page lente (19.8 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/mascate",
+      "quoi": "page lente (19.4 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/fezouane",
+      "quoi": "page lente (19.6 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/chiraz",
+      "quoi": "page lente (19.7 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/sousse",
+      "quoi": "page lente (19.6 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/dublin",
+      "quoi": "page lente (19.5 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/taipei",
+      "quoi": "page lente (19.9 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/gdansk",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.5 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/panama",
+      "quoi": "page lente (19.6 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/phnom-penh",
+      "quoi": "page lente (19.7 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/sfax",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/louxor",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/milan",
+      "quoi": "page lente (19.6 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/seattle",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/hanoi",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/katmandou",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/jaipur",
+      "quoi": "page lente (19.6 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/goa",
+      "quoi": "page lente (19.5 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/pattaya",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/chiang-mai",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/siem-reap",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/gand",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/gdansk",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/bratislava",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/thessalonique",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/palerme",
+      "quoi": "page lente (11.4 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/genes",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/luxembourg",
+      "quoi": "page lente (19.4 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/san-diego",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/austin",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/guadalajara",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/cusco",
+      "quoi": "page lente (19.4 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/kolkata",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/kandy",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/homs",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.4 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/tlemcen",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/hotels/kinshasa",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/guides/omra-2026-guide-complet",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/priere/marrakech/hotel-excentre-de-marrakech",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.5 s au controle calme — a surveiller, pas a reparer"
     },
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
       "url": "https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt",
       "quoi": "description trop courte (17 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
-      "quoi": "description trop courte (18 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac",
-      "quoi": "description trop courte (10 car.)",
       "detail": ""
     },
     {
@@ -158,8 +410,36 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr",
+      "quoi": "description trop courte (41 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
+      "quoi": "description trop courte (18 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
       "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
       "quoi": "description trop courte (21 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac",
+      "quoi": "description trop courte (10 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd",
+      "quoi": "description trop courte (24 car.)",
       "detail": ""
     },
     {
@@ -168,6 +448,153 @@
       "url": "https://www.gohalaltravel.com/contact",
       "quoi": "description en francais sur le domaine anglais",
       "detail": "mots francais : mosquee, une"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/privacy",
+      "quoi": "page lente (19.9 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/agadir",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/alger",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/beyrouth",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/kota-kinabalu",
+      "quoi": "page lente (15.4 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/tiznit",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/chennai",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/malmo",
+      "quoi": "page lente (19.5 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/detroit",
+      "quoi": "page lente (19.4 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/daegu",
+      "quoi": "page lente (19.7 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/sfax",
+      "quoi": "page lente (19.4 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/pays/zanzibar",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/hotels/nador",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/hotels/machhad",
+      "quoi": "page lente (19.6 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/hotels/prague",
+      "quoi": "page lente (19.7 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/hotels/fukuoka",
+      "quoi": "page lente (19.8 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/hotels/utrecht",
+      "quoi": "page lente (19.5 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/hotels/minneapolis",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/guides/top-halal-destinations-2026",
+      "quoi": "page lente (19.6 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/blog/prayer-times-while-traveling-muslim-guide",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/saidia/mosque-a-10-minutes-de-saidia-dans-la-montagne",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.6 s au controle calme — a surveiller, pas a reparer"
     },
     {
       "niveau": "defaut",
@@ -184,18 +611,11 @@
       "detail": "mots francais : avec, piscine, resto"
     },
     {
-      "niveau": "defaut",
+      "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
-      "quoi": "description en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel"
+      "url": "https://www.gohalaltravel.com/priere/casablanca/le-rendez-vous",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.5 s au controle calme — a surveiller, pas a reparer"
     },
     {
       "niveau": "defaut",
@@ -214,6 +634,34 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms28x8qb_g18zz",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.6 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
+      "quoi": "description trop courte (17 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
       "quoi": "titre en francais sur le domaine anglais",
       "detail": "mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »"
@@ -223,34 +671,6 @@
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
       "quoi": "description trop courte (21 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr",
-      "quoi": "description trop courte (41 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd",
-      "quoi": "description trop courte (24 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
-      "quoi": "description trop courte (17 car.)",
       "detail": ""
     },
     {
@@ -268,11 +688,67 @@
       "detail": ""
     },
     {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr",
+      "quoi": "description trop courte (41 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd",
+      "quoi": "description trop courte (24 car.)",
+      "detail": ""
+    },
+    {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8",
       "quoi": "titre en francais sur le domaine anglais",
       "detail": "mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "halalgpt.fr",
+      "url": "https://halalgpt.fr/q/restaurant-halal-paris",
+      "quoi": "page lente (19.8 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "halalgpt.fr",
+      "url": "https://halalgpt.fr/q/restaurant-halal-lyon",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "halalgpt.fr",
+      "url": "https://halalgpt.fr/q/snickers-mars-twix-halal",
+      "quoi": "page lente (3.1 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "halalgpt.fr",
+      "url": "https://halalgpt.fr/q/restaurant-halal-montpellier",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "halalgpt.fr",
+      "url": "https://halalgpt.fr/q/priere-vendredi-obligatoire",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.4 s au controle calme — a surveiller, pas a reparer"
     }
   ]
 }
