@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-08-26 09:19 UTC.**
+**Dernier changement constate le 2026-08-26 10:06 UTC.**
 
-⚠️ **Cette ronde a regarde 169 pages sur 2019 — environ 8 %.**
+⚠️ **Cette ronde a regarde 166 pages sur 2019 — environ 8 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -18,7 +18,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 24 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 2 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -27,29 +27,17 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 
 | Site | Pages vues | Tous niveaux |
 |---|---|---|
-| islampasapas.fr | 33 | 24 |
+| islampasapas.fr | 25 | 18 |
 | voyageshalal.fr | 41 | 0 |
-| gohalaltravel.com | 41 | 0 |
+| gohalaltravel.com | 41 | 8 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 13 | 0 |
+| halalcheck.fr | 18 | 0 |
 
 ## 🟠 defaut — 24
 
-### islampasapas.fr (24)
+### islampasapas.fr (18)
 
 - **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/sens-des-sourates`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/lire-l-arabe`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/piliers-de-la-foi`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/la-priere`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/histoire-des-prophetes`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/vie-du-prophete`
-- **aucun titre H1** — la page n'annonce pas son sujet  
   `https://islampasapas.fr/section/le-comportement`
 - **aucun titre H1** — la page n'annonce pas son sujet  
   `https://islampasapas.fr/section/jeune-et-ramadan`
@@ -85,3 +73,27 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
   `https://islampasapas.fr/section/vocabulaire-arabe`
 - **aucun titre H1** — la page n'annonce pas son sujet  
   `https://islampasapas.fr/section/les-invocations`
+
+### gohalaltravel.com (6)
+
+- **titre en francais sur le domaine anglais** — mots francais : bord, resto — « Where to pray at Resto Sidi koi Ali en bord de mer… »  
+  `https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer`
+- **description en francais sur le domaine anglais** — mots francais : bord, resto  
+  `https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer`
+- **titre en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »  
+  `https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej`
+- **description en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel  
+  `https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej`
+- **titre en francais sur le domaine anglais** — mots francais : avec, piscine, resto — « Where to pray at Resto avec piscine — Tafoughalt… »  
+  `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
+- **description en francais sur le domaine anglais** — mots francais : avec, piscine, resto  
+  `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
+
+## 🟡 surveiller — 2
+
+### gohalaltravel.com (2)
+
+- **description trop courte (24 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd`
+- **description trop courte (17 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
