@@ -1,11 +1,11 @@
 # Balayage complet
 
-**Dernier changement constate le 2026-08-26 03:40 UTC.**
+**Dernier changement constate le 2026-08-27 13:06 UTC.**
 
 **2022 pages regardees — le site entier.** Les chiffres ci-dessous
 valent donc pour tout ce que Google peut voir.
 
-Balayage commence le 2026-08-26 03:40 UTC, termine en 10 minutes. Un balayage
+Balayage commence le 2026-08-27 13:06 UTC, termine en 10 minutes. Un balayage
 complet qui rendrait la main en quelques secondes n'aurait pas eu lieu :
 c'est a cette duree qu'on le reconnait.
 
@@ -18,7 +18,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 23 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 16 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 17 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -28,8 +28,8 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 | Site | Pages vues | Tous niveaux | 🟠 defauts | Plafond |
 |---|---|---|---|---|
 | islampasapas.fr | 17 | 12 | 12 | 0 |
-| voyageshalal.fr | 871 | 10 | 0 | 0 |
-| gohalaltravel.com | 892 | 17 | 11 | 10 |
+| voyageshalal.fr | 871 | 7 | 0 | 0 |
+| gohalaltravel.com | 892 | 21 | 11 | 10 |
 | halalgpt.fr | 232 | 0 | 0 | 0 |
 | halalcheck.fr | 10 | 0 | 0 | 0 |
 
@@ -93,44 +93,46 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
   `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
 - **description en francais sur le domaine anglais** — mots francais : avec, piscine, resto  
   `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
-- **titre en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »  
-  `https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug`
 - **titre en francais sur le domaine anglais** — mots francais : restaura, resto — « Restaura Café chill — Halal resto in Marrakech… »  
   `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
+- **titre en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »  
+  `https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug`
 - **titre en francais sur le domaine anglais** — mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »  
   `https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8`
 - **titre en francais sur le domaine anglais** — mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »  
   `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
 
-## 🟡 surveiller — 16
+## 🟡 surveiller — 17
 
-### voyageshalal.fr (10)
+### voyageshalal.fr (7)
 
-- **page instable sous charge** — muette pendant la ronde, repond en 0.4 s au controle calme — a surveiller, pas a reparer  
-  `https://www.voyageshalal.fr/hotels/santiago`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.voyageshalal.fr/blog/ou-prier-aeroport-lyon`
+- **description trop courte (41 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
 - **description trop courte (10 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
 - **description trop courte (24 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.9 s au controle calme — a surveiller, pas a reparer  
-  `https://www.voyageshalal.fr/spot/sp_msdjx32v_jkx0l`
 - **description trop courte (17 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt`
 - **description trop courte (42 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa`
-- **description trop courte (41 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
 - **description trop courte (18 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
 - **description trop courte (21 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
 
-### gohalaltravel.com (6)
+### gohalaltravel.com (10)
 
 - **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/destinations/tokyo`
+  `https://www.gohalaltravel.com/destinations/miami`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/destinations/yokohama`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/destinations/kinshasa`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/hotels/khartoum`
+- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
+  `https://www.gohalaltravel.com/guides/dubai-halal-travel-guide-2026`
 - **description trop courte (24 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd`
 - **description trop courte (17 car.)**  
