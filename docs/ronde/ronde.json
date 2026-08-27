@@ -1,16 +1,16 @@
 {
-  "ronde_du": "2026-08-27 11:04 UTC",
-  "pages_vues": 174,
+  "ronde_du": "2026-08-27 21:06 UTC",
+  "pages_vues": 183,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 33,
-      "defauts": 24
+      "pages": 41,
+      "defauts": 12
     },
     {
       "site": "voyageshalal.fr",
       "pages": 41,
-      "defauts": 0
+      "defauts": 1
     },
     {
       "site": "gohalaltravel.com",
@@ -24,7 +24,7 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 18,
+      "pages": 19,
       "defauts": 0
     }
   ],
@@ -67,13 +67,6 @@
     {
       "niveau": "defaut",
       "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/vie-du-prophete",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
       "url": "https://islampasapas.fr/section/le-comportement",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
@@ -121,81 +114,11 @@
       "detail": "la page n'annonce pas son sujet"
     },
     {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/lire-l-arabe",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/piliers-de-la-foi",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/la-priere",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/histoire-des-prophetes",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/vie-du-prophete",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/le-comportement",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/jeune-et-ramadan",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/zakat-et-aumone",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/le-pelerinage",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/vocabulaire-arabe",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/les-invocations",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://voyageshalal.fr/",
+      "quoi": "page lente (3.2 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
     }
   ]
 }
