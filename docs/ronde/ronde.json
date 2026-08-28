@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-08-28 05:34 UTC",
-  "pages_vues": 179,
+  "ronde_du": "2026-08-28 18:27 UTC",
+  "pages_vues": 180,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -24,11 +24,46 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 15,
+      "pages": 16,
       "defauts": 0
     }
   ],
   "defauts": [
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/zakat-et-aumone",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/le-pelerinage",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/vocabulaire-arabe",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/les-invocations",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/sens-des-sourates",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
     {
       "niveau": "defaut",
       "site": "islampasapas.fr",
@@ -89,41 +124,6 @@
       "niveau": "defaut",
       "site": "islampasapas.fr",
       "url": "https://islampasapas.fr/section/vocabulaire-arabe",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/les-invocations",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/sens-des-sourates",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/lire-l-arabe",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/piliers-de-la-foi",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/la-priere",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     }
