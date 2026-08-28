@@ -1,5 +1,5 @@
 {
-  "verifie_le": "2026-08-24 05:33 UTC",
+  "verifie_le": "2026-08-28 17:06 UTC",
   "constats": [
     {
       "projet": "jours-feries",
@@ -32,10 +32,10 @@
       "note": "calendrier scolaire par zone",
       "code": 200,
       "type": "application/json; charset=utf-8",
-      "octets": 1145,
-      "forme": "objet a 2 cles: {total_count, results}",
-      "verdict": "vert",
-      "detail": ""
+      "octets": 270,
+      "forme": "",
+      "verdict": "format",
+      "detail": "JSON illisible (Expecting value: line 1 column 1 (char 0)). Debut recu: \"\\x1f�\\x08\\x00\\x00\\x00\\x00\\x00\\x04\\x03ݒKK\\x041\\x10��J��\\rd�c�����x\\x18<�`h�>DbzH' .��M\\x16T\\x1c� �(B\\x08��N�����2��R�Y��9�G\\x0b!\\x13r\\t��p��\\x0e�&?eO� � ,D�,\\x1c�\\x00b��\\x0c�N\\u05f9��\\x12�թ��\""
     },
     {
       "projet": "carburants",
@@ -44,7 +44,7 @@
       "note": "flux instantane, adresse moderne",
       "code": 200,
       "type": "application/json; charset=utf-8",
-      "octets": 13171,
+      "octets": 13140,
       "forme": "objet a 2 cles: {total_count, results}",
       "verdict": "vert",
       "detail": ""
@@ -56,7 +56,7 @@
       "note": "ancienne adresse, archive zip — a tester car citee de memoire",
       "code": 200,
       "type": "application/zip",
-      "octets": 949326,
+      "octets": 952174,
       "forme": "binaire, 4 premiers octets b'PK\\x03\\x04'",
       "verdict": "vert",
       "detail": ""
