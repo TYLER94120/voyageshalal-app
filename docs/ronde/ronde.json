@@ -1,11 +1,11 @@
 {
-  "ronde_du": "2026-08-29 01:52 UTC",
-  "pages_vues": 176,
+  "ronde_du": "2026-08-29 08:52 UTC",
+  "pages_vues": 181,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
       "pages": 41,
-      "defauts": 12
+      "defauts": 11
     },
     {
       "site": "voyageshalal.fr",
@@ -24,18 +24,11 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 12,
+      "pages": 17,
       "defauts": 0
     }
   ],
   "defauts": [
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/les-invocations",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
     {
       "niveau": "defaut",
       "site": "islampasapas.fr",
