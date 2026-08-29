@@ -1,18 +1,55 @@
 {
-  "verifie_le": "2026-08-29 13:50 UTC",
-  "liens_controles": 686,
+  "verifie_le": "2026-08-29 19:24 UTC",
+  "liens_controles": 1526,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [],
-  "bloques": [
+  "morts": [
     {
       "site": "voyageshalal.fr",
       "genre": "externe",
-      "url": "https://unsplash.com",
-      "detail": "code 401 — refuse les robots, pas forcement mort"
+      "url": "https://www.halalbooking.com/search?query=Accra",
+      "detail": "code 404"
     },
     {
-      "site": "gohalaltravel.com",
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Abu%20Dhabi",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Agadir",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Addis-Abeba",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Alexandrie",
+      "detail": "code 404"
+    },
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Alger",
+      "detail": "code 404"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://world.openbeautyfacts.org",
+      "detail": "TimeoutError (confirme machine calme)"
+    }
+  ],
+  "bloques": [
+    {
+      "site": "voyageshalal.fr",
       "genre": "externe",
       "url": "https://unsplash.com",
       "detail": "code 401 — refuse les robots, pas forcement mort"
