@@ -1,11 +1,11 @@
 {
-  "ronde_du": "2026-08-28 18:27 UTC",
-  "pages_vues": 180,
+  "ronde_du": "2026-08-29 01:52 UTC",
+  "pages_vues": 176,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
       "pages": 41,
-      "defauts": 14
+      "defauts": 12
     },
     {
       "site": "voyageshalal.fr",
@@ -24,32 +24,11 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 16,
+      "pages": 12,
       "defauts": 0
     }
   ],
   "defauts": [
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/zakat-et-aumone",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/le-pelerinage",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
-    {
-      "niveau": "defaut",
-      "site": "islampasapas.fr",
-      "url": "https://islampasapas.fr/section/vocabulaire-arabe",
-      "quoi": "aucun titre H1",
-      "detail": "la page n'annonce pas son sujet"
-    },
     {
       "niveau": "defaut",
       "site": "islampasapas.fr",
@@ -124,6 +103,13 @@
       "niveau": "defaut",
       "site": "islampasapas.fr",
       "url": "https://islampasapas.fr/section/vocabulaire-arabe",
+      "quoi": "aucun titre H1",
+      "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "islampasapas.fr",
+      "url": "https://islampasapas.fr/section/les-invocations",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
     }
