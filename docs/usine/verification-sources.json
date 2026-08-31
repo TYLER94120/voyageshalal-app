@@ -1,5 +1,5 @@
 {
-  "verifie_le": "2026-08-29 11:26 UTC",
+  "verifie_le": "2026-08-31 11:18 UTC",
   "constats": [
     {
       "projet": "jours-feries",
@@ -44,7 +44,7 @@
       "note": "flux instantane, adresse moderne",
       "code": 200,
       "type": "application/json; charset=utf-8",
-      "octets": 13796,
+      "octets": 13724,
       "forme": "objet a 2 cles: {total_count, results}",
       "verdict": "vert",
       "detail": ""
@@ -56,7 +56,7 @@
       "note": "ancienne adresse, archive zip — a tester car citee de memoire",
       "code": 200,
       "type": "application/zip",
-      "octets": 951648,
+      "octets": 949429,
       "forme": "binaire, 4 premiers octets b'PK\\x03\\x04'",
       "verdict": "vert",
       "detail": ""
@@ -68,8 +68,8 @@
       "note": "index de tous les produits suivis",
       "code": 200,
       "type": "application/json",
-      "octets": 5918,
-      "forme": "liste de 467 elements (str)",
+      "octets": 5951,
+      "forme": "liste de 469 elements (str)",
       "verdict": "vert",
       "detail": ""
     },
