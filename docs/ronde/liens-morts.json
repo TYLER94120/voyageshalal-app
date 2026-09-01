@@ -1,16 +1,9 @@
 {
-  "verifie_le": "2026-09-01 13:30 UTC",
-  "liens_controles": 884,
+  "verifie_le": "2026-09-01 19:24 UTC",
+  "liens_controles": 740,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Dar%20es%20Salaam",
-      "detail": "code 404"
-    }
-  ],
+  "morts": [],
   "bloques": [
     {
       "site": "voyageshalal.fr",
