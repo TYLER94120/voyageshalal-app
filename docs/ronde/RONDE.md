@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-09-01 13:22 UTC.**
+**Dernier changement constate le 2026-09-01 17:24 UTC.**
 
-⚠️ **Cette ronde a regarde 178 pages sur 2043 — environ 9 %.**
+⚠️ **Cette ronde a regarde 183 pages sur 2043 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -31,16 +31,12 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 | voyageshalal.fr | 41 | 0 |
 | gohalaltravel.com | 41 | 0 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 14 | 0 |
+| halalcheck.fr | 19 | 0 |
 
 ## 🟠 defaut — 13
 
 ### islampasapas.fr (13)
 
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/lire-l-arabe`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/piliers-de-la-foi`
 - **aucun titre H1** — la page n'annonce pas son sujet  
   `https://islampasapas.fr/section/la-priere`
 - **aucun titre H1** — la page n'annonce pas son sujet  
@@ -63,3 +59,7 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
   `https://islampasapas.fr/section/lire-l-arabe`
 - **aucun titre H1** — la page n'annonce pas son sujet  
   `https://islampasapas.fr/section/piliers-de-la-foi`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/la-priere`
+- **aucun titre H1** — la page n'annonce pas son sujet  
+  `https://islampasapas.fr/section/histoire-des-prophetes`
