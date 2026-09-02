@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-09-02 00:56 UTC",
-  "pages_vues": 180,
+  "ronde_du": "2026-09-02 11:01 UTC",
+  "pages_vues": 177,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 0
+      "defauts": 2
     },
     {
       "site": "halalgpt.fr",
@@ -24,7 +24,7 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 16,
+      "pages": 13,
       "defauts": 0
     }
   ],
@@ -105,6 +105,20 @@
       "url": "https://islampasapas.fr/section/les-invocations",
       "quoi": "aucun titre H1",
       "detail": "la page n'annonce pas son sujet"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel"
     }
   ]
 }

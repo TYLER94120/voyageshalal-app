@@ -1,13 +1,13 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-09-02 00:56 UTC.**
+**Dernier changement constate le 2026-09-02 11:01 UTC.**
 
-⚠️ **Cette ronde a regarde 180 pages sur 2045 — environ 9 %.**
+⚠️ **Cette ronde a regarde 177 pages sur 2045 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
 casse dans la nuit : la rotation est simplement passee sur d'autres pages.
-Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **vieux de 17 h**.
+Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **de ce matin**.
 
 La ronde passe **toutes les 30 minutes** sur les quatre sites et
 regarde ce qu'un visiteur recoit vraiment. Ce fichier n'est reecrit
@@ -17,7 +17,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 11 | il la recoit, mais elle le dessert |
+| 🟠 defaut | 13 | il la recoit, mais elle le dessert |
 | 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
@@ -29,11 +29,11 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 |---|---|---|
 | islampasapas.fr | 41 | 11 |
 | voyageshalal.fr | 41 | 0 |
-| gohalaltravel.com | 41 | 0 |
+| gohalaltravel.com | 41 | 2 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 16 | 0 |
+| halalcheck.fr | 13 | 0 |
 
-## 🟠 defaut — 11
+## 🟠 defaut — 13
 
 ### islampasapas.fr (11)
 
@@ -59,3 +59,10 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
   `https://islampasapas.fr/section/vocabulaire-arabe`
 - **aucun titre H1** — la page n'annonce pas son sujet  
   `https://islampasapas.fr/section/les-invocations`
+
+### gohalaltravel.com (2)
+
+- **titre en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »  
+  `https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej`
+- **description en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel  
+  `https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej`
