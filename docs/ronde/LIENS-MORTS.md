@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-09-03 04:35 UTC** · 734 liens controles.
+Releve du **2026-09-03 12:50 UTC** · 1174 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
@@ -14,14 +14,55 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 
 | | Combien | Qui repare |
 |---|---|---|
-| 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
+| 🔴 liens **internes** morts | **21** | nous, c'est notre faute |
 | 🟠 liens externes morts | 0 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 2 | personne — a ne PAS retirer |
+| ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## Rien a signaler
+## 🔴 Liens internes morts — 21
 
-Tous les liens controles menent quelque part.
+- `https://www.gohalaltravel.com/destinations/berat` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/maafushi` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/langkawi` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/travnik` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/atolls-nord` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/koh-lanta` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/charm-el-cheikh` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/nungwi` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/sarande` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/gjirokaster` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/riyad` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/wadi-rum` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/stone-town` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/petra` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/sur` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/male` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/paje` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/al-wakrah` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/edinburgh` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/alula` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.gohalaltravel.com/destinations/krabi` — code 404  
+  *(sur gohalaltravel.com)*
