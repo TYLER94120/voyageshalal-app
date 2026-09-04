@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-09-04 04:36 UTC** · 1467 liens controles.
+Releve du **2026-09-04 12:44 UTC** · 1057 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
@@ -16,7 +16,7 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 |---|---|---|
 | 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
 | 🟠 liens externes morts | 0 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 0 | personne — a ne PAS retirer |
+| ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
