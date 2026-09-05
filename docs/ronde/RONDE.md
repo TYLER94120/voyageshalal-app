@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-09-04 11:38 UTC.**
+**Dernier changement constate le 2026-09-05 08:17 UTC.**
 
-⚠️ **Cette ronde a regarde 180 pages sur 2045 — environ 9 %.**
+⚠️ **Cette ronde a regarde 179 pages sur 2045 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -17,7 +17,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 11 | il la recoit, mais elle le dessert |
+| 🟠 defaut | 0 | il la recoit, mais elle le dessert |
 | 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
@@ -27,35 +27,12 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 
 | Site | Pages vues | Tous niveaux |
 |---|---|---|
-| islampasapas.fr | 41 | 11 |
+| islampasapas.fr | 41 | 0 |
 | voyageshalal.fr | 41 | 0 |
 | gohalaltravel.com | 41 | 0 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 16 | 0 |
+| halalcheck.fr | 15 | 0 |
 
-## 🟠 defaut — 11
+## Rien a signaler
 
-### islampasapas.fr (11)
-
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/sens-des-sourates`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/lire-l-arabe`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/piliers-de-la-foi`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/la-priere`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/histoire-des-prophetes`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/le-comportement`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/jeune-et-ramadan`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/zakat-et-aumone`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/le-pelerinage`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/vocabulaire-arabe`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/les-invocations`
+5 site(s) sur 5 ont rendu des pages, et celles-ci sont correctes.
