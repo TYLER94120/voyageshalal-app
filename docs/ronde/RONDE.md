@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-09-05 08:17 UTC.**
+**Dernier changement constate le 2026-09-05 11:58 UTC.**
 
-⚠️ **Cette ronde a regarde 179 pages sur 2045 — environ 9 %.**
+⚠️ **Cette ronde a regarde 175 pages sur 2042 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -17,8 +17,8 @@ que rien de nouveau n'est casse, pas que le robot dort.
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 0 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
+| 🟠 defaut | 8 | il la recoit, mais elle le dessert |
+| 🟡 a surveiller | 2 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -29,10 +29,36 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 |---|---|---|
 | islampasapas.fr | 41 | 0 |
 | voyageshalal.fr | 41 | 0 |
-| gohalaltravel.com | 41 | 0 |
+| gohalaltravel.com | 41 | 10 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 15 | 0 |
+| halalcheck.fr | 11 | 0 |
 
-## Rien a signaler
+## 🟠 defaut — 8
 
-5 site(s) sur 5 ont rendu des pages, et celles-ci sont correctes.
+### gohalaltravel.com (8)
+
+- **titre en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »  
+  `https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej`
+- **description en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel  
+  `https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej`
+- **titre en francais sur le domaine anglais** — mots francais : bord, resto — « Where to pray at Resto Sidi koi Ali en bord de mer… »  
+  `https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer`
+- **description en francais sur le domaine anglais** — mots francais : bord, resto  
+  `https://www.gohalaltravel.com/priere/essaouira/resto-sidi-koi-ali-en-bord-de-mer`
+- **titre en francais sur le domaine anglais** — mots francais : avec, piscine, resto — « Where to pray at Resto avec piscine — Tafoughalt… »  
+  `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
+- **description en francais sur le domaine anglais** — mots francais : avec, piscine, resto  
+  `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
+- **titre en francais sur le domaine anglais** — mots francais : restaura, resto — « Restaura Café chill — Halal resto in Marrakech… »  
+  `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
+- **titre en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »  
+  `https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug`
+
+## 🟡 surveiller — 2
+
+### gohalaltravel.com (2)
+
+- **description trop courte (42 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
+- **description trop courte (41 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr`
