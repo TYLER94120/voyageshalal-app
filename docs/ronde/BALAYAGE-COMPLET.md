@@ -1,11 +1,11 @@
 # Balayage complet
 
-**Dernier changement constate le 2026-09-04 07:25 UTC.**
+**Dernier changement constate le 2026-09-05 03:57 UTC.**
 
 **2048 pages regardees — le site entier.** Les chiffres ci-dessous
 valent donc pour tout ce que Google peut voir.
 
-Balayage commence le 2026-09-04 07:25 UTC, termine en 15 minutes. Un balayage
+Balayage commence le 2026-09-05 03:57 UTC, termine en 11 minutes. Un balayage
 complet qui rendrait la main en quelques secondes n'aurait pas eu lieu :
 c'est a cette duree qu'on le reconnait.
 
@@ -17,7 +17,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 22 | il la recoit, mais elle le dessert |
+| 🟠 defaut | 11 | il la recoit, mais elle le dessert |
 | 🟡 a surveiller | 12 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
@@ -27,7 +27,7 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 
 | Site | Pages vues | Tous niveaux | 🟠 defauts | Plafond |
 |---|---|---|---|---|
-| islampasapas.fr | 41 | 11 | 11 | 0 |
+| islampasapas.fr | 41 | 0 | 0 | 0 |
 | voyageshalal.fr | 871 | 7 | 0 | 0 |
 | gohalaltravel.com | 892 | 16 | 11 | 10 |
 | halalgpt.fr | 234 | 0 | 0 | 0 |
@@ -45,35 +45,9 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
 
 🔴 **On a recule — c'est ce qui fait echouer ce controle :**
 
-- islampasapas.fr : plafond 0, compte **11**
 - gohalaltravel.com : plafond 10, compte **11**
 
-## 🟠 defaut — 22
-
-### islampasapas.fr (11)
-
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/sens-des-sourates`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/lire-l-arabe`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/piliers-de-la-foi`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/la-priere`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/histoire-des-prophetes`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/le-comportement`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/jeune-et-ramadan`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/zakat-et-aumone`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/le-pelerinage`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/vocabulaire-arabe`
-- **aucun titre H1** — la page n'annonce pas son sujet  
-  `https://islampasapas.fr/section/les-invocations`
+## 🟠 defaut — 11
 
 ### gohalaltravel.com (11)
 
@@ -104,30 +78,30 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
 
 ### voyageshalal.fr (7)
 
-- **description trop courte (41 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
-- **description trop courte (21 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
+- **description trop courte (18 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
 - **description trop courte (10 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
+- **description trop courte (21 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
 - **description trop courte (24 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
 - **description trop courte (17 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt`
 - **description trop courte (42 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa`
-- **description trop courte (18 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
+- **description trop courte (41 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
 
 ### gohalaltravel.com (5)
 
 - **description trop courte (24 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd`
+- **description trop courte (41 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr`
 - **description trop courte (17 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
 - **description trop courte (42 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
-- **description trop courte (41 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr`
 - **description trop courte (21 car.)**  
   `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
