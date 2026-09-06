@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-09-06 13:04 UTC.**
+**Dernier changement constate le 2026-09-06 16:23 UTC.**
 
-⚠️ **Cette ronde a regarde 175 pages sur 2042 — environ 9 %.**
+⚠️ **Cette ronde a regarde 180 pages sur 2042 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -18,7 +18,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 0 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 3 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 5 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -28,18 +28,22 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 | Site | Pages vues | Tous niveaux |
 |---|---|---|
 | islampasapas.fr | 41 | 0 |
-| voyageshalal.fr | 41 | 3 |
+| voyageshalal.fr | 41 | 5 |
 | gohalaltravel.com | 41 | 0 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 11 | 0 |
+| halalcheck.fr | 16 | 0 |
 
-## 🟡 surveiller — 3
+## 🟡 surveiller — 5
 
-### voyageshalal.fr (3)
+### voyageshalal.fr (5)
 
+- **description trop courte (24 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
+- **description trop courte (41 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
 - **description trop courte (10 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
 - **description trop courte (18 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
-- **description trop courte (24 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
+- **description trop courte (17 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt`
