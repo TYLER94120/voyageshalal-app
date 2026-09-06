@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-09-05 07:06 UTC",
-  "pages_vues": 2048,
+  "ronde_du": "2026-09-06 04:59 UTC",
+  "pages_vues": 2045,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -9,7 +9,7 @@
     },
     {
       "site": "voyageshalal.fr",
-      "pages": 871,
+      "pages": 868,
       "defauts": 7
     },
     {
@@ -32,8 +32,8 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt",
-      "quoi": "description trop courte (17 car.)",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
+      "quoi": "description trop courte (42 car.)",
       "detail": ""
     },
     {
@@ -41,6 +41,27 @@
       "site": "voyageshalal.fr",
       "url": "https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac",
       "quoi": "description trop courte (10 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
+      "quoi": "description trop courte (21 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt",
+      "quoi": "description trop courte (17 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr",
+      "quoi": "description trop courte (41 car.)",
       "detail": ""
     },
     {
@@ -59,31 +80,10 @@
     },
     {
       "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
-      "quoi": "description trop courte (21 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
-      "quoi": "description trop courte (42 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr",
-      "quoi": "description trop courte (41 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/contact",
-      "quoi": "description en francais sur le domaine anglais",
-      "detail": "mots francais : mosquee, une"
+      "url": "https://www.gohalaltravel.com/destinations/pays/albanie",
+      "quoi": "page lente (8.8 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
     },
     {
       "niveau": "defaut",
@@ -128,20 +128,6 @@
       "detail": "mots francais : avec, piscine, resto"
     },
     {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr",
-      "quoi": "description trop courte (41 car.)",
-      "detail": ""
-    },
-    {
       "niveau": "surveiller",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd",
@@ -151,9 +137,9 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
       "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »"
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
     },
     {
       "niveau": "defaut",
@@ -168,6 +154,13 @@
       "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
       "quoi": "description trop courte (42 car.)",
       "detail": ""
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »"
     },
     {
       "niveau": "defaut",
@@ -188,6 +181,13 @@
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
       "quoi": "description trop courte (17 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr",
+      "quoi": "description trop courte (41 car.)",
       "detail": ""
     }
   ]
