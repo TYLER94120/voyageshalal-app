@@ -1,16 +1,9 @@
 {
-  "verifie_le": "2026-09-07 04:44 UTC",
-  "liens_controles": 735,
+  "verifie_le": "2026-09-07 14:16 UTC",
+  "liens_controles": 756,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://world.openbeautyfacts.org",
-      "detail": "code 500"
-    }
-  ],
+  "morts": [],
   "bloques": [
     {
       "site": "voyageshalal.fr",
