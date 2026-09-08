@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-09-08 14:43 UTC",
-  "pages_vues": 178,
+  "ronde_du": "2026-09-08 18:26 UTC",
+  "pages_vues": 183,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 2
+      "defauts": 0
     },
     {
       "site": "halalgpt.fr",
@@ -24,24 +24,9 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 14,
+      "pages": 19,
       "defauts": 0
     }
   ],
-  "defauts": [
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
-      "quoi": "description trop courte (17 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »"
-    }
-  ]
+  "defauts": []
 }
