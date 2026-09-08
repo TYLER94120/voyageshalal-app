@@ -1,40 +1,16 @@
 {
-  "verifie_le": "2026-09-07 22:51 UTC",
-  "liens_controles": 1179,
+  "verifie_le": "2026-09-08 04:39 UTC",
+  "liens_controles": 1232,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [
+  "morts": [],
+  "bloques": [
     {
-      "site": "voyageshalal.fr",
+      "site": "gohalaltravel.com",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Vienne",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Yogyakarta",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Zagora",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Zanzibar",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Tunis",
-      "detail": "code 404"
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
     }
   ],
-  "bloques": [],
   "innocentes_au_controle_calme": []
 }

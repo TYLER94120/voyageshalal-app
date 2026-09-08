@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-09-07 22:51 UTC** · 1179 liens controles.
+Releve du **2026-09-08 04:39 UTC** · 1232 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
@@ -15,22 +15,13 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 | | Combien | Qui repare |
 |---|---|---|
 | 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
-| 🟠 liens externes morts | 5 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 0 | personne — a ne PAS retirer |
+| 🟠 liens externes morts | 0 | nous, en retirant le lien |
+| ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## 🟠 Liens externes morts — 5
+## Rien a signaler
 
-- `https://www.halalbooking.com/search?query=Vienne` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Yogyakarta` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Zagora` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Zanzibar` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Tunis` — code 404  
-  *(sur voyageshalal.fr)*
+Tous les liens controles menent quelque part.
