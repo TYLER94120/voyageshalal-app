@@ -1,21 +1,21 @@
 {
-  "ronde_du": "2026-09-08 07:26 UTC",
-  "pages_vues": 2046,
+  "ronde_du": "2026-09-09 04:12 UTC",
+  "pages_vues": 2049,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 41,
+      "pages": 44,
       "defauts": 0
     },
     {
       "site": "voyageshalal.fr",
       "pages": 868,
-      "defauts": 7
+      "defauts": 9
     },
     {
       "site": "gohalaltravel.com",
       "pages": 893,
-      "defauts": 19
+      "defauts": 18
     },
     {
       "site": "halalgpt.fr",
@@ -32,6 +32,20 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/blog/manger-halal-bangkok",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.4 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/priere/fes",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.6 s au controle calme — a surveiller, pas a reparer"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
       "url": "https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd",
       "quoi": "description trop courte (24 car.)",
       "detail": ""
@@ -39,15 +53,8 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr",
-      "quoi": "description trop courte (41 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
-      "quoi": "description trop courte (21 car.)",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
+      "quoi": "description trop courte (42 car.)",
       "detail": ""
     },
     {
@@ -60,13 +67,6 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
-      "quoi": "description trop courte (18 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
       "url": "https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt",
       "quoi": "description trop courte (17 car.)",
       "detail": ""
@@ -74,51 +74,44 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
-      "quoi": "description trop courte (42 car.)",
+      "url": "https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr",
+      "quoi": "description trop courte (41 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
+      "quoi": "description trop courte (18 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
+      "quoi": "description trop courte (21 car.)",
       "detail": ""
     },
     {
       "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/almaty",
+      "url": "https://www.gohalaltravel.com/destinations/pays/zanzibar",
       "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
+      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
     },
     {
       "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/oujda",
+      "url": "https://www.gohalaltravel.com/hotels/asilah",
       "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
     },
     {
       "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/shenzhen",
+      "url": "https://www.gohalaltravel.com/hotels/machhad",
       "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/hotels/hanoi",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
-      "quoi": "description en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel"
+      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
     },
     {
       "niveau": "defaut",
@@ -149,6 +142,34 @@
       "detail": "mots francais : bord, resto"
     },
     {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : restaura, resto — « Restaura Café chill — Halal resto in Marrakech… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
+      "quoi": "description trop courte (42 car.)",
+      "detail": ""
+    },
+    {
       "niveau": "surveiller",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd",
@@ -156,11 +177,11 @@
       "detail": ""
     },
     {
-      "niveau": "defaut",
+      "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
+      "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
+      "quoi": "description trop courte (17 car.)",
+      "detail": ""
     },
     {
       "niveau": "surveiller",
@@ -184,32 +205,18 @@
       "detail": ""
     },
     {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
-      "quoi": "description trop courte (17 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : restaura, resto — « Restaura Café chill — Halal resto in Marrakech… »"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
-      "quoi": "description trop courte (42 car.)",
-      "detail": ""
-    },
-    {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8",
       "quoi": "titre en francais sur le domaine anglais",
       "detail": "mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
     }
   ]
 }
