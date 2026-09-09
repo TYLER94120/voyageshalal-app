@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-09-09 13:51 UTC.**
+**Dernier changement constate le 2026-09-09 17:44 UTC.**
 
-⚠️ **Cette ronde a regarde 177 pages sur 2046 — environ 9 %.**
+⚠️ **Cette ronde a regarde 182 pages sur 2046 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -18,7 +18,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 0 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 6 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 4 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -28,27 +28,20 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 | Site | Pages vues | Tous niveaux |
 |---|---|---|
 | islampasapas.fr | 41 | 0 |
-| voyageshalal.fr | 41 | 5 |
-| gohalaltravel.com | 41 | 1 |
+| voyageshalal.fr | 41 | 4 |
+| gohalaltravel.com | 41 | 0 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 13 | 0 |
+| halalcheck.fr | 18 | 0 |
 
-## 🟡 surveiller — 6
+## 🟡 surveiller — 4
 
-### voyageshalal.fr (5)
+### voyageshalal.fr (4)
 
 - **description trop courte (24 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
-- **description trop courte (18 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
-- **description trop courte (21 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
-- **description trop courte (17 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt`
 - **description trop courte (10 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
-
-### gohalaltravel.com (1)
-
-- **page lente (3.1 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://gohalaltravel.com/`
+- **description trop courte (21 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
+- **page lente (3.0 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.voyageshalal.fr/spot/sp_ms1se3yb_mju65`
