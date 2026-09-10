@@ -1,23 +1,9 @@
 {
-  "verifie_le": "2026-09-10 19:07 UTC",
-  "liens_controles": 1169,
+  "verifie_le": "2026-09-10 22:36 UTC",
+  "liens_controles": 1411,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/destinations/pays/arabie-saoudite",
-      "detail": "URLError (confirme machine calme)"
-    }
-  ],
-  "bloques": [
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://unsplash.com",
-      "detail": "code 401 — refuse les robots, pas forcement mort"
-    }
-  ],
+  "morts": [],
+  "bloques": [],
   "innocentes_au_controle_calme": []
 }
