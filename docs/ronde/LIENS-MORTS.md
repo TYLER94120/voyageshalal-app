@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-09-10 12:55 UTC** · 690 liens controles.
+Releve du **2026-09-10 19:07 UTC** · 1169 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
@@ -14,14 +14,15 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 
 | | Combien | Qui repare |
 |---|---|---|
-| 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
+| 🔴 liens **internes** morts | **1** | nous, c'est notre faute |
 | 🟠 liens externes morts | 0 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 2 | personne — a ne PAS retirer |
+| ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## Rien a signaler
+## 🔴 Liens internes morts — 1
 
-Tous les liens controles menent quelque part.
+- `https://www.gohalaltravel.com/destinations/pays/arabie-saoudite` — URLError (confirme machine calme)  
+  *(sur gohalaltravel.com)*
