@@ -1,113 +1,16 @@
 {
-  "verifie_le": "2026-09-09 22:34 UTC",
-  "liens_controles": 2293,
+  "verifie_le": "2026-09-10 04:45 UTC",
+  "liens_controles": 727,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Abidjan",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Abuja",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Annaba",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Gharda%C3%AFa",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Djibouti",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Douala",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Bamako",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Kairouan",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Kampala",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Khartoum",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Kigali",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=La%C3%A2youne",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Kinshasa",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Tlemcen",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Marrakech",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Ouagadougou",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://halalbooking.com/en/iberostar-waves-founty-beach-all-inclusive/p/9564",
-      "detail": "code 404"
-    }
-  ],
+  "morts": [],
   "bloques": [
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
+    },
     {
       "site": "gohalaltravel.com",
       "genre": "externe",
