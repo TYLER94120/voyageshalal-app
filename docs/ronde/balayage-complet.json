@@ -1,5 +1,5 @@
 {
-  "ronde_du": "2026-09-09 07:34 UTC",
+  "ronde_du": "2026-09-10 07:31 UTC",
   "pages_vues": 2049,
   "pages_par_site": [
     {
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 893,
-      "defauts": 16
+      "defauts": 19
     },
     {
       "site": "halalgpt.fr",
@@ -32,16 +32,37 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/dacca",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.5 s au controle calme — a surveiller, pas a reparer"
+      "url": "https://www.voyageshalal.fr/hotels/sofia",
+      "quoi": "page lente (5.4 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
     },
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/destinations/larache",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
+      "url": "https://www.voyageshalal.fr/hotels/thessalonique",
+      "quoi": "page lente (4.9 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt",
+      "quoi": "description trop courte (17 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
+      "quoi": "description trop courte (18 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
+      "quoi": "description trop courte (21 car.)",
+      "detail": ""
     },
     {
       "niveau": "surveiller",
@@ -73,31 +94,31 @@
     },
     {
       "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt",
-      "quoi": "description trop courte (17 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
-      "quoi": "description trop courte (18 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
-      "quoi": "description trop courte (21 car.)",
-      "detail": ""
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/destinations/kairouan",
+      "quoi": "page lente (5.2 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
     },
     {
       "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/destinations/astana",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
+      "url": "https://www.gohalaltravel.com/destinations/annaba",
+      "quoi": "page lente (5.0 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/guides/eid-family-travel",
+      "quoi": "page lente (5.3 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/blog/hijab-airport-security-check",
+      "quoi": "page lente (5.1 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
     },
     {
       "niveau": "defaut",
@@ -116,6 +137,20 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
       "quoi": "titre en francais sur le domaine anglais",
       "detail": "mots francais : avec, piscine, resto — « Where to pray at Resto avec piscine — Tafoughalt… »"
@@ -130,16 +165,30 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "url": "https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8",
       "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »"
+      "detail": "mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
+      "quoi": "description trop courte (17 car.)",
+      "detail": ""
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
-      "quoi": "description en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel"
+      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd",
+      "quoi": "description trop courte (24 car.)",
+      "detail": ""
     },
     {
       "niveau": "defaut",
@@ -165,20 +214,6 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
-      "quoi": "description trop courte (17 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
       "quoi": "titre en francais sur le domaine anglais",
       "detail": "mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »"
@@ -188,20 +223,6 @@
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
       "quoi": "description trop courte (21 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd",
-      "quoi": "description trop courte (24 car.)",
       "detail": ""
     }
   ]
