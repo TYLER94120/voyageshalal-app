@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-09-10 22:36 UTC** · 1411 liens controles.
+Releve du **2026-09-11 04:43 UTC** · 1196 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
@@ -15,13 +15,40 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 | | Combien | Qui repare |
 |---|---|---|
 | 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
-| 🟠 liens externes morts | 0 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 0 | personne — a ne PAS retirer |
+| 🟠 liens externes morts | 14 | nous, en retirant le lien |
+| ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## Rien a signaler
+## 🟠 Liens externes morts — 14
 
-Tous les liens controles menent quelque part.
+- `https://www.halalbooking.com/search?query=Alicante` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.halalbooking.com/search?query=Ahmedabad` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.halalbooking.com/search?query=Bangalore` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.halalbooking.com/search?query=Belgrade` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.halalbooking.com/search?query=Bilbao` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.halalbooking.com/search?query=Auckland` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.halalbooking.com/search?query=Bologne` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.halalbooking.com/search?query=Abha` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.halalbooking.com/search?query=Bogot%C3%A1` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.halalbooking.com/search?query=Bucarest` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.halalbooking.com/search?query=Bras%C3%ADlia` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.halalbooking.com/search?query=Bratislava` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.halalbooking.com/search?query=Brisbane` — code 404  
+  *(sur gohalaltravel.com)*
+- `https://www.halalbooking.com/search?query=Austin` — code 404  
+  *(sur gohalaltravel.com)*
