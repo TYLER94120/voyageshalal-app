@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-09-11 14:16 UTC.**
+**Dernier changement constate le 2026-09-11 17:50 UTC.**
 
-⚠️ **Cette ronde a regarde 180 pages sur 2049 — environ 9 %.**
+⚠️ **Cette ronde a regarde 176 pages sur 2049 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -17,8 +17,8 @@ que rien de nouveau n'est casse, pas que le robot dort.
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 3 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 4 | pas urgent, a ne pas laisser grossir |
+| 🟠 defaut | 0 | il la recoit, mais elle le dessert |
+| 🟡 a surveiller | 2 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -29,30 +29,15 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 |---|---|---|
 | islampasapas.fr | 41 | 0 |
 | voyageshalal.fr | 41 | 0 |
-| gohalaltravel.com | 41 | 7 |
+| gohalaltravel.com | 41 | 2 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 16 | 0 |
+| halalcheck.fr | 12 | 0 |
 
-## 🟠 defaut — 3
+## 🟡 surveiller — 2
 
-### gohalaltravel.com (3)
+### gohalaltravel.com (2)
 
-- **titre en francais sur le domaine anglais** — mots francais : restaura, resto — « Restaura Café chill — Halal resto in Marrakech… »  
-  `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
-- **titre en francais sur le domaine anglais** — mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »  
-  `https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8`
-- **titre en francais sur le domaine anglais** — mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »  
-  `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
-
-## 🟡 surveiller — 4
-
-### gohalaltravel.com (4)
-
-- **description trop courte (42 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
-- **description trop courte (41 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr`
-- **description trop courte (21 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
-- **description trop courte (24 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd`
+- **page lente (3.3 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://gohalaltravel.com/`
+- **page lente (3.5 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://www.gohalaltravel.com`

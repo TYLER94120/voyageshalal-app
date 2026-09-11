@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-09-11 14:16 UTC",
-  "pages_vues": 180,
+  "ronde_du": "2026-09-11 17:50 UTC",
+  "pages_vues": 176,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 7
+      "defauts": 2
     },
     {
       "site": "halalgpt.fr",
@@ -24,59 +24,24 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 16,
+      "pages": 12,
       "defauts": 0
     }
   ],
   "defauts": [
     {
-      "niveau": "defaut",
+      "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : restaura, resto — « Restaura Café chill — Halal resto in Marrakech… »"
+      "url": "https://gohalaltravel.com/",
+      "quoi": "page lente (3.3 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
     },
     {
       "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
-      "quoi": "description trop courte (42 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr",
-      "quoi": "description trop courte (41 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
-      "quoi": "description trop courte (21 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd",
-      "quoi": "description trop courte (24 car.)",
-      "detail": ""
+      "url": "https://www.gohalaltravel.com",
+      "quoi": "page lente (3.5 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
     }
   ]
 }
