@@ -1,41 +1,16 @@
 {
-  "verifie_le": "2026-09-11 19:09 UTC",
-  "liens_controles": 1421,
+  "verifie_le": "2026-09-11 22:36 UTC",
+  "liens_controles": 734,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Port-Louis",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Maputo",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Ouagadougou",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Marrakech",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://halalbooking.com/en/iberostar-waves-founty-beach-all-inclusive/p/9564",
-      "detail": "code 404"
-    }
-  ],
+  "morts": [],
   "bloques": [
+    {
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
+    },
     {
       "site": "gohalaltravel.com",
       "genre": "externe",
