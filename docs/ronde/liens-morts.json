@@ -1,16 +1,9 @@
 {
-  "verifie_le": "2026-09-12 12:11 UTC",
-  "liens_controles": 1272,
-  "pages_vues": 251,
-  "pages_connues": 984,
+  "verifie_le": "2026-09-12 15:33 UTC",
+  "liens_controles": 1186,
+  "pages_vues": 370,
+  "pages_connues": 1718,
   "morts": [],
   "bloques": [],
-  "innocentes_au_controle_calme": [
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://gohalaltravel.com/destinations/sydney",
-      "detail": "URLError — aucun code de reponse"
-    }
-  ]
+  "innocentes_au_controle_calme": []
 }
