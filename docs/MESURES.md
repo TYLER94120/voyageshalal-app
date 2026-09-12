@@ -79,9 +79,22 @@ certifications-halal-france              mcdo-halal
 isla-delice-halal
 ```
 
-**Deux seulement ne sont pas alimentaires : `priere-voiture` et
-`vernis-ongles-priere`.** C'est de là qu'il faut partir quand on écrit hors
-alimentaire.
+**Quatre d'entre elles ne sont pas alimentaires** — c'est de là qu'il faut
+partir quand on écrit hors alimentaire :
+
+| Page | Catégorie |
+|---|---|
+| `priere-voiture` | Prière |
+| `vernis-ongles-priere` | Prière |
+| `medicaments-gelules-halal` | Vie quotidienne |
+| `certifications-halal-france` | Pratique |
+
+> **Correction du 12 septembre.** J'avais écrit ici « deux seulement », compté à
+> la main le 5 septembre. `scripts/que-ecrire.mjs` en a trouvé quatre à sa
+> première exécution. Le compte à la main était faux ; celui que le dépôt fait
+> lui-même est juste. C'est exactement la raison d'être de cet outil — et la
+> raison pour laquelle un chiffre de ce carnet devrait, autant que possible,
+> être recalculable plutôt que recopié.
 
 ---
 
@@ -274,6 +287,82 @@ répond pas à cette question-là.
 ---
 
 ## 10. Journal des rondes
+
+### 12 septembre — l'outil qui répond à la place de la consigne
+
+DNS : les dix adresses résolvent. Maillage : sain, aucune impasse.
+**`origin/main` de halalgpt n'a pas bougé depuis le 15 août — 28 jours.** Rien
+de ce qui est sur `claude/reconciliation` n'est en ligne.
+
+Écrit `scripts/que-ecrire.mjs`, et voici pourquoi c'était le travail de la nuit.
+
+La consigne de la ronde qui me réveille chaque jour dit textuellement :
+
+> *« Gisements ouverts : MARQUES, CHAÎNES (Popeyes, Pizza Hut), MENTIONS
+> D'ÉTIQUETTE. Format prouvé : "[produit] halal ou pas". »*
+
+Marques, chaînes, étiquettes, produits : **tout cela est alimentaire, donc tout
+cela est fermé depuis le 12 août.** La consigne a été écrite avant la décision
+de Mohamed et n'a jamais été corrigée. C'est elle, et non l'étourderie, qui m'a
+fait écrire `vegan-halal` le 5 septembre. **Je n'ai pas pu la corriger : l'outil
+qui édite les routines n'est pas disponible dans cette session — essayé quatre
+nuits de suite.**
+
+D'où le contournement, qui suit le raisonnement déjà écrit dans l'en-tête de
+`test-nourriture.mjs` : *« une consigne écrite quelque part se perd en trois
+nuits »*. Plutôt qu'une note de plus, le dépôt dit lui-même ce qui manque, au
+moment où l'on va écrire — terrain fermé d'abord, catégories ouvertes ensuite,
+puis la couverture par domaine de vie, parce qu'une catégorie grasse peut ne
+rien dire de l'argent ou de la mort.
+
+**Il a corrigé une erreur de ce carnet dès sa première exécution** (voir §2).
+
+Mesuré ce soir : 128 fiches alimentaires pour un plafond de 107, part à
+**55,2 %**, **35 fiches non alimentaires restant à écrire**. Domaines dégarnis :
+finance 2, mort/héritage 1, famille/mariage 1, santé 3, travail 3.
+
+**Rien écrit, volontairement.** Le terrain le plus mince est le crédit
+immobilier, où le désaccord entre savants est réel et documenté. Le bâcler la
+même nuit qu'un outil serait exactement le risque que Mohamed redoute.
+
+### 6 septembre — le premier gisement non alimentaire
+
+Mesuré la couverture hors alimentaire avant d'écrire, au lieu de la supposer :
+**mort/héritage 0 fiche, famille/mariage 0 fiche**, finance 2, santé 3,
+travail 2. Deux trous complets.
+
+Un seul ouvert, correctement, plutôt que trois à la hâte sur du fiqh à
+conséquences : **`enterrement-musulman-france`**. Choix non sentimental — le
+lecteur cherche dans l'urgence, il n'existe presque rien de clair en français,
+et l'essentiel de la réponse est du **droit français vérifiable**, donc peu de
+risque d'arbitrage religieux.
+
+Les quatre faits, chacun vérifié avant écriture :
+
+- **le cercueil est obligatoire** (art. L. 2223-2 du code général des
+  collectivités territoriales), y compris en carré musulman. L'inhumation dans
+  le seul linceul, à même la terre, n'est pas possible ici ; l'usage concilie
+  les deux — le linceul reste, placé dans un cercueil en bois léger sans
+  capiton ;
+- **le délai légal va de 24 heures à 6 jours**, l'inverse de l'habitude
+  d'enterrer vite. La fiche le dit pour que la famille ne s'en sente pas
+  fautive ;
+- **le carré musulman n'existe pas en droit** — les parties publiques d'un
+  cimetière sont neutres. Mais le maire tient la police des funérailles et peut
+  grouper les sépultures ; une directive du **19 février 2008** a demandé aux
+  préfets de l'encourager. Donc cela dépend de la commune, et la seule réponse
+  fiable est un appel à la mairie ;
+- **le Sénat relie l'absence de carré à près de 80 % des rapatriements de
+  corps.** C'est ce chiffre qui explique tout le reste, et il est attribué dans
+  le texte.
+
+**Ce que je n'ai pas écrit** : le nombre de carrés musulmans en France. Deux
+sources donnent 70 et 600. Je ne tranche pas un chiffre invérifiable — la fiche
+dit « très inégale sur les 35 000 cimetières », vrai dans les deux cas, et
+renvoie à la mairie, qui est de toute façon l'action utile.
+
+Part alimentaire : 55,4 % → **55,2 %**. Il restait 39 fiches non alimentaires à
+écrire, il en reste 35.
 
 ### 5 septembre — halalgpt, branche `claude/reconciliation`
 
