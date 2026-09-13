@@ -1,23 +1,9 @@
 {
-  "verifie_le": "2026-09-13 13:19 UTC",
-  "liens_controles": 1143,
+  "verifie_le": "2026-09-13 18:48 UTC",
+  "liens_controles": 1430,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://world.openbeautyfacts.org",
-      "detail": "code 500"
-    }
-  ],
-  "bloques": [
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://unsplash.com",
-      "detail": "code 401 — refuse les robots, pas forcement mort"
-    }
-  ],
+  "morts": [],
+  "bloques": [],
   "innocentes_au_controle_calme": []
 }
