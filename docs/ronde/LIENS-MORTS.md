@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-09-14 15:02 UTC** · 1397 liens controles.
+Releve du **2026-09-14 20:18 UTC** · 735 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
@@ -15,30 +15,13 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 | | Combien | Qui repare |
 |---|---|---|
 | 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
-| 🟠 liens externes morts | 9 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
+| 🟠 liens externes morts | 0 | nous, en retirant le lien |
+| ⚪ bloques aux robots | 2 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## 🟠 Liens externes morts — 9
+## Rien a signaler
 
-- `https://www.halalbooking.com/search?query=Ta%C3%AFf` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Xi'an` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Tabouk` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Vientiane` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Tlemcen` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Shenzhen` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Sfax` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Varanasi` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://halalbooking.com/en/iberostar-waves-founty-beach-all-inclusive/p/9564` — code 404  
-  *(sur voyageshalal.fr)*
+Tous les liens controles menent quelque part.
