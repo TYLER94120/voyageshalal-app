@@ -1,9 +1,28 @@
 {
-  "verifie_le": "2026-09-14 20:18 UTC",
-  "liens_controles": 735,
+  "verifie_le": "2026-09-14 23:12 UTC",
+  "liens_controles": 1141,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [],
+  "morts": [
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Abu%20Dhabi",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Addis-Abeba",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Accra",
+      "detail": "code 404"
+    }
+  ],
   "bloques": [
     {
       "site": "voyageshalal.fr",
