@@ -1,10 +1,10 @@
 {
-  "ronde_du": "2026-09-14 08:07 UTC",
-  "pages_vues": 2053,
+  "ronde_du": "2026-09-15 08:01 UTC",
+  "pages_vues": 2056,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 48,
+      "pages": 51,
       "defauts": 0
     },
     {
@@ -32,8 +32,15 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt",
-      "quoi": "description trop courte (17 car.)",
+      "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
+      "quoi": "description trop courte (21 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
+      "quoi": "description trop courte (42 car.)",
       "detail": ""
     },
     {
@@ -41,6 +48,20 @@
       "site": "voyageshalal.fr",
       "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
       "quoi": "description trop courte (18 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd",
+      "quoi": "description trop courte (24 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt",
+      "quoi": "description trop courte (17 car.)",
       "detail": ""
     },
     {
@@ -58,25 +79,18 @@
       "detail": ""
     },
     {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd",
-      "quoi": "description trop courte (24 car.)",
-      "detail": ""
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »"
     },
     {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
-      "quoi": "description trop courte (42 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g",
-      "quoi": "description trop courte (21 car.)",
-      "detail": ""
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel"
     },
     {
       "niveau": "defaut",
@@ -109,37 +123,9 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
       "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej",
-      "quoi": "description en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : restaura, resto — « Restaura Café chill — Halal resto in Marrakech… »"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
-      "quoi": "description trop courte (42 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr",
-      "quoi": "description trop courte (41 car.)",
-      "detail": ""
+      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
     },
     {
       "niveau": "defaut",
@@ -163,11 +149,11 @@
       "detail": ""
     },
     {
-      "niveau": "defaut",
+      "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
+      "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
+      "quoi": "description trop courte (17 car.)",
+      "detail": ""
     },
     {
       "niveau": "surveiller",
@@ -177,10 +163,24 @@
       "detail": ""
     },
     {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : restaura, resto — « Restaura Café chill — Halal resto in Marrakech… »"
+    },
+    {
       "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
-      "quoi": "description trop courte (17 car.)",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
+      "quoi": "description trop courte (42 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr",
+      "quoi": "description trop courte (41 car.)",
       "detail": ""
     }
   ]
