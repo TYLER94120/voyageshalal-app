@@ -1,41 +1,9 @@
 {
-  "verifie_le": "2026-09-16 22:57 UTC",
-  "liens_controles": 1171,
+  "verifie_le": "2026-09-17 04:55 UTC",
+  "liens_controles": 1817,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Agra",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Asilah",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Al%20Hoce%C3%AFma",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Al-Quds%20(J%C3%A9rusalem)",
-      "detail": "code 404"
-    }
-  ],
-  "bloques": [
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://unsplash.com",
-      "detail": "code 401 — refuse les robots, pas forcement mort"
-    }
-  ],
+  "morts": [],
+  "bloques": [],
   "innocentes_au_controle_calme": []
 }
