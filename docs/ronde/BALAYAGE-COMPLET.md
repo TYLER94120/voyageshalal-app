@@ -1,11 +1,11 @@
 # Balayage complet
 
-**Dernier changement constate le 2026-09-17 05:11 UTC.**
+**Dernier changement constate le 2026-09-17 07:59 UTC.**
 
 **2059 pages regardees — le site entier.** Les chiffres ci-dessous
 valent donc pour tout ce que Google peut voir.
 
-Balayage commence le 2026-09-17 05:11 UTC, termine en 12 minutes. Un balayage
+Balayage commence le 2026-09-17 07:59 UTC, termine en 12 minutes. Un balayage
 complet qui rendrait la main en quelques secondes n'aurait pas eu lieu :
 c'est a cette duree qu'on le reconnait.
 
@@ -72,30 +72,30 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
 
 ### voyageshalal.fr (7)
 
-- **description trop courte (41 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
-- **description trop courte (10 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
-- **description trop courte (21 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
 - **description trop courte (24 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
 - **description trop courte (17 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt`
-- **description trop courte (18 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
+- **description trop courte (10 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
 - **description trop courte (42 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa`
+- **description trop courte (18 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
+- **description trop courte (21 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
+- **description trop courte (41 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
 
 ### gohalaltravel.com (5)
 
-- **description trop courte (42 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
 - **description trop courte (24 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd`
+- **description trop courte (42 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
+- **description trop courte (21 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
 - **description trop courte (17 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
 - **description trop courte (41 car.)**  
   `https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr`
-- **description trop courte (21 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
