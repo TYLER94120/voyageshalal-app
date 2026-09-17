@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-09-15 17:35 UTC",
-  "pages_vues": 177,
+  "ronde_du": "2026-09-17 15:14 UTC",
+  "pages_vues": 179,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 0
+      "defauts": 2
     },
     {
       "site": "halalgpt.fr",
@@ -24,9 +24,24 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 13,
+      "pages": 15,
       "defauts": 0
     }
   ],
-  "defauts": []
+  "defauts": [
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : avec, piscine, resto — « Where to pray at Resto avec piscine — Tafoughalt… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : avec, piscine, resto"
+    }
+  ]
 }
