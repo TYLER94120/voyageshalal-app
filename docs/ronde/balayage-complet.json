@@ -1,5 +1,5 @@
 {
-  "ronde_du": "2026-09-17 07:59 UTC",
+  "ronde_du": "2026-09-18 05:43 UTC",
   "pages_vues": 2059,
   "pages_par_site": [
     {
@@ -32,36 +32,8 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd",
-      "quoi": "description trop courte (24 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt",
-      "quoi": "description trop courte (17 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
       "url": "https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac",
       "quoi": "description trop courte (10 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
-      "quoi": "description trop courte (42 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
-      "quoi": "description trop courte (18 car.)",
       "detail": ""
     },
     {
@@ -74,8 +46,36 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt",
+      "quoi": "description trop courte (17 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd",
+      "quoi": "description trop courte (24 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
       "url": "https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr",
       "quoi": "description trop courte (41 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
+      "quoi": "description trop courte (18 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
+      "quoi": "description trop courte (42 car.)",
       "detail": ""
     },
     {
@@ -128,6 +128,13 @@
       "detail": ""
     },
     {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr",
+      "quoi": "description trop courte (41 car.)",
+      "detail": ""
+    },
+    {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
@@ -174,13 +181,6 @@
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
       "quoi": "description trop courte (17 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr",
-      "quoi": "description trop courte (41 car.)",
       "detail": ""
     }
   ]
