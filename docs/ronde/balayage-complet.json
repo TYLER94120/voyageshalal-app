@@ -1,5 +1,5 @@
 {
-  "ronde_du": "2026-09-20 07:55 UTC",
+  "ronde_du": "2026-09-21 08:12 UTC",
   "pages_vues": 2059,
   "pages_par_site": [
     {
@@ -32,8 +32,22 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd",
+      "quoi": "description trop courte (24 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
       "url": "https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt",
       "quoi": "description trop courte (17 car.)",
+      "detail": ""
+    },
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
+      "quoi": "description trop courte (18 car.)",
       "detail": ""
     },
     {
@@ -53,13 +67,6 @@
     {
       "niveau": "surveiller",
       "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r",
-      "quoi": "description trop courte (18 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
       "url": "https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa",
       "quoi": "description trop courte (42 car.)",
       "detail": ""
@@ -72,11 +79,18 @@
       "detail": ""
     },
     {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd",
-      "quoi": "description trop courte (24 car.)",
-      "detail": ""
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : avec, piscine, resto — « Where to pray at Resto avec piscine — Tafoughalt… »"
+    },
+    {
+      "niveau": "defaut",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
+      "quoi": "description en francais sur le domaine anglais",
+      "detail": "mots francais : avec, piscine, resto"
     },
     {
       "niveau": "defaut",
@@ -109,16 +123,30 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
       "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : avec, piscine, resto — « Where to pray at Resto avec piscine — Tafoughalt… »"
+      "detail": "mots francais : restaura, resto — « Restaura Café chill — Halal resto in Marrakech… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
+      "quoi": "description trop courte (42 car.)",
+      "detail": ""
     },
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine",
-      "quoi": "description en francais sur le domaine anglais",
-      "detail": "mots francais : avec, piscine, resto"
+      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
+      "quoi": "titre en francais sur le domaine anglais",
+      "detail": "mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »"
+    },
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
+      "quoi": "description trop courte (21 car.)",
+      "detail": ""
     },
     {
       "niveau": "surveiller",
@@ -135,13 +163,6 @@
       "detail": ""
     },
     {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr",
-      "quoi": "description trop courte (41 car.)",
-      "detail": ""
-    },
-    {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
@@ -151,36 +172,15 @@
     {
       "niveau": "defaut",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : restaura, resto — « Restaura Café chill — Halal resto in Marrakech… »"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa",
-      "quoi": "description trop courte (42 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
       "url": "https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8",
       "quoi": "titre en francais sur le domaine anglais",
       "detail": "mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »"
     },
     {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »"
-    },
-    {
       "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
-      "quoi": "description trop courte (21 car.)",
+      "url": "https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr",
+      "quoi": "description trop courte (41 car.)",
       "detail": ""
     }
   ]
