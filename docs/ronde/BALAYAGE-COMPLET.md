@@ -1,11 +1,11 @@
 # Balayage complet
 
-**Dernier changement constate le 2026-09-22 07:57 UTC.**
+**Dernier changement constate le 2026-09-23 04:19 UTC.**
 
 **2059 pages regardees — le site entier.** Les chiffres ci-dessous
 valent donc pour tout ce que Google peut voir.
 
-Balayage commence le 2026-09-22 07:57 UTC, termine en 11 minutes. Un balayage
+Balayage commence le 2026-09-23 04:19 UTC, termine en 12 minutes. Un balayage
 complet qui rendrait la main en quelques secondes n'aurait pas eu lieu :
 c'est a cette duree qu'on le reconnait.
 
@@ -18,7 +18,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 10 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 16 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 12 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -28,9 +28,9 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 | Site | Pages vues | Tous niveaux | 🟠 defauts | Plafond |
 |---|---|---|---|---|
 | islampasapas.fr | 54 | 0 | 0 | 0 |
-| voyageshalal.fr | 868 | 8 | 0 | 0 |
-| gohalaltravel.com | 893 | 17 | 10 | 10 |
-| halalgpt.fr | 234 | 1 | 0 | 0 |
+| voyageshalal.fr | 868 | 7 | 0 | 0 |
+| gohalaltravel.com | 893 | 15 | 10 | 10 |
+| halalgpt.fr | 234 | 0 | 0 | 0 |
 | halalcheck.fr | 10 | 0 | 0 | 0 |
 
 **Le plafond ne remonte jamais.** Il part du compte du jour ou il a ete
@@ -68,45 +68,34 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
 - **titre en francais sur le domaine anglais** — mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »  
   `https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8`
 
-## 🟡 surveiller — 16
+## 🟡 surveiller — 12
 
-### voyageshalal.fr (8)
+### voyageshalal.fr (7)
 
-- **page instable sous charge** — muette pendant la ronde, repond en 0.4 s au controle calme — a surveiller, pas a reparer  
-  `https://www.voyageshalal.fr/hotels/hyderabad-inde`
 - **description trop courte (17 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt`
-- **description trop courte (10 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
-- **description trop courte (18 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
-- **description trop courte (21 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
 - **description trop courte (24 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
-- **description trop courte (42 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa`
 - **description trop courte (41 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
+- **description trop courte (18 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
+- **description trop courte (10 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
+- **description trop courte (42 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa`
+- **description trop courte (21 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
 
-### gohalaltravel.com (7)
+### gohalaltravel.com (5)
 
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/destinations/fes`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/destinations/konya`
 - **description trop courte (17 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
 - **description trop courte (21 car.)**  
   `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
 - **description trop courte (24 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd`
-- **description trop courte (42 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
 - **description trop courte (41 car.)**  
   `https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr`
-
-### halalgpt.fr (1)
-
-- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
-  `https://halalgpt.fr/q/vitamine-d3-halal`
+- **description trop courte (42 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
