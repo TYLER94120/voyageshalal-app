@@ -215,6 +215,48 @@ d'avoir corrigé la fuite de ~300 Mo/jour de Fast Origin Transfer. La stratégie
 de cache proposée sur voyageshalal attend l'accord de Mohamed (refonte à deux
 gabarits, 45 pages).
 
+### Mesure du 23 septembre — halalgpt n'est pas le coupable
+
+Fait le jour du renouvellement, pour que la décision repose sur des chiffres.
+
+**Tout ce qui sert du contenu sur halalgpt est statique ou pré-rendu** (`○` et
+`●` dans la table de routes) : l'accueil, `/questions`, les neuf hubs de
+catégorie, les 237 fiches, le sitemap, `robots.txt`. Ces pages sortent du cache
+de Vercel et ne consomment pas de Fast Origin Transfer une fois chaudes.
+
+Ne restent dynamiques (`ƒ`) que les neuf routes d'API, `/e/[code]`, et les deux
+routes d'image Open Graph.
+
+| Route | Brut | Gzip |
+|---|---|---|
+| `/` | 21,6 ko | **5,0 ko** |
+| `/q/e120-halal` | 29,4 ko | **6,1 ko** |
+| `/categorie/additifs` | 38,8 ko | **6,5 ko** |
+| `/questions` | 107,6 ko | **21,5 ko** |
+| `/sitemap.xml` | 41,3 ko | **2,8 ko** |
+| `/q/e120-halal/opengraph-image` | 37,1 ko | — |
+
+**Une hypothèse que j'avais et qui est fausse** : je soupçonnais les images Open
+Graph, générées à la demande pour chacune des 237 fiches. Une image de fiche
+pèse 37 ko — le même ordre de grandeur qu'une page HTML, pas les 200 à 300 ko
+que j'imaginais. Ce n'est pas là que part la bande passante.
+
+**Conclusion pour halalgpt : rien à corriger.** Le site est déjà dans la forme
+la moins coûteuse possible, et une fiche coûte 6 ko compressés à un visiteur
+mobile — ce qui compte, puisque 88 % des clics viennent du mobile.
+
+**Ce que je n'ai PAS pu mesurer, et c'est la moitié qui décide.** Le gros
+consommateur est presque certainement voyageshalal — 33 322 hôtels — mais
+**son dépôt n'est pas dans ce conteneur.** `/home/user/voyageshalal-app`, malgré
+son nom, est l'application mobile **Expo / React Native** (`expo-router/entry`,
+`expo start --android`), pas le site Next.js. Aucun `force-dynamic`, aucun
+`revalidate` : normal, ce n'est pas un site web.
+
+Donc : la question « peut-on redescendre en Hobby ? » ne se tranche pas depuis
+ici. Il faut soit attacher le dépôt du site voyageshalal à une session, soit
+lire l'onglet Usage de Vercel, qui ventile la consommation **par projet**. C'est
+la seule mesure qui dira lequel des cinq sites dépense les 10 Go.
+
 ---
 
 ## 7. Les règles permanentes
