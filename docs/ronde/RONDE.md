@@ -1,13 +1,13 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-09-25 01:47 UTC.**
+**Dernier changement constate le 2026-09-25 21:23 UTC.**
 
-⚠️ **Cette ronde a regarde 178 pages sur 2056 — environ 9 %.**
+⚠️ **Cette ronde a regarde 176 pages sur 2056 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
 casse dans la nuit : la rotation est simplement passee sur d'autres pages.
-Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **vieux de 18 h**.
+Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **vieux de 13 h**.
 
 La ronde passe **toutes les 30 minutes** sur les quatre sites et
 regarde ce qu'un visiteur recoit vraiment. Ce fichier n'est reecrit
@@ -18,7 +18,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 0 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 1 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -29,10 +29,13 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 |---|---|---|
 | islampasapas.fr | 41 | 0 |
 | voyageshalal.fr | 41 | 0 |
-| gohalaltravel.com | 41 | 0 |
+| gohalaltravel.com | 41 | 1 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 14 | 0 |
+| halalcheck.fr | 12 | 0 |
 
-## Rien a signaler
+## 🟡 surveiller — 1
 
-5 site(s) sur 5 ont rendu des pages, et celles-ci sont correctes.
+### gohalaltravel.com (1)
+
+- **page lente (4.1 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://gohalaltravel.com/`
