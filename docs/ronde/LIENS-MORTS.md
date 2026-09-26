@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-09-25 23:18 UTC** · 1138 liens controles.
+Releve du **2026-09-26 05:01 UTC** · 1448 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
@@ -15,100 +15,60 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 | | Combien | Qui repare |
 |---|---|---|
 | 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
-| 🟠 liens externes morts | 44 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 2 | personne — a ne PAS retirer |
+| 🟠 liens externes morts | 24 | nous, en retirant le lien |
+| ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## 🟠 Liens externes morts — 44
+## 🟠 Liens externes morts — 24
 
 - `https://www.halalbooking.com/search?query=Abu%20Dhabi` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Agadir` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Alger` — code 404  
-  *(sur gohalaltravel.com)*
+  *(sur voyageshalal.fr)*
 - `https://www.halalbooking.com/search?query=Accra` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Addis-Abeba` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Alexandrie` — code 404  
-  *(sur gohalaltravel.com)*
+  *(sur voyageshalal.fr)*
 - `https://www.halalbooking.com/search?query=Almaty` — code 404  
-  *(sur gohalaltravel.com)*
+  *(sur voyageshalal.fr)*
 - `https://www.halalbooking.com/search?query=Amman` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Amsterdam` — code 404  
-  *(sur gohalaltravel.com)*
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Addis-Abeba` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Alexandrie` — code 404  
+  *(sur voyageshalal.fr)*
 - `https://www.halalbooking.com/search?query=Ankara` — code 404  
-  *(sur gohalaltravel.com)*
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Agadir` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Alger` — code 404  
+  *(sur voyageshalal.fr)*
 - `https://www.halalbooking.com/search?query=Antalya` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Bagdad` — code 404  
-  *(sur gohalaltravel.com)*
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Amsterdam` — code 404  
+  *(sur voyageshalal.fr)*
 - `https://www.halalbooking.com/search?query=Aqaba` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Bakou` — code 404  
-  *(sur gohalaltravel.com)*
+  *(sur voyageshalal.fr)*
 - `https://www.halalbooking.com/search?query=Bali` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Banda%20Aceh` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Bangkok` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Barcelone` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Berlin` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Boukhara` — code 404  
-  *(sur gohalaltravel.com)*
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Bakou` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Bagdad` — code 404  
+  *(sur voyageshalal.fr)*
 - `https://www.halalbooking.com/search?query=Beyrouth` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Bruxelles` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Bursa` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Cappadoce` — code 404  
-  *(sur gohalaltravel.com)*
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Berlin` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Bangkok` — code 404  
+  *(sur voyageshalal.fr)*
 - `https://www.halalbooking.com/search?query=Bordeaux` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Chefchaouen` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Chicago` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Cordoue` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Casablanca` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Dacca` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Dakar` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Dearborn` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Delhi` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Djerba` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Doha` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Duba%C3%AF` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=F%C3%A8s` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Grenade` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Gaziantep` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Houston` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Hyderabad` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Islamabad` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Istanbul` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Jakarta` — code 404  
-  *(sur gohalaltravel.com)*
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Banda%20Aceh` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Barcelone` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Boukhara` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Bruxelles` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Bursa` — code 404  
+  *(sur voyageshalal.fr)*
