@@ -1,47 +1,9 @@
 {
-  "verifie_le": "2026-09-27 19:46 UTC",
-  "liens_controles": 1306,
+  "verifie_le": "2026-09-27 23:04 UTC",
+  "liens_controles": 1186,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Abu%20Dhabi",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Accra",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Addis-Abeba",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Alexandrie",
-      "detail": "code 404"
-    },
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Agadir",
-      "detail": "code 404"
-    }
-  ],
-  "bloques": [
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://unsplash.com",
-      "detail": "code 401 — refuse les robots, pas forcement mort"
-    }
-  ],
+  "morts": [],
+  "bloques": [],
   "innocentes_au_controle_calme": []
 }
