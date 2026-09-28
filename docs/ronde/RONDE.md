@@ -1,13 +1,13 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-09-28 07:32 UTC.**
+**Dernier changement constate le 2026-09-28 16:39 UTC.**
 
-⚠️ **Cette ronde a regarde 175 pages sur 2057 — environ 9 %.**
+⚠️ **Cette ronde a regarde 176 pages sur 2057 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
 casse dans la nuit : la rotation est simplement passee sur d'autres pages.
-Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **vieux de 23 h**.
+Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **de ce matin**.
 
 La ronde passe **toutes les 30 minutes** sur les quatre sites et
 regarde ce qu'un visiteur recoit vraiment. Ce fichier n'est reecrit
@@ -18,7 +18,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 0 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 4 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -28,20 +28,11 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 | Site | Pages vues | Tous niveaux |
 |---|---|---|
 | islampasapas.fr | 41 | 0 |
-| voyageshalal.fr | 41 | 4 |
+| voyageshalal.fr | 41 | 0 |
 | gohalaltravel.com | 41 | 0 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 11 | 0 |
+| halalcheck.fr | 12 | 0 |
 
-## 🟡 surveiller — 4
+## Rien a signaler
 
-### voyageshalal.fr (4)
-
-- **description trop courte (10 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
-- **page lente (3.2 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.voyageshalal.fr/spot/sp_mrt8ic21_7fovr`
-- **description trop courte (42 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa`
-- **description trop courte (41 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
+5 site(s) sur 5 ont rendu des pages, et celles-ci sont correctes.
