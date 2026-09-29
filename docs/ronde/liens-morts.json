@@ -1,91 +1,43 @@
 {
-  "verifie_le": "2026-09-29 10:42 UTC",
-  "liens_controles": 1175,
+  "verifie_le": "2026-09-29 18:05 UTC",
+  "liens_controles": 1090,
   "pages_vues": 370,
   "pages_connues": 1718,
   "morts": [
     {
       "site": "gohalaltravel.com",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Alexandrie",
+      "url": "https://www.halalbooking.com/search?query=Al%20Hoce%C3%AFma",
       "detail": "code 404"
     },
     {
       "site": "gohalaltravel.com",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Amman",
+      "url": "https://www.halalbooking.com/search?query=Agra",
       "detail": "code 404"
     },
     {
       "site": "gohalaltravel.com",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Accra",
+      "url": "https://www.halalbooking.com/search?query=Al-Quds%20(J%C3%A9rusalem)",
       "detail": "code 404"
     },
     {
       "site": "gohalaltravel.com",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Addis-Abeba",
+      "url": "https://www.halalbooking.com/search?query=Astana",
       "detail": "code 404"
     },
     {
       "site": "gohalaltravel.com",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Abu%20Dhabi",
+      "url": "https://www.halalbooking.com/search?query=Asilah",
       "detail": "code 404"
     },
     {
       "site": "gohalaltravel.com",
       "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Alger",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Almaty",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Agadir",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Ankara",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Antalya",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Bakou",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Amsterdam",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Aqaba",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Bagdad",
+      "url": "https://www.halalbooking.com/search?query=B%C3%A9ni%20Mellal",
       "detail": "code 404"
     }
   ],
