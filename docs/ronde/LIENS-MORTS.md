@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-09-29 18:05 UTC** · 1090 liens controles.
+Releve du **2026-09-29 23:44 UTC** · 1297 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
@@ -15,24 +15,13 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 | | Combien | Qui repare |
 |---|---|---|
 | 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
-| 🟠 liens externes morts | 6 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 2 | personne — a ne PAS retirer |
+| 🟠 liens externes morts | 0 | nous, en retirant le lien |
+| ⚪ bloques aux robots | 0 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## 🟠 Liens externes morts — 6
+## Rien a signaler
 
-- `https://www.halalbooking.com/search?query=Al%20Hoce%C3%AFma` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Agra` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Al-Quds%20(J%C3%A9rusalem)` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Astana` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Asilah` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=B%C3%A9ni%20Mellal` — code 404  
-  *(sur gohalaltravel.com)*
+Tous les liens controles menent quelque part.
