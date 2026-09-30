@@ -1,6 +1,6 @@
 # La passerelle des codes additifs
 
-Releve du **2026-09-30 12:54 UTC** · 57 codes demandes a `https://halalgpt.fr/e/<CODE>`.
+Releve du **2026-09-30 22:29 UTC** · 57 codes demandes a `https://halalgpt.fr/e/<CODE>`.
 
 HalalCheck promet une reponse pour chaque additif qu'il reconnait.
 Ce robot verifie que halalgpt.fr la tient. C'est le seul controle qui
