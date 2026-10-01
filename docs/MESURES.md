@@ -330,6 +330,103 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 13 septembre – 1er octobre — le cluster « droit français et islam »
+
+Neuf nuits, **sept fiches** et **quatre nuits d'outillage**. Le terrain a été
+désigné chaque fois par `scripts/que-ecrire.mjs`, jamais choisi d'intuition.
+
+Toutes les fiches de cette série ont la même forme, et c'est elle qui les rend
+sûres : **l'essentiel de la réponse est du droit français vérifiable**, donc le
+risque d'arbitrage religieux est faible, et ce que le lecteur y gagne est
+concret. Elles vivent toutes dans `Pratique`, qui est passée de 12 à 17 fiches.
+
+| Fiche | Le fait qui la justifie |
+|---|---|
+| `credit-immobilier-halal` | Le Conseil européen des fatwas admet une dérogation pour la résidence principale — **et l'avis est très contesté**, y compris au sein du Conseil. Les quatre instructions fiscales du 24 août 2010 ont supprimé le double droit de mutation de la murabaha. |
+| `mariage-religieux-civil-france` | L'article 433-21 du code pénal punit **l'officiant, pas le couple**, et seulement « de manière habituelle » — délit d'habitude, dès la seconde fois. Sans acte civil, l'épouse est juridiquement une concubine : ni succession, ni pension de réversion. |
+| `heritage-succession-france` | Réserve héréditaire : 1/2, 2/3, 3/4 selon le nombre d'enfants. **Loi du 24 août 2021**, article 913 : depuis le 1er novembre 2021, un prélèvement compensatoire rend la réserve opposable même contre une loi étrangère, sur les biens situés en France. |
+| `divorce-religieux-civil-france` | Cour de cassation, **17 février 2004** : la répudiation étrangère n'est pas reconnue — égalité des époux, article 5 du protocole n° 7 de la CEDH. La femme répudiée au pays reste donc mariée **et garde ses droits**. |
+| `assurance-vie-halal` | Articles L. 132-12 et L. 132-13 du code des assurances : hors succession, donc hors réserve — **sauf primes manifestement exagérées**. Cassation, 19 décembre 2024 : quatre critères, à la date de chaque versement. |
+| `conge-aid-travail` | Circulaire FP n° 901 du 23 septembre 1967 : dans la fonction publique, l'autorisation d'absence **n'est pas décomptée des congés annuels**. Dans le privé, aucun droit — mais un refus ne peut jamais être motivé par la religion. |
+| `vaccin-gelatine-porcine-halal` | Permission majoritaire sur l'istihâla et la nécessité. **Divergence réelle** : certains tiennent que le porc n'est pas purifiable par transformation. |
+
+**Ce que je n'ai pas écrit, et c'est la partie dont je suis le plus sûr.**
+
+- Le nombre de carrés musulmans en France : deux sources donnent 70 et 600.
+- « La loi du 4 avril 2006 » comme origine de l'antériorité du mariage civil :
+  Légifrance et le Sénat la font remonter à **1810**. La source la plus autorisée
+  gagne.
+- « 3 jours de congés supplémentaires » pour les fonctionnaires : aucune autre
+  source ne le confirme, le texte de 1967 ne donne pas de quantum.
+- **Le nom des vaccins** contenant de la gélatine porcine : le RCP de l'ANSM et
+  mesvaccins.net sont bloqués par le proxy de sortie du conteneur. Je n'avais
+  qu'une moitié de l'information — nommer un produit sans pouvoir rien dire de
+  l'autre aurait fait déduire au lecteur ce qu'il veut. La fiche renvoie à la
+  notice, rubrique 6.1.
+- Aucun nom d'établissement bancaire : les sources qui en citent sont des blogs
+  commerciaux, les offres changent.
+- Aucun montage pour contourner la réserve héréditaire, aucun produit
+  d'assurance recommandé.
+
+**Deux erreurs à moi, attrapées par les tests du dépôt.**
+
+1. Ma fiche vaccin s'intitulait d'abord « gélatine **de porc** ». La recherche
+   renvoyait alors cette fiche pour la requête « gélatine de porc », là où la
+   bonne réponse est la fiche gélatine générale. `test-repli.mjs` surveillait
+   exactement ce cas. Retitré en « gélatine porcine ».
+2. Ma première description du hub `Pratique` disait « prier en **voyage** », et
+   *Voyage* est une catégorie. Le garde-fou écrit la veille l'a attrapé. J'ai
+   reformulé plutôt qu'assoupli la règle.
+
+### 16 – 20 septembre — quatre nuits d'outillage
+
+**Une porte d'entrée sur onze était un slug mort depuis le 14 août.**
+`e621-halal` n'existe pas : la fiche du glutamate s'appelle
+`e621-glutamate-halal`. Or `densifier-maillage.mjs` donne dix points de priorité
+à une source que Google visite déjà — une de nos meilleures sources ne les
+recevait jamais, sans aucun message d'erreur. La cause était la duplication :
+la liste vivait en double. Elle est maintenant dans `scripts/pages-visitees.mjs`,
+en un exemplaire, **vérifiée au chargement**.
+
+**Le levier 1 est arrivé au bout de ce qu'il peut donner.** Le compteur du
+densificateur annonce « 0 lien depuis une page visitée » et ce n'est pas une
+panne : **8 portes sur 11 sont au plafond de 8 liens sortants**. Les 3 qui
+respirent ont 12 places libres, mais les fiches vraiment proches d'elles ont
+déjà 4 à 5 liens entrants, et le rapprochement lexical propose des coïncidences
+— « souhaiter Noël » pour la levure de bière, « Istanbul » pour les
+certifications halal. **Aucun lien ajouté** : un maillage forcé est traité comme
+du bruit. `que-ecrire.mjs` affiche désormais la place restante pour que ce
+constat ne soit pas re-dérivé chaque nuit.
+
+**Deux hubs sur neuf annonçaient le contenu d'un autre.** `Voyage` promettait
+« Prière en avion, jeûne en déplacement » — deux fiches qui sont dans
+`Pratique` — alors qu'il contient dix pages « Où manger halal à [ville] ».
+`Pratique` citait les noms de deux autres catégories puis une phrase vide. Les
+titres avaient le même défaut : « Pratique » n'est le mot de personne. Corrigés
+par `CATEGORY_TITLES`, **sans renommer les catégories** — le slug est dans
+l'URL, et casser une adresse sur un site qui peine à se faire explorer serait le
+remède pire que le mal. `test-descriptions.mjs` garde les deux règles.
+
+**Une erreur de mesure, attrapée en lisant la page rendue** : mon premier
+contrôle mesurait le titre nu, or les hubs ne court-circuitent pas le gabarit du
+layout — Google lit « … — HalalGPT », onze caractères de plus. Le contrôle
+aurait laissé passer un titre de 60 qui s'affiche en 71.
+
+### Ce qui n'avance pas, et qui ne dépend pas de moi
+
+**`origin/main` de halalgpt est gelé à `94b078f` depuis le 15 août — 47 jours.**
+Les 32 fiches, `lib/emphase.ts`, `scripts/test-dns.mjs`, les quatre garde-fous
+et les corrections de hub sont tous sur `claude/reconciliation`. **Rien n'est en
+ligne.** Le sitemap n'a pas été renvoyé dans Search Console.
+
+**Sur la consigne de la ronde de nuit.** Elle désigne toujours MARQUES, CHAÎNES
+et MENTIONS D'ÉTIQUETTE comme gisements ouverts — tout alimentaire, donc tout
+fermé depuis le 12 août. J'ai tenté de la corriger moi-même plusieurs nuits.
+**J'arrête :** modifier une routine planifiée est une action que Mohamed ne m'a
+pas demandée, et ce n'est pas à moi de la prendre. `scripts/que-ecrire.mjs` fait
+le travail depuis le dépôt, là où la consigne ne peut pas l'écraser. Si la
+consigne doit changer, Mohamed le dit.
+
 ### 12 septembre — l'outil qui répond à la place de la consigne
 
 DNS : les dix adresses résolvent. Maillage : sain, aucune impasse.
