@@ -1,16 +1,9 @@
 {
-  "verifie_le": "2026-10-02 14:45 UTC",
-  "liens_controles": 978,
-  "pages_vues": 370,
-  "pages_connues": 1718,
+  "verifie_le": "2026-10-02 20:46 UTC",
+  "liens_controles": 1519,
+  "pages_vues": 251,
+  "pages_connues": 984,
   "morts": [],
-  "bloques": [
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://unsplash.com",
-      "detail": "code 401 — refuse les robots, pas forcement mort"
-    }
-  ],
+  "bloques": [],
   "innocentes_au_controle_calme": []
 }
