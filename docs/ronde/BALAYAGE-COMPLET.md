@@ -1,11 +1,11 @@
 # Balayage complet
 
-**Dernier changement constate le 2026-10-01 09:26 UTC.**
+**Dernier changement constate le 2026-10-02 09:01 UTC.**
 
 **2061 pages regardees — le site entier.** Les chiffres ci-dessous
 valent donc pour tout ce que Google peut voir.
 
-Balayage commence le 2026-10-01 09:26 UTC, termine en 11 minutes. Un balayage
+Balayage commence le 2026-10-02 09:01 UTC, termine en 10 minutes. Un balayage
 complet qui rendrait la main en quelques secondes n'aurait pas eu lieu :
 c'est a cette duree qu'on le reconnait.
 
@@ -18,7 +18,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 10 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 16 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 12 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -28,8 +28,8 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 | Site | Pages vues | Tous niveaux | 🟠 defauts | Plafond |
 |---|---|---|---|---|
 | islampasapas.fr | 54 | 0 | 0 | 0 |
-| voyageshalal.fr | 868 | 8 | 0 | 0 |
-| gohalaltravel.com | 895 | 18 | 10 | 10 |
+| voyageshalal.fr | 868 | 7 | 0 | 0 |
+| gohalaltravel.com | 895 | 15 | 10 | 10 |
 | halalgpt.fr | 234 | 0 | 0 | 0 |
 | halalcheck.fr | 10 | 0 | 0 | 0 |
 
@@ -68,14 +68,14 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
 - **titre en francais sur le domaine anglais** — mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »  
   `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
 
-## 🟡 surveiller — 16
+## 🟡 surveiller — 12
 
-### voyageshalal.fr (8)
+### voyageshalal.fr (7)
 
-- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
-  `https://www.voyageshalal.fr/blog/voyager-pendant-ramadan-guide-complet`
-- **description trop courte (17 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt`
+- **description trop courte (24 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
+- **description trop courte (41 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
 - **description trop courte (42 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa`
 - **description trop courte (10 car.)**  
@@ -84,26 +84,18 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
   `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
 - **description trop courte (21 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
-- **description trop courte (24 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
-- **description trop courte (41 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
+- **description trop courte (17 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt`
 
-### gohalaltravel.com (8)
+### gohalaltravel.com (5)
 
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/hotels/austin`
-- **description trop courte (42 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
-- **description trop courte (21 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
+- **description trop courte (17 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
 - **description trop courte (24 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd`
 - **description trop courte (41 car.)**  
   `https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr`
-- **description trop courte (17 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/halal-questions/is-soy-sauce-halal`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/halal-questions/is-fish-gelatine-halal`
+- **description trop courte (42 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
+- **description trop courte (21 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
