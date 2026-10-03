@@ -542,6 +542,38 @@ Part alimentaire : 55,4 % → **55,2 %**. Il restait 39 fiches non alimentaires 
 
 ## 11. Branches en attente de promotion par Mohamed
 
+### Relevé du 3 octobre — ce que `claude/reconciliation` contient exactement
+
+Mesuré, pour que la décision ne repose pas sur « il y a du travail dessus ».
+
+| | main | branche |
+|---|---|---|
+| Commit | `94b078f` (15 août) | 27 commits d'avance |
+| Fiches | **207** | **240** (+33) |
+| Diff | — | 13 fichiers, 1102 insertions, 92 suppressions |
+
+**Quatre fichiers que `main` n'a pas du tout :**
+
+| Fichier | À quoi il sert |
+|---|---|
+| `lib/emphase.ts` | Les marqueurs de gras partaient tels quels dans les données structurées envoyées à Google et dans le texte lu à voix haute par le mode conduite. Corrigé — mais seulement sur la branche. |
+| `scripts/test-dns.mjs` | Les dix adresses de l'empire. C'est le contrôle qui aurait évité les cinq jours d'invisibilité d'août (§5). |
+| `scripts/que-ecrire.mjs` | Répond par la mesure à « sur quel terrain écrire », et annonce d'abord le terrain fermé le 12 août. |
+| `scripts/pages-visitees.mjs` | La liste des onze portes d'entrée, en un exemplaire et vérifiée au chargement. |
+
+**Et le fait qui éclaire les 49 jours : il n'y a JAMAIS eu de pull request sur
+le dépôt halalgpt.** Zéro, tous états confondus (`gh api repos/.../pulls?state=all`
+renvoie une liste vide). Ce n'est pas une anomalie en soi — Mohamed promeut
+depuis Vercel, pas depuis GitHub, et ce circuit ne demande aucune PR. Mais la
+conséquence est qu'**il n'existe nulle part une vue unique de ce qui attend** :
+pas de diff à relire, pas de résumé, rien qui dise « voilà les 33 fiches et les
+cinq garde-fous, promeus ou refuse ». D'où ce tableau.
+
+**Je n'ouvre pas de pull request** : la consigne est de ne pas en créer sans
+demande explicite, et c'est la bonne règle — une PR sur ce dépôt changerait son
+circuit de validation. Si Mohamed en veut une, il le dit et je l'ouvre.
+
+
 | Dépôt | Branche | Ce qu'elle contient |
 |---|---|---|
 | halalgpt | `claude/reconciliation` | tout le travail depuis le 30 août — **rien n'est en ligne** |
