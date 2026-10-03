@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-10-02 14:03 UTC",
-  "pages_vues": 182,
+  "ronde_du": "2026-10-03 17:51 UTC",
+  "pages_vues": 181,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -10,7 +10,7 @@
     {
       "site": "voyageshalal.fr",
       "pages": 41,
-      "defauts": 0
+      "defauts": 1
     },
     {
       "site": "gohalaltravel.com",
@@ -24,9 +24,17 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 18,
+      "pages": 17,
       "defauts": 0
     }
   ],
-  "defauts": []
+  "defauts": [
+    {
+      "niveau": "surveiller",
+      "site": "voyageshalal.fr",
+      "url": "https://www.voyageshalal.fr/destinations/khartoum",
+      "quoi": "page instable sous charge",
+      "detail": "muette pendant la ronde, repond en 0.4 s au controle calme — a surveiller, pas a reparer"
+    }
+  ]
 }
