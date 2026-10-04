@@ -1,71 +1,22 @@
 {
-  "verifie_le": "2026-10-04 14:05 UTC",
-  "liens_controles": 1513,
-  "pages_vues": 251,
-  "pages_connues": 984,
-  "morts": [
+  "verifie_le": "2026-10-04 19:39 UTC",
+  "liens_controles": 735,
+  "pages_vues": 370,
+  "pages_connues": 1718,
+  "morts": [],
+  "bloques": [
     {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://gohalaltravel.com/destinations/la-haye",
-      "detail": "URLError (confirme machine calme)"
+      "site": "voyageshalal.fr",
+      "genre": "externe",
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
     },
     {
       "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://gohalaltravel.com/destinations/manama",
-      "detail": "URLError (confirme machine calme)"
+      "genre": "externe",
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
     }
   ],
-  "bloques": [],
-  "innocentes_au_controle_calme": [
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://gohalaltravel.com/destinations/homs",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://gohalaltravel.com/destinations/bakou",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://gohalaltravel.com/destinations/pune",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://gohalaltravel.com/destinations/malacca",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://gohalaltravel.com/destinations/sanliurfa",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://gohalaltravel.com/destinations/johor-bahru",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://gohalaltravel.com/destinations/basra",
-      "detail": "URLError — aucun code de reponse"
-    },
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://www.gohalaltravel.com?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-accueil",
-      "detail": "URLError — aucun code de reponse"
-    }
-  ]
+  "innocentes_au_controle_calme": []
 }
