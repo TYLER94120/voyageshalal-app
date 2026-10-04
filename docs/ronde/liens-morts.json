@@ -1,9 +1,29 @@
 {
-  "verifie_le": "2026-10-03 23:05 UTC",
-  "liens_controles": 1185,
+  "verifie_le": "2026-10-04 05:56 UTC",
+  "liens_controles": 1629,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [],
-  "bloques": [],
+  "morts": [
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://halalbooking.com/en/iberostar-waves-founty-beach-all-inclusive/p/9564",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Marrakech",
+      "detail": "code 404"
+    }
+  ],
+  "bloques": [
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
+    }
+  ],
   "innocentes_au_controle_calme": []
 }
