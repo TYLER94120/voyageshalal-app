@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-10-06 01:18 UTC** · 1849 liens controles.
+Releve du **2026-10-06 11:17 UTC** · 1400 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
@@ -15,44 +15,13 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 | | Combien | Qui repare |
 |---|---|---|
 | 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
-| 🟠 liens externes morts | 16 | nous, en retirant le lien |
+| 🟠 liens externes morts | 0 | nous, en retirant le lien |
 | ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## 🟠 Liens externes morts — 16
+## Rien a signaler
 
-- `https://www.halalbooking.com/search?query=Abuja` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Annaba` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Gharda%C3%AFa` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Djibouti` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Bamako` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Abidjan` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Douala` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Kairouan` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Marrakech` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Kampala` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=La%C3%A2youne` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Khartoum` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Kinshasa` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Tlemcen` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Kigali` — code 404  
-  *(sur gohalaltravel.com)*
-- `https://www.halalbooking.com/search?query=Ouagadougou` — code 404  
-  *(sur gohalaltravel.com)*
+Tous les liens controles menent quelque part.
