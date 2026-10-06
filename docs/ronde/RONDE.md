@@ -1,13 +1,13 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-10-05 18:12 UTC.**
+**Dernier changement constate le 2026-10-06 00:15 UTC.**
 
-⚠️ **Cette ronde a regarde 178 pages sur 2058 — environ 9 %.**
+⚠️ **Cette ronde a regarde 183 pages sur 2058 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
 casse dans la nuit : la rotation est simplement passee sur d'autres pages.
-Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **de ce matin**.
+Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **vieux de 15 h**.
 
 La ronde passe **toutes les 30 minutes** sur les quatre sites et
 regarde ce qu'un visiteur recoit vraiment. Ce fichier n'est reecrit
@@ -17,8 +17,8 @@ que rien de nouveau n'est casse, pas que le robot dort.
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 1 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 1 | pas urgent, a ne pas laisser grossir |
+| 🟠 defaut | 0 | il la recoit, mais elle le dessert |
+| 🟡 a surveiller | 7 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -28,21 +28,26 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 | Site | Pages vues | Tous niveaux |
 |---|---|---|
 | islampasapas.fr | 41 | 0 |
-| voyageshalal.fr | 41 | 0 |
-| gohalaltravel.com | 41 | 2 |
+| voyageshalal.fr | 41 | 7 |
+| gohalaltravel.com | 41 | 0 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 14 | 0 |
+| halalcheck.fr | 19 | 0 |
 
-## 🟠 defaut — 1
+## 🟡 surveiller — 7
 
-### gohalaltravel.com (1)
+### voyageshalal.fr (7)
 
-- **titre en francais sur le domaine anglais** — mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »  
-  `https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8`
-
-## 🟡 surveiller — 1
-
-### gohalaltravel.com (1)
-
+- **description trop courte (24 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
+- **description trop courte (18 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
 - **description trop courte (17 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
+  `https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt`
+- **description trop courte (42 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa`
+- **description trop courte (10 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
+- **description trop courte (21 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
+- **description trop courte (41 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
