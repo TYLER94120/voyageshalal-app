@@ -1,11 +1,11 @@
 # Balayage complet
 
-**Dernier changement constate le 2026-10-07 05:26 UTC.**
+**Dernier changement constate le 2026-10-07 09:19 UTC.**
 
 **2061 pages regardees — le site entier.** Les chiffres ci-dessous
 valent donc pour tout ce que Google peut voir.
 
-Balayage commence le 2026-10-07 05:26 UTC, termine en 12 minutes. Un balayage
+Balayage commence le 2026-10-07 09:19 UTC, termine en 12 minutes. Un balayage
 complet qui rendrait la main en quelques secondes n'aurait pas eu lieu :
 c'est a cette duree qu'on le reconnait.
 
@@ -18,7 +18,7 @@ que rien de nouveau n'est casse, pas que le robot dort.
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
 | 🟠 defaut | 10 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 20 | pas urgent, a ne pas laisser grossir |
+| 🟡 a surveiller | 12 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -28,8 +28,8 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 | Site | Pages vues | Tous niveaux | 🟠 defauts | Plafond |
 |---|---|---|---|---|
 | islampasapas.fr | 54 | 0 | 0 | 0 |
-| voyageshalal.fr | 868 | 8 | 0 | 0 |
-| gohalaltravel.com | 895 | 22 | 10 | 10 |
+| voyageshalal.fr | 868 | 7 | 0 | 0 |
+| gohalaltravel.com | 895 | 15 | 10 | 10 |
 | halalgpt.fr | 234 | 0 | 0 | 0 |
 | halalcheck.fr | 10 | 0 | 0 | 0 |
 
@@ -59,59 +59,43 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
   `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
 - **description en francais sur le domaine anglais** — mots francais : avec, piscine, resto  
   `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
-- **titre en francais sur le domaine anglais** — mots francais : restaura, resto — « Restaura Café chill — Halal resto in Marrakech… »  
-  `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
 - **titre en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »  
   `https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug`
+- **titre en francais sur le domaine anglais** — mots francais : restaura, resto — « Restaura Café chill — Halal resto in Marrakech… »  
+  `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
 - **titre en francais sur le domaine anglais** — mots francais : bord, resto — « Resto Sidi koi Ali en bord de mer — Halal resto in Essao… »  
   `https://www.gohalaltravel.com/spot/sp_mselbxzb_9ujf8`
 - **titre en francais sur le domaine anglais** — mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »  
   `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
 
-## 🟡 surveiller — 20
+## 🟡 surveiller — 12
 
-### voyageshalal.fr (8)
+### voyageshalal.fr (7)
 
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.voyageshalal.fr/hotels/zagreb`
-- **description trop courte (41 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
-- **description trop courte (10 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
-- **description trop courte (18 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
-- **description trop courte (24 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
 - **description trop courte (17 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt`
-- **description trop courte (42 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa`
+- **description trop courte (18 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
 - **description trop courte (21 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
-
-### gohalaltravel.com (12)
-
-- **page instable sous charge** — muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/destinations/safi`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/hotels/boston`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/hotels/las-vegas`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/hotels/kyoto`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/hotels/ouagadougou`
-- **page instable sous charge** — muette pendant la ronde, repond en 0.6 s au controle calme — a surveiller, pas a reparer  
-  `https://www.gohalaltravel.com/priere/marrakech/hotel-excentre-magnifique`
+- **description trop courte (24 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
 - **description trop courte (41 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr`
+  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
+- **description trop courte (42 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa`
+- **description trop courte (10 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
+
+### gohalaltravel.com (5)
+
 - **description trop courte (24 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd`
-- **description trop courte (17 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
+- **description trop courte (41 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr`
 - **description trop courte (42 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
+- **description trop courte (17 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
 - **description trop courte (21 car.)**  
   `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
-- **page lente (19.5 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.gohalaltravel.com/halal-questions/is-shellac-e904-halal`
