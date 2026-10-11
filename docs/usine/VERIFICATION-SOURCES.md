@@ -1,6 +1,6 @@
 # Verification des sources de l'usine
 
-**Dernier changement constate le 2026-10-10 10:55 UTC**, par un robot GitHub.
+**Dernier changement constate le 2026-10-11 11:09 UTC**, par un robot GitHub.
 
 Le controle tourne **tous les jours a 5 h**. Ce fichier n'est reecrit
 que si quelque chose a bouge : la date ci-dessus est donc celle du
@@ -57,7 +57,7 @@ sur un projet dont aucune source n'est verte.
 
 - adresse : `https://donnees.roulez-eco.fr/opendata/instantane`
 - a quoi elle sert : ancienne adresse, archive zip — a tester car citee de memoire
-- reponse : code 200, 945656 octets, type `application/zip`
+- reponse : code 200, 942819 octets, type `application/zip`
 - forme recue : `binaire, 4 premiers octets b'PK\x03\x04'`
 
 ### fin-de-support
@@ -66,8 +66,8 @@ sur un projet dont aucune source n'est verte.
 
 - adresse : `https://endoflife.date/api/all.json`
 - a quoi elle sert : index de tous les produits suivis
-- reponse : code 200, 6126 octets, type `application/json`
-- forme recue : `liste de 482 elements (str)`
+- reponse : code 200, 6139 octets, type `application/json`
+- forme recue : `liste de 483 elements (str)`
 
 ✅ **repond, et le format est celui attendu**
 
