@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-10-13 19:18 UTC** · 980 liens controles.
+Releve du **2026-10-13 23:44 UTC** · 1421 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
@@ -15,13 +15,46 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 | | Combien | Qui repare |
 |---|---|---|
 | 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
-| 🟠 liens externes morts | 0 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
+| 🟠 liens externes morts | 17 | nous, en retirant le lien |
+| ⚪ bloques aux robots | 2 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## Rien a signaler
+## 🟠 Liens externes morts — 17
 
-Tous les liens controles menent quelque part.
+- `https://www.halalbooking.com/search?query=Abidjan` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Abuja` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Bamako` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Antananarivo` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Djibouti` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Kampala` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Douala` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Dar%20es%20Salaam` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Khartoum` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Kinshasa` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Marrakech` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Ouagadougou` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Maputo` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Kigali` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=La%C3%A2youne` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Port-Louis` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://halalbooking.com/en/iberostar-waves-founty-beach-all-inclusive/p/9564` — code 404  
+  *(sur voyageshalal.fr)*
