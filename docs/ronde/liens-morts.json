@@ -1,16 +1,9 @@
 {
-  "verifie_le": "2026-10-15 23:04 UTC",
-  "liens_controles": 946,
+  "verifie_le": "2026-10-16 04:34 UTC",
+  "liens_controles": 1432,
   "pages_vues": 370,
   "pages_connues": 1718,
   "morts": [],
-  "bloques": [
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://unsplash.com",
-      "detail": "code 401 — refuse les robots, pas forcement mort"
-    }
-  ],
+  "bloques": [],
   "innocentes_au_controle_calme": []
 }
