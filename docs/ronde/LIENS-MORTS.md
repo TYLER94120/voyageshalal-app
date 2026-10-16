@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-10-16 04:34 UTC** · 1432 liens controles.
+Releve du **2026-10-16 13:16 UTC** · 1770 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
