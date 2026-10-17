@@ -1,9 +1,16 @@
 {
-  "verifie_le": "2026-10-17 15:37 UTC",
-  "liens_controles": 1443,
+  "verifie_le": "2026-10-17 18:31 UTC",
+  "liens_controles": 1175,
   "pages_vues": 370,
   "pages_connues": 1718,
   "morts": [],
   "bloques": [],
-  "innocentes_au_controle_calme": []
+  "innocentes_au_controle_calme": [
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/destinations/monterrey",
+      "detail": "URLError — aucun code de reponse"
+    }
+  ]
 }

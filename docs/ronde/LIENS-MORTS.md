@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-10-17 15:37 UTC** · 1443 liens controles.
+Releve du **2026-10-17 18:31 UTC** · 1175 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
@@ -21,6 +21,13 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
+
+✅ **1 lien(s) sauve(s) du controle calme.** Ils n'avaient rendu
+aucun code de reponse pendant le balayage — ce qui ne veut pas dire « mort »,
+mais « l'hote ne repond plus a NOTRE robot ». Rejuges un par un, machine calme,
+ils repondent tres bien. Sans cette etape, on serait alle reparer des pages saines.
+
+- `https://www.gohalaltravel.com/destinations/monterrey` *(sur gohalaltravel.com)*
 
 ## Rien a signaler
 
