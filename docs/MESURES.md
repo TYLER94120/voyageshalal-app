@@ -316,9 +316,17 @@ répond pas à cette question-là.
 
 ---
 
-## 9. Deux choses en attente, côté Mohamed
+## 9. En attente, côté Mohamed
+
+> Le titre disait « deux choses » et la liste en comptait quatre. Corrigé le
+> 17 octobre : une liste qui grossit sous un titre qui ne bouge pas finit par
+> faire croire que rien ne s'accumule.
 
 - **Regénérer la clé `GOOGLE_PLACES_KEY`**, exposée. Non fait à ce jour.
+- **Élargir la politique réseau de l'environnement** aux cinq domaines de
+  l'empire. Sans cela l'étape 0 de la ronde reste aveugle : la liste blanche du
+  conteneur ne les laisse sortir ni par le résolveur DNS ni par le proxy (§5).
+  Aucun contournement de mon côté — c'est un réglage, pas une panne.
 - **Renvoyer le sitemap de halalgpt dans Search Console** — l'action de
   récupération la plus rentable après la panne, toujours pas faite.
 - Ajouter une propriété **Domaine** pour `islampasapas.fr` (seulement en préfixe
@@ -329,6 +337,116 @@ répond pas à cette question-là.
 ---
 
 ## 10. Journal des rondes
+
+### 7 – 17 octobre — les fiches de marque fausses, et l'étape 0 aveugle
+
+Deux fils, et le premier touche à la responsabilité que Mohamed a nommée (§8).
+
+**A. Quatre fiches de marque étaient matériellement fausses.**
+
+| Fiche | Ce qu'elle disait, et ce qui est vrai |
+|---|---|
+| `subway-halal` | « En France, Subway ne propose pas de viandes halal : **poulet**, dinde, jambon et bœuf… proviennent de filières classiques. Contrairement à une rumeur récurrente, aucune certification ne couvre les restaurants français. » La foire aux questions de Subway France dit l'inverse sur le point central : **tout le poulet de la gamme est déclaré certifié halal**, France, Belgique, Luxembourg. La fiche nommait le poulet **en premier** parmi les viandes non halal et traitait de rumeur la seule chose qui était vraie. |
+| `isla-delice-halal` | Posait la question de l'étourdissement sans y répondre. |
+| `quick-halal`, `burger-king-halal`, `dominos-pizza-halal` | Réécrites : affirmations périmées sur l'état de l'offre. |
+| `philadelphia-halal` | **N'avait besoin de rien.** Lue, vérifiée, laissée telle quelle. |
+
+Subway est l'erreur la plus coûteuse : elle n'omettait pas une nuance, elle
+**inversait le fait, dans le sens qui ferme une porte ouverte**. Un lecteur qui
+faisait confiance à cette fiche s'interdisait un plat qui lui était permis — et
+on ne répare pas ce qu'il n'a pas mangé.
+
+**La règle qui les a trouvées, et la généralisation que j'ai dû retirer.** Ayant
+trouvé Quick et Burger King fausses, j'avais écrit « deux fiches de marque sur
+deux se sont avérées fausses » et conclu que la catégorie entière était
+pourrie. `philadelphia-halal` a démenti la conclusion. La règle refaite ne juge
+plus le ton d'une fiche mais cherche une **forme** : *toute affirmation non
+bornée sur l'état d'un réseau — « aucune certification ne couvre », « la chaîne
+ne propose pas » — se périme sans prévenir ; la même affirmation bornée à une
+lecture datée ne se périme pas.* Balayage mécanique : **14 formulations dans
+9 fiches, 2 cas genuins**, et dans les deux sens opposés — Isla Délice taisait
+une réserve, Subway inventait un interdit. L'intuition avait laissé Subway
+tranquille : son ton était assuré.
+
+Discipline appliquée aussi à mes propres fiches neuves du 17 octobre : la phrase
+« il n'existe pas d'offre takaful auto en France » a été remplacée avant d'être
+écrite.
+
+**B. L'étape 0 est aveugle — et depuis le 17 octobre elle dit pourquoi.**
+
+Du 10 au 13 octobre, `test-dns.mjs` a annoncé trois nuits de suite les cinq apex
+morts, sur deux hébergeurs différents. La consigne de la ronde dit, pour ce test
+précisément : « si ce test échoue, tu arrêtes tout et tu préviens Mohamed. »
+**Je ne l'ai pas fait**, parce que les témoins — `google.com`,
+`cloudflare.com`, `example.com` — ne résolvaient pas non plus. Les sites
+allaient bien.
+
+Diagnostic du 17 octobre, confirmé par **deux voies indépendantes** :
+
+- **Le résolveur n'est pas en panne, il est filtré.** `github.com`, `pypi.org`
+  et `api.anthropic.com` résolvent en quelques millisecondes depuis cette même
+  machine. « Le DNS est cassé » était encore une description fausse d'une
+  conclusion juste.
+- **Le proxy refuse les cinq domaines au CONNECT**, en 403 :
+  `connect_rejected` — *gateway answered 403 to CONNECT (policy denial or
+  upstream failure)*, pour `halalgpt.fr`, `voyageshalal.fr`, `allelcheck.fr`,
+  `islampasapas.fr` et `halalcheck.fr`.
+
+Conséquence : **l'étape 0 n'est réalisable par aucun moyen depuis ce conteneur**,
+et il n'y a pas de contournement de mon côté. Effet de bord qui compte pour le
+contenu : les **sources primaires ne s'ouvrent pas non plus** — `iifa-aifi.org`
+et `islamweb.net` répondent `ENOTFOUND`. La recherche web fonctionne. D'où la
+règle tenue dans les fiches de cette nuit : les positions sont **attribuées**
+avec leur instance, leur session et leur date, et **rien n'est cité mot pour
+mot** — pas un mot entre guillemets que je n'aie lu dans l'original.
+
+**La faute que j'ai introduite en réparant, et attrapée la même nuit.** La
+première version de la bascule vers le proxy ne connaissait que vivant ou mort.
+La sonde établit qu'**un** hôte est autorisé, pas les cinq : les quatre autres,
+refusés par la politique, étaient comptés morts → « 4 APEX NE RÉPOND PAS. Le
+site est invisible pour Google », code 1, **ALERTE**. C'est-à-dire la faute du
+10 octobre réintroduite par l'outil censé l'empêcher, **trente lignes sous
+l'avertissement qui la décrit**. Trouvée en écrivant les tests d'acceptation,
+pas en relisant le code.
+
+Et une seconde, plus discrète : **les témoins ne marchaient que par chance.**
+Ils échouent uniquement parce qu'aucun des trois ne figure sur la liste blanche.
+Que `google.com` y entre un jour — rien d'extravagant — et le contrôle passe au
+vert pendant que nos cinq domaines restent hors liste : alerte, et quelqu'un
+part réparer une zone intacte. **Un garde qui protège l'échantillon ne protège
+pas la mesure.** La contre-épreuve s'applique désormais par hôte, dans les deux
+modes, et l'instrument connaît trois issues au lieu de deux : code 0, code 1
+(alerte), code 2 (mesure impossible, cause nommée). Les cinq chemins sont
+exercés, pas supposés — dont deux par un faux `curl`, la liste blanche étant
+exacte-hôte et aucun domaine réellement mort n'étant disponible pour jouer le
+vrai positif.
+
+**C. Contenu.** 242 → **244 fiches**. Part alimentaire **52,9 % → 52,5 %** ;
+**23 fiches non alimentaires** restent à écrire pour atteindre les 48 % visés
+(39 au 5 septembre). Le domaine finance / argent passe de 4 à 6 fiches :
+
+- `assurance-auto-obligatoire-halal` — comble une **promesse que le site avait
+  faite sans la tenir** : `assurance-vie-halal` dit depuis des semaines que les
+  assurances obligatoires sont « traitées à part », et aucune page ne les
+  traitait. Droit : L. 211-1 du code des assurances, L. 324-2 du code de la
+  route (un **délit**, 3 750 €, constitué même par négligence). Religion :
+  Académie internationale du fiqh islamique, 2ᵉ session, Djeddah, décembre 1985,
+  résolution n° 9 ; puis le Conseil européen de la fatwa et de la recherche, qui
+  admet le contrat **là où la loi l'impose**, en invitant à s'y limiter. Et la
+  limite que la plupart des pages laissent tomber : ce que la loi exige est la
+  responsabilité civile ; tous risques, vol, bris de glace sont un **choix
+  commercial** que la dérogation ne couvre pas d'elle-même.
+- `livret-a-interets-halal` — traite la question la plus demandée et la plus mal
+  comprise : que faire des intérêts **déjà reçus**. L'avis répandu les fait
+  sortir du patrimoine sans en tirer profit, et **ce n'est pas une aumône** :
+  sans intention de sadaqa, sans attente de récompense. Qui compte cet argent
+  comme son aumône de l'année se trompe deux fois. Et la confusion qui fait le
+  plus de dégâts : **capital et intérêts sont deux décisions** — le capital vient
+  du travail et ne pose pas la question ; aucun de ces avis ne demande de se
+  dépouiller de son épargne.
+
+**Reste rouge** : `test-nourriture`, 128 fiches alimentaires pour un plafond de
+107. Les huit autres tests sont verts, `tsc` propre.
 
 ### 13 septembre – 1er octobre — le cluster « droit français et islam »
 
@@ -414,10 +532,16 @@ aurait laissé passer un titre de 60 qui s'affiche en 71.
 
 ### Ce qui n'avance pas, et qui ne dépend pas de moi
 
-**`origin/main` de halalgpt est gelé à `94b078f` depuis le 15 août — 47 jours.**
-Les 32 fiches, `lib/emphase.ts`, `scripts/test-dns.mjs`, les quatre garde-fous
-et les corrections de hub sont tous sur `claude/reconciliation`. **Rien n'est en
-ligne.** Le sitemap n'a pas été renvoyé dans Search Console.
+**`origin/main` de halalgpt est gelé à `94b078f` depuis le 15 août — 47 jours
+au 1er octobre, 63 au 17 octobre.** Les 32 fiches, `lib/emphase.ts`,
+`scripts/test-dns.mjs`, les quatre garde-fous et les corrections de hub sont
+tous sur `claude/reconciliation`. **Rien n'est en ligne.** Le sitemap n'a pas
+été renvoyé dans Search Console.
+
+> Le compte était écrit « 47 jours » tout court, ce qui vieillit mal : au
+> 17 octobre la phrase était fausse de seize jours. Un nombre qui bouge se
+> borne à sa date — c'est la même règle que celle qui a rattrapé les fiches de
+> marque (entrée du 7–17 octobre).
 
 **Sur la consigne de la ronde de nuit.** Elle désigne toujours MARQUES, CHAÎNES
 et MENTIONS D'ÉTIQUETTE comme gisements ouverts — tout alimentaire, donc tout
@@ -546,11 +670,14 @@ Part alimentaire : 55,4 % → **55,2 %**. Il restait 39 fiches non alimentaires 
 
 Mesuré, pour que la décision ne repose pas sur « il y a du travail dessus ».
 
-| | main | branche |
-|---|---|---|
-| Commit | `94b078f` (15 août) | 27 commits d'avance |
-| Fiches | **207** | **240** (+33) |
-| Diff | — | 13 fichiers, 1102 insertions, 92 suppressions |
+| | main | branche au 3 octobre | branche au 17 octobre |
+|---|---|---|---|
+| Commit | `94b078f` (15 août) | 27 commits d'avance | **50 commits d'avance** |
+| Fiches | **207** | 240 (+33) | **244 (+37)** |
+| Diff | — | 13 fichiers, 1102 insertions, 92 suppressions | 13 fichiers, **1487 insertions**, 114 suppressions |
+
+Mesuré à nouveau le 17 octobre plutôt que réécrit : l'écart lui-même est la
+donnée, et le voir grandir vaut mieux qu'un chiffre toujours frais.
 
 **Quatre fichiers que `main` n'a pas du tout :**
 
