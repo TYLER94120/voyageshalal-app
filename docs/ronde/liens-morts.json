@@ -1,29 +1,16 @@
 {
-  "verifie_le": "2026-10-17 22:21 UTC",
-  "liens_controles": 1629,
-  "pages_vues": 370,
-  "pages_connues": 1718,
-  "morts": [
+  "verifie_le": "2026-10-18 04:37 UTC",
+  "liens_controles": 1510,
+  "pages_vues": 251,
+  "pages_connues": 984,
+  "morts": [],
+  "bloques": [],
+  "innocentes_au_controle_calme": [
     {
       "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://www.halalbooking.com/search?query=Marrakech",
-      "detail": "code 404"
-    },
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://halalbooking.com/en/iberostar-waves-founty-beach-all-inclusive/p/9564",
-      "detail": "code 404"
+      "genre": "interne",
+      "url": "https://gohalaltravel.com/destinations/trabzon",
+      "detail": "URLError — aucun code de reponse"
     }
-  ],
-  "bloques": [
-    {
-      "site": "gohalaltravel.com",
-      "genre": "externe",
-      "url": "https://unsplash.com",
-      "detail": "code 401 — refuse les robots, pas forcement mort"
-    }
-  ],
-  "innocentes_au_controle_calme": []
+  ]
 }
