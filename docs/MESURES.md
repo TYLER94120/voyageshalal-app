@@ -338,6 +338,83 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 18 octobre — « un commentaire n'est pas un garde-fou »
+
+**La même erreur pour la troisième fois, et ce qu'elle apprend.** Le 16
+septembre, le 8 octobre et ce soir, une mesure improvisée du maillage m'a
+annoncé des fiches à 6 ou 7 sauts des onze portes que Google visite, et les
+trois fois j'ai failli ajouter des liens artificiels. Les trois fois le chiffre
+était faux pour la même raison : une requête écrite à la hâte ne suit que le
+champ `related`, alors que **chaque page de fiche porte un fil d'Ariane vers son
+hub de catégorie**, que **chaque hub liste toutes ses fiches**, et que **chaque
+hub pointe vers tous les autres hubs**.
+
+Ce qui rend cette troisième fois instructive plutôt que honteuse : **la leçon
+était déjà écrite**, en commentaire dans l'en-tête de `que-ecrire.mjs`, avec les
+deux premières dates. Je l'ai lue ce soir, puis j'ai écrit la mauvaise requête
+quand même. Ce qui manquait n'était pas l'avertissement de ne pas se tromper,
+c'était **un bon outil à portée de main**. D'où `scripts/distance-exploration.mjs`,
+qui mesure la vraie distance — et qui **vérifie son propre modèle avant de
+mesurer** : il relit les deux gabarits et exige d'y retrouver chaque arête qu'il
+s'autorise à tracer, plus l'absence de troncature de la liste du hub. Les deux
+chemins de péremption sont exercés, pas supposés.
+
+**La vraie mesure, et elle clôt le levier 1 :**
+
+| Distance des portes | Fiches |
+|---|---|
+| 0 saut | 11 |
+| 1 saut | 62 |
+| 2 sauts | 131 |
+| 3 sauts | 40 |
+| au-delà | **aucune** |
+
+**Toutes les fiches sont à 3 sauts ou moins. Le maillage n'est donc pas le frein
+à l'exploration** — ce qui veut dire que le levier 1 est épuisé pour de bon, et
+non plus « probablement épuisé ». Volontairement hors du graphe : « la découverte
+du jour », qui ajoute une arête depuis chaque fiche vers une fiche **qui change
+chaque jour** ; elle raccourcit les distances réelles, mais on ne bâtit pas une
+garantie d'accessibilité sur un lien qui ne sera pas le même demain.
+
+**Le seul vrai défaut trouvé, et il tombe au mauvais endroit.** `ia-halal`
+n'avait **qu'un lien entrant** — la fiche qui dit, depuis un site qui est
+lui-même une IA, qu'une IA ne peut pas donner de fatwa et n'en porte la
+responsabilité devant personne. C'est la clé de voûte éditoriale de la question
+que Mohamed a posée sur sa responsabilité (§8), et c'était la fiche la plus mal
+placée du catalogue. Deux liens ajoutés sur un critère d'honnêteté : depuis
+`certifications-halal-france` — **une des onze portes** — parce que cette fiche
+demande *qui peut certifier* là où `ia-halal` demande *qui peut répondre* ; et
+depuis `priere-istikhara`, la prière qu'on fait pour être guidé dans une
+décision, vers la fiche qui dit de ne pas demander à une machine de décider.
+
+**Un trou qu'aucune fiche ne couvrait.** Mesure : sur 244 fiches, les mots
+*voile*, *foulard* et *hijab* n'apparaissaient dans **aucun titre**. Ni au
+travail, ni à l'école, nulle part — sur un site halal français, pour l'une des
+questions de pratique les plus cherchées du pays. D'où `voile-travail-france`,
+la page la plus sensible du site, donc la plus bornée : **elle dit en première
+ligne ce qu'elle ne traite pas** (ce que la religion demande de la tenue, qui se
+pose à un savant), et traite l'étage du droit, qui se vérifie. Quatre citations
+vérifiées avant d'être écrites — L. 1321-2-1 du code du travail, Baby Loup
+(Cass. ass. plén., 25 juin 2014), **Bougnaoui** (CJUE, 14 mars 2017, C-188/15 :
+le souhait d'un client est une considération *subjective*, pas une exigence
+professionnelle essentielle et déterminante) et l'**avis Marteaux** (Conseil
+d'État, 3 mai 2000 : dans le public, l'interdiction vaut quelles que soient les
+fonctions). **Deux numéros volontairement non cités** faute de pouvoir les
+vérifier exactement : les sources divergent sur le numéro de la loi du 20 avril
+2016, et je n'ai pas de numéro d'arrêt pour la lecture étroite que la Cour de
+cassation fait de la clause de neutralité. Un numéro approximatif ne vaut rien.
+
+**Un piège d'outillage, à garder.** La commande de vérification que donne la
+consigne de la ronde — `curl -s http://127.0.0.1:3330/q/le-slug` — **ne renvoie
+rien dans ce conteneur** : curl passe par le proxy même pour une adresse locale.
+Il faut `--noproxy '*'`. Sans cela, **une requête bloquée ressemble exactement à
+une page cassée** : c'est la même famille d'erreur que l'étape 0 du 10 octobre.
+
+**Compte** : 245 fiches, part alimentaire **52,2 %**, **22 fiches non
+alimentaires** restantes pour 48 %. `travail / droit` passe de 4 à 5. Étape 0 :
+code 2, sixième nuit aveugle. `main` toujours à `94b078f`, 207 fiches,
+**53 commits de retard**.
+
 ### 7 – 17 octobre — les fiches de marque fausses, et l'étape 0 aveugle
 
 Deux fils, et le premier touche à la responsabilité que Mohamed a nommée (§8).
