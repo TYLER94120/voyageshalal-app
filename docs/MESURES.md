@@ -338,6 +338,71 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 19 octobre — la mesure qui a rattrapé mon propre texte
+
+**`voile-ecole-france`**, l'autre moitié du trou mesuré la veille. L'école relève
+d'un droit entièrement différent du travail — autre loi, autres acteurs, autre
+champ — et un parent qui cherche pour son enfant ne tirait rien de la fiche
+travail. Ce que la page apporte et qu'aucune autre n'apporte : **« l'école »
+n'est pas un seul lieu en droit.** Élève du public, étudiant à l'université,
+personnel, parent accompagnateur relèvent de **quatre régimes**, et les
+discussions sur le sujet les mélangent — ce qui fait croire à des interdictions
+qui n'existent pas, et à des libertés qui n'existent pas non plus. Citations
+vérifiées avant d'être écrites : loi du 15 mars 2004 / article L. 141-5-1 du code
+de l'éducation (cité mot pour mot, le texte étant reproduit au Bulletin
+officiel), circulaire du 18 mai 2004, note de service d'août 2023 sur l'abaya
+validée par le Conseil d'État, et le *Guide de la laïcité à l'université* de
+France Universités (2023) pour le point le plus mal connu : **la loi de 2004 ne
+vise pas les usagers du supérieur.**
+
+**Le troisième état, appliqué à un trou dans mon propre savoir.** Le régime des
+établissements **privés** — sous contrat ou non — n'a pas pu être établi. La
+fiche le dit : elle ne le tranche pas, rappelle que le texte de 2004 nomme les
+établissements *publics*, et renvoie au règlement de l'établissement. *Non
+vérifié* n'est pas *écarté*, et un vide marqué vaut mieux qu'un vide comblé.
+
+**Et la mesure qui compte, parce qu'elle a attrapé MON texte, avant le commit.**
+J'ai interrogé la recherche interne du site sur les mots qu'un lecteur tape :
+
+| Saisie | Avant | Après |
+|---|---|---|
+| `voile` | les deux fiches | les deux fiches |
+| `foulard` | **travail seulement** | les deux |
+| `hijab` | **RIEN** | école |
+| `khimar` | **RIEN** | école |
+| `abaya` | école | école |
+
+J'avais écrit « voile » partout et **aucun des autres noms**, alors que *hijab*
+est l'un des mots les plus tapés du sujet. Réparé non par bourrage de
+mots-clés mais par l'endroit où le droit le dit lui-même : la circulaire vise le
+voile « quel que soit le nom qu'on lui donne », ce qui répond à une vraie
+question du lecteur — *le nom change-t-il quelque chose ?* Non, et c'est utile de
+l'écrire.
+
+**Ce que je n'ai PAS fait de cette leçon, et c'est un choix.** La tentation était
+d'en faire un garde-fou : une liste de synonymes que `test-recherche` vérifierait.
+Je m'en abstiens. Le 5 septembre, deux fixtures codant en dur « ce mot n'existe
+pas encore » sont devenues fausses parce que le contenu avait avancé — et une
+liste de synonymes écrite à la main est exactement cette forme-là. La leçon du
+18 octobre (« un commentaire n'est pas un garde-fou ») ne se renverse pas en
+« tout doit être un garde-fou » : **un outil se justifie quand il mesure quelque
+chose de dérivable des données, pas quand il figerait un jugement éditorial.**
+Ici la connaissance des synonymes est irréductiblement éditoriale. Ce qui
+l'attrape, c'est l'habitude — interroger la recherche interne sur les mots du
+lecteur avant de commiter une fiche neuve — et c'est à ce titre qu'elle est
+écrite ici.
+
+**Vérifié aussi, et évité de justesse** : le rapatriement du corps semblait un
+beau trou dans `mort / héritage` (5 fiches). `enterrement-musulman-france` le
+traite déjà. Lu avant d'écrire, donc pas de doublon — c'est le critère du
+levier 3 : une fiche neuve doit apprendre ce qu'aucune autre n'apprend.
+
+**Compte** : 246 fiches, part alimentaire **52,0 %**, **21 fiches non
+alimentaires** restantes pour 48 %. Levier 1 revérifié, inchangé : toutes les
+fiches à 3 sauts ou moins, médiane 4 liens entrants, aucune impasse. Étape 0 :
+code 2, **septième nuit aveugle**. `main` toujours à `94b078f`, 207 fiches,
+**55 commits de retard**.
+
 ### 18 octobre — « un commentaire n'est pas un garde-fou »
 
 **La même erreur pour la troisième fois, et ce qu'elle apprend.** Le 16
