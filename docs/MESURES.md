@@ -338,6 +338,90 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 20 octobre — quatre erreurs dans une seule réparation
+
+**Aucune fiche neuve, et c'est un cycle réussi** — la consigne le dit, et cette
+nuit le bon travail était ailleurs : un défaut de **correction** dans la
+recherche interne du site.
+
+**Ce que la mesure a trouvé.** En sondant chaque fiche par son mot le plus
+distinctif, deux saisies sont ressorties : `mms` ne ramenait **rien**, et `m&m`
+ramenait trois fiches de restaurants. En creusant :
+
+| Saisie | Avant |
+|---|---|
+| `m` | **243 fiches sur 246**, `restaurant-halal-lyon` en tête |
+| `a` | 246 sur 246 |
+| `m&m` | 243, la ponctuation en faisant deux termes `m` |
+
+Quelqu'un qui cherchait les M&M's recevait **le catalogue entier, présenté comme
+une réponse**. Et c'est le genre de défaut qui ne se signale pas : *un résultat
+faux coûte plus cher qu'une absence de résultat.*
+
+**Cause** : une asymétrie. `motsDistinctifs` n'indexe pas les mots de moins de
+trois caractères ; la saisie les gardait. Un terme d'une lettre n'est jamais
+absent d'un titre, donc toujours « présent », donc il ramenait tout. **Aligner
+les deux** est la réparation principielle, pas un seuil choisi au hasard.
+
+**Second défaut, même mesure** : « M&M's » devenait `m m s` à l'indexation —
+trois jetons trop courts, donc trois jetons jetés. La marque n'était indexée
+sous **aucune** forme. Famille entière, pas cas isolé : `cocacola` tapé sans
+trait d'union, `haagendazs`. Les noms à ponctuation interne sont désormais aussi
+indexés recollés, au **poids du titre** quand c'en est un.
+
+**QUATRE FOIS OÙ JE ME SUIS TROMPÉ EN RÉPARANT** — et c'est le vrai contenu de
+cette nuit. Chaque fois, la prise est venue d'une **exécution**, jamais d'une
+relecture.
+
+1. `recolle` lisait la sortie d'`aplati`, où « M&M's » est déjà devenu `m&m s` —
+   l'apostrophe ayant été remplacée par un espace en amont. Elle ne pouvait
+   recoller que `mm`, jamais `mms` : **le défaut survivait à sa propre
+   réparation.**
+2. Mon garde-fou exigeait qu'aucun début de mot de trois lettres ne ramène plus
+   de la moitié du catalogue. Il a signalé `con` : 220 fiches. **Vérification
+   avant correction** — pour `con`, les cinq fiches dont le *titre* porte le mot
+   sortent en tête, et `hal` ramène 174 fiches dont **173 par le titre** : c'est
+   le sujet du site. Le parti pris du moteur est de **classer, pas d'exclure**,
+   et il est écrit dans `recherche.ts`. Mon assertion contredisait la conception
+   et aurait obligé à casser la recherche pendant la frappe. Remplacée par
+   l'invariant qui est vrai : le titre passe avant le corps.
+3. `recolle` collait surtout de la **grammaire** : « est-il » → `estil`,
+   « peut-on » → `peuton`, pour 200 des 246 fiches. Mon garde-fou « passait »
+   dans un mur de **208 entrées de bruit** : il ne vérifiait plus rien. Le
+   défaut visible était le bruit ; **le défaut réel était que la mesure ne
+   mesurait plus.** Corrigé par une liste close et grammaticale d'enclitiques
+   du français — qui ne vieillit pas comme vieillirait une liste de marques. Le
+   garde compte maintenant **9 vrais noms**.
+4. J'avais exigé que `quil` ne ramène rien. Il ramène `maquillage-ramadan`,
+   parce que `quil` est à l'intérieur de « maquillage » et que la recherche au
+   milieu des mots du titre est voulue et documentée. **Mon attente était
+   fausse, pas le moteur.** La contrepartie se mesure donc dans l'index — aucune
+   contraction à apostrophe ne doit fabriquer de jeton — et non dans les
+   résultats.
+
+C'est la forme la plus forte de la leçon du 18 octobre. « Un commentaire n'est
+pas un garde-fou » se prolonge en : **ce qui attrape une erreur, c'est de faire
+tourner quelque chose.** Quatre fois sur quatre, la relecture m'aurait laissé
+passer.
+
+**Un compromis chiffré plutôt que tu.** `m&m` seul ne ramène toujours rien :
+recollé, il ne porte que deux lettres. Autoriser deux lettres recollées ferait
+toucher **243 fiches sur 246** à `co` et 239 à `pr` — le défaut qu'on vient de
+réparer. Un caractère de plus suffit (`m&ms`, `m&m's`, `m&m s` trouvent la
+fiche). Le seuil s'applique à l'information tapée, pas aux miettes.
+
+Les trois gardes ajoutés sont **dérivés des données** — 309 saisies courtes et
+1352 débuts de mot fabriqués depuis le catalogue, 9 noms extraits des titres.
+Rien à périmer, et une marque ajoutée demain est couverte sans toucher au test :
+c'est exactement la distinction posée la veille entre ce qui mérite un outil et
+ce qui figerait un jugement éditorial.
+
+**Compte** : 246 fiches, inchangé. Index de recherche 183 ko contre 180, plafond
+220. `dates-fiches.mjs` n'a rien redaté — correct, aucun contenu de fiche n'a
+bougé, ce qui confirme au passage qu'il mesure le contenu et non les commits.
+Étape 0 : code 2, **huitième nuit aveugle**. `main` toujours à `94b078f`,
+207 fiches, **56 commits de retard**.
+
 ### 19 octobre — la mesure qui a rattrapé mon propre texte
 
 **`voile-ecole-france`**, l'autre moitié du trou mesuré la veille. L'école relève
