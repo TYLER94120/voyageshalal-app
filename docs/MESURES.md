@@ -338,6 +338,56 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 21 octobre — une fiche qui dit ce qu'elle n'a pas pu établir
+
+**`mahr-dot-mariage-islam`**, dans `famille / mariage` — l'un des deux domaines
+les plus minces (4 fiches). Vérifié d'abord ce qui existait, réflexe qui m'a
+évité un doublon l'avant-veille : le mahr n'apparaissait que dans le **corps** de
+`mariage-religieux-civil-france`, cité deux fois comme argument et **jamais
+expliqué** — ni ce qu'il est, ni à qui il revient, ni combien, ni s'il est
+exigible.
+
+**Ce que la fiche apprend, par ordre d'utilité.** D'abord la correction qui la
+justifie : **le mahr n'est pas un prix payé au père de la mariée.** C'est la
+confusion la plus répandue sur le sujet et elle fait du tort à des familles
+entières ; les juristes s'accordent à y voir un droit de **l'épouse elle-même**.
+Ensuite l'échéance, qui crée les vrais problèmes des années plus tard : un mahr
+**différé est une dette**, et une dette dont personne n'a gardé trace est une
+dette que personne ne peut prouver — au moment où on la réclame, celui qui
+devait n'est parfois plus là.
+
+**La nuance que la vérification m'a imposée, et que j'ai écrite au lieu de la
+lisser.** Le Coran ordonne en **4:4** de remettre aux épouses leur dot. Mais le
+verset **s'adresse aux maris** : il ne dit pas en toutes lettres « la dot lui
+appartient ». Ce qui l'implique est la suite du même verset — *si elles vous en
+abandonnent quelque chose de bon gré* — puisqu'on ne remet volontairement que ce
+qui est à soi. La conclusion est donc une **lecture**, partagée par les
+juristes, et non la lettre du texte. C'est précisément la différence entre
+transmettre et prononcer (§8), et elle se joue sur une phrase.
+
+**Et ce que la fiche dit ne pas savoir.** Deux recherches n'ont ramené **aucune
+décision française que j'aie pu lire** sur l'exigibilité d'un mahr devant un
+juge. Ce qui circule est du commentaire de cabinets, dont plusieurs affirment au
+contraire que le juge civil ne traite pas la question. La fiche l'écrit en
+clair — *« ne compte pas là-dessus comme si c'était acquis »* — et renvoie au
+notaire, qui est la bonne personne quelle que soit la réponse. **Non vérifié
+n'est pas écarté**, et le marquer vaut mieux qu'une réponse assurée et fausse
+sur une dette de mariage. Même traitement pour le **minimum** : les écoles
+divergent, la divergence est nommée, rien n'est tranché.
+
+**Maillage** : 3 liens entrants. Celui depuis `mariage-religieux-civil-france`
+prend la place de `credit-immobilier-halal` — un lien vers une fiche de crédit
+immobilier depuis une fiche sur la validité du mariage était le plus faible des
+huit, et la fiche nomme le mahr deux fois dans son corps. Le remplacement est un
+gain éditorial, pas un arbitrage de quota.
+
+**L'habitude du 19 octobre tient** : avant commit, `mahr`, `dot`, `dot mariage`,
+`dot islam` et `combien de dot` ramènent toutes la fiche en premier.
+
+**Compte** : 247 fiches, part alimentaire **51,8 %**, **20 fiches non
+alimentaires** restantes pour 48 %. Étape 0 : code 2, **neuvième nuit aveugle**.
+`main` toujours à `94b078f`, 207 fiches, **58 commits de retard**.
+
 ### 20 octobre — quatre erreurs dans une seule réparation
 
 **Aucune fiche neuve, et c'est un cycle réussi** — la consigne le dit, et cette
