@@ -338,6 +338,70 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 22 octobre — la règle de Mohamed n'avait aucun garde-fou
+
+Pas de fiche neuve. Cette nuit porte sur **§8**, la règle que Mohamed a nommée
+lui-même : « ✅ Permis » = le site prononce ; « ✅ Permis selon les quatre
+écoles » = le site transmet. Il est l'éditeur, et c'est en son nom que le site
+parle de religion.
+
+**Premier constat : aucun garde-fou ne couvrait cette règle.** `test-voix` porte
+sur la synthèse vocale, pas sur les verdicts. Dix tests, et le plus important
+pour sa responsabilité n'existait pas.
+
+**Mesure, puis lecture — et la lecture a divisé le chiffre par dix.** Un
+balayage des 247 verdicts a signalé **59 cas** « jugement religieux sans marque
+d'attribution ». En les lisant un par un, la plupart sont des artefacts de mon
+propre regex :
+
+| Signalés à tort | Pourquoi |
+|---|---|
+| 12 fiches de voyage | « ✦ 8.9 — Très bon halal » est une **note du site sur l'infrastructure**, pas une fatwa |
+| `voile-ecole-france`, `assurance-auto` | « interdit », « permis » y désignent la **loi française**, ce que les fiches disent explicitement |
+| ~20 additifs et marques | « ✅ Halal » sur la gomme xanthane, « ❌ Lardons de porc interdits » sont des **constats de composition** — et le porc est le seul point qui n'a besoin d'aucune attribution |
+| plusieurs fiches de prière | elles **attribuaient très bien**, mon regex ne reconnaissait pas leurs marques : « le hadith est explicite (Boukhari) », « l'ordre coranique est explicite (62:9) », « Sunna recommandée » |
+
+**Troisième fois ce mois-ci** qu'une de mes mesures improvisées surévalue d'un
+ordre de grandeur (16 septembre, 8 octobre, 18 octobre pour le maillage ; 20
+octobre pour les marques à ponctuation). La leçon se précise : **ces balayages
+servent à désigner des candidats, jamais à compter.**
+
+**Quatre cas genuins, et le critère qui les distingue.** La règle mord là où le
+verdict gouverne une **conduite**, pas une composition. Un verdict de composition
+est un constat que la fiche justifie ; un verdict de conduite est un **jugement**,
+et un jugement s'attribue.
+
+| Fiche | Avant | Après |
+|---|---|---|
+| `priere-voiture` **(porte)** | ⚠️ Surérogatoire oui — obligatoire seulement si l'on ne peut pas s'arrêter | ⚠️ **La majorité :** surérogatoire oui, obligatoire non |
+| `medicaments-gelules-halal` **(porte)** | ⚠️ Permis en cas de nécessité | ⚠️ Permis par nécessité — **la règle de la darura** |
+| `porter-or-homme-islam` | ❌ Non pour l'or et la soie — permis pour les femmes | ❌ Or et soie : non pour l'homme **selon les 4 écoles** |
+| `jeux-video-halal` | ⚠️ Permis en soi — c'est le contenu et le temps qui posent question | ⚠️ Licite en soi **selon la majorité** — le temps décide |
+
+**Rien n'est inventé** : dans les quatre cas le **corps attribuait déjà
+correctement** — « la distinction que font les savants », « unanime entre les
+quatre écoles », « les savants contemporains considèrent très majoritairement »,
+« règle de la darura ». Le manque était dans **la seule ligne que Google affiche
+et qu'un lecteur pressé lit seule**. Les verdicts ne font que remonter
+l'attribution de leur propre fiche. Et **deux des quatre sont des portes que
+Google visite déjà** : ce sont les lignes les plus vues du site.
+
+Gain de surcroît : **`darura` devient cherchable**, donc un lecteur qui a entendu
+le terme trouve la fiche. Vérifié aussi que `priere voiture`, `jeux video` et
+`gelules` ramènent toujours la bonne fiche en premier — un verdict alimente la
+zone « étiquette » de l'index de recherche.
+
+**Pas de garde-fou ajouté, et c'est raisonné.** Un garde par regex produirait dix
+faux positifs pour un vrai, et le 20 octobre j'ai appris qu'un garde noyé dans
+son bruit **cesse de mesurer**. Le critère qui compte — *ce jugement est-il
+contesté entre savants ?* — n'est pas dérivable d'une chaîne de caractères.
+Troisième refus d'automatiser ce mois-ci, et le plus net : ce qui sépare une
+conduite d'une composition est éditorial.
+
+**Compte** : 247 fiches, inchangé. Étape 0 : code 2, **dixième nuit aveugle**.
+`main` toujours à `94b078f`, 207 fiches, **60 commits de retard**, et **68 jours**
+depuis le 15 août.
+
 ### 21 octobre — une fiche qui dit ce qu'elle n'a pas pu établir
 
 **`mahr-dot-mariage-islam`**, dans `famille / mariage` — l'un des deux domaines
