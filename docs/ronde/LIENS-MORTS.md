@@ -1,8 +1,8 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-10-23 04:53 UTC** · 1234 liens controles.
+Releve du **2026-10-23 13:28 UTC** · 1190 liens controles.
 
-⚠️ **Ce tour a regarde 251 pages sur 984 — environ 26 %.**
+⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
 Le nombre ci-dessous vaut pour CETTE TRANCHE, pas pour le site entier.
 Un releve a 4 puis un a 42 ne veut pas dire que 38 liens ont casse dans
@@ -15,34 +15,13 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 | | Combien | Qui repare |
 |---|---|---|
 | 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
-| 🟠 liens externes morts | 11 | nous, en retirant le lien |
+| 🟠 liens externes morts | 0 | nous, en retirant le lien |
 | ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## 🟠 Liens externes morts — 11
+## Rien a signaler
 
-- `https://halalbooking.com/en/iberostar-waves-founty-beach-all-inclusive/p/9564` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Antananarivo` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Abuja` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Dar%20es%20Salaam` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Douala` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Kampala` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Kigali` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Kinshasa` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Maputo` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Port-Louis` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Marrakech` — code 404  
-  *(sur voyageshalal.fr)*
+Tous les liens controles menent quelque part.
