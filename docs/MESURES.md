@@ -338,6 +338,27 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 23 octobre — la vérification qu'on fait avant d'appuyer
+
+Pas de fiche neuve. Onze nuits à signaler les commits en attente, et jamais
+vérifié si la promotion **tient**. Audit complet en **§11** : risque de
+déploiement faible et mesuré (aucun fichier de configuration dans le diff,
+aucune dépendance ni variable d'environnement nouvelle, clés vérifiées à
+l'exécution et non au build), **un défaut vérifiable sur le site en ligne**
+(trois pages affichent des astérisques littérales, et les envoient à Google dans
+leurs données structurées), et la leçon qui renverse l'intuition : **le contenu
+et son moteur de rendu voyagent ensemble** — 26 fiches liraient « astérisque
+astérisque » à voix haute si `questions.ts` partait sans `emphase.ts`.
+
+Garde ajouté sur la ligne la plus publique du site : aucun marqueur de gras dans
+`question`, `short` ou `verdict`, puisque seul `answer` passe par le rendu. Zéro
+aujourd'hui des deux côtés — mais on est passé de 2 passages en gras à 265, et
+**rien ne protégeait l'invariant**. Un garde posé avant la première faute, pour
+une fois.
+
+**Compte** : 247 fiches, inchangé. Étape 0 : code 2, **onzième nuit aveugle**.
+`main` toujours à `94b078f`, **61 commits de retard**, **69 jours**.
+
 ### 22 octobre — la règle de Mohamed n'avait aucun garde-fou
 
 Pas de fiche neuve. Cette nuit porte sur **§8**, la règle que Mohamed a nommée
@@ -1005,6 +1026,56 @@ Part alimentaire : 55,4 % → **55,2 %**. Il restait 39 fiches non alimentaires 
 ---
 
 ## 11. Branches en attente de promotion par Mohamed
+
+### Audit du 23 octobre — est-ce que la promotion tient ?
+
+Onze nuits que je signale les commits en attente **sans avoir jamais vérifié la
+seule chose qui compte avant d'appuyer.** Un échec de build après 69 jours
+d'attente serait le pire moment pour le découvrir.
+
+**Risque de déploiement : faible, et c'est mesuré.**
+
+| Vérification | Résultat |
+|---|---|
+| Fichiers de configuration dans le diff | **aucun** — ni `package.json`, ni `vercel.json`, ni `next.config` |
+| Dépendance nouvelle | **aucune** — `lib/emphase.ts` est local |
+| Variable d'environnement nouvelle | **aucune** ; les 3 lectures au niveau module ont toutes un défaut (`\|\|`, `??`) |
+| Clés d'API | vérifiées **dans** les gestionnaires de requête → à l'exécution, pas au build |
+| Répartition des 15 fichiers | 8 scripts (ne partent pas en production), 2 de contenu, 4 de bibliothèque/page, 1 route API |
+
+Les quatre changements de production sont **additifs et défensifs** :
+`sansEmphase` sur la sortie du chat et sur le JSON-LD, `enMorceaux` pour rendre
+le gras dans le corps, et `CATEGORY_TITLES[cat] ?? le gabarit précédent` — un
+repli, pas un remplacement.
+
+**Un défaut vérifiable sur le site actuellement en ligne.** `main` porte des
+marqueurs `**` dans **trois** fiches — `riba-interet-islam`,
+`sport-combat-halal`, `ia-halal` — et sa page de fiche rend les paragraphes tels
+quels (`<p>{paragraph}</p>`). Donc en ce moment, un visiteur voit des astérisques
+autour de la phrase la plus importante de `ia-halal` : *« \*\*une IA t'aide à
+savoir quoi demander, pas à savoir quoi faire.\*\* »* Et le JSON-LD de `main`,
+bâti sur `short + answer.join`, les envoie à Google. **Vérifié plutôt que
+supposé** : le mode conduite n'est **pas** touché — il lit `answer[0]`, et les
+trois marqueurs sont aux paragraphes 1, 2 et 4.
+
+**Et le chiffre qui renverse ma première intuition.** Sur la branche : **32
+fiches et 265 passages en gras**, dont **26 dans le premier paragraphe**. La
+leçon n'est donc pas « promouvoir vite pour corriger trois pages », mais : **le
+contenu et son moteur de rendu voyagent ensemble.** Promouvoir `lib/questions.ts`
+sans `lib/emphase.ts` ferait lire « astérisque astérisque » à voix haute sur
+26 fiches en mode conduite. Ils sont sur la même branche, donc une promotion
+normale est sûre — **un cherry-pick ne le serait pas.**
+
+**Garde ajouté, sur la ligne la plus publique du site.** `emphase.ts` ne
+s'applique qu'à `answer` ; `question` part dans le `<title>` et le `<h1>`,
+`short` dans la **méta description**, `verdict` sur sa propre ligne — tous trois
+tels quels. Deux astérisques égarées dans un `short` s'afficheraient donc
+**littéralement dans les résultats Google**. Mesure : zéro marqueur dans ces
+trois champs, des deux côtés — l'invariant tient déjà, mais **rien ne le
+protégeait**, alors qu'on est passé de 2 passages en gras à 265. Un garde posé
+*avant* la première faute est exactement ce qu'on n'a pas eu pour le DNS en
+août. Dérivé des données, et les deux chemins exercés.
+
 
 ### Relevé du 3 octobre — ce que `claude/reconciliation` contient exactement
 
