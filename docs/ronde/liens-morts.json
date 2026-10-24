@@ -1,12 +1,55 @@
 {
-  "verifie_le": "2026-10-24 18:48 UTC",
-  "liens_controles": 1410,
+  "verifie_le": "2026-10-24 22:29 UTC",
+  "liens_controles": 1197,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [],
-  "bloques": [
+  "morts": [
     {
       "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Cordoue",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bursa",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Chefchaouen",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Cappadoce",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Casablanca",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Chicago",
+      "detail": "code 404"
+    },
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://world.openbeautyfacts.org",
+      "detail": "code 500"
+    }
+  ],
+  "bloques": [
+    {
+      "site": "voyageshalal.fr",
       "genre": "externe",
       "url": "https://unsplash.com",
       "detail": "code 401 — refuse les robots, pas forcement mort"
