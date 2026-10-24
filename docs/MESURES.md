@@ -338,6 +338,65 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 24 octobre — un audit qui revient propre, et une erreur en sens inverse
+
+**L'audit du `short`**, suite de celui des verdicts. Le `short` **est** la méta
+description : l'autre ligne que Google affiche, et elle n'avait jamais été passée
+sous la règle du §8. **9 fiches signalées, une seule à corriger.**
+
+La plupart des signalements sont des règles ancrées dans un texte explicite —
+« manger par oubli n'annule pas le jeûne », le tayammum, le lapin que *« le
+Prophète ﷺ en a accepté »* (une attribution que mon regex ne reconnaissait pas).
+**Les hedger les rendrait moins honnêtes, pas plus** : suggérer un doute là où il
+n'y en a pas est aussi une faute. La règle existe pour que le site ne délivre pas
+de fatwa, pas pour rendre chaque phrase timide.
+
+Le vrai critère, celui qui a trié : **le résumé promet-il plus de certitude que
+son propre corps ?** Un seul cas — `deuil-idda-veuve` affirmait « sortir par
+nécessité sont permis » alors que son corps dit « la majorité des savants
+distingue » et « les règles varient selon les écoles ».
+
+**Une erreur de mesure, et pour la première fois en sens inverse.** J'ai sondé la
+couverture avec des requêtes de deux mots — « incineration cremation »,
+« circoncision en France » — et **tout** répondait « aucune ». Faux : le moteur
+exige **tous** les mots, donc une requête longue renvoie vide même sur un sujet
+couvert. Je le savais, `barbe` étant une requête qui marche. **Quatrième fois ce
+mois-ci** qu'une mesure improvisée me trompe, et la première où elle **inventait
+une absence** au lieu d'une présence : *la direction de l'erreur suit la forme de
+la question.* Refait avec des mots simples — `circoncision`, `halloween`,
+`horoscope`, `apostasie`, `transfusion`, `épilation`, `chômage` absents ;
+`crémation`, `cimetière`, `allaitement` de simples mentions.
+
+**`circoncision-islam-france`**, sur un sujet dont le site ne disait **rien**.
+Ce qu'elle apprend : pourquoi un parent entend deux réponses opposées sans que
+personne ne se trompe — chaféites et hanbalites tiennent le *khitan* pour une
+obligation, hanafites et malikites pour une *sunna mu'akkada* ; **aucune ne dit
+de ne pas le faire**, le désaccord porte sur le poids. Aucune école ne fixe
+d'âge, et le septième jour lui-même divise : c'est un usage, pas une règle
+opposable. Et le fait pratique que personne ne dit avant : **la circoncision
+rituelle n'est pas remboursée**, ni par l'Assurance Maladie ni par une mutuelle,
+qui ne complète que ce que la Sécu prend.
+
+**Aucun montant, et la fiche dit pourquoi** : les tarifs en ligne viennent de
+comparateurs commerciaux qui se recopient, et un prix bouge — elle demande un
+devis écrit à la place. **Statut juridique marqué *non vérifié*** : l'acte rituel
+repose en pratique sur une tolérance plutôt que sur un texte qui le nomme.
+
+**Et ce que le site ne laisse pas implicite** : la fiche parle des garçons. Toute
+excision est un **crime** en droit français, poursuivi comme une mutilation, et
+rien sur la page ne lui offre le moindre couvert religieux. Une source consultée
+rangeait les filles dans un tableau d'écoles — ne rien dire aurait laissé ce
+silence travailler.
+
+**L'habitude du 19 octobre paye une deuxième fois.** Avant commit, `khitan` et
+`remboursement` ne ramenaient **rien** : le nom arabe n'était écrit nulle part,
+et l'index ne portait que « remboursée » — taper *plus* que le mot indexé échoue,
+limitation déjà notée le 20 octobre. Réparé par le sens, pas par du bourrage.
+
+**Compte** : 248 fiches, part alimentaire **51,6 %**, **19 restantes** pour 48 %.
+Étape 0 : code 2, **douzième nuit aveugle**. `main` toujours à `94b078f`,
+**63 commits de retard**, **70 jours**.
+
 ### 23 octobre — la vérification qu'on fait avant d'appuyer
 
 Pas de fiche neuve. Onze nuits à signaler les commits en attente, et jamais
