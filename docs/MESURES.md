@@ -338,6 +338,62 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 25 octobre — une prémisse fausse qui coûte de l'argent
+
+**`allocation-chomage-halal`**, choisie parmi les trous mesurés la veille sur un
+critère précis : **celui dont une mauvaise réponse coûte le plus cher au
+lecteur.** Croire à tort que c'est interdit, c'est renoncer à un revenu auquel on
+a droit et que son propre travail a financé — **la même forme que l'erreur
+Subway : un « non » qui ferme une porte ouverte.** Le sujet était absent :
+`chomage`, `allocation`, `cotisation`, `indemnite` ne ramenaient rien.
+
+**Ce que la fiche apprend est d'abord un fait, pas un avis.** La prémisse que la
+plupart des gens ont fausse : **ce n'est pas de la charité.** L'ARE est une
+**assurance**, financée par des cotisations patronales assises sur les salaires
+et par la CSG, versée à qui a travaillé une durée minimale. La ligne du salarié a
+disparu de la fiche de paie le **1er octobre 2018**, remplacée par une hausse de
+**1,7 point de CSG** — mais le droit est resté **adossé au travail**. À la
+question « est-ce une aumône ? », il y a donc une réponse factuelle, et c'est
+non.
+
+**Aucun taux cité, pour une raison vérifiée** : les sources divergent entre
+4,00 % et 4,05 % pour la cotisation patronale, et un taux bouge. Le mécanisme
+suffit ; le chiffre n'ajoute rien et se périmerait.
+
+**Ce que la fiche ne tranche pas.** La licéité de ces allocations est un **point
+de divergence entre savants** — une source le dit explicitement — et aucune
+instance ne la règle de manière citable. La fiche la **nomme** comme divergence
+au lieu de la résoudre : elle ne dit ni « c'est permis » ni « c'est douteux ».
+
+**Ce qu'elle affirme**, parce que tous les avis consultés s'y rejoignent, y
+compris les plus stricts : **la fraude est écartée.** Percevoir ce à quoi on a
+droit est une chose, l'obtenir par mensonge en est une autre ; le principe
+invoqué est le respect des engagements pris, **y compris envers un État non
+musulman**. Avec les pièges concrets : travail non déclaré, changement de
+situation non signalé, et le départ à l'étranger quand la résidence est une
+condition.
+
+**Et le revers, qui compte autant** : le droit ne se réclame pas tout seul, et
+celui qui s'en prive par scrupule se prive d'une somme que son travail a
+financée — le scrupule portant sur une question que les savants n'ont pas
+tranchée, non sur un interdit établi. **Un doute se nomme ; il ne devient pas une
+interdiction par prudence.**
+
+Deux sources écartées d'emblée : les pages polémiques qui abordent le sujet par
+la fraude au djihadisme n'ont rien à dire sur la règle et n'ont pas été lues
+comme doctrine.
+
+**L'habitude du 19 octobre attrape quelque chose pour la troisième fiche de
+suite** — `pôle emploi` ne ramenait rien. L'organisme n'a été renommé France
+Travail qu'en 2024 et tout le monde tapera l'ancien nom des années encore : la
+fiche le dit maintenant. `assedic` reste muet, et c'est assumé — de
+l'archéologie administrative, pas un mot de lecteur. **Trois fiches, trois
+manques :** ce contrôle avant commit n'est plus un luxe, c'est une étape.
+
+**Compte** : 249 fiches, part alimentaire **51,4 %**, **18 restantes** pour 48 %.
+Étape 0 : code 2, **treizième nuit aveugle**. `main` toujours à `94b078f`,
+**65 commits de retard**, **71 jours**.
+
 ### 24 octobre — un audit qui revient propre, et une erreur en sens inverse
 
 **L'audit du `short`**, suite de celui des verdicts. Le `short` **est** la méta
