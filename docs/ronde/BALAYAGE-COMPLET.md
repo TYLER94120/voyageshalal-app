@@ -1,11 +1,11 @@
 # Balayage complet
 
-**Dernier changement constate le 2026-10-25 05:11 UTC.**
+**Dernier changement constate le 2026-10-25 07:49 UTC.**
 
 **2061 pages regardees — le site entier.** Les chiffres ci-dessous
 valent donc pour tout ce que Google peut voir.
 
-Balayage commence le 2026-10-25 05:11 UTC, termine en 11 minutes. Un balayage
+Balayage commence le 2026-10-25 07:49 UTC, termine en 11 minutes. Un balayage
 complet qui rendrait la main en quelques secondes n'aurait pas eu lieu :
 c'est a cette duree qu'on le reconnait.
 
@@ -29,8 +29,8 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 |---|---|---|---|---|
 | islampasapas.fr | 54 | 0 | 0 | 0 |
 | voyageshalal.fr | 868 | 7 | 0 | 0 |
-| gohalaltravel.com | 895 | 17 | 10 | 10 |
-| halalgpt.fr | 234 | 0 | 0 | 0 |
+| gohalaltravel.com | 895 | 15 | 10 | 10 |
+| halalgpt.fr | 234 | 2 | 0 | 0 |
 | halalcheck.fr | 10 | 0 | 0 | 0 |
 
 **Le plafond ne remonte jamais.** Il part du compte du jour ou il a ete
@@ -72,34 +72,37 @@ personne ne regarderait plus. Le cliquet ne parle que quand on recule.
 
 ### voyageshalal.fr (7)
 
+- **description trop courte (41 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
+- **description trop courte (18 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
+- **description trop courte (24 car.)**  
+  `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
 - **description trop courte (17 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms2d7i1y_gtzpt`
 - **description trop courte (42 car.)**  
   `https://www.voyageshalal.fr/spot/sp_ms8u2638_sreaa`
-- **description trop courte (18 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msf72qww_41c1r`
 - **description trop courte (10 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msdactjq_p5sac`
 - **description trop courte (21 car.)**  
   `https://www.voyageshalal.fr/spot/sp_msnbwgey_0st3g`
+
+### gohalaltravel.com (5)
+
 - **description trop courte (24 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_ms21x392_fl8qd`
-- **description trop courte (41 car.)**  
-  `https://www.voyageshalal.fr/spot/sp_msaxq55j_e46lr`
-
-### gohalaltravel.com (7)
-
-- **page lente (5.3 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.gohalaltravel.com/destinations/fukuoka`
-- **page lente (5.0 s)** — au-dela de 3 s, une part des visiteurs repart  
-  `https://www.gohalaltravel.com/destinations/sapporo`
+  `https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd`
 - **description trop courte (17 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
 - **description trop courte (42 car.)**  
   `https://www.gohalaltravel.com/spot/sp_ms8u2638_sreaa`
 - **description trop courte (21 car.)**  
   `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
-- **description trop courte (24 car.)**  
-  `https://www.gohalaltravel.com/spot/sp_ms21x392_fl8qd`
 - **description trop courte (41 car.)**  
   `https://www.gohalaltravel.com/spot/sp_msaxq55j_e46lr`
+
+### halalgpt.fr (2)
+
+- **page lente (5.2 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://halalgpt.fr/q/maquillage-ramadan`
+- **page lente (4.7 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://halalgpt.fr/q/dattes-rompre-jeune`
