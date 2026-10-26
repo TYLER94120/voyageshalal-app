@@ -338,6 +338,61 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 26 octobre — le trou où l'erreur peut coûter une vie
+
+**`antidepresseurs-halal`**, choisie sur le même critère que la veille — *où une
+mauvaise réponse coûte le plus cher au lecteur* — et c'est le sujet qui dominait
+la liste des trous mesurés le 24 octobre.
+
+**Le trou, vérifié avant d'écrire.** `psy-therapie-islam` traite la consultation
+d'un psychologue à fond et ne dit **rien** des médicaments : ni *antidépresseur*,
+ni *psychiatre*, ni *psychotrope*, ni *anxiolytique*. `medicament-ramadan` et
+`piqure-ramadan` couvrent la mécanique générale du jeûne mais ne nomment **aucun
+traitement psychiatrique**. Deux questions restaient donc sans réponse, et ce
+sont les deux plus coûteuses.
+
+**La première est celle du stigmate** : beaucoup renoncent à un traitement parce
+qu'on leur a dit que c'était manquer de confiance en Dieu. Le site répond déjà à
+cela pour la consultation ; la fiche étend le même fondement, et la phrase qui
+compte est que le hadith « soignez-vous » **ne fait aucune exception pour
+l'esprit**, et que rien dans ce principe ne distingue un comprimé d'une
+conversation.
+
+**La seconde est le Ramadan, et c'est là que l'erreur est grave.** La mécanique
+est ailleurs sur le site ; ce qui manquait est le **critère**. L'exemption repose
+sur le **verset 2:184**, et la maladie qui la justifie est celle que le jeûne
+**aggraverait** ou dont il **retarderait la guérison** — formulation des
+juristes, vérifiée. Un traitement psychiatrique est exactement ce cas.
+
+**Et un fait vérifié que personne ne dit** : les carnets de suivi français remis
+aux patients sous **lithium** rangent **le jeûne parmi les situations qui font
+monter la lithiémie**, et le déconseillent. Une étude prospective sur des
+patients bipolaires en contexte de jeûne musulman observe la même chose — baisse
+de la filtration rénale, hausse des concentrations — en précisant que la
+littérature reste **limitée**, et la fiche le précise aussi. Détail qui lève un
+obstacle : **une prise de sang de contrôle ne demande pas d'être à jeun.**
+
+**Ce que la fiche refuse de faire, et elle le dit** : publier une liste de
+symptômes qu'elle n'a pas vérifiée. Ce que la recherche m'a donné sur ce point
+venait de la **synthèse du moteur**, pas d'un document — et une liste clinique de
+ma composition sur une page que lisent des gens sous traitement serait
+exactement le genre de chose qui ne se rattrape pas. À la place, trois questions
+à poser au prescripteur, dont la réponse lui appartient.
+
+**Le contrôle avant commit attrape quelque chose pour la quatrième fiche de
+suite**, et cette fois plus qu'un synonyme : **`psychiatre` n'apparaissait nulle
+part sur le site**, alors qu'en France c'est lui qui prescrit — ni
+`anxiolytique`, `psychotrope`, `somnifère`, `neuroleptique`, alors que la fiche
+vaut pour toute la classe. Les deux ajouts sont donc informatifs : nommer le
+prescripteur tel qu'on l'appelle, et dire que la page vaut pour les psychotropes
+quel que soit le nom sur la boîte. `psychiatrie` reste muet, et c'est assumé —
+taper *plus* que le mot indexé échoue (limitation du 20 octobre), et forcer le
+mot serait du bourrage pour une requête moins probable que `psychiatre`.
+
+**Compte** : 250 fiches, part alimentaire **51,2 %**, **17 restantes** pour 48 %.
+Étape 0 : code 2, **quatorzième nuit aveugle**. `main` toujours à `94b078f`,
+**67 commits de retard**, **72 jours**.
+
 ### 25 octobre — une prémisse fausse qui coûte de l'argent
 
 **`allocation-chomage-halal`**, choisie parmi les trous mesurés la veille sur un
