@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-10-27 14:33 UTC** · 1761 liens controles.
+Releve du **2026-10-27 20:43 UTC** · 982 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
@@ -15,13 +15,40 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 | | Combien | Qui repare |
 |---|---|---|
 | 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
-| 🟠 liens externes morts | 0 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 0 | personne — a ne PAS retirer |
+| 🟠 liens externes morts | 14 | nous, en retirant le lien |
+| ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## Rien a signaler
+## 🟠 Liens externes morts — 14
 
-Tous les liens controles menent quelque part.
+- `https://www.halalbooking.com/search?query=Stockholm` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Taipei` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Valence` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Toulouse` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Split` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Varsovie` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Vancouver` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Utrecht` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Turin` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Washington` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Thessalonique` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Zagreb` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Zurich` — code 404  
+  *(sur voyageshalal.fr)*
+- `https://www.halalbooking.com/search?query=Wroc%C5%82aw` — code 404  
+  *(sur voyageshalal.fr)*
