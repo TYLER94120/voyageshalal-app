@@ -338,6 +338,60 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 27 octobre — le plan du site, audité avant d'être renvoyé
+
+Pas de fiche neuve. Le diagnostic qui gouverne le site est un **budget
+d'exploration**, le plan du site est le **seul** artefact qui dise à Google quoi
+venir chercher, et son renvoi dans Search Console est l'action en attente depuis
+le plus longtemps (§9). Il n'avait **jamais été audité** : un défaut dedans se
+propagerait au moment du renvoi.
+
+**L'audit revient propre, et c'est la première chose à dire.**
+
+| Vérification | Résultat |
+|---|---|
+| Compte | **262 URLs** = accueil + /questions + /conduite + 9 hubs + 250 fiches |
+| Réponse HTTP | **262 testées, 0 échec** |
+| Domaine | toutes sur `https://halalgpt.fr`, **0 hors domaine** |
+| Doublons | **0** |
+| Dates | **262 lastmod**, aucune dans le futur |
+| Canoniques | échantillon de 38, **0 écart** avec le plan |
+| robots.txt | `/api/`, `/apprendre/`, `/labo-son` interdits — et **aucune** annoncée dans le plan |
+
+**Donc le renvoi ne propagera rien de faux.** C'est bon à savoir *avant*
+d'appuyer, pas après.
+
+**Et une fausse alerte de ma main, la cinquième du mois.** J'ai d'abord compté
+`/confidentialite` et `/mentions-legales` comme des oublis du plan. Elles portent
+`index: false, follow: true` : leur absence est **voulue**. Pire — le commentaire
+de `test-canoniques.mjs` raconte **déjà** cet épisode : le 13 août, une première
+version du même test avait accusé les deux mêmes pages, et la conclusion écrite
+était que *« la règle n'existait nulle part ailleurs que dans ma tête »*. Deux
+mois plus tard, même observation sur les mêmes pages. **La différence, cette
+fois : j'ai vérifié avant d'agir.**
+
+**Le garde ajouté**, dans `test-canoniques.mjs` plutôt que dans un script neuf —
+la consigne prévient qu'un test de liens en doublon a déjà dû être jeté, et ce
+fichier énumère déjà les routes. La règle : *une route est du même côté du plan
+que de l'index.* **Mesurée avant d'être écrite**, parce que le même fichier
+avertit qu'un test qui invente sa règle fabrique du travail : 5 indexables toutes
+annoncées, 5 en noindex toutes absentes, 0 écart dans chaque sens. Le garde
+décrit donc l'état du site, et protège contre l'oubli qui ne se voit jamais —
+**une page absente du plan s'affiche parfaitement.**
+
+**Deux fautes de ma main dans la seule fonction de détection**, toutes deux
+trouvées en écrivant le test d'échec : elle cherchait le chemin littéral et
+annonçait `/q/[slug]` absent du plan alors que les 250 fiches y sont ; puis
+`includes('${SITE_URL}/conduite')` répondait **oui** alors que le plan disait
+`/conduite-xx` — une sous-chaîne n'est pas une égalité, et le garde ne détectait
+donc **pas** une page retirée du plan, soit exactement le sens qu'il existe pour
+couvrir. **Sixième fois ce mois-ci** que le défaut est trouvé par l'exécution du
+test d'échec et non par la relecture. Les trois chemins d'échec sont maintenant
+exercés et nommés.
+
+**Compte** : 250 fiches, inchangé. Étape 0 : code 2, **quinzième nuit aveugle**.
+`main` toujours à `94b078f`, **68 commits de retard**, **73 jours**.
+
 ### 26 octobre — le trou où l'erreur peut coûter une vie
 
 **`antidepresseurs-halal`**, choisie sur le même critère que la veille — *où une
