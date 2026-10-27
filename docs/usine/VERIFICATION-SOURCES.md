@@ -1,6 +1,6 @@
 # Verification des sources de l'usine
 
-**Dernier changement constate le 2026-10-23 09:42 UTC**, par un robot GitHub.
+**Dernier changement constate le 2026-10-27 10:09 UTC**, par un robot GitHub.
 
 Le controle tourne **tous les jours a 5 h**. Ce fichier n'est reecrit
 que si quelque chose a bouge : la date ci-dessus est donc celle du
@@ -50,14 +50,14 @@ sur un projet dont aucune source n'est verte.
 
 - adresse : `https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?limit=5`
 - a quoi elle sert : flux instantane, adresse moderne
-- reponse : code 200, 13008 octets, type `application/json; charset=utf-8`
+- reponse : code 200, 13164 octets, type `application/json; charset=utf-8`
 - forme recue : `objet a 2 cles: {total_count, results}`
 
 ✅ **repond, et le format est celui attendu**
 
 - adresse : `https://donnees.roulez-eco.fr/opendata/instantane`
 - a quoi elle sert : ancienne adresse, archive zip — a tester car citee de memoire
-- reponse : code 200, 946693 octets, type `application/zip`
+- reponse : code 200, 944342 octets, type `application/zip`
 - forme recue : `binaire, 4 premiers octets b'PK\x03\x04'`
 
 ### fin-de-support
@@ -66,8 +66,8 @@ sur un projet dont aucune source n'est verte.
 
 - adresse : `https://endoflife.date/api/all.json`
 - a quoi elle sert : index de tous les produits suivis
-- reponse : code 200, 6156 octets, type `application/json`
-- forme recue : `liste de 485 elements (str)`
+- reponse : code 200, 6167 octets, type `application/json`
+- forme recue : `liste de 486 elements (str)`
 
 ✅ **repond, et le format est celui attendu**
 
