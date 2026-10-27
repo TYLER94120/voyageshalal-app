@@ -1,12 +1,139 @@
 {
-  "verifie_le": "2026-10-26 21:01 UTC",
-  "liens_controles": 923,
+  "verifie_le": "2026-10-27 05:08 UTC",
+  "liens_controles": 1441,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [],
+  "morts": [
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Ath%C3%A8nes",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Alicante",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Anvers",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=%C3%89dimbourg",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Auckland",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bangalore",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Atlanta",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bilbao",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Belgrade",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Birmingham",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Boston",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bologne",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bratislava",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Brisbane",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Bucarest",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Budapest",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Cannes",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Buenos%20Aires",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Chennai",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Charm%20el-Cheikh",
+      "detail": "code 404"
+    },
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://www.halalbooking.com/search?query=Busan",
+      "detail": "code 404"
+    }
+  ],
   "bloques": [
     {
-      "site": "voyageshalal.fr",
+      "site": "gohalaltravel.com",
       "genre": "externe",
       "url": "https://unsplash.com",
       "detail": "code 401 — refuse les robots, pas forcement mort"
