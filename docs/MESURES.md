@@ -338,6 +338,61 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 28 octobre — le dernier trou à enjeu vital
+
+**`transfusion-don-sang-islam`**, et c'était le **dernier sujet à enjeu vital**
+de la liste mesurée le 24 octobre. Vérifié avant d'écrire : `transfusion` ne
+ramenait rien, et `don-organes-islam` — bien attribué — ne dit **rien du sang**.
+Question distincte, d'ailleurs : un organe ne se renouvelle pas, le sang si.
+
+**Pourquoi ce n'est pas un « oui évidemment »**, et c'est ce qui rend la page
+utile : il y avait une **vraie réserve à lever**. Le sang qui sort du corps est
+tenu pour impur, et il est une partie du corps humain, dont les juristes disent
+qu'elle doit être traitée avec respect. Quelqu'un qui n'a entendu que cette
+moitié-là peut en conclure qu'il faut refuser.
+
+Ce qui lève la réserve est la *darura*. Et l'état précis de la question : **pour
+un malade dont la vie est en jeu sans transfusion immédiate, l'accord rapporté
+est unanime.** C'est la phrase qui justifie la fiche — *personne ne devrait
+refuser une transfusion, pour soi ou pour son enfant, en croyant que la religion
+l'interdit.* Le don **sans urgence** est plus discuté, et la fiche le dit :
+majorité contemporaine pour, sous trois conditions, mais des savants nommés
+tiennent qu'en l'absence de nécessité le don n'est pas permis — donc si on a
+répondu non à quelqu'un, on ne l'a pas forcément mal renseigné.
+
+**Et la convergence que personne ne dit**, vérifiée aux sources
+institutionnelles : la condition qui inquiétait le plus les juristes — **qu'on ne
+vende pas** son sang — est satisfaite **d'office en France, par la loi**. L'EFS
+énonce quatre valeurs (anonymat, non-profit, volontariat, bénévolat) et le don ne
+peut être rémunéré sous aucune forme ; la **loi du 21 juillet 1952** interdit de
+faire commerce de son corps, et la **loi Aujaleu** la même année interdit tout
+profit tiré du sang offert. Ce qui était une condition à vérifier est ici un
+pilier du droit.
+
+**Deux refus assumés.** Pas de critères d'admission — âge, poids, délais,
+contre-indications appartiennent à l'EFS : ils changent, et un critère périmé
+enverrait quelqu'un pour rien. Et sur le don en journée pendant le jeûne, la
+fiche dit **ne pas avoir établi** le point, tout en donnant le conseil pratique
+qui évite la question : donner après la rupture. **Une résolution de l'Académie
+du fiqh de 1988 n'est pas citée** : une source la mentionne, je n'ai pas pu lire
+le texte, et un numéro de résolution qu'on n'a pas lu ne se cite pas.
+
+**Cinquième fiche de suite où le contrôle avant commit trouve quelque chose — et
+cette fois il a corrigé le titre.** `sang islam` ramenait `adoption-islam` en
+premier : mon titre n'avait pas le mot *islam*, donc il pesait **2 contre 12**.
+La convention du site l'inclut déjà, d'où « Transfusion et don du sang : permis
+en islam ? », qui garde la forme interrogative et les trois mots qui comptent.
+
+**Où en est le contenu, maintenant que ce trou est comblé.** Les gaps restants de
+la liste du 24 octobre — halloween, saint-valentin, horoscope, épilation, bourse,
+incinération — sont **tous à faible enjeu**. Le critère « où une mauvaise réponse
+coûte-t-elle le plus cher » ne désigne plus personne, ce qui veut dire que les
+prochaines nuits valent mieux en qualité et en outillage qu'en volume.
+
+**Compte** : 251 fiches, 263 URLs au plan, part alimentaire **51,0 %**, **16
+restantes** pour 48 %. Étape 0 : code 2, **seizième nuit aveugle**. `main`
+toujours à `94b078f`, **70 commits de retard**, **74 jours**.
+
 ### 27 octobre — le plan du site, audité avant d'être renvoyé
 
 Pas de fiche neuve. Le diagnostic qui gouverne le site est un **budget
