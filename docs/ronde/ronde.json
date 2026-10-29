@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-10-29 16:48 UTC",
-  "pages_vues": 175,
+  "ronde_du": "2026-10-29 21:42 UTC",
+  "pages_vues": 180,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 2
+      "defauts": 0
     },
     {
       "site": "halalgpt.fr",
@@ -24,24 +24,9 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 11,
+      "pages": 16,
       "defauts": 0
     }
   ],
-  "defauts": [
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/hotels/essaouira",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/hotels/sharjah",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.3 s au controle calme — a surveiller, pas a reparer"
-    }
-  ]
+  "defauts": []
 }
