@@ -338,6 +338,63 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 29 octobre — KFC était faux, et l'erreur était recopiée ailleurs
+
+Pas de fiche neuve : j'avais conclu la veille que les trous à fort enjeu étaient
+épuisés et que les nuits suivantes valaient mieux en qualité. Mesure de ce qui
+restait le plus risqué — **les fiches de marque, où quatre des cinq chaînes
+vérifiées en octobre se sont avérées fausses.** Sur 128 fiches alimentaires,
+**12 portent encore la forme à risque** (affirmation non bornée sur l'état d'une
+offre ou d'une certification). Une sautait aux yeux : `kfc-halal`, écrite le
+4 août, **jamais retouchée**, portant un « ❌ Non en France » plat.
+
+**Cinquième fois qu'un « non » assuré tombe.** Depuis le **21 janvier 2026**, KFC
+France propose une carte **exclusivement halal** dans une partie de ses
+restaurants, en commençant par vingt-quatre. La fiche était donc fausse **deux
+fois** : elle affirmait le contraire, elle l'**attribuait à la FAQ officielle de
+la marque**, et elle rangeait les « rumeurs de KFC halal » du côté des enseignes
+qui imitent le concept. **Exactement l'erreur Subway, répétée** — traiter de
+rumeur ce qui est vrai.
+
+**Et l'autre moitié, que la réécriture donne.** La certification a été
+publiquement **contestée** : le **19 août 2026**, **AVS a démenti** certifier
+KFC, en réponse à un site tiers qui l'avait listé parmi les certificateurs. KFC a
+ensuite publié des certificats, qu'un site spécialisé a jugés utiles pour
+identifier des acteurs de la chaîne d'approvisionnement mais **insuffisants à eux
+seuls** pour garantir la conformité de la viande servie. La fiche ne tranche donc
+pas : offre déclarée, partielle, chaîne de certification discutée — et quelqu'un
+qui suit AVS a une raison **réelle** de prudence, *un démenti, pas une rumeur*.
+Deux chiffres non donnés : le nombre de restaurants (il bouge, comptes de sites
+secondaires) et l'origine de la viande (annoncée européenne sans source officielle
+lisible).
+
+**ET LE VRAI DÉFAUT DE LA NUIT, plus grave que KFC.** J'ai corrigé cinq fiches de
+chaîne en octobre **sans jamais balayer les renvois croisés**. Mesure :
+
+| Fiche | Ce qu'elle disait encore |
+|---|---|
+| `mcdo-halal` **(une des 11 portes)** | « KFC, Burger King, Quick, Subway et Domino's ne servent pas non plus de viande halal en France » — **une seule phrase pour cinq réseaux, fausse sur trois**, dont deux que j'avais corrigés deux semaines plus tôt |
+| `popeyes-halal` | KFC « donne la réponse opposée en France : poulet de filière standard, pas de certification » |
+
+La page la plus vue du lot portait donc l'erreur. `mcdo-halal` ne porte plus de
+liste du tout : la situation diffère d'une enseigne à l'autre, elle bouge,
+parfois d'un restaurant à l'autre — chaque enseigne a sa fiche. **Une phrase qui
+porte cinq réseaux se périme cinq fois plus vite.**
+
+**Au crédit du passage d'octobre** : les renvois écrits *alors*, dans
+`burger-king-halal` et `quick-halal`, sont déjà bornés (« des exceptions
+circulent sans liste vérifiable », « l'étendue de cette certification a bougé »).
+La règle avait donc bien été appliquée aux fiches réécrites — ce qui manquait,
+c'était de l'appliquer aux fiches **qui parlent d'elles**.
+
+**Leçon de procédé, et c'est l'acquis de la nuit** : une correction de fiche de
+marque n'est pas finie tant que les **renvois croisés** ne sont pas balayés. Le
+balayage est dérivable et coûte trente secondes.
+
+**Compte** : 251 fiches, aucune créée — part alimentaire inchangée à **51,0 %**.
+Étape 0 : code 2, **dix-septième nuit aveugle**. `main` toujours à `94b078f`,
+**72 commits de retard**, **75 jours**.
+
 ### 28 octobre — le dernier trou à enjeu vital
 
 **`transfusion-don-sang-islam`**, et c'était le **dernier sujet à enjeu vital**
