@@ -338,6 +338,95 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 30 octobre — l'outil, puis deux de mes fiches qui se contredisaient
+
+**L'atelier avait disparu** : conteneur recyclé, `/home/user/halalgpt` absent. Le
+`cd` a échoué silencieusement et tout ce qui suivait a tourné dans le dépôt
+voyageshalal — d'où des chiffres absurdes (« main à 52a8390, 0 fiche ») que je
+n'ai pas rapportés. Reconstruit par clonage : la branche était à `b072e37`,
+exactement ce que j'avais poussé la veille.
+
+**⚠️ ET UNE DÉCOUVERTE QUI CHANGE L'INSTRUCTION POUR CE CARNET.** La branche
+locale portait le bon nom mais pointait sur la **pointe de `main`**, pas sur mon
+travail (même dérive de pointeur que le 1er octobre). Récupéré depuis `origin`.
+En mesurant l'écart, ceci :
+
+| Mesure | Résultat |
+|---|---|
+| Fichiers que mes commits touchent | **`docs/MESURES.md`, et lui seul** |
+| `docs/MESURES.md` sur `main` | **absent** — c'est un ajout propre |
+| Fichiers qui *paraissent* modifiés | **10**, tous dans `docs/ronde/` et `docs/usine/` |
+
+Ces dix fichiers sont la production **d'un autre agent**, et ils n'apparaissent
+modifiés que parce que la base de ma branche est antérieure à son travail — mes
+commits ne les ont jamais touchés. **Conséquence : fusionner cette branche
+annulerait silencieusement sa journée.**
+
+> **Pour Mohamed : ne fusionne pas la branche, prends le fichier.**
+> `git checkout claude/halalgpt-domain-hxl2t7 -- docs/MESURES.md`
+> Cela donne le carnet sur `main` sans toucher à quoi que ce soit d'autre. Je ne
+> rebase pas la branche moi-même : le clone est superficiel, `git merge-base`
+> échoue faute d'historique, et le 1er octobre j'ai cassé un rebase en opérant
+> sans l'historique nécessaire.
+
+**Mesure d'abord, suite de la leçon de la veille.** La forme fautive — une phrase
+qui nomme plusieurs marques et affirme leur état — existe-t-elle encore ailleurs ?
+**Un seul résultat, et c'est un faux positif** : `mentos-halal` nomme E901 et
+E903, des codes additifs, et sa phrase « ne sont pas une réponse unique » dit
+justement que la réponse *varie*.
+
+**Donc pas de garde-fou, et le raisonnement vaut d'être gardé :** juger si une
+mention est *périmée* n'est pas dérivable, il faut lire ; le déclencheur n'est pas
+un état du dépôt mais un **geste** (« je viens de corriger une fiche de marque »),
+qu'aucun test lancé à chaque commit ne peut connaître ; et il n'y a plus rien à
+garder — il y a **un geste à outiller**. D'où `scripts/renvois.mjs` : on
+l'appelle, il ne crie pas.
+
+**Septième faute de ma main ce mois-ci**, dans sa première version : elle devinait
+les noms propres aux **majuscules du titre**. Premier essai — « Par » et « Des »
+donnés comme noms de `lardons-halal` (29 renvois !), « Que » pour
+`halal-definition`, « Je » pour `retard-fajr-reveil`, et « Dubaï » tronqué en
+« Duba », les lettres accentuées n'étant pas dans `\w`. Il aurait fallu allonger
+une liste d'exclusions — **la péremption que je fuis depuis le 19 septembre, et
+que j'avais écrite dans l'en-tête du fichier avant de bâtir le mode par défaut
+dessus.** Deuxième version : les termes viennent du **slug**, écrit à la main,
+sans accent, et qui nomme déjà le sujet.
+
+**L'épreuve qui compte** : lancé sur `lib/questions.ts` remis à l'état du
+28 octobre, l'outil remonte **exactement** la phrase qui était fausse. Il aurait
+donc attrapé le défaut resté deux semaines dans une porte visitée par Google.
+
+**Puis je m'en suis servi, et il a trouvé mieux qu'une mention périmée : deux de
+mes propres fiches se contredisaient.**
+
+| Fiche | Ce qu'elle disait |
+|---|---|
+| `quick-halal` (9 oct.) | « Burger King… **n'en propose pas** dans ses restaurants français » |
+| `burger-king-halal` (14 oct.) | « une partie des restaurants… **aurait conservé une certification** » |
+
+Écrites à cinq jours d'intervalle, par moi, disant l'inverse l'une de l'autre.
+`quick-halal` renvoie désormais à la fiche Burger King, qui fait foi et qui ne
+tranche pas — **deux pages du même site ne peuvent pas dire le contraire l'une de
+l'autre.**
+
+**Et la même faute qu'il y a quinze jours, attrapée par la vérification de la page
+SERVIE.** Après avoir corrigé le paragraphe, « seule grande enseigne » restait
+dans le **`short`** — la ligne que Google affiche. C'est précisément ce que j'ai
+corrigé le 15 octobre sur la fiche voisine, et le titre de mon commit ce jour-là
+disait : *« Domino's : le corps était prudent, la ligne que Google affiche ne
+l'était pas. »* La leçon était écrite ; ce qui l'a rattrapée est d'avoir **servi
+la page et regardé**. Mesure au passage : l'ancien résumé faisait **163
+caractères**, donc la description était déjà tronquée.
+
+**Honnêteté sur le build** : la première tentative a échoué sur une erreur
+webpack, la seconde a réussi sans rien changer au code — le serveur de la
+vérification précédente tenait encore `.next`. Je ne nomme pas un défaut que je
+ne peux pas reproduire, et je ne le cache pas non plus.
+
+**Compte** : 251 fiches, aucune créée — part alimentaire inchangée à **51,0 %**.
+Étape 0 : code 2, **dix-huitième nuit aveugle**. `main` de halalgpt toujours à
+`94b078f`, **75 commits de retard**, **76 jours**.
+
 ### 29 octobre — KFC était faux, et l'erreur était recopiée ailleurs
 
 Pas de fiche neuve : j'avais conclu la veille que les trous à fort enjeu étaient
