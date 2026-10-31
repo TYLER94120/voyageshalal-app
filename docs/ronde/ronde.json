@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-10-30 23:58 UTC",
-  "pages_vues": 183,
+  "ronde_du": "2026-10-31 11:06 UTC",
+  "pages_vues": 180,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 0
+      "defauts": 1
     },
     {
       "site": "halalgpt.fr",
@@ -24,9 +24,17 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 19,
+      "pages": 16,
       "defauts": 0
     }
   ],
-  "defauts": []
+  "defauts": [
+    {
+      "niveau": "surveiller",
+      "site": "gohalaltravel.com",
+      "url": "https://gohalaltravel.com/",
+      "quoi": "page lente (3.3 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
+    }
+  ]
 }
