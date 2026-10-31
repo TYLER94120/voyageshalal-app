@@ -338,6 +338,76 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 31 octobre — le balayage revient propre, et la barbe
+
+**Le balayage de la classe entière, suite de la veille.** L'outil avait trouvé une
+contradiction entre deux de mes fiches en n'en vérifiant que **cinq sur 251**.
+J'ai donc cherché la classe complète : pour chaque fiche à verdict polarisé, une
+autre fiche affirme-t-elle le contraire de son sujet ?
+
+**Un seul candidat sur 251, et c'est un faux positif** : `quick-halal` dit que
+Quick se distingue *de* McDonald's précisément parce que McDo n'a pas d'offre
+halal — les deux fiches s'accordent, mon regex a vu « offre halal » dans une
+phrase dont le sujet a un verdict négatif. **Le balayage revient donc propre** :
+la contradiction de la veille était la seule, et elle est corrigée.
+
+**Puis le quota de Mohamed** — 15 fiches non alimentaires restantes. Le sujet le
+plus demandé qui manquait : **la barbe**. Vérifié avant d'écrire : aucun titre ne
+la porte, et `moustache`, `rasage`, `raser`, `poils`, `épilation` ne ramenaient
+**rien**. *(Au passage, « barbe » ramenait `marshmallow-halal` — pour « barbe à
+papa ». Bon rappel de lire avant de conclure.)*
+
+**Ce que la fiche apprend** : le Coran n'en parle pas. La prescription vient de la
+**Sunna**, notamment d'un hadith rapporté par al-Bukhârî — tailler la moustache,
+laisser pousser la barbe. Le dire n'est pas la diminuer, c'est la **situer**, et
+cela explique pourquoi les écoles divergent sur son *poids* là où elles ne
+divergent pas sur le porc. Majorité des quatre écoles : **obligatoire** (*wajib*) ;
+une partie : **sunna mu'akkada**. Quasi-convergence sur l'interdit de la **raser
+entièrement**, divergence sur la **taille**.
+
+**Et une mise en garde que la recherche m'a imposée**, qui est la partie utile :
+elle signale que **les pages de vulgarisation sont bien plus tranchées que les
+textes juridiques** — plusieurs annoncent un « consensus » que les exposés mieux
+documentés ne soutiennent pas, ceux-là montrant un éventail de l'interdit au
+toléré selon l'école. La fiche le dit au lecteur au lieu de lui vendre une
+certitude. **C'est un cas où la fiche honnête en dit moins que les pages
+assurées, et c'est là sa valeur.**
+
+**La moitié française, que personne ne relie à cette question.** Arrêt de la
+chambre sociale du **8 juillet 2020, n° 18-23.743** : un consultant d'une société
+de sécurité et de défense licencié pour faute grave, l'employeur reprochant une
+barbe taillée de manière à exprimer des messages religieux et politiques avant une
+mission au Yémen. **Licenciement jugé nul pour discrimination.** Deux motifs qui
+portent au-delà : en l'absence de **règlement intérieur ou de note de service**
+posant l'exigence, l'injonction de revenir à « une apparence plus neutre » est une
+discrimination directe ; et les **demandes d'un client** au sujet d'une barbe
+pouvant être connotée religieusement **ne sauraient, par elles-mêmes**, constituer
+une exigence professionnelle essentielle et déterminante — *le principe de l'arrêt
+Bougnaoui sur le voile, déjà dans ce site, étendu à la barbe.*
+
+**Ma date était fausse et la recherche l'a corrigée** : je cherchais un arrêt de
+2022, il est de 2020. Vérifié plutôt qu'affirmé.
+
+**Fixture périmée réparée.** `test-recherche` exigeait que « barbe » ne ramène
+**rien** sans le corps — une affirmation du genre *« ce mot n'est dans aucun
+titre »*, qui vieillit dès qu'on écrit la fiche que le mot appelait. **Deuxième
+fois** que cette liste se périme ainsi, après « emulsifiant » le 5 septembre.
+Traitée selon le précédent que le fichier a lui-même posé : on garde ce qui
+comptait — *avec le corps on trouve la famille* — au lieu d'interdire le mot dans
+un titre.
+
+**Deux saisies assumées comme ne tombant pas** : `rasage` (puisque `raser`
+fonctionne, forcer le substantif serait du bourrage) et `poil` — car **la pilosité
+en général n'est pas traitée** par cette fiche, et la faire remonter là serait
+mentir sur son contenu. La procédure de la veille a tourné aussi : les trois
+renvois vers `barbe-islam` sont « Barbès », « barbe à papa » et la teinture de la
+barbe — aucune contradiction, et au passage la limite connue de l'outil, qui
+cherche par sous-chaîne.
+
+**Compte** : 252 fiches, part alimentaire **50,8 %**, **15 restantes** pour 48 %.
+264 URLs au plan. Étape 0 : code 2, **dix-neuvième nuit aveugle**. `main` toujours
+à `94b078f`, **77 commits de retard**, **77 jours**.
+
 ### 30 octobre — l'outil, puis deux de mes fiches qui se contredisaient
 
 **L'atelier avait disparu** : conteneur recyclé, `/home/user/halalgpt` absent. Le
