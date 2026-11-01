@@ -338,6 +338,65 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 1er novembre — une métrique inversée, et six ponts
+
+Pas de fiche neuve. J'ai mesuré les liens internes **en nombre et en distance**
+depuis des semaines, **jamais en qualité** — et c'est le levier que le diagnostic
+désigne. La veille, j'avais d'ailleurs retiré un lien en le jugeant « le plus
+faible des sept », à l'œil.
+
+**Première mesure, et elle s'est retournée contre moi.** Hypothèse : un bon lien
+relie deux fiches qui partagent du vocabulaire. Sur **1362 liens**, 21 suspects —
+moins de 2 % — avec trois mots communs ou moins et des catégories différentes. En
+les **lisant**, presque tous sont excellents :
+
+| Lien | Pourquoi il est bon |
+|---|---|
+| `mms-halal → e120-halal` | les M&M's contiennent du carmin, et **E120 *est* le carmin** |
+| `voyage-halal-istanbul → repas-halal-avion` | on y va en avion |
+| `starbucks-halal → arome-vanille-halal` | l'arôme est dans la boisson |
+| `sport-ramadan → whey-proteine-halal` | qui s'entraîne en jeûnant se pose la question |
+| `kebab-halal → certifications-halal-france` | comment vérifier le kebab |
+
+**La métrique n'était pas seulement bruyante : elle était inversement corrélée à
+ce qu'elle cherchait.** Un bon lien **franchit** deux vocabulaires — marque vers
+code, ville vers repas d'avion — et c'est précisément ce qui le rend utile : il
+donne au lecteur ce qu'il n'aurait **pas** trouvé en cherchant les mêmes mots. Un
+lien entre quasi-synonymes, lui, n'apprend rien.
+
+**Huitième fois ce mois-ci qu'une métrique de ma main surévalue, et la plus
+instructive** : les autres faisaient du bruit, celle-ci aurait fait **supprimer
+les meilleurs liens du site** si je l'avais appliquée sans lire.
+
+**Deuxième mesure, que la première a rendue possible.** Puisque *marque → code
+additif* est le meilleur motif du site, est-il appliqué partout ? **19 fiches
+nomment un code E dont la fiche existe sans y renvoyer.** Six ponts posés, tous
+là où le texte de la fiche nomme le code lui-même :
+
+    doritos-halal           -> e621-glutamate, e631-e627
+    gelatine-poisson-halal  -> e407-carraghenane
+    fanta-halal             -> e120          (même motif que mms)
+    sans-porc-halal         -> e441-gelatine
+    dragibus-halal          -> e901-cire-abeille
+
+**Treize ponts laissés, et c'est raisonné** : leurs fiches sont au **plafond de
+huit** liens sortants. Il faudrait sacrifier un lien existant pour satisfaire un
+motif — or la mesure de ce soir vient justement de montrer que **je ne sais pas
+juger à l'œil lequel est le plus faible**. Churner de bons liens pour compléter
+une règle serait le mauvais échange.
+
+Le pont de `dragibus` a été **arbitré, pas deviné** : la fiche dit « cires licites
+E901/E903 en général » et renvoie déjà à `e120` pour le doute sur le colorant. Le
+créneau restant va donc à **E901, la cire d'origine animale** — celle qui porte le
+doute — et qui est au passage la moins liée des deux (4 entrants contre 7).
+
+**1368 liens internes.** Vérifié : il ne reste **aucun** pont posable sans
+sacrifice.
+
+**Compte** : 252 fiches, aucune créée — part alimentaire inchangée à **50,8 %**.
+264 URLs au plan. Étape 0 : code 2, **vingtième nuit aveugle**. `main` toujours à
+`94b078f`, **79 commits de retard**, **78 jours**.
+
 ### 31 octobre — le balayage revient propre, et la barbe
 
 **Le balayage de la classe entière, suite de la veille.** L'outil avait trouvé une
