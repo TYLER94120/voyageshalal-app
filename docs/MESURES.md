@@ -338,6 +338,118 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 2 novembre — l'outil nommé par la consigne, et un chemin qui se périme
+
+Pas de fiche neuve. La consigne de la ronde nomme `densifier-maillage.mjs` en
+premier pour le levier 1 — « utilise les outils de main, ils sont meilleurs que
+tout ce que tu réécrirais » — et **je fais du maillage à la main depuis des
+semaines sans l'avoir jamais lancé.** Lancé à blanc : huit liens proposés pour
+ramener huit fiches au plancher de quatre liens entrants, dont trois depuis une
+porte visitée par Google.
+
+**Je ne les ai pas appliqués à l'aveugle**, parce que son propre en-tête dit
+« le critère éditorial passe avant le compte » et que la leçon de la veille est
+que je ne sais pas juger un lien au compteur. Lecture des huit paires avant
+d'écrire. **Cinq étaient vides.**
+
+| Paire refusée | Pourquoi |
+|---|---|
+| `certifications-halal-france → voile-ecole-france` | aucun chemin de lecteur |
+| `certifications-halal-france → mahr-dot-mariage-islam` | organismes de certification → dot de mariage |
+| `certifications-halal-france → circoncision-islam-france` | rien en commun que la catégorie |
+| `chien-islam → transfusion-don-sang-islam` | deux règles sans rapport |
+| `chien-islam → vaccin-gelatine-porcine-halal` | la salive du chien n'est pas la gélatine porcine |
+
+**Les trois premières sont celles qui valaient le plus cher**, et c'est le point
+à retenir : elles partaient d'une des onze portes. Un lien depuis une porte compte
+double dans le score de l'outil, donc **l'outil accroche à la page la plus
+visitée ce qui passe.** Son biais est exactement là où son intérêt est le plus
+grand.
+
+**Sept liens posés à la place, choisis sur la phrase qui les mérite déjà** —
+mesure faite en cherchant, pour chaque cible, qui en parle en prose :
+
+| Lien | Ce qui le mérite |
+|---|---|
+| `horaires-priere-voyage → invocation-voyage` | les prières en voyage, puis le dou'a du voyageur |
+| `assurance-vie-halal → allocation-chomage-halal` | deux instruments français jugés sur le même terrain |
+| `porter-or-homme-islam → mahr-dot-mariage-islam` | la fiche parle de l'alliance de mariage ; la dot est l'autre question d'argent |
+| `piqure-ramadan → vaccin-gelatine-porcine-halal` | sa question **nomme le vaccin** |
+| `vaccin-gelatine-porcine-halal → transfusion-don-sang-islam` | istihâla et nécessité, le frère du don d'organes déjà lié |
+| `circoncision-islam-france → barbe-islam` | le hadith de la fitra les nomme ensemble |
+| `barbe-islam → circoncision-islam-france` | la réciproque |
+
+Deux choses apprises en cherchant. **`prise-de-sang-ramadan` pointait déjà vers
+la transfusion** : le lien que j'allais poser existait. Et ma recherche par
+sous-chaîne a d'abord rendu « mahr » dans *mahram*, « barbe » dans *barbecue* et
+dans *barbe à papa*, « dot » dans *anecdote* — le bruit habituel, reconnu cette
+fois avant d'agir dessus.
+
+**Un refus assumé : `voile-ecole-france` reste à trois liens entrants.** La
+seule page dont le lecteur veut celle-là est la fiche voisine sur le travail, et
+elle pointe déjà ; aucun autre texte du site ne parle de laïcité. Fabriquer un
+quatrième lien pour satisfaire un plancher serait le geste que je venais de
+refuser à l'outil. **Sept sur huit, et le huitième expliqué.**
+
+#### Les cinq tests navigateur étaient muets — et ils étaient verts la veille
+
+En lançant la suite complète, `test-navigation` et `test-chevauchement`
+sortaient en **code 1**. Ce n'était pas le site. Deux causes empilées :
+
+1. `import { chromium } from 'playwright'` — introuvable. Playwright n'est
+   volontairement pas une dépendance du projet ; il vit dans l'atelier, à
+   `/opt/node-tools/node_modules`, et un import ESM ne cherche que dans les
+   `node_modules` au-dessus du fichier.
+2. Le binaire était figé à `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`.
+   Le conteneur sert **chromium-1243**, et dans `chrome-linux64`. Le numéro de
+   version **et** le nom du dossier interne avaient bougé.
+
+**La veille, ces cinq tests étaient verts** (entrée du 1er novembre : « 20 verts
+sur 21 »), après installation de playwright dans le conteneur. Deux conséquences,
+et la seconde est la vraie leçon.
+
+- Une réparation faite **dans le conteneur** n'est pas une réparation : le
+  conteneur est recyclé chaque nuit, et le problème est revenu à l'identique
+  vingt-quatre heures plus tard.
+- Les deux mesures prises ensemble — cinq tests verts le 1er, et `1243` seul
+  présent le 2 — impliquent que **l'image du conteneur a changé entre les deux
+  rondes**. Je ne peux pas le vérifier après coup ; c'est une inférence, pas une
+  observation. Mais elle dit l'essentiel : un chemin versionné se périme à un
+  moment qu'on ne choisit pas.
+
+Et ce qui rend la chose instructive est ce qui était écrit **juste au-dessus de
+la ligne fautive** : « sans ce chemin explicite, le test ne démarre pas et on
+croirait à tort que le site est en cause ». L'avertissement était exact. La
+ligne qu'il protégeait s'écrivait à elle-même une date de péremption. **Un
+commentaire n'est pas un garde-fou** — même leçon que le 18 octobre.
+
+`scripts/navigateur.mjs`, un seul endroit : on **cherche** le navigateur au lieu
+de le supposer (le lien stable `/opt/pw-browsers/chromium` d'abord, puis
+n'importe quelle version présente, en descendant d'un niveau plutôt qu'en
+devinant le nom du dossier — c'est ce renommage qui a cassé les cinq), et
+playwright est chargé par son chemin d'atelier si l'import normal échoue. Plus
+besoin de l'installer pour lancer un test.
+
+**Et surtout : outil absent = code 2, mesure impossible. Jamais code 1.** Trois
+états, pas deux — la leçon du 17 octobre sur `test-dns`. Sans elle je rapportais
+ce soir « test-navigation échoue » et quelqu'un allait réparer un site intact.
+Vérifié : avec `PW_RACINE` vers un dossier vide, code 2 et un message qui dit
+que rien n'a été mesuré.
+
+**Suite complète : 20 verts sur 21.** Les cinq navigateur passent contre le
+serveur local, les huit garde-fous serveur aussi, toutes les fiches restent à
+**3 sauts ou moins** des portes (1 saut : 62 → 63, 2 sauts : 131 → 138). Reste
+rouge : `test-nourriture`, **128 fiches alimentaires pour un plafond de 107** —
+soit **15 fiches non alimentaires** à écrire pour atteindre les 48 % visés.
+
+**Étape 0 : code 2, vingt-et-unième nuit aveugle.** La politique réseau du
+conteneur refuse les cinq domaines de l'empire au CONNECT ; le script dit
+« mesure impossible » et non « site mort », ce qui est le comportement voulu,
+mais cela fait vingt-et-une nuits sans surveillance réelle des domaines.
+
+`main` reste figé à `94b078f` — **79 jours, 82 commits de retard, 207 fiches en
+ligne contre 252 sur la branche.**
+
 ### 1er novembre — une métrique inversée, et six ponts
 
 Pas de fiche neuve. J'ai mesuré les liens internes **en nombre et en distance**
