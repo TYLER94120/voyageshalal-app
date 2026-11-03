@@ -338,6 +338,145 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 3 novembre — les sources religieuses, enfin auditées
+
+Le levier 1 est à son terme mesuré depuis la veille. Ce qui n'avait **jamais**
+été mesuré touche directement ce qui inquiète Mohamed (§8) : **les sources
+religieuses que le site cite.** La règle dit « une source qu'on ne peut pas
+citer exactement ne se cite pas ». Personne ne l'avait vérifiée.
+
+**Inventaire sur 253 fiches** : 12 références coraniques distinctes sur 16
+fiches, 40 mentions de collection de hadith, 53 citations entre guillemets.
+
+**Et le résultat est bon, il faut le dire tel quel : les douze références
+coraniques sont toutes exactes.**
+
+| Référence | Fiche(s) | Ce que porte le verset |
+|---|---|---|
+| 2:115 | `qibla-direction-priere` | l'Orient et l'Occident appartiennent à Allah |
+| 2:185 | `ramadan-voyage-jeune`, `medicament-ramadan` | le malade et le voyageur rattrapent |
+| 2:195 | `cigarette-halal` | ne pas se jeter dans la destruction |
+| 2:275 | `riba-interet-islam` | le commerce licite, l'intérêt illicite |
+| 4:119 | `chirurgie-esthetique-halal` | le serment de Satan de changer la création |
+| 5:5 | `viande-supermarche-halal`, `difference-halal-casher` | la nourriture des gens du Livre |
+| 5:6 | `tayammum-sans-eau` | les ablutions et leur substitut |
+| 5:90 | `paris-sportifs-halal`, `loto-jeux-hasard-halal` | le jeu de hasard parmi les souillures |
+| 5:96 | `poisson-fruits-de-mer-halal`, `crevette-halal` | le gibier de la mer est licite |
+| 43:13 | `invocation-voyage` | l'invocation de celui qui monte une bête |
+| 60:8 | `souhaiter-noel-halal` | la bonté envers qui ne vous combat pas |
+| 62:9 | `priere-vendredi-obligatoire` | l'appel du vendredi |
+
+La plupart des hadiths nomment leur collection, plusieurs nomment le
+transmetteur — `cheval-halal` va jusqu'à « (Boukhari, Mouslim, d'après Jâbir et
+Asmâ') ». **Ma première mesure était pourtant fausse** : le motif `(x:y)` ne
+voyait pas « sourate 4, verset 119 » écrit en lettres. Refaite avant d'en rien
+conclure, sinon j'aurais annoncé quatre citations là où il y en a douze.
+
+#### Trois corrections, et aucune n'invente une source
+
+| Fiche | Avant | Après |
+|---|---|---|
+| `qibla-direction-priere` | ✅ On fait de son mieux — **le Coran lui-même le dit** (2:115) | ✅ L'effort sincère suffit — **les savants le lisent en** 2:115 |
+| `priere-vendredi-obligatoire` | ✅ Obligatoire pour les hommes — **l'ordre coranique est explicite** (62:9) | ✅ Obligatoire pour l'homme résident — **accord des quatre écoles** |
+
+**La classe d'erreur est nouvelle, et mon audit de verdicts d'octobre l'avait
+manquée** : un verdict qui attribue **au texte** ce qui est l'inférence de ceux
+qui le lisent. 2:115 dit que la Face d'Allah est partout ; il ne dit pas « fais
+de ton mieux pour la qibla ». L'ordre de 62:9 est bien explicite, mais
+« obligatoire pour les hommes », avec les dispenses, vient de la Sunna et des
+écoles. Les deux étaient dans **le champ le plus visible de la page**, celui qui
+part aussi dans les données structurées de Google.
+
+Troisième correction : `antidepresseurs-halal` et `greffe-cheveux-halal`
+citaient le hadith « soignez-vous » sans source — l'un sans rien, l'autre « dans
+les recueils de sunna ». `psy-therapie-islam` porte **déjà** l'attribution
+exacte pour la même parole : (Tirmidhi, Abou Dawoud). Propagée.
+
+**Règle que je me suis tenue, et elle compte plus que les corrections** : je
+n'ajoute une attribution que si elle existe **déjà ailleurs dans le corpus pour
+la même parole**. Trois paroles rapportées restent sans collection
+(`oubli-manger-ramadan`, `dattes-rompre-jeune`, `biere-sans-alcool-halal`). Je
+les connais de mémoire. Les sources primaires sont hors liste blanche du
+conteneur, donc l'état est **non vérifié** — et le bon geste pour cet état est
+de laisser et de l'écrire ici, pas de remplir de mémoire.
+
+#### Pas de garde-fou ici, et c'est une décision mesurée
+
+Un garde « toute citation entre guillemets nomme sa source » signale **15 cas
+sur 53**. À la lecture, **dix sont du bruit** : des arguments populaires cités
+pour être réfutés (« l'alcool s'évapore à la cuisson »), une liste
+d'ingrédients, un terme marketing (« wudu-friendly »), des questions
+rhétoriques (« est-ce permis »). Un est un faux positif — `chat-maison-islam`
+nomme Abou Qatada, hors de ma fenêtre de lecture. Le français met des
+guillemets autour de bien autre chose que des paroles rapportées. **Un garde
+noyé dans son bruit cesse de mesurer** (20 octobre).
+
+Et j'ai **refait sans le savoir l'audit des verdicts d'octobre** : les mêmes
+**59** signalés, dont 4 seulement étaient réels et sont corrigés depuis. Les 55
+autres sont des notes de voyage (✦ 8.9), des faits de composition (« ✅ Halal
+(végétal) ») et du droit français. Sans ce carnet, je « trouvais » 59 problèmes
+une deuxième fois. C'est précisément à cela qu'il sert.
+
+#### La fiche que le site réclamait lui-même
+
+`enterrement-musulman-france` se termine sur « regarder ce que valent un contrat
+obsèques ou une assurance rapatriement » — la question **nommée, pas traitée**.
+Et sa propre mesure dit l'enjeu : le Sénat relie près de **80 % des
+rapatriements de corps** au manque de carré musulman. Domaine mort/héritage, le
+plus mince du catalogue, et non alimentaire.
+
+**`contrat-obseques-halal`** — ce qu'il y a à comprendre :
+
+- « Contrat obsèques » désigne **deux produits** que le droit ne traite pas
+  pareil : **en capital** (une assurance qui verse une somme) et **en
+  prestations** (assurance + contrat de prestations funéraires, qui nomme les
+  services retenus).
+- Et surtout : la dérogation que le **Conseil européen de la fatwa** admet pour
+  l'assurance auto tient à l'**obligation légale**. **Aucune loi n'impose un
+  contrat obsèques.** La condition même de la dérogation manque. Raisonnement
+  des instances nommées, rapporté — le site ne prononce rien.
+- Droit vérifié : **L. 2223-34-1** et **L. 2223-33-1 du CGCT** — une clause qui
+  prévoit des obsèques à l'avance sans contenu « détaillé et personnalisé » est
+  **réputée non écrite** ; une question écrite au Sénat de 2018 relevait que des
+  contrats « packagés » n'y satisfaisaient pas.
+- **Ce que je n'ai pas nommé : « loi Sueur » et sa date.** Les sources se
+  contredisent (1993, 2004, 2008) et `legifrance.gouv.fr` comme
+  `service-public.fr` sont hors liste blanche. J'ai cité l'article de code, qui
+  est le texte opérant, et rien d'autre.
+- **Un vide marqué au lieu d'être comblé** : la revalorisation du capital. Les
+  sources ne s'accordent pas sur l'étendue de l'obligation légale — rattachée
+  aux contrats en prestations, présentée comme un engagement professionnel pour
+  ceux en capital. La fiche le dit et renvoie à une question écrite à
+  l'assureur.
+
+#### La réparation d'hier a survécu au recyclage
+
+Le conteneur a changé de noyau cette nuit, et **playwright est absent du
+projet**. Les cinq tests navigateur ont tourné quand même. C'est la preuve que
+`navigateur.mjs` était au bon endroit : hier la même panne avait été réparée
+*dans le conteneur*, et elle était revenue vingt-quatre heures plus tard.
+
+#### Outil : la grille de `que-ecrire.mjs` ne classait plus 5 fiches
+
+Elle le disait elle-même — « hors grille : 5 fiche(s) sur 124 (4 %) ». Mots-clés
+ajoutés (chômage, obsèque, antidépresseur, circoncision, barbe, voile) :
+**0 hors grille sur 125**. Et `contrat` tout seul attrapait
+`contrat-obseques-halal` dans travail/droit : devenu `contrat-travail`. **Un
+motif trop court classe au mauvais endroit** — même famille que le chemin figé
+de la veille.
+
+**Suite complète : 20 verts sur 21.** 253 fiches, **1385** liens internes, 0
+renvoi mort, toutes à 3 sauts ou moins. Une seule fiche sous le plancher,
+`voile-ecole-france`, laissée là volontairement la veille. *(Le message du
+commit annonce 1382 : compte estimé au lieu d'être mesuré. Le bon chiffre est
+1385 — 1375 + 6 sortants de la fiche neuve + 4 entrants.)* Reste rouge :
+`test-nourriture`, 128 fiches
+alimentaires pour un plafond de 107 — **14 fiches non alimentaires** à écrire
+pour atteindre les 48 % (la part passe de 50,8 % à 50,6 %).
+
+Étape 0 : code 2, **vingt-deuxième nuit aveugle**. `main` toujours à `94b078f`
+— 80 jours, **84 commits**, 207 fiches en ligne contre **253** sur la branche.
+
 ### 2 novembre — l'outil nommé par la consigne, et un chemin qui se périme
 
 Pas de fiche neuve. La consigne de la ronde nomme `densifier-maillage.mjs` en
