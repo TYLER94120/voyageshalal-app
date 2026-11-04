@@ -1,6 +1,6 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-11-04 00:37 UTC** · 949 liens controles.
+Releve du **2026-11-04 12:10 UTC** · 1408 liens controles.
 
 ⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
 
@@ -16,18 +16,11 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 |---|---|---|
 | 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
 | 🟠 liens externes morts | 0 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
+| ⚪ bloques aux robots | 0 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
-
-✅ **1 lien(s) sauve(s) du controle calme.** Ils n'avaient rendu
-aucun code de reponse pendant le balayage — ce qui ne veut pas dire « mort »,
-mais « l'hote ne repond plus a NOTRE robot ». Rejuges un par un, machine calme,
-ils repondent tres bien. Sans cette etape, on serait alle reparer des pages saines.
-
-- `https://world.openfoodfacts.org` *(sur halalcheck.fr)*
 
 ## Rien a signaler
 

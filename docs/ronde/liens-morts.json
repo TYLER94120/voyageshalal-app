@@ -1,23 +1,9 @@
 {
-  "verifie_le": "2026-11-04 00:37 UTC",
-  "liens_controles": 949,
+  "verifie_le": "2026-11-04 12:10 UTC",
+  "liens_controles": 1408,
   "pages_vues": 370,
   "pages_connues": 1718,
   "morts": [],
-  "bloques": [
-    {
-      "site": "voyageshalal.fr",
-      "genre": "externe",
-      "url": "https://unsplash.com",
-      "detail": "code 401 — refuse les robots, pas forcement mort"
-    }
-  ],
-  "innocentes_au_controle_calme": [
-    {
-      "site": "halalcheck.fr",
-      "genre": "externe",
-      "url": "https://world.openfoodfacts.org",
-      "detail": "TimeoutError — aucun code de reponse"
-    }
-  ]
+  "bloques": [],
+  "innocentes_au_controle_calme": []
 }
