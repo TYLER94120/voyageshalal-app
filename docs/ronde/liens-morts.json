@@ -1,6 +1,6 @@
 {
-  "verifie_le": "2026-11-03 19:30 UTC",
-  "liens_controles": 1176,
+  "verifie_le": "2026-11-04 00:37 UTC",
+  "liens_controles": 949,
   "pages_vues": 370,
   "pages_connues": 1718,
   "morts": [],
@@ -12,5 +12,12 @@
       "detail": "code 401 — refuse les robots, pas forcement mort"
     }
   ],
-  "innocentes_au_controle_calme": []
+  "innocentes_au_controle_calme": [
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://world.openfoodfacts.org",
+      "detail": "TimeoutError — aucun code de reponse"
+    }
+  ]
 }
