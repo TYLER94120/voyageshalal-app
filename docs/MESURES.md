@@ -338,6 +338,80 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 4 novembre — le périmètre d'un garde ne se vérifie pas quand il passe au vert
+
+Pas de fiche neuve. **La description de l'accueil était coupée par Google depuis
+des mois**, et aucun garde ne pouvait le voir.
+
+`test-titres` et `test-descriptions` contrôlent depuis des mois que les **253
+fiches** tiennent dans ce que Google affiche. Ni l'un ni l'autre ne regardait
+les **douze autres pages indexables** — les neuf hubs, `/questions`,
+`/conduite`, et l'accueil.
+
+| | avant | après |
+|---|---|---|
+| description de `/` | **179 caractères** | 155 |
+| ce que Google affichait | « …Ramadan, prière, **voyag** » | la phrase entière |
+
+Google coupe à 160. La description s'affichait donc tranchée en plein mot, **sur
+la seule page du site vers laquelle pointent des liens extérieurs** — c'est
+`test-canoniques` qui l'avait établi le 13 août, pour une autre raison (§11).
+Ramenée à 155 en retirant le nom du site, que le titre affiche déjà juste
+au-dessus, et en gagnant « marques », un mot que les gens tapent.
+
+Les onze autres pages sont justes : les neuf hubs entre 38 et 54 caractères de
+titre, `/questions` à 37 et 147, `/conduite` à 55 et 126.
+
+#### Deux fois mon instrument s'est trompé avant de trouver
+
+Et les deux comptent autant que le défaut.
+
+**Première sonde, écrite depuis `lib/questions.ts`** en lisant
+`CATEGORY_TITLES`. Faux : le gabarit de hub a un **défaut**,
+`${catégorie} : {n} questions halal`, appliqué quand la catégorie n'a pas de
+titre sur mesure. Ma sonde annonçait « Additifs — HalalGPT » (19 caractères) là
+où le site sert « Additifs : 41 questions halal — HalalGPT » (40). **J'allais
+réécrire sept titres de hub qui n'avaient rien**, au motif qu'un titre d'un seul
+mot ne contient pas ce que les gens tapent — un raisonnement juste appliqué à
+une mesure fausse. C'est exactement ce que l'en-tête de
+`distance-exploration.mjs` raconte depuis le 18 octobre : une sonde qui
+**suppose** le gabarit se trompe.
+
+**Deuxième sonde, en bash** : `${#var}` compte des **octets**. L'accueil sort
+ses apostrophes en `&#x27;` — six caractères pour un seul — et `’` pèse trois
+octets. Elle annonçait 198 au lieu de 179, et surtout elle accusait à tort
+`/categorie/pratique` (161 au lieu de 149). **Un compteur qui se trompe d'unité
+fabrique des défauts.** Dixième sur-signalement du mois, et le premier dû à
+l'unité de mesure plutôt qu'au critère.
+
+#### `scripts/test-affichage.mjs`
+
+Trois choix, chacun contre une erreur déjà commise :
+
+- il lit ce que le **serveur rend**, pas la source — contre l'erreur du gabarit ;
+- il compte en **points de code**, entités décodées — contre l'erreur d'unité ;
+- il tire sa liste de routes du dossier `app/` au lieu de la recopier — une
+  liste écrite à la main se périme en silence (`pages-visitees.mjs`). Et toute
+  **autre** route dynamique indexable qui apparaîtrait est signalée comme un
+  trou au lieu d'être ignorée, pour que ce garde ne se périme pas comme celui
+  qu'il complète.
+
+Les fiches restent hors périmètre, volontairement : elles ont déjà leurs deux
+gardes, et les mélanger ici noierait les douze pages qui n'en avaient aucun.
+
+**Acceptation** : le garde échoue sur l'accueil **avant** correction en nommant
+ce qui est perdu (« e, vie quotidienne. »), passe après. Serveur absent :
+**code 2, mesure impossible** — jamais code 1. Un serveur qu'on n'a pas lancé
+n'est pas un site cassé.
+
+**Suite complète : 22 gardes, 20 verts, 1 rouge, 1 mesure impossible.** Le rouge
+est `test-nourriture` (128 fiches alimentaires pour un plafond de 107, décidé le
+12 août) ; la mesure impossible est `test-dns`. 253 fiches, 1385 liens internes,
+0 renvoi mort.
+
+Étape 0 : code 2, **vingt-troisième nuit aveugle**. `main` toujours à `94b078f`
+— 81 jours, **85 commits**, 207 fiches en ligne contre 253 sur la branche.
+
 ### 3 novembre — les sources religieuses, enfin auditées
 
 Le levier 1 est à son terme mesuré depuis la veille. Ce qui n'avait **jamais**
