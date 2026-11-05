@@ -1,6 +1,6 @@
 # Verification des sources de l'usine
 
-**Dernier changement constate le 2026-11-01 11:37 UTC**, par un robot GitHub.
+**Dernier changement constate le 2026-11-05 12:53 UTC**, par un robot GitHub.
 
 Le controle tourne **tous les jours a 5 h**. Ce fichier n'est reecrit
 que si quelque chose a bouge : la date ci-dessus est donc celle du
@@ -16,7 +16,7 @@ sur un projet dont aucune source n'est verte.
 | Projet | Jouable | Sources vertes |
 |---|---|---|
 | `jours-feries` | ✅ oui | 3 / 3 |
-| `carburants` | ✅ oui | 2 / 2 |
+| `carburants` | ✅ oui | 1 / 2 |
 | `fin-de-support` | ✅ oui | 2 / 2 |
 
 ## Le detail, source par source
@@ -46,18 +46,18 @@ sur un projet dont aucune source n'est verte.
 
 ### carburants
 
-✅ **repond, et le format est celui attendu**
+⚠️ **repond, mais PAS dans le format attendu**
 
 - adresse : `https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?limit=5`
 - a quoi elle sert : flux instantane, adresse moderne
-- reponse : code 200, 13163 octets, type `application/json; charset=utf-8`
-- forme recue : `objet a 2 cles: {total_count, results}`
+- reponse : code 200, 2745 octets, type `application/json; charset=utf-8`
+- ce qui cloche : JSON illisible (Expecting value: line 1 column 1 (char 0)). Debut recu: '\x1f�\x08\x00\x00\x00\x00\x00\x04\x03�mo�8\x12�� �/����$%ْ�K�6����\x04��\x16��\x08\x14�M��%�,\x05�-��o���͒�4���"�m�3|\x1br\x1e���(O�0�Y�E���,���2�+�|\x07\x05o?��5|N���K���'
 
 ✅ **repond, et le format est celui attendu**
 
 - adresse : `https://donnees.roulez-eco.fr/opendata/instantane`
 - a quoi elle sert : ancienne adresse, archive zip — a tester car citee de memoire
-- reponse : code 200, 939994 octets, type `application/zip`
+- reponse : code 200, 982185 octets, type `application/zip`
 - forme recue : `binaire, 4 premiers octets b'PK\x03\x04'`
 
 ### fin-de-support
