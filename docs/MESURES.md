@@ -338,6 +338,87 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 5 novembre — le reste du périmètre : quatre zones sans garde, quatre zones saines
+
+Pas de fiche neuve. Suite directe de la veille : si deux gardes couvraient 253
+fiches et aucune des douze autres pages, **qu'est-ce qui restait encore hors de
+tout périmètre ?** Balayage, puis mesure une par une.
+
+| Zone | Garde existant | Mesure |
+|---|---|---|
+| `robots.txt` | aucun | `Allow: /`, trois `Disallow` documentés et voulus, plan annoncé à l'adresse canonique |
+| adresses inconnues | aucun | `/q/`, `/categorie/` et les chemins inventés répondent **404** |
+| passerelle `/e/<code>` | `test-passerelle` | E120 → **308** vers `/q/e120-halal`, PATATE → 404 |
+| JSON-LD | aucun | 253 fiches, FAQPage + BreadcrumbList partout, JSON valide, zéro gras |
+
+**Les quatre étaient saines. Le travail de la nuit n'a donc rien réparé** — et
+c'est un résultat, pas un échec : un balayage qui revient propre vaut d'être
+écrit, sinon on le refait dans un mois (leçon du 3 novembre, où j'ai refait
+sans le savoir l'audit des verdicts d'octobre).
+
+#### Mais trois d'entre elles échouent en silence
+
+C'est ce qui justifie `scripts/test-exploration.mjs`, et rien d'autre :
+
+- un **`Disallow: /`** de trop fait sortir le site entier de Google **sans un
+  bruit**. Le carnet porte déjà cinq jours d'invisibilité que personne n'a vus
+  (§5) ;
+- une adresse inconnue qui répond **200** est un soft 404 : le robot la lit,
+  n'y trouve rien — et le **budget d'exploration est le diagnostic de ce site**
+  (§2) ;
+- un **JSON-LD cassé** est ignoré par Google sans message. Le défaut est
+  documenté : `lib/emphase.ts` existe parce que des marqueurs de gras partaient
+  dans les données structurées.
+
+Un quatrième cas est gardé pour une raison particulière. `/e/<code plausible
+non publié>` répond **200 délibérément** — une page honnête « pas encore
+publiée » vaut mieux qu'une redirection vers une catégorie qui ne parle pas du
+code (audit du 13 août). Ce choix **ne tient que parce que la page est
+`noindex`**, et son propre commentaire le dit : « les indexer reviendrait à
+fabriquer des centaines de pages minces ». Un commentaire n'est pas un
+garde-fou. Si le `noindex` disparaît, c'est désormais le garde qui l'apprend.
+
+#### Ce que je n'ai pas fait, et le refus vaut la mesure
+
+Les hubs et l'accueil ne portent **aucun** JSON-LD. La tentation était d'en
+ajouter — `WebSite`, `SearchAction`, `ItemList`. **Refusé** : le diagnostic de
+ce site est un budget d'exploration, pas un manque de résultats enrichis. Du
+balisage n'amène pas le robot à venir plus souvent. Inventer un levier n'en est
+pas un.
+
+#### Un garde qui n'a jamais échoué est une croyance
+
+Acceptation faite contre un **serveur de paille** servant neuf défauts à la
+fois. Le garde en rapporte **13** et nomme chacun : site fermé au robot, plan
+annoncé ailleurs, plan introuvable, quatre soft 404, `noindex` disparu de la
+passerelle, JSON invalide, `BreadcrumbList` manquant, gras dans le `FAQPage`.
+Serveur absent : **code 2**. 2,1 secondes pour les 253 fiches.
+
+#### Troisième erreur d'instrument en trois nuits
+
+Et c'est le vrai motif récurrent de la semaine. Mon `curl` lisait le **corps**
+d'une redirection 308 sans la suivre : `/e/E120` semblait annoncer « fiche non
+encore publiée » alors qu'il redirige correctement vers la fiche. J'ai failli
+rapporter une passerelle cassée qui marche.
+
+| Nuit | L'instrument disait | La réalité |
+|---|---|---|
+| 3 nov | 4 citations coraniques | 12 — le motif ne voyait pas « sourate 4, verset 119 » |
+| 4 nov | « Additifs — HalalGPT », 19 car. | « Additifs : 41 questions halal », 40 car. — gabarit par défaut ignoré |
+| 4 nov | `/categorie/pratique` à 161 car. | 149 — bash comptait des octets |
+| 5 nov | `/e/E120` : fiche non publiée | 308 vers `/q/e120-halal` — corps d'une redirection non suivie |
+
+Quatre fois, la sonde a accusé le site à tort, et quatre fois la vérification a
+précédé le rapport. **Soupçonner l'instrument n'est pas une précaution
+occasionnelle : c'est l'étape normale.**
+
+**Suite complète : 23 gardes, 21 verts, 1 rouge, 1 mesure impossible.** Le
+rouge est `test-nourriture` (128 fiches alimentaires pour un plafond de 107) ;
+la mesure impossible est `test-dns`. 253 fiches, 1385 liens internes.
+
+Étape 0 : code 2, **vingt-quatrième nuit aveugle**. `main` toujours à
+`94b078f` — 82 jours, **86 commits**, 207 fiches en ligne contre 253.
+
 ### 4 novembre — le périmètre d'un garde ne se vérifie pas quand il passe au vert
 
 Pas de fiche neuve. **La description de l'accueil était coupée par Google depuis
