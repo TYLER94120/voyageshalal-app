@@ -1,9 +1,23 @@
 {
-  "verifie_le": "2026-11-04 19:47 UTC",
-  "liens_controles": 1798,
+  "verifie_le": "2026-11-05 00:54 UTC",
+  "liens_controles": 981,
   "pages_vues": 370,
   "pages_connues": 1718,
-  "morts": [],
-  "bloques": [],
+  "morts": [
+    {
+      "site": "halalcheck.fr",
+      "genre": "externe",
+      "url": "https://world.openbeautyfacts.org",
+      "detail": "TimeoutError (confirme machine calme)"
+    }
+  ],
+  "bloques": [
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
+    }
+  ],
   "innocentes_au_controle_calme": []
 }
