@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-11-07 02:15 UTC",
-  "pages_vues": 178,
+  "ronde_du": "2026-11-07 09:07 UTC",
+  "pages_vues": 183,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -10,7 +10,7 @@
     {
       "site": "voyageshalal.fr",
       "pages": 41,
-      "defauts": 3
+      "defauts": 0
     },
     {
       "site": "gohalaltravel.com",
@@ -24,31 +24,9 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 14,
+      "pages": 19,
       "defauts": 0
     }
   ],
-  "defauts": [
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/hotels/moscou",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.1 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/hotels/miami",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.4 s au controle calme — a surveiller, pas a reparer"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "voyageshalal.fr",
-      "url": "https://www.voyageshalal.fr/hotels/hanoi",
-      "quoi": "page instable sous charge",
-      "detail": "muette pendant la ronde, repond en 0.2 s au controle calme — a surveiller, pas a reparer"
-    }
-  ]
+  "defauts": []
 }
