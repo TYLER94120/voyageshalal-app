@@ -338,6 +338,106 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 6 – 10 novembre — cinq rondes perdues, et pourquoi
+
+À consigner, parce que l'absence de trace serait pire que la trace d'un échec.
+**Cinq nuits sans travail livré.** Le processus de la session a redémarré en
+pleine ronde les 6, 7, 8 et 10 novembre, et la nuit du 9 n'a rien produit.
+Aucun commit, aucune mesure conservée.
+
+Les quatre fois, le redémarrage est survenu au même endroit : **juste avant ou
+pendant un appel aux outils d'environnement**, que je venais de découvrir et
+qui pouvaient enfin débloquer l'étape 0.
+
+Le 10 novembre, l'appel a enfin rendu une réponse, et elle est la mesure de la
+semaine :
+
+> *approval request was still unanswered when the message that follows arrived
+> and was closed […] Nobody refused it, so this is not the user's decision.*
+
+**Même `get_environment`, qui ne fait que lire, demande une approbation
+humaine.** Or une ronde automatique se déclenche à 00 h 38 UTC et personne n'est
+là pour l'accorder. La conclusion n'est donc pas « Mohamed a refusé » — il n'a
+jamais vu la demande. C'est que **cette classe d'outils est hors de portée d'une
+ronde non surveillée**, et j'arrête d'essayer chaque nuit : chaque tentative
+coûtait la ronde entière.
+
+**Ce que la mesure a tout de même établi**, et qui va dans la §9 : le refus
+vient bien de la politique réseau et non des sites. Le proxy le dit lui-même,
+horodaté à la seconde de chaque étape 0 :
+
+| date | ce que le proxy a répondu |
+|---|---|
+| 6 nov | `connect_rejected  halalgpt.fr:443` — *gateway answered 403 to CONNECT (policy denial)* |
+| 7 nov | idem |
+| 8 nov | idem |
+| 10 nov | idem |
+
+Les cinq hôtes que l'étape 0 interroge sont `halalgpt.fr`,
+`voyageshalal.fr`, `gohalaltravel.com`, `islampasapas.fr` et `halalcheck.fr`.
+**Mohamed peut les ajouter lui-même** à la liste des hôtes autorisés de
+l'environnement, dans les réglages — c'est le seul chemin praticable, et il
+rendrait la vue à l'étape 0 après un mois d'aveuglement.
+
+### 11 novembre — un nikah avec un PACS ne protège pas la veuve
+
+`mariage-religieux-civil-france` établit qu'un nikah seul n'a aucun effet
+juridique, et que l'épouse est alors **juridiquement une concubine** : pas de
+succession, pas de réversion. Beaucoup de couples en tirent la suite logique —
+on ajoute un PACS, et la moitié légale est réglée.
+
+**Mesure d'abord** : le mot « PACS » n'apparaissait **qu'une fois** dans les 253
+fiches, dans une incidente de `autopsie-islam-france` sur les personnes à
+informer avant un prélèvement. Le sujet était absent, et famille/mariage est
+l'un des trois domaines les plus minces (5 fiches). Non alimentaire.
+
+Ce qu'il y a à comprendre : **un PACS n'est pas un mariage, et la différence se
+paie à la mort, pas à la signature.**
+
+| | ce que dit le droit |
+|---|---|
+| ce que le PACS **donne** | vie commune, aide matérielle et assistance réciproques (**art. 515-4 du code civil**), foyer fiscal commun. **Cass. 27 janvier 2021** : le remboursement de l'emprunt du logement indivis peut relever de cette aide — et celui qui a payé ne peut pas réclamer de créance à la séparation |
+| ce qu'il **ne donne pas** | le partenaire pacsé **n'est pas héritier**. Sans testament, il ne reçoit rien. Douze mois de jouissance du logement (**art. 515-6**, renvoi à 763), loyers de l'année remboursés si le logement était loué |
+| le **testament** | transmet dans la limite de la **quotité disponible** seulement, mais exonère **totalement** de droits de succession (**art. 796-0 bis du CGI**) — comme un époux |
+| la **réversion** | réservée aux époux. Réponses ministérielles successives ; **Cass. 23 janvier 2014** (publié) a jugé la différence conforme au principe d'égalité. Un conjoint **divorcé** peut en recevoir, un pacsé non |
+
+**Ce que je n'ai pas écrit.** La dissolution unilatérale du PACS : non vérifiée
+(`legifrance.gouv.fr` et `service-public.fr` sont hors liste blanche), donc
+absente de la fiche. Et la **qualification religieuse du PACS lui-même n'est pas
+tranchée** : la fiche dit l'étage du droit et renvoie à un savant, dans la forme
+de `voile-ecole-france`. Le verdict est un fait de droit, pas un avis —
+« ⚠️ Non en droit — le partenaire pacsé n'hérite pas ».
+
+#### Deux liens par échange, et un échange refusé
+
+Les deux pages dont le sujet **est** la succession étaient au plafond de huit
+liens sortants. Plutôt que de dépasser le plafond, j'ai échangé — et uniquement
+là où le lien remplacé était le plus faible des huit :
+
+| page | échange | pourquoi |
+|---|---|---|
+| `mariage-religieux-civil-france` | `garde-enfants-divorce-france` → PACS | sa section [2] porte déjà sur l'absence de droits successoraux |
+| `heritage-succession-france` | `don-organes-islam` → PACS | du don d'organes depuis une page sur l'héritage : le plus faible des huit, et la cible garde 9 entrants |
+
+Et **un échange refusé après vérification** : `deuil-idda-veuve` →
+`garde-enfants-divorce-france` aurait été un bon échange (une veuve n'est pas
+divorcée), mais `garde-enfants-divorce-france` est pile à **4 entrants**. Lui
+retirer son dernier aurait réparé un lien en cassant un plancher. Mesuré avant,
+pas après.
+
+**Suite complète : 23 gardes, 21 verts, 1 rouge, 1 mesure impossible.** 254
+fiches, **1393** liens internes, 0 renvoi mort, toutes à 3 sauts ou moins. Part
+alimentaire **50,4 %** — il reste **13 fiches non alimentaires** pour 48 %.
+
+Étape 0 : code 2, **vingt-neuvième nuit aveugle**. Et le compte est exact, pas
+arrondi : les 6, 7, 8 et 10 novembre l'étape 0 a bien tourné et rendu 2 ; le
+**9 novembre elle n'a pas tourné du tout**, la ronde s'étant arrêtée avant. Une
+nuit sans mesure n'est pas une nuit aveugle de plus — c'est une nuit sans
+mesure, et l'écrire autrement serait gonfler un chiffre.
+
+`main` toujours à `94b078f` — **88 jours**, **88 commits**, 207 fiches en ligne
+contre **254**.
+
 ### 5 novembre — le reste du périmètre : quatre zones sans garde, quatre zones saines
 
 Pas de fiche neuve. Suite directe de la veille : si deux gardes couvraient 253
