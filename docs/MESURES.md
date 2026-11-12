@@ -338,6 +338,68 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 12 novembre — les dettes du défunt, et un cluster saturé
+
+`heritage-succession-france` traite la réserve héréditaire, la loi du 24 août
+2021 et le tiers de la *wasiyya*. **Mesure d'abord** : le corpus entier ne disait
+**rien** des dettes du défunt ni de l'option de l'héritier — zéro mention de
+dette successorale, de passif, de renonciation ou de créancier dans les 254
+fiches. Et mort/héritage reste le domaine le plus mince (5 fiches).
+
+**Le danger concret**, et c'est lui qui justifie la fiche. Deux réflexes opposés
+font du mal : « ce n'est pas à moi de payer », alors que la religion range la
+dette avant tout partage — et surtout **accepter la succession par piété**, pour
+honorer le mort, sans savoir ce qu'elle contient.
+
+Ce qu'il y a à comprendre : **ici les deux systèmes disent la même chose**, ce
+qui est l'inverse du constat de la fiche voisine.
+
+| | ce que ça dit |
+|---|---|
+| l'ordre des juristes | frais funéraires, puis **les dettes**, puis le legs (*wasiyya*, plafonnée au tiers), puis les parts fixées. Un partage avant les dettes se fait dans le mauvais ordre — et la dette se règle **sur la masse**, pas sur le patrimoine des héritiers |
+| le droit français | **art. 768 du code civil** : trois branches — accepter purement et simplement, renoncer, ou **accepter à concurrence de l'actif net**, qui plafonne ce que l'héritier doit à la valeur de ce qu'il reçoit |
+| le piège | **quatre mois** de réflexion ; ensuite une **sommation de prendre parti** (acte **extrajudiciaire**, qu'une lettre recommandée ne remplace pas) ouvre **deux mois**, et **le silence vaut acceptation pure et simple**. Dix ans pour renoncer tant qu'aucun acte d'héritier n'a été fait ; l'inverse n'existe pas |
+| la porte étroite | **art. 786** : décharge judiciaire possible pour une dette qu'on ne pouvait pas connaître |
+
+D'où la phrase qui compte le plus dans la fiche : choisir l'acceptation à
+concurrence de l'actif net **n'est pas une dérobade**, c'est la forme juridique
+de ce que l'ordre des juristes décrit déjà. Le devoir est de régler les dettes
+**sur l'héritage** ; il ne demande pas aux héritiers de se ruiner. Il faut le
+dire, parce que la peur fait prendre de mauvaises décisions.
+
+**Ce que je n'ai pas écrit** : le hadith sur l'âme du débiteur, que je connais.
+Il n'est attribué nulle part ailleurs dans le corpus et les sources primaires
+sont hors liste blanche. Règle du 3 novembre tenue — je n'ajoute une attribution
+que si elle existe **déjà** dans le corpus pour la même parole.
+
+#### Constat structurel : le cluster mort/héritage est saturé
+
+C'est la deuxième nuit de suite où les liens entrants passent par des
+**échanges** plutôt que des ajouts, et la raison est mesurable : sur les sept
+pages du voisinage mort/héritage, **une seule** avait de la place sous le
+plafond de huit liens sortants. `enterrement-musulman-france` est même à **11**.
+
+| page | échange | pourquoi ce lien-là était le plus faible |
+|---|---|---|
+| `heritage-succession-france` | `mariage-religieux-civil-france` → dettes | garde 9 entrants |
+| `enterrement-musulman-france` | `riba-interet-islam` → dettes | rien ne mène d'un enterrement à l'intérêt bancaire ; riba garde 13 entrants |
+| `credit-immobilier-halal` | `travailler-restaurant-alcool` → dettes | un prêt qui survit à l'emprunteur **est** le cas d'école ; la cible garde 6 entrants |
+| `contrat-obseques-halal` | ajout | les frais funéraires viennent juste avant les dettes dans l'ordre |
+
+**Conséquence à noter pour la suite** : toute fiche future dans ce domaine
+coûtera un échange, pas un ajout. Ce n'est pas un problème tant que l'échange
+remplace un lien plus faible — et je vérifie chaque fois que la cible reste
+au-dessus du plancher de 4. Mais si le plafond de 8 devient la contrainte
+dominante plutôt qu'un garde-fou, c'est le plafond qu'il faudra relire, pas les
+liens qu'il faudra tordre. Je le signale sans le changer.
+
+**Suite complète : 23 gardes, 21 verts, 1 rouge, 1 mesure impossible.** 255
+fiches, **1400** liens internes, 0 renvoi mort, toutes à 3 sauts ou moins. Part
+alimentaire **50,2 %** — **12 fiches non alimentaires** pour 48 %.
+
+Étape 0 : code 2, **trentième nuit aveugle**. `main` toujours à `94b078f` —
+89 jours, **90 commits**, 207 fiches en ligne contre **255**.
+
 ### 6 – 10 novembre — cinq rondes perdues, et pourquoi
 
 À consigner, parce que l'absence de trace serait pire que la trace d'un échec.
