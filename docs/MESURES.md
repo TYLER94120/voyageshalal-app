@@ -338,6 +338,72 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 13 novembre — audit de péremption : ni KFC ni Popeyes ne nomme son certificateur
+
+Pas de fiche neuve — deux en deux nuits suffisent, et la consigne dit qu'une
+ronde quotidienne n'est pas une fiche par jour. Je suis allé là où mes erreurs
+les plus graves ont toujours été : **les fiches d'enseigne, qui portent des
+faits qui se périment** (Subway le 15 octobre, KFC le 29 octobre).
+
+**Mesure d'abord.** Sur les 255 fiches, **9 fiches de marque** portent une
+affirmation datée ou temporelle. Les deux plus risquées sont celles qui
+décrivent l'offre halal **courante** d'une chaîne : `kfc-halal` (« depuis
+janvier 2026 ») et `popeyes-halal` (« annoncée en juin 2025 »).
+
+**Les deux tiennent. Rien à retracter.** Aucune annonce d'extension ni de
+retrait depuis octobre. Et le refus de la fiche KFC de donner un nombre de
+restaurants était **juste** : les comptes qui circulent ne concordent même pas.
+
+| source | date | nombre de KFC halal |
+|---|---|---|
+| une liste | 24 août 2026 | 139 |
+| une autre | 14 octobre 2026 | 151 sur ~405 |
+| annonce KFC | 21 janvier 2026 | 24 au départ |
+
+Ce désaccord est désormais **dans** la fiche — non pour donner le compte, mais
+pour montrer pourquoi on ne le donne pas.
+
+#### Ce qui était imprécis, et c'était la même chose dans les deux
+
+| fiche | ce qu'elle disait | ce qui est vrai |
+|---|---|---|
+| `kfc-halal` | la marque « a corrigé sa FAQ au sujet de l'accréditation de HQC France » — lisible comme si KFC nommait HQC | **l'inverse : KFC France ne nomme pas son certificateur.** L'attribution à HQC ne vient que de sites tiers |
+| `popeyes-halal` | du certificat et de la communication, « les deux existent ici » — laissait croire le certificat public | **Popeyes France ne nomme pas non plus son certificateur** : le certificat du poulet et de l'huile se demande en restaurant |
+
+D'où le constat qui vaut pour les deux, et qui est **la chose la plus utile à
+savoir** : *ni l'une ni l'autre n'affiche le nom de son organisme.* Écrit une
+seule fois, dans le paragraphe qui porte déjà la comparaison — je l'avais
+d'abord mis dans les deux paragraphes voisins, où il faisait doublon.
+
+La modification de FAQ est maintenant datée et citée : le **27 août 2026**,
+« l'ensemble des organismes d'accréditation Halal » est devenu « **des**
+organismes d'accréditation Halal », sans être signalée. Un mot retiré, et la
+portée de la phrase avec lui.
+
+Ajouté aussi, vérifié : chez Popeyes les produits au bacon sont **signalés sur
+les visuels en restaurant**, et les comptes rendus de novembre parlent de trois
+recettes — avec la réserve explicite qu'un chiffre de carte bouge avec la carte.
+
+#### `renvois.mjs` lancé sur les deux
+
+Parce qu'une correction n'est finie que quand ce que les **autres** fiches en
+disent est juste aussi (leçon du 29 octobre). Résultat : 4 phrases dans 2 fiches
+pour KFC, toutes exactes — et `mcdo-halal` renvoie bien chaque enseigne à sa
+propre fiche, donc **la réparation d'octobre tient**. Aucune autre fiche ne
+parle de Popeyes.
+
+**Ce qu'un balayage propre vaut** : la même leçon que le 5 novembre. Deux fiches
+vérifiées et confirmées, ce n'est pas une nuit perdue — c'est une nuit où l'on
+sait. Et c'est écrit ici pour ne pas la refaire dans un mois sans le savoir.
+
+**Suite complète : 23 gardes, 21 verts, 1 rouge, 1 mesure impossible.** 255
+fiches, 1400 liens internes. Deux dates seulement ont changé au plan du site,
+`kfc-halal` et `popeyes-halal` — vérification que l'audit n'a touché que ce
+qu'il devait toucher.
+
+Étape 0 : code 2, **trente-et-unième nuit aveugle**. `main` toujours à
+`94b078f` — 90 jours, **92 commits**, 207 fiches en ligne contre 255.
+
 ### 12 novembre — les dettes du défunt, et un cluster saturé
 
 `heritage-succession-france` traite la réserve héréditaire, la loi du 24 août
