@@ -338,6 +338,60 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 14 novembre — la leçon était appliquée à un paragraphe et pas à son voisin
+
+Suite de l'audit de péremption, tier suivant. Et la trouvaille est **une
+répétition de ma propre erreur, à un paragraphe de distance**.
+
+`mcdo-halal` — une des **onze portes** que Google visite — confesse en toutes
+lettres, dans son avant-dernier paragraphe : « cette fiche portait ici une seule
+phrase qui donnait l'état de cinq réseaux d'un coup, et elle est devenue fausse
+sur trois d'entre eux ». Deux paragraphes plus haut, elle donnait **l'état de
+quinze pays d'un coup**, à plat, sans attribution. La leçon avait été appliquée
+là où l'erreur avait fait mal, **et pas à sa voisine de la même forme.**
+
+| vérifié cette nuit | résultat |
+|---|---|
+| **France** | confirmé — démenti de la chaîne aux journalistes, rapporté par une vérification de presse du 5 juin 2026 |
+| **Royaume-Uni** | confirmé — et j'apprends **pourquoi la rumeur tient** : essai du halal dans **un seul restaurant, à Southall**, abandonné faute de demande. Expliquer une rumeur vaut mieux que la démentir à vide |
+| **Singapour** | **faux dans la fiche** — elle disait « une partie du réseau », c'est l'**ensemble**, certifié par le **MUIS** |
+
+**Ce qui change.** Le tableau des quinze pays est coupé en deux : ce qui est
+vérifié est donné comme vérifié, le reste devient explicitement un état des
+lieux que le site **ne garantit pas** — avec la règle qui gouverne tout (il
+n'existe pas de politique mondiale, chaque marché décide) et un renvoi à sa
+propre erreur du paragraphe suivant comme raison du doute.
+
+Et **deux lignes contredisaient cette discipline sans qu'on le remarque** : le
+résumé final (« au Maghreb, en Turquie et dans le Golfe, oui ») affirmait à plat
+ce que le paragraphe d'au-dessus venait de refuser de garantir, et la
+**description qui part dans Google** disait « dans les pays musulmans, McDo est
+certifié halal ». Les deux portent désormais les trois pays vérifiés et la règle.
+Corriger un paragraphe sans corriger le résumé qui le contredit, c'est la leçon
+Domino's du 15 octobre — le corps prudent, la ligne que Google affiche non.
+
+#### Deux balayages propres, consignés pour ne pas les refaire à l'aveugle
+
+**Les dix guides de restaurants ne nomment aucun établissement.** Ils nomment
+des **quartiers** — Belsunce, Wazemmes, Arnaud-Bernard, la Guillotière, Noailles,
+la Paillade. Un quartier ne ferme pas le mois prochain. Il n'y a donc pas ici
+l'exposition « établissement inventé » que redoute la §8, et c'est un choix de
+conception qui tient. Rien à corriger.
+
+**`isla-delice-halal` tient aussi** : rien ne contredit la fiche, aucune trace
+d'un changement de certificateur, et elle présente déjà la certification ARGML
+comme **la déclaration du fabricant**, vérifiable sur le paquet — la bonne forme.
+
+`renvois.mjs` lancé sur McDonald's : une seule phrase ailleurs en parle, dans
+`quick-halal`, et elle reste exacte.
+
+**Suite complète : 23 gardes, 21 verts, 1 rouge, 1 mesure impossible.** Une
+seule date a changé au plan du site, `mcdo-halal` — vérification que l'audit n'a
+touché que ce qu'il devait toucher.
+
+Étape 0 : code 2, **trente-deuxième nuit aveugle**. `main` toujours à
+`94b078f` — 91 jours, **94 commits**, 207 fiches en ligne contre 255.
+
 ### 13 novembre — audit de péremption : ni KFC ni Popeyes ne nomme son certificateur
 
 Pas de fiche neuve — deux en deux nuits suffisent, et la consigne dit qu'une
