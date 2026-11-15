@@ -1,6 +1,6 @@
 {
-  "verifie_le": "2026-11-15 06:37 UTC",
-  "liens_controles": 979,
+  "verifie_le": "2026-11-15 15:40 UTC",
+  "liens_controles": 1359,
   "pages_vues": 370,
   "pages_connues": 1718,
   "morts": [],
@@ -12,12 +12,5 @@
       "detail": "code 401 — refuse les robots, pas forcement mort"
     }
   ],
-  "innocentes_au_controle_calme": [
-    {
-      "site": "gohalaltravel.com",
-      "genre": "interne",
-      "url": "https://www.gohalaltravel.com/priere/nador",
-      "detail": "URLError — aucun code de reponse"
-    }
-  ]
+  "innocentes_au_controle_calme": []
 }
