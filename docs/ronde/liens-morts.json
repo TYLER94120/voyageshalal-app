@@ -1,9 +1,23 @@
 {
-  "verifie_le": "2026-11-14 23:56 UTC",
-  "liens_controles": 1866,
+  "verifie_le": "2026-11-15 06:37 UTC",
+  "liens_controles": 979,
   "pages_vues": 370,
   "pages_connues": 1718,
   "morts": [],
-  "bloques": [],
-  "innocentes_au_controle_calme": []
+  "bloques": [
+    {
+      "site": "gohalaltravel.com",
+      "genre": "externe",
+      "url": "https://unsplash.com",
+      "detail": "code 401 — refuse les robots, pas forcement mort"
+    }
+  ],
+  "innocentes_au_controle_calme": [
+    {
+      "site": "gohalaltravel.com",
+      "genre": "interne",
+      "url": "https://www.gohalaltravel.com/priere/nador",
+      "detail": "URLError — aucun code de reponse"
+    }
+  ]
 }
