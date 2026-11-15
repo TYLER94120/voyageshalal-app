@@ -338,6 +338,78 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 15 novembre — la fiche disait « regarde le nom du certificateur » sans le nommer
+
+Fin de l'audit de péremption, tier le plus bas. **Et le défaut n'était pas une
+péremption : c'était un trou au milieu du conseil.**
+
+`quick-halal` consacre un paragraphe entier à la méthode — « le certificat porte
+le nom de l'organisme qui l'a délivré, c'est **ce nom** qui vous dit quel niveau
+d'exigence vous achetez, pas le mot halal sur une vitrine ». Et elle ne donnait
+jamais ce nom. Trois autres fiches du corpus le portent pourtant, dont
+`certifications-halal-france` et `isla-delice-halal`.
+
+**Ajouté — propagation, pas invention** : Quick est certifiée par l'**ARGML**,
+l'association rituelle de la Grande Mosquée de Lyon, depuis **avril 2012**, date
+à laquelle elle a remplacé la Grande Mosquée de Paris (volaille) et celle d'Évry
+(bœuf). Et ce nom décide : la fiche Isla Délice de ce site raconte que cette
+marque a quitté **AVS** pour l'ARGML la même année, **précisément sur
+l'étourdissement électrique**. C'est là que se joue le choix de beaucoup de
+gens, et aucune vitrine ne le dira. Ajouté aussi la limite : la certification
+porte sur **la viande**, pas sur tout ce qui se vend au comptoir.
+
+#### Une correction de direction, qui compte autant
+
+La fiche laissait entendre que la couverture halal avait **rétréci** depuis le
+rachat de l'enseigne. Or les sources ne se contredisent plus seulement sur le
+nombre :
+
+| ce que disent les sources | |
+|---|---|
+| certaines | **tout** le réseau français certifié depuis 2025 (188, 192 ou 196 restaurants selon la page) |
+| d'autres | encore **une soixantaine sur près de deux cents** |
+
+Le désaccord porte donc sur **la nature de la réponse**, pas sur une décimale.
+**Non vérifié** : ni communiqué de l'enseigne ni déclaration du certificateur
+trouvables, et les pages qui publient des chiffres sont exactement les guides
+commerciaux que cette fiche disqualifie déjà. Rien d'adopté — mais la
+conséquence pratique est inversée et désormais écrite : **« ne suppose pas non
+plus que la couverture est partielle. Demande. »**
+
+**Une fiche qui fait craindre plus que la réalité est fausse dans l'autre
+sens**, et c'est une forme d'erreur que je n'avais pas encore nommée ici. Toutes
+mes corrections d'octobre allaient dans le sens « le site annonçait halal à
+tort ». Celle-ci va dans l'autre : le site faisait douter là où la réponse est
+peut-être entière. Les deux coûtent au lecteur.
+
+Maillage : la fiche n'avait que **3** liens sortants et aucun vers les deux pages
+qui expliquent ce que ce certificateur implique. Ajoutés.
+
+#### Audit clos à 7 fiches sur 9, et c'est un choix
+
+| fiche | résultat |
+|---|---|
+| `kfc-halal` | tient — imprécision corrigée (ne nomme pas son certificateur) |
+| `popeyes-halal` | tient — même imprécision corrigée |
+| `mcdo-halal` | **une erreur** (Singapour), tableau des pays coupé en deux |
+| `quick-halal` | **un trou** (certificateur non nommé) + direction corrigée |
+| `isla-delice-halal` | tient, rien à changer |
+| les 10 guides de restaurants | ne nomment aucun établissement, seulement des quartiers |
+| `skittles-halal`, `babybel-halal` | **non vérifiés, délibérément** |
+
+Les deux derniers restent, et c'est assumé : leurs affirmations sont des
+compositions de produits **non certifiés**, déjà encadrées par la bonne formule
+(« vérifie l'emballage de ton pays d'achat », « il ne s'agit pas d'une
+certification »). Le gain marginal est faible, et vérifier pour vérifier serait
+du balayage. **Bilan de l'audit : une erreur, deux imprécisions, un trou, sur
+sept fiches contrôlées.**
+
+**Suite complète : 23 gardes, 21 verts, 1 rouge, 1 mesure impossible.** 255
+fiches, **1402** liens internes. Une seule date changée au plan du site.
+
+Étape 0 : code 2, **trente-troisième nuit aveugle**. `main` toujours à
+`94b078f` — 92 jours, **96 commits**, 207 fiches en ligne contre 255.
+
 ### 14 novembre — la leçon était appliquée à un paragraphe et pas à son voisin
 
 Suite de l'audit de péremption, tier suivant. Et la trouvaille est **une
