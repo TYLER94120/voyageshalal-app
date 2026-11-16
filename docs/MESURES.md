@@ -338,6 +338,56 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 16 novembre — la forme trouvée hier ne se généralise pas
+
+Hier, `quick-halal` disait « le nom du certificateur décide » et ne le nommait
+jamais. La forme semblait généralisable — **une fiche qui énonce une règle de
+décision et ne l'applique pas à son propre sujet** — et elle est mesurable.
+Donc mesurée sur les 255 fiches.
+
+Cinq fiches invoquent cette règle. Deux nomment un organisme. **Trois n'en
+nomment aucun — et les trois sont des faux positifs.**
+
+| fiche | pourquoi il n'y a rien à nommer |
+|---|---|
+| `burger-king-halal` | la marque **déclare** ne proposer aucune viande halal ; le conseil porte sur une exception locale contestée |
+| `buffalo-grill-halal` | aucune certification nationale, des franchises isolées |
+| `pizza-hut-halal` | des ingrédients certifiés dans un nombre limité de restaurants, **jamais les cuisines** — la fiche demande « par quel organisme » *parce que* cela varie d'un restaurant à l'autre |
+
+**La règle qui borne la forme** : *une fiche ne retient rien quand il n'y a rien
+à nommer à son échelle.* Quick avait une certification **d'enseigne**,
+documentée depuis 2012 ; ces trois n'ont pas de certification d'enseigne du
+tout. **60 % de faux positifs** — pas de garde-fou ici non plus, la distinction
+demande de lire.
+
+C'est la troisième fois ce mois-ci qu'une forme réelle, trouvée en corrigeant,
+se révèle trop rare pour devenir une règle automatique : les citations entre
+guillemets (3 nov, 10 bruits sur 15), les verdicts non attribués (3 nov, 55 faux
+sur 59), et celle-ci. **Généraliser une trouvaille est un réflexe juste ; la
+mesurer avant d'y croire est ce qui l'empêche de coûter.**
+
+#### Ce que la lecture a tout de même donné
+
+`pizza-hut-halal` porte l'idée la plus **transférable** du site — « un
+ingrédient peut être certifié sans que la cuisine le soit » —, celle que la
+consigne de la ronde cite elle-même. Mesure : **dix fiches** portent cette idée,
+et deux porteuses évidentes ne pointaient pas vers celle qui l'explique.
+
+| lien ajouté | ce qui le mérite |
+|---|---|
+| `dominos-pizza-halal` → `pizza-hut-halal` | son §2 parle du **même four** que les pizzas carnées ; pizza-hut développe exactement « certifié jusqu'où ? ». Elle n'avait que **3** liens sortants |
+| `quick-halal` → `pizza-hut-halal` | la ligne ajoutée hier — « la certification porte sur la viande, pas sur tout ce qui se vend au comptoir » — **est** cette distinction |
+
+Deux ajouts, **aucun échange** : les deux fiches avaient de la place. Ça change
+du cluster mort/héritage, saturé depuis le 12.
+
+**Suite complète : 23 gardes, 21 verts, 1 rouge, 1 mesure impossible.** 255
+fiches, **1404** liens internes, `pizza-hut-halal` de 4 à 6 entrants, toutes les
+fiches à 3 sauts ou moins.
+
+Étape 0 : code 2, **trente-quatrième nuit aveugle**. `main` toujours à
+`94b078f` — 93 jours, **98 commits**, 207 fiches en ligne contre 255.
+
 ### 15 novembre — la fiche disait « regarde le nom du certificateur » sans le nommer
 
 Fin de l'audit de péremption, tier le plus bas. **Et le défaut n'était pas une
