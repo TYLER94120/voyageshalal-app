@@ -338,6 +338,84 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 17 novembre — ma supposition était fausse, et dans la direction dangereuse
+
+Nouvelle fiche **`travailler-banque-halal`**. Aucune fiche, et aucune mention
+dans les 255, sur une question posée tous les jours ; travail/droit était l'un
+des domaines les plus minces.
+
+**Et la mesure m'a corrigé avant que j'écrive.** Je partais de l'idée que la
+majorité des savants distingue le **rôle** de l'employeur, comme ce site le
+fait déjà pour le caissier qui scanne de l'alcool. Les sources trouvables disent
+autre chose :
+
+| ce que j'ai cherché | ce que j'ai trouvé |
+|---|---|
+| une position du Conseil européen de la fatwa | **aucune** sur ce point précis |
+| la distinction par fonction comme avis majoritaire | rapportée par un **guide commercial**, pas par une autorité |
+| ce que disent les sites de fatwa de référence | un avis répandu tient l'emploi en banque pour non permis **y compris comme gardien**, au titre de l'aide à ce qui est interdit, avec exception de contrainte réelle |
+
+Si j'avais écrit depuis ma supposition, j'aurais produit une page **plus
+permissive que les sources ne le permettent** — l'erreur « fausse dans l'autre
+sens » nommée le 15 novembre, mais ici dans la direction qui coûte à Mohamed.
+
+**Donc la fiche n'établit aucune majorité, et le dit en première ligne.** Ce
+qu'elle apporte à la place vient du corpus lui-même : le hadith rapporté par
+**Mouslim** que porte déjà `riba-interet-islam` ne vise pas un établissement, il
+vise des **personnes** nommées une par une — « celui qui rédige l'acte, et les
+deux témoins ». D'où le renversement qui est tout l'apport de la page : **la
+mauvaise question est « mon employeur est-il une banque » ; la bonne est « que
+font mes mains ».** Suivent une zone sans ambiguïté, le désaccord réel sur les
+postes périphériques avec les deux raisons, le dégradé qui fait l'accord des
+deux côtés, la sortie par le haut, et le renvoi à un savant. Aucune recension du
+marché de la finance islamique — même refus que dans
+`assurance-auto-obligatoire-halal`.
+
+#### Et j'ai cassé quelque chose en cours de route
+
+Pour donner un lien entrant à la fiche neuve, j'ai **échangé** un lien de
+`caissier-scanner-alcool` au lieu d'en **ajouter** un — alors qu'elle avait de
+la place. `chat-maison-islam` est tombé de 4 à 3 entrants, **sous le plancher**.
+C'est exactement la vérification que j'avais faite le 12 novembre et pas ce
+soir : j'avais alors refusé un bon échange pour cette raison précise. Réparé
+dans le même commit.
+
+**La leçon n'est pas « vérifier après ». Le 12, j'ai mesuré avant d'échanger et
+j'ai renoncé. Le 17, j'ai échangé par habitude.** L'habitude s'était formée en
+cinq nuits de cluster saturé, où l'échange était la seule option.
+
+#### Outil : un défaut plus large que celui que je cherchais
+
+La grille de `que-ecrire.mjs` comptait `travailler-banque-halal` **deux fois**
+(finance + travail/droit). Le 3 novembre j'avais corrigé un cas de ce type en
+rétrécissant un mot-clé ; **ce n'était pas la cause.** La cause était le
+compteur, qui additionnait tous les domaines reconnaissant un slug.
+
+Désormais une fiche ne compte que dans le **premier** domaine qui la reconnaît —
+et la correction révèle que **six domaines étaient gonflés** :
+
+| domaine | annoncé | réel |
+|---|---|---|
+| prière / pureté | 21 | 20 |
+| ramadan / jeûne | 15 | 14 |
+| vie sociale / loisirs | 19 | 18 |
+| **apparence / parure** | **7** | **5** |
+| voyage / lieux | 31 | 29 |
+
+La somme des domaines égale enfin le nombre de fiches non alimentaires (**128**),
+ce qui n'avait jamais été le cas. Conséquence : les « domaines les plus minces »
+sur lesquels j'ai choisi mes terrains ces dernières semaines étaient légèrement
+faux — **apparence/parure est à 5, à égalité avec mort/héritage**, et je la
+croyais à 7. Et une conséquence consignée dans l'en-tête du script : l'**ordre**
+des clés décide maintenant du classement d'une fiche à l'intersection.
+
+**Suite complète : 23 gardes, 21 verts, 1 rouge, 1 mesure impossible.** 256
+fiches, **1414** liens internes, 0 renvoi mort, toutes à 3 sauts ou moins. Part
+alimentaire **50,0 %** — **11 fiches non alimentaires** pour 48 %.
+
+Étape 0 : code 2, **trente-cinquième nuit aveugle**. `main` toujours à
+`94b078f` — 94 jours, **100 commits**, 207 fiches en ligne contre 256.
+
 ### 16 novembre — la forme trouvée hier ne se généralise pas
 
 Hier, `quick-halal` disait « le nom du certificateur décide » et ne le nommait
