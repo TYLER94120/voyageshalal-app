@@ -338,6 +338,71 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 18 novembre — la correction d'hier a désigné le terrain, et le site rendait une erreur possible
+
+Nouvelle fiche **`perruque-islam`**, et c'est la correction de la grille d'hier
+qui l'a désignée : en rendant le compteur exact, apparence/parure est passé de 7
+à **5**, un domaine que je croyais fourni. Deux sujets y manquaient totalement,
+absents des 256 fiches — **les perruques** et l'épilation des sourcils —, tous
+deux nommés dans des hadiths que le corpus cite **déjà** avec leur attribution.
+
+#### Ce qu'il y a à comprendre, et c'est notre propre site qui rend l'erreur possible
+
+`greffe-cheveux-halal` conclut à la permission, et **tout son argument est
+qu'une greffe moderne est une autogreffe : rien ne vient de l'extérieur.** Qui
+en déduit « les cheveux, c'est permis » se trompe de raisonnement, parce qu'une
+perruque fait exactement l'inverse — elle **ajoute**. Ce n'est donc pas le même
+texte qui s'applique, et c'est celui que la fiche greffe porte déjà : « Allah a
+maudit celle qui ajoute des cheveux et celle qui demande qu'on lui en ajoute »
+(**Boukhari et Mouslim**). Attribution propagée, rien d'inventé.
+
+| lecture | ce qu'elle tient |
+|---|---|
+| **restrictive** | la perruque est l'ajout que le texte nomme, y compris posée sans attache — lecture malikite. Avec l'argument qui va avec : une femme qui a perdu ses cheveux garde de quoi **se couvrir**, et se couvrir n'est pas ajouter |
+| **permissive** | elle sépare le cas de la **maladie**, sur la distinction que ce site utilise déjà — effacer un défaut n'est pas ajouter un ornement. **Dār al-Iftāʾ d'Égypte, 2016**, pour des enfants sous chimiothérapie. **Cheikh al-Outhaymîn**, quand la repousse est sans espoir, tout en tenant la perruque d'embellissement pour interdite. Et l'**Académie internationale du fiqh islamique** (OCI) a rangé en **2007** la greffe en cas de chute parmi les actes esthétiques permis — la même instance que le corpus cite déjà |
+
+**Et une limite écrite dans la fiche elle-même** : ces deux attributions, je les
+ai lues **relayées par des sites**, pas dans les décisions. Elles sont données
+comme des positions attribuées, pas comme des textes vérifiés. Le dire est le
+minimum quand le lecteur décidera peut-être sur cette base — au milieu d'une
+chimiothérapie.
+
+**Le point que personne ne relie** : pour le ghusl, l'eau doit atteindre le cuir
+chevelu, donc une perruque s'enlève — comme des extensions imperméables, ce que
+`ghusl-grande-ablution` dit déjà. **Licéité et validité de l'ablution sont deux
+questions différentes**, et on les confond.
+
+**Volet français** : le mécanisme (prescription mentionnant la chimiothérapie ou
+la radiothérapie crânienne, renouvelable tous les douze mois ; classes de
+prothèses ; mutuelle responsable). **Pas les montants** — les sources ne
+concordent pas pour 2026, et un chiffre faux sur une dépense de santé coûte plus
+qu'un chiffre absent. Même discipline que pour le nombre de KFC.
+
+#### Aucun échange, et la vérification d'hier a payé dès le lendemain
+
+`greffe-cheveux-halal` est le lien entrant le plus mérité — et elle est au
+plafond. Ses deux liens les plus faibles, `chicha-halal` et `puff-vape-halal`
+(rien ne mène d'une greffe de cheveux au tabac), sont à **exactement 4
+entrants** : les retirer cassait un plancher. **C'est la faute que j'ai commise
+hier**, et cette fois j'ai mesuré avant. Quatre sources avec de la place ont été
+prises à la place : `teinture-cheveux-islam`, `ghusl-grande-ablution` (le point
+de l'eau), `piercing-halal`, `barbe-islam`.
+
+#### Outil : la grille ne comptait pas la fiche que la grille m'a fait écrire
+
+`perruque` n'était pas dans ses mots-clés. J'ai écrit cette fiche **parce que**
+la grille disait ce domaine mince, et la grille l'ignorait — c'est son propre
+compteur de hors-grille qui l'a dit. Mot-clé ajouté : 0 hors grille, somme des
+domaines = 129 fiches, apparence/parure à 6.
+
+**Suite complète : 23 gardes, 21 verts, 1 rouge, 1 mesure impossible.** 257
+fiches, **1424** liens internes, 0 renvoi mort, toutes à 3 sauts ou moins. Part
+alimentaire **49,8 %** — **sous les 50 % pour la première fois**. Il reste
+**10 fiches non alimentaires** pour atteindre les 48 %.
+
+Étape 0 : code 2, **trente-sixième nuit aveugle**. `main` toujours à
+`94b078f` — 95 jours, **102 commits**, 207 fiches en ligne contre 257.
+
 ### 17 novembre — ma supposition était fausse, et dans la direction dangereuse
 
 Nouvelle fiche **`travailler-banque-halal`**. Aucune fiche, et aucune mention
