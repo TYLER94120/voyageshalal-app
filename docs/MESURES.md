@@ -338,6 +338,70 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 19 novembre — une contradiction dans notre propre corpus, deux nuits de suite
+
+Nouvelle fiche **`epilation-sourcils-islam`**, le second sujet manquant du
+domaine que la correction de la grille avait désigné le 17. Une des questions
+les plus posées, et presque toujours traitée par **un seul mot** — permis, ou
+interdit — là où les savants distinguent **quatre gestes**.
+
+| le geste | ce que disent les avis |
+|---|---|
+| retirer les poils **entre** les sourcils | aucune divergence sérieuse : ils ne font pas partie des sourcils |
+| couper ce qui **dépasse**, sans amincir ni changer la forme | largement toléré |
+| **amincir** ou **redessiner** | c'est là que le désaccord commence, et il est réel |
+| **changer complètement l'aspect** | le cœur de ce que le texte désigne |
+
+**Et sur la zone qui divise, la fiche dit ne pas savoir** — explicitement, parce
+que les pages qui tranchent le font sans preuve. Mes sources se contredisent sur
+ce point précis : certaines annoncent que la majorité interdit, d'autres que
+l'avis le plus fort permet de redessiner. Trois positions rapportées comme
+telles — la restriction **malikite** au cas du sourcil très fin et complètement
+changé, l'accord du mari pour la femme mariée, et l'interdiction large. Laquelle
+prévaut : **non établi**, et la limite des sources est écrite dans la fiche
+(sites et forums, pas des décisions d'instances).
+
+Le reste du visage est traité à part, parce qu'on confond : beaucoup de savants
+ne voient pas d'inconvénient aux poils hors sourcils, **an-Nawawī** était plus
+sévère et les rattachait aux sourcils. Ce qu'on lit sur les sourcils ne se
+transporte pas au duvet.
+
+#### La trouvaille est dans notre propre corpus — et c'est la deuxième fois en deux nuits
+
+`chirurgie-esthetique-halal` se terminait sur : « le maquillage, la coiffure,
+**les soins non permanents ne relèvent pas de ce débat** » — deux phrases après
+avoir cité un hadith qui **nomme l'épilation des sourcils**, laquelle n'est pas
+permanente. Un lecteur pouvait en conclure que le geste nommé par le texte était
+hors du débat. Corrigé : « non permanent » n'est pas le critère, l'**altération
+durable de l'apparence créée** l'est.
+
+| nuit | la fiche neuve a révélé |
+|---|---|
+| 18 nov | `greffe-cheveux-halal` conclut à la permission parce qu'une autogreffe n'ajoute rien — d'où l'on pouvait déduire à tort que la perruque suit |
+| 19 nov | `chirurgie-esthetique-halal` excluait du débat les soins non permanents — dont le geste que son propre hadith nomme |
+
+**Écrire la fiche voisine est devenu la meilleure façon de relire une fiche
+existante.** Ce n'est pas un hasard : une fiche se juge seule, mais une
+contradiction ne se voit qu'entre deux. Les gardes automatiques ne l'attrapent
+pas — ils vérifient des formes, pas des raisonnements.
+
+#### Maillage et outil
+
+Quatre liens entrants, **aucun échange**, aucune cible au plancher :
+`perruque-islam`, `rouge-levres-carmin-halal`, `barbe-islam`, `piercing-halal`.
+
+Et **hors grille pour la deuxième nuit d'affilée** — prévisible : un sujet neuf
+n'est pas dans une liste de mots-clés tirée du catalogue. Mots-clés ajoutés, et
+la leçon consignée dans l'en-tête du script : **le bon geste est d'ajouter le
+mot-clé en même temps que la fiche. Écrire une fiche, c'est aussi la classer.**
+
+**Suite complète : 23 gardes, 21 verts, 1 rouge, 1 mesure impossible.** 258
+fiches, **1434** liens internes, 0 renvoi mort, toutes à 3 sauts ou moins. Part
+alimentaire **49,6 %** — **9 fiches non alimentaires** pour 48 %.
+
+Étape 0 : code 2, **trente-septième nuit aveugle**. `main` toujours à
+`94b078f` — 96 jours, **104 commits**, 207 fiches en ligne contre 258.
+
 ### 18 novembre — la correction d'hier a désigné le terrain, et le site rendait une erreur possible
 
 Nouvelle fiche **`perruque-islam`**, et c'est la correction de la grille d'hier
