@@ -1,8 +1,8 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-11-18 02:16 UTC.**
+**Dernier changement constate le 2026-11-19 01:23 UTC.**
 
-⚠️ **Cette ronde a regarde 181 pages sur 2058 — environ 9 %.**
+⚠️ **Cette ronde a regarde 183 pages sur 2058 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
@@ -17,8 +17,8 @@ que rien de nouveau n'est casse, pas que le robot dort.
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 0 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
+| 🟠 defaut | 4 | il la recoit, mais elle le dessert |
+| 🟡 a surveiller | 1 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -29,10 +29,26 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 |---|---|---|
 | islampasapas.fr | 41 | 0 |
 | voyageshalal.fr | 41 | 0 |
-| gohalaltravel.com | 41 | 0 |
+| gohalaltravel.com | 41 | 5 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 17 | 0 |
+| halalcheck.fr | 19 | 0 |
 
-## Rien a signaler
+## 🟠 defaut — 4
 
-5 site(s) sur 5 ont rendu des pages, et celles-ci sont correctes.
+### gohalaltravel.com (4)
+
+- **titre en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel — « Pray at Resto traditionnel spécial jus de fruit et pétit… »  
+  `https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej`
+- **description en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel  
+  `https://www.gohalaltravel.com/priere/marrakech/resto-traditionnel-special-jus-de-fruit-et-petit-dej`
+- **titre en francais sur le domaine anglais** — mots francais : avec, piscine, resto — « Where to pray at Resto avec piscine — Tafoughalt… »  
+  `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
+- **description en francais sur le domaine anglais** — mots francais : avec, piscine, resto  
+  `https://www.gohalaltravel.com/priere/tafoughalt/resto-avec-piscine`
+
+## 🟡 surveiller — 1
+
+### gohalaltravel.com (1)
+
+- **page lente (3.1 s)** — au-dela de 3 s, une part des visiteurs repart  
+  `https://gohalaltravel.com/`
