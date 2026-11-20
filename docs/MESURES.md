@@ -338,6 +338,104 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 20 novembre — deux pages se renvoyaient l'une à l'autre, et le plan du site mentait à Google
+
+Pas de fiche neuve. Deux trouvailles, et la seconde est la plus grave.
+
+#### 1. La mesure qui généralise les deux nuits précédentes
+
+Les 18 et 19, la fiche neuve a révélé une contradiction dans une fiche
+existante. C'est la classe de défaut que les 23 gardes **ne peuvent pas**
+attraper — ils vérifient des formes, pas des raisonnements. Cherchée cette fois
+systématiquement : **quand deux fiches citent la même source, disent-elles la
+même chose ?**
+
+Index sur les 258 fiches : **neuf sources** sont citées par plusieurs fiches,
+les seules où une contradiction est possible. AVS (6 fiches) : cohérent partout.
+MUIS (3) : cohérent. Cour de cassation (5) : arrêts différents, rien à
+confronter. **Mais ARGML, dans 4 fiches, a révélé pire qu'une contradiction.**
+
+| page | ce qu'elle fait |
+|---|---|
+| `certifications-halal-france` ★ porte | nomme « le grand clivage » (étourdissement accepté ou refusé), place **AVS** d'un côté, **laisse ARGML non placée**, et renvoie à « notre page dédiée » |
+| `abattage-etourdissement-halal` | nomme la position souple « d'autres certificateurs » **sans en citer un seul**, et conclut « chaque organisme publie la sienne — voir notre page sur les certifications » |
+
+**Les deux pages se renvoient l'une à l'autre pour le même fait, et il n'est
+dans aucune des deux.** Le lecteur fait l'aller-retour et n'apprend rien.
+
+Et **ma propre formulation était trop grossière dans les deux sens** :
+`isla-delice-halal` et `quick-halal` racontent le passage d'AVS à l'ARGML « sur
+la question de l'étourdissement », d'où l'on déduit que l'ARGML *accepte*
+l'étourdissement. Vérification : faux. Sa position n'est **ni un refus ni une
+permission**, elle est **conditionnelle** — son contrôleur vérifie que la
+volaille est **encore vivante à la sortie du bain**, et une bête morte ou
+cliniquement morte à ce stade ne peut pas être égorgée.
+
+**Et la condition n'est pas décorative** : en **décembre 2021**, l'ARGML a
+**suspendu** sa certification chez un partenaire historique de la volaille,
+jugeant que les nouveaux paramètres électriques imposés par une instruction
+ministérielle tuaient presque toujours l'animal avant l'égorgement. Un organisme
+qui se retire plutôt que de céder sur sa condition en dit plus long que
+« rigoureuse également », qui était tout ce que la page de référence en disait.
+Réserves écrites dans la fiche : sources de 2021 et avant, cahier des charges
+actuel **non vérifié**, et une association de consommateurs conteste depuis 2008
+que l'électronarcose soit une sédation.
+
+#### 2. Le plan du site annonçait des mises à jour qui n'avaient pas eu lieu
+
+**Trouvé par une mesure impossible.** Après les corrections, la redate a fait
+**reculer** la date de modification de trois fiches que je n'avais pas touchées.
+Une date de modification ne recule pas : l'une des deux valeurs était fausse.
+**Je n'ai pas commité la redate et j'ai regardé la méthode.**
+
+`dates-fiches.mjs` définissait le bloc d'une fiche comme allant de sa ligne
+`slug:` à celle précédant le `slug:` **suivant**. Il incluait donc le `  },` qui
+ferme la fiche et le `  {` qui ouvre la suivante — **deux lignes identiques dans
+les 258 entrées**. Or `git log -L` suit une plage par son contenu : des lignes
+génériques lui permettent de s'accrocher à la frontière de n'importe quelle
+autre fiche. Il rapportait pour une fiche la date d'une modification faite chez
+sa **voisine**.
+
+| vérifié à la main | ce que disait le fichier | la réalité |
+|---|---|---|
+| `mauvais-oeil-protection` | modifiée le 28 octobre | `git log -S` sur « roqya légiférée » : **un seul commit, le 8 août**, celui qui la crée. Son texte n'a jamais changé |
+| `nombre-rakat-priere` | modifiée le 31 octobre | créée le 14 août à 01h17, texte touché une dernière fois à 10h55, **rien depuis** |
+
+**C'était l'ancienne valeur qui était fausse.** Et la conséquence est exactement
+ce que l'en-tête de ce script interdit depuis le premier jour : *« une date de
+mise à jour fausse est une promesse fausse, faite au lecteur autant qu'à
+Google »*. La règle était écrite dans le fichier ; la méthode la violait.
+
+**Troisième fois cette semaine qu'une règle écrite n'est pas appliquée par ce
+qu'elle gouverne** — la fiche greffe le 18, la fiche chirurgie esthétique le 19,
+ce script le 20. Ce n'est plus une coïncidence : **une règle écrite à côté du
+mécanisme qu'elle décrit ne le contraint pas.** C'est la même leçon que « un
+commentaire n'est pas un garde-fou », mais appliquée au contenu et aux outils,
+pas seulement au code.
+
+Correction : le bloc s'arrête à la ligne `related:` de la fiche, toujours la
+dernière de l'entrée (vérifié : les 258 en ont une). **Effet sur les 258 : 248
+inchangées, 6 fausses mises à jour retirées, 4 dates avancées — les quatre
+fiches réellement corrigées ce soir.** Le plan annonce désormais le 8 août pour
+`mauvais-oeil-protection`. Et l'erreur résiduelle penche du bon côté : quand le
+suivi ne voit plus rien, la date retombe sur la publication — **une date trop
+ancienne sous-estime une mise à jour ; une date trop récente la promet à tort.**
+
+#### Un défaut que j'ai failli rapporter et qui n'en est pas un
+
+Le `short` de `certifications-halal-france` fait **213 caractères** pour une
+limite d'affichage de 160, et `test-descriptions` passe au vert. Ce n'est pas une
+faille du garde : `descriptionDeFiche` tronque **délibérément** à la dernière
+phrase complète qui tient. Mesure sur la page servie : **136 caractères**, coupés
+proprement. Mécanisme, pas défaut — et c'est la leçon du 4 novembre qui a servi :
+mesurer le serveur, pas la source.
+
+**Suite complète : 23 gardes, 21 verts, 1 rouge, 1 mesure impossible.** 258
+fiches, 1434 liens internes.
+
+Étape 0 : code 2, **trente-huitième nuit aveugle**. `main` toujours à
+`94b078f` — 97 jours, **106 commits**, 207 fiches en ligne contre 258.
+
 ### 19 novembre — une contradiction dans notre propre corpus, deux nuits de suite
 
 Nouvelle fiche **`epilation-sourcils-islam`**, le second sujet manquant du
