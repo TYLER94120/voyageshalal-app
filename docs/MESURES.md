@@ -338,6 +338,71 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 21 novembre — j'ai fini ce que j'avais annoncé, et bâti un validateur qui ne pouvait pas marcher
+
+Pas de fiche neuve. Trois choses, et la deuxième est une erreur de ma part.
+
+#### 1. Finir ce que j'avais annoncé
+
+Hier j'ai retiré **six** fausses dates de mise à jour du plan du site en n'en
+ayant vérifié que **deux** à la main — et je l'ai rapporté comme six
+corrections. Les quatre autres sont maintenant vérifiées :
+
+| fiche | texte vu dans | date stockée |
+|---|---|---|
+| `voyage-halal-doha` | un seul commit, 4 août 16h34 | identique à la seconde |
+| `voyage-halal-new-york` | un seul commit, 4 août 16h50 | identique |
+| `pizza-hut-halal` | un seul commit, 30 août 13h56 | identique |
+| `ia-halal` | un seul commit, 12 août 01h13 | identique |
+
+**Les six corrections sont confirmées par une méthode indépendante.** Une
+affirmation reportée sur un échantillon n'est pas fausse, mais elle n'est pas
+finie — et c'est à moi de la finir, pas au lecteur de me croire.
+
+#### 2. Un validateur qui ne pouvait pas marcher
+
+J'ai voulu valider les 252 autres dates par `git log -S` sur des fragments du
+texte de chaque fiche. **35 fiches signalées sur 40.** Et la raison est écrite
+dans l'en-tête du script que je prétendais valider :
+
+> *modifiée — `git log -L` sur le bloc de la fiche […] C'est la seule façon de
+> voir un enrichissement, que `-S` manque complètement.*
+
+**J'ai bâti un validateur sur la technique que la documentation déclare aveugle
+à la chose mesurée.** Rien n'est commité, et le pourquoi est désormais dans
+l'en-tête du garde pour que personne ne recommence.
+
+C'est la treizième fois ce mois-ci qu'une mesure sur-signale, et la première où
+la réponse était écrite d'avance, à l'endroit exact où je travaillais. Hier je
+notais qu'une règle écrite à côté d'un mécanisme ne le contraint pas. Ce soir :
+**une règle écrite à côté d'un mécanisme ne m'a pas contraint non plus.**
+
+#### 3. Le contrôle qui, lui, est exact
+
+`dates-fiches.mjs` porte depuis le premier jour : « ces dates ne sont jamais
+inventées ; une date de mise à jour fausse est une promesse fausse, faite au
+lecteur autant qu'à Google ». **Rien ne l'appliquait** — et le 20 novembre la
+méthode la violait sans bruit.
+
+Le nouveau contrôle (section 0 de `test-sitemap.mjs`) n'attrape pas « la date
+est-elle la **bonne** » : il faudrait refaire le calcul. Il attrape l'autre
+moitié, **sans aucun faux positif possible** : toute date du fichier doit être
+l'horodatage d'un commit ayant touché `lib/questions.ts`. Mesure : **516 dates
+sur 516**, 70 commits, zéro orpheline.
+
+Ajouté au passage le **code 2** qui manquait à ce garde — serveur absent = mesure
+impossible, pas site cassé. Et un défaut de **ma** conception trouvé par l'essai
+d'acceptation : avec une date fabriquée **et** le serveur absent, le code restait
+2, donc le défaut était masqué. Corrigé — « mesure impossible » ne doit jamais
+effacer un défaut déjà mesuré. Les trois cas vérifiés : date fabriquée + serveur
+absent = **1**, fichier propre + serveur absent = **2**, tout présent = **0**.
+
+**Suite complète : 23 gardes, 21 verts, 1 rouge, 1 mesure impossible.** 258
+fiches, 1434 liens internes.
+
+Étape 0 : code 2, **trente-neuvième nuit aveugle**. `main` toujours à
+`94b078f` — 98 jours, **107 commits**, 207 fiches en ligne contre 258.
+
 ### 20 novembre — deux pages se renvoyaient l'une à l'autre, et le plan du site mentait à Google
 
 Pas de fiche neuve. Deux trouvailles, et la seconde est la plus grave.
