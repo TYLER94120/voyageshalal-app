@@ -327,6 +327,15 @@ répond pas à cette question-là.
   l'empire. Sans cela l'étape 0 de la ronde reste aveugle : la liste blanche du
   conteneur ne les laisse sortir ni par le résolveur DNS ni par le proxy (§5).
   Aucun contournement de mon côté — c'est un réglage, pas une panne.
+- **Et trois hôtes de droit français**, refusés au CONNECT (403) :
+  `legifrance.gouv.fr`, `service-public.fr`, `justice.gouv.fr` — plus
+  `codes.droit.org`, qui reproduit les codes. Ce n'est pas du confort : une
+  quinzaine de fiches du cluster « droit français et islam » citent un article
+  de loi, et je ne peux vérifier aucun texte consolidé moi-même. Le 22 novembre,
+  le délai de six mois qui décide du sort d'un organe prélevé a dû être écrit
+  d'après des commentaires convergents, et la fiche le dit. Les outils
+  d'environnement demandent une approbation humaine qu'une ronde de 00 h 38 ne
+  peut pas obtenir : c'est à faire depuis les réglages.
 - **Renvoyer le sitemap de halalgpt dans Search Console** — l'action de
   récupération la plus rentable après la panne, toujours pas faite.
 - Ajouter une propriété **Domaine** pour `islampasapas.fr` (seulement en préfixe
@@ -337,6 +346,104 @@ répond pas à cette question-là.
 ---
 
 ## 10. Journal des rondes
+
+### 22 novembre — un droit annoncé sans le délai qui l'enferme
+
+Pas de fiche neuve. Une fiche corrigée, et c'est la correction la plus lourde
+de conséquence depuis celle de KFC le 29 octobre — mais en sens inverse : KFC
+disait une chose fausse, celle-ci taisait la moitié utile d'une chose vraie.
+
+#### 1. Le défaut
+
+`autopsie-islam-france`, écrite le 6 octobre, annonçait à une famille musulmane
+un droit réel : quand des prélèvements portant sur **l'intégralité d'un organe**
+ont été faits et que leur conservation n'est plus nécessaire à l'enquête,
+l'autorité judiciaire en ordonne la restitution aux proches **qui en font la
+demande**. La fiche ajoutait, à juste titre, « personne ne la proposera
+spontanément » et « c'est une démarche à faire ».
+
+**Elle ne disait pas quand.** Or la demande est enfermée dans un délai, et faute
+de demande les prélèvements sont **détruits**. Une famille qui suivait cette
+fiche à la lettre pouvait perdre le droit qu'elle venait d'y apprendre, et
+perdre l'organe avec. C'est l'erreur dans le sens qui coûte au lecteur : la page
+le rassurait sur une démarche qu'elle présentait comme ouverte.
+
+Ce qui manquait formait une chaîne dont je n'avais que le premier et le dernier
+anneau :
+
+| | Ce que la loi prévoit | La fiche le disait ? |
+|---|---|---|
+| 1 | Art. 230-28 al. 3 : sauf si la manifestation de la vérité le commande, le praticien **ne prélève pas** l'intégralité d'un organe | non — et c'est la protection la plus importante pour ce lectorat |
+| 2 | Les proches obtiennent **sur demande la liste exhaustive** des prélèvements | non — or c'est le seul moyen de savoir s'il y a quelque chose à réclamer |
+| 3 | La demande s'adresse au **procureur** pendant l'enquête, au **juge d'instruction** si une information est ouverte | non — « l'autorité judiciaire » ne dit pas à qui écrire |
+| 4 | **Six mois** à compter de l'information donnée aux proches, et destruction à défaut | non |
+
+L'anneau 2 est celui qui rendait les autres inutilisables : **on ne réclame pas
+ce dont on ignore l'existence.**
+
+#### 2. Ce que je n'ai pas pu lire, et qui est écrit dans la fiche
+
+Légifrance, `codes.droit.org` et `justice.gouv.fr` sont **tous les trois refusés
+au CONNECT** par la politique réseau du conteneur (403) — un hôte de plus à la
+liste du §9. Le numéro et la date de la loi (**n° 2026-651 du 23 juillet 2026**,
+sur la justice criminelle et le respect des victimes) sont confirmés, ainsi que
+les articles réécrits. Le délai de six mois et la destruction viennent de
+**commentaires convergents** de la loi, pas du texte consolidé.
+
+La fiche le dit en son nom propre, comme `contrat-obseques-halal` le 3 novembre
+et `mahr-dot-mariage-islam` avant elle. Et la conduite qu'elle recommande ne
+dépend pas du chiffre : **demander la liste, puis la restitution, par écrit,
+tout de suite.** C'est vrai que le délai soit de six mois ou de trois.
+
+Corrigé aussi : « codifiée aux articles 230-28 à **230-31** » devient « réécrit
+les articles 230-28 à **230-30** » — 230-31 appartient au chapitre mais n'a pas
+été réécrit. Le délai d'**un mois** pour le permis d'inhumer est confirmé et
+reste : un commentaire prétendait que la loi l'avait supprimé, c'est l'avis
+isolé, et Légifrance le contredit.
+
+#### 3. La voisine, lue pour la même raison
+
+`don-organes-islam`, puisque la relecture par voisinage est ce qui trouve les
+contradictions que les 23 gardes ne voient pas. **Elle ne contredit pas.** Don
+volontaire et prélèvement judiciaire forcé sont deux régimes distincts, et
+chaque fiche reste dans le sien — l'une parle de consentement présumé au don,
+l'autre d'une contrainte qui ne dépend pas de la famille. Rien à réparer. Un
+audit qui revient propre est un résultat, et il est noté pour ne pas être refait.
+
+#### 4. L'instrument que je ne garde pas — deuxième nuit de suite
+
+J'ai sondé les 258 fiches pour la **forme** du défaut : « on peut demander »
+sans aucun délai nommé. 10 fiches désignées ; les deux plus à enjeu
+(`mahr-dot-mariage-islam`, `garde-enfants-divorce-france`) sont **intactes** à la
+lecture — la première dit explicitement ce qu'elle n'a pas pu établir, la
+seconde n'annonce aucun droit à délai.
+
+Mais le point décisif est l'essai d'acceptation, fait sur le fichier **d'avant**
+la correction : **la sonde ne signale pas `autopsie-islam-france`.** Le délai
+d'un mois pour le corps, présent dans la fiche, masquait l'absence de délai pour
+les organes. Elle mesure la fiche, le défaut est par droit.
+
+**Aveugle à ce qu'elle cherche — exactement la faute du validateur `git log -S`
+d'hier.** Deux nuits de suite, un instrument construit sur une granularité qui
+ne peut pas atteindre la chose mesurée. La leçon se durcit : *avant d'écrire une
+sonde, l'essayer sur le défaut qui l'a motivée — si elle ne le trouve pas, elle
+ne trouvera pas ses frères.* Elle reste dans le bloc-notes, elle ne devient pas
+un garde-fou.
+
+#### 5. Mesures de la nuit
+
+| | |
+|---|---|
+| Étape 0 (DNS) | **code 2, quarantième nuit aveugle.** Témoins google/cloudflare/example ne résolvent pas : c'est la sortie du conteneur, pas l'empire |
+| Étape 0 bis (contenu de `main`) | `main` toujours à `94b078f`, **207 fiches** contre 258 sur la branche. 99 jours, 107 commits |
+| Fiches | 258, inchangé |
+| Liens internes | 1434, médiane 4 entrants, aucune impasse |
+| Suite | 23 gardes — **21 verts, 1 rouge** (`test-nourriture`), 1 code 2 (`test-dns`) |
+| Redatage | **une fiche touchée, une date qui bouge** (28 oct → 22 nov). 257 inchangées — première vérification de la borne réparée le 20 novembre, où deux corrections avaient fait bouger dix dates dont six fausses |
+| Part alimentaire | 49,6 % — 128 nourriture, 130 vie générale, 9 fiches non alimentaires encore à écrire pour 48 % |
+| Hors grille | **0 fiche sur 130** — les mots-clés ont enfin rattrapé le catalogue |
+
+Commits `19c4ca1` et `9a4b3b6` sur `claude/reconciliation`.
 
 ### 21 novembre — j'ai fini ce que j'avais annoncé, et bâti un validateur qui ne pouvait pas marcher
 
