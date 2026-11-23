@@ -347,6 +347,124 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 23 novembre — je me suis trompé hier en disant que c'était isolé
+
+Pas de fiche neuve. Deux fiches corrigées, et une **rétractation** : l'entrée
+du 22 novembre finissait sur « tonight's defect is isolated », après avoir lu
+deux voisines intactes. **C'est faux.** Un inventaire que j'aurais dû faire
+avant de conclure montre le même défaut dans deux autres fiches, dont une
+écrite de ma main le 11 novembre. Trois fiches en deux nuits.
+
+La leçon est sur la méthode, pas sur les fiches : **deux lectures ne font pas
+un inventaire.** Hier j'ai lu les deux voisines les plus à enjeu, elles étaient
+intactes, et j'ai transformé « ces deux-là vont bien » en « le défaut est
+isolé ». C'est le pas de trop, et c'est exactement ce que la skill
+`mesurer-avant-daffirmer` interdit — sauf que cette fois l'affirmation portait
+sur l'absence d'un défaut, et une affirmation d'absence n'avait jamais été
+traitée comme une affirmation à mesurer.
+
+#### 1. L'inventaire qui manquait
+
+**13 fiches sur 258 citent un texte de droit français précis, 28 références au
+total.** Toutes dans la catégorie Pratique. Le §9 estimait « une quinzaine » :
+l'estimation était honnête.
+
+| Fiche | Références |
+|---|---|
+| `voile-ecole-france` | L. 141-5-1, L. 141-6 c. éduc., loi n° 2004-228 |
+| `nikah-pacs-france` | 515-4, 515-6, 763 c. civ., 796-0 bis CGI |
+| `autopsie-islam-france` | 74 CPP, 230-28 à 230-30, loi n° 2026-651 |
+| `voile-travail-france` | L. 1321-2-1, L. 1132-1 c. trav. |
+| `enterrement-musulman-france` | L. 2223-2 CGCT, directive du 19 fév. 2008 |
+| `contrat-obseques-halal` | L. 2223-34-1, L. 2223-33-1 CGCT |
+| `garde-enfants-divorce-france` | 373-2, 373-2-1 c. civ. |
+| `dettes-defunt-islam` | 768, 786 c. civ. |
+| `assurance-vie-halal` | L. 132-12, L. 132-13 c. ass. |
+| `assurance-auto-obligatoire-halal` | L. 211-1, L. 324-2 c. ass. |
+| `mariage-religieux-civil-france` | 433-21 c. pén. |
+| `divorce-religieux-civil-france` | article 5 |
+| `heritage-succession-france` | 913 c. civ. |
+
+Classées par ce qu'une erreur coûte au lecteur, les deux premières traitées
+sont celles où l'on paie de son propre argent.
+
+#### 2. `dettes-defunt-islam` — deux délais donnés sans leur levier
+
+**Art. 772.** La fiche disait : « cette sommation ouvre **deux mois**, et le
+silence vaut acceptation pure et simple ». Vrai. Elle ne disait pas que **le
+même article permet de demander un délai supplémentaire au juge** quand
+l'inventaire n'a pas pu être clos, ou pour d'autres motifs sérieux et
+légitimes. Un héritier a deux mois pour décider s'il paiera sur ses propres
+biens, et la fiche ne lui donnait pas la demande qui lui rend du temps.
+
+**Art. 786.** La fiche renvoyait « aux conditions et aux délais que ce texte
+prévoit » — c'est-à-dire à un texte que le lecteur n'ira pas lire. Nommés
+maintenant :
+
+- **deux conditions cumulatives** — bonnes raisons d'ignorer la dette **et**
+  paiement qui **obère gravement le patrimoine personnel** ; cette seconde
+  condition est à la charge de l'héritier, et les juridictions l'appliquent
+  strictement ;
+- **cinq mois** à compter du jour où il a connu **l'existence et l'importance**
+  de la dette — pas du décès, pas de l'acceptation ;
+- tribunal judiciaire du **lieu d'ouverture** de la succession.
+
+#### 3. `nikah-pacs-france` — et celle-ci fermait une porte peut-être ouverte
+
+La fiche affirmait, d'après Cass. 1re civ. 27 janvier 2021, que le partenaire
+qui a remboursé seul l'emprunt du logement indivis « ne peut pas réclamer une
+créance à ce titre ». **La décision existe** (pourvoi n° 19-26.140, désormais
+cité) et dit bien cela. Mais elle portait sur la **résidence principale** du
+couple et mesure les versements **aux facultés de celui qui a payé**. Un bien
+qui n'est pas le logement de la famille, des versements hors de proportion, ou
+une **clause du contrat de PACS** fixant la part de chacun dans l'aide
+matérielle — l'art. 515-4 réserve expressément la convention contraire — ne
+donnent pas forcément le même résultat.
+
+**C'est l'erreur dans le sens qui coûte**, celle de Subway le 29 octobre :
+faire renoncer un lecteur à ce qui lui est permis, ou ici à une créance qu'il
+a. Corrigée avec le levier nommé : *la clause se rédige au moment du PACS, pas
+au moment de la rupture.*
+
+#### 4. Vérifié et intact — huit points
+
+Art. 768 (les trois branches de l'option), les **quatre mois** de l'art. 771,
+la sommation par acte extrajudiciaire qu'une lettre recommandée ne remplace
+pas, les **dix ans** de l'art. 780, art. 515-4, art. 515-6 par renvoi à 763, et
+l'**exonération totale de droits de succession du partenaire pacsé** (art.
+796-0 bis CGI). Rien à reprendre. Noté pour ne pas être refait.
+
+#### 5. La réserve que je n'ai pas réécrite, et pourquoi
+
+Légifrance reste refusé au CONNECT (403). Tout ce qui précède vient de sources
+secondaires nombreuses et convergentes, dont plusieurs citent le texte.
+
+**Je n'ai pas remis dans ces deux fiches la mention « nous n'avons pas pu lire
+le texte consolidé ».** Hier elle portait un chiffre isolé et contesté — les
+six mois de l'art. 230-30 ; ici elle porterait huit points convergés. *Une
+réserve écrite partout ne signale plus rien.* Le choix est discutable et il est
+écrit ici pour qu'il le soit.
+
+#### 6. Mesures de la nuit
+
+| | |
+|---|---|
+| Étape 0 (DNS) | **code 2, quarante-et-unième nuit aveugle** |
+| Étape 0 bis | `main` toujours à `94b078f`, **207 fiches contre 258**. **100 jours**, 109 commits |
+| Fiches | 258, inchangé |
+| Liens internes | 1434, médiane 4 entrants, aucune impasse — rien à réparer |
+| Suite | 23 gardes — **21 verts, 1 rouge** (`test-nourriture`), 1 code 2 |
+| Redatage | **deux fiches touchées, deux dates qui bougent.** Deuxième vérification de la borne réparée le 20 novembre |
+| Part alimentaire | 49,6 % — 9 fiches non alimentaires encore à écrire pour 48 % |
+
+Commits `061d5de` et `ce91105` sur `claude/reconciliation`.
+
+**Reste de l'inventaire à vérifier**, par ordre d'enjeu décroissant :
+`heritage-succession-france` (913), `voile-ecole-france` et
+`voile-travail-france` (un droit qu'on abandonne ou un combat perdu d'avance),
+`assurance-vie-halal` (L. 132-12/13), `divorce-religieux-civil-france` dont la
+référence « article 5 » est tronquée et ne dit même pas de quel texte.
+
 ### 22 novembre — un droit annoncé sans le délai qui l'enferme
 
 Pas de fiche neuve. Une fiche corrigée, et c'est la correction la plus lourde
