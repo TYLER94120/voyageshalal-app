@@ -347,6 +347,97 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 24 novembre — un droit qui peut être vide, et un défaut que mon outil avait fabriqué
+
+Pas de fiche neuve. Troisième nuit du même inventaire : deux fiches lues, une
+corrigée, **une intacte** — et un défaut inscrit hier dans ce carnet qui
+n'existait pas.
+
+#### 1. `heritage-succession-france` — tout était juste, trois choses manquaient
+
+Vérifié et **intact** : la réserve de 1/2, 2/3, 3/4 selon le nombre d'enfants ;
+le conjoint non réservataire en présence de descendants ; l'alinéa ajouté par la
+loi du 24 août 2021, applicable aux décès survenus depuis le 1er novembre 2021 ;
+les conditions du prélèvement compensatoire. Rien à reprendre sur le fond.
+
+Ce qui manquait, et **le premier point est une fausse réassurance** :
+
+| | Ce qui manquait | Pourquoi ça compte |
+|---|---|---|
+| 1 | Le prélèvement ne s'exerce que **sur les biens existants situés en France** | Si le patrimoine est entièrement à l'étranger, **le droit existe et ne donne rien.** La fiche disait « désigner une loi étrangère ne met plus les biens français à l'abri » — vrai, mais un lecteur pouvait en conclure que ses enfants sont protégés, alors que la protection est creuse s'il ne reste rien ici |
+| 2 | Il est réservé aux **enfants** ; le conjoint survivant n'en bénéficie pas | Une veuve pouvait raisonnablement croire qu'il la couvrait |
+| 3 | **Le notaire doit informer chaque héritier réservataire connu, individuellement**, de son droit de demander la réduction des libéralités qui entament sa réserve, le cas échéant avant tout partage. Aucune forme imposée, preuve par tout moyen | **Le levier**, et il vaut bien au-delà des successions internationales. Celui qui connaît cette obligation peut en demander l'exécution ; celui qui l'ignore signe parfois un partage sans savoir ce qu'il abandonne |
+
+#### 2. `assurance-vie-halal` — intacte, et c'est un résultat
+
+L. 132-12, L. 132-13, la limite des **primes manifestement exagérées**, les
+quatre critères appréciés à la date de chaque versement, et le point négatif
+décisif : *l'atteinte à la réserve n'est pas à elle seule un critère
+d'exagération.* Tout vérifié. L'arrêt existe et la fiche le datait juste :
+**2e civ., 19 décembre 2024, pourvoi n° 23-19.110**, publié au Bulletin, au visa
+de L. 132-13.
+
+Seul ajout : le numéro de pourvoi, par la même discipline qu'hier pour
+Cass. 19-26.140 — une décision datée sans numéro est difficile à retrouver pour
+un lecteur ou un notaire. **Rien d'autre touché.** La leçon de
+`philadelphia-halal`, le 7 octobre, est qu'une fiche qui n'a besoin de rien se
+laisse telle quelle.
+
+#### 3. Mon outil avait fabriqué un défaut — et il était déjà écrit ici
+
+Le carnet d'hier annonçait, dans la liste du reste à vérifier, que
+`divorce-religieux-civil-france` cite « article 5 » sans dire de quel texte.
+**Faux.** La fiche écrit « article 5 du **protocole n° 7 de la Convention
+européenne des droits de l'homme ».** Le motif de mon inventaire s'arrêtait à
+« article 5 du » : il capture le numéro et deux mots, pas la suite.
+
+C'est le cas d'école de `soupconner-l-instrument`, et il est arrivé **le
+lendemain** d'une nuit où je me reprochais de conclure trop vite. Deux
+différences avec hier, toutes deux dans le bon sens : la lecture a précédé la
+correction, et le défaut n'a jamais touché une fiche. Mais il avait déjà été
+écrit dans ce carnet comme un fait — **un sur-signalement conservé est un
+sur-signalement qui se propage**, et c'est ce qui le rend différent des treize
+précédents, tous morts dans la session où ils sont nés. Corrigé sur place, à
+l'endroit où il était écrit.
+
+Quatorzième sur-signalement du mois. Aucun n'a touché une fiche.
+
+#### 4. Ce que trois nuits d'inventaire ont appris
+
+Sur les cinq fiches de droit examinées depuis le 22 novembre : **quatre
+corrigées, une intacte**, et dans les quatre cas le même défaut — *la règle
+donnée sans ce que le lecteur peut en faire.* Jamais une invention, jamais une
+erreur de fond. Les textes cités sont les bons ; ce qui manque, c'est le délai,
+la condition, l'exclusion ou la démarche qui rend le droit utilisable.
+
+C'est une faiblesse d'écriture, pas de vérification — et elle est invisible aux
+23 gardes, qui contrôlent des formes et non des raisonnements. Le seul
+instrument qui la trouve est la relecture d'une fiche contre une source
+extérieure, une fiche par nuit.
+
+#### 5. Mesures de la nuit
+
+| | |
+|---|---|
+| Étape 0 (DNS) | **code 2, quarante-deuxième nuit aveugle** |
+| Étape 0 bis | `main` toujours à `94b078f`, **207 fiches contre 258**. **101 jours**, 111 commits |
+| Fiches | 258, inchangé |
+| Liens internes | 1434, médiane 4 entrants, aucune impasse — rien à réparer |
+| Suite | 23 gardes — **21 verts, 1 rouge** (`test-nourriture`), 1 code 2 |
+| Redatage | **deux fiches touchées, deux dates qui bougent** — troisième nuit de suite où les deux nombres sont égaux |
+| Part alimentaire | 49,6 % — 9 fiches non alimentaires encore à écrire pour 48 % |
+
+Commits `5ab5d8f` et `b538c59` sur `claude/reconciliation`.
+
+**Reste de l'inventaire**, par ordre d'enjeu : `voile-ecole-france` et
+`voile-travail-france` (un droit qu'on abandonne ou un combat perdu d'avance),
+`assurance-auto-obligatoire-halal` (L. 211-1, L. 324-2),
+`mariage-religieux-civil-france` (433-21 c. pén., la sanction du mariage
+religieux célébré sans mariage civil), `garde-enfants-divorce-france` (373-2 et
+373-2-1), `contrat-obseques-halal` (L. 2223-33-1 et -34-1),
+`enterrement-musulman-france` (L. 2223-2 et la directive de 2008),
+`divorce-religieux-civil-france` (protocole n° 7, art. 5).
+
 ### 23 novembre — je me suis trompé hier en disant que c'était isolé
 
 Pas de fiche neuve. Deux fiches corrigées, et une **rétractation** : l'entrée
@@ -464,6 +555,12 @@ Commits `061d5de` et `ce91105` sur `claude/reconciliation`.
 `voile-travail-france` (un droit qu'on abandonne ou un combat perdu d'avance),
 `assurance-vie-halal` (L. 132-12/13), `divorce-religieux-civil-france` dont la
 référence « article 5 » est tronquée et ne dit même pas de quel texte.
+
+> **Corrigé le 24 novembre : cette dernière phrase était fausse, et le défaut
+> venait de mon inventaire.** La fiche écrit « article 5 du **protocole n° 7 de
+> la Convention européenne des droits de l'homme** ». C'est le motif de
+> l'inventaire qui s'arrêtait à « article 5 du » — il capture le numéro et deux
+> mots, pas la suite. La citation est complète et exacte.
 
 ### 22 novembre — un droit annoncé sans le délai qui l'enferme
 
