@@ -1,13 +1,13 @@
 # La ronde des sites
 
-**Dernier changement constate le 2026-11-23 03:01 UTC.**
+**Dernier changement constate le 2026-11-24 22:41 UTC.**
 
-⚠️ **Cette ronde a regarde 183 pages sur 2058 — environ 9 %.**
+⚠️ **Cette ronde a regarde 177 pages sur 2058 — environ 9 %.**
 
 Les chiffres ci-dessous decrivent CETTE TRANCHE, pas le site entier. Un
 jour a 1 defaut et le lendemain a 28 ne veut pas dire que 27 choses ont
 casse dans la nuit : la rotation est simplement passee sur d'autres pages.
-Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **vieux de 17 h**.
+Pour le compte complet, voir [BALAYAGE-COMPLET.md](BALAYAGE-COMPLET.md) — **de ce matin**.
 
 La ronde passe **toutes les 30 minutes** sur les quatre sites et
 regarde ce qu'un visiteur recoit vraiment. Ce fichier n'est reecrit
@@ -17,8 +17,8 @@ que rien de nouveau n'est casse, pas que le robot dort.
 | Niveau | Combien | Ce que ca veut dire |
 |---|---|---|
 | 🔴 grave | **0** | le visiteur ne recoit pas la page |
-| 🟠 defaut | 0 | il la recoit, mais elle le dessert |
-| 🟡 a surveiller | 0 | pas urgent, a ne pas laisser grossir |
+| 🟠 defaut | 2 | il la recoit, mais elle le dessert |
+| 🟡 a surveiller | 2 | pas urgent, a ne pas laisser grossir |
 
 ### Ce que cette ronde a regarde, site par site
 
@@ -29,10 +29,24 @@ Sans elle, « absent de la liste » et « jamais ouvert » se lisaient pareil.
 |---|---|---|
 | islampasapas.fr | 41 | 0 |
 | voyageshalal.fr | 41 | 0 |
-| gohalaltravel.com | 41 | 0 |
+| gohalaltravel.com | 41 | 4 |
 | halalgpt.fr | 41 | 0 |
-| halalcheck.fr | 19 | 0 |
+| halalcheck.fr | 13 | 0 |
 
-## Rien a signaler
+## 🟠 defaut — 2
 
-5 site(s) sur 5 ont rendu des pages, et celles-ci sont correctes.
+### gohalaltravel.com (2)
+
+- **titre en francais sur le domaine anglais** — mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »  
+  `https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug`
+- **titre en francais sur le domaine anglais** — mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »  
+  `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
+
+## 🟡 surveiller — 2
+
+### gohalaltravel.com (2)
+
+- **description trop courte (17 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt`
+- **description trop courte (21 car.)**  
+  `https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g`
