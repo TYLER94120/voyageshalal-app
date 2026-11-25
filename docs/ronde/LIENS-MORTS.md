@@ -1,8 +1,8 @@
 # Les liens qui ne menent nulle part
 
-Releve du **2026-11-25 03:33 UTC** · 982 liens controles.
+Releve du **2026-11-25 14:25 UTC** · 87 liens controles.
 
-⚠️ **Ce tour a regarde 370 pages sur 1718 — environ 22 %.**
+⚠️ **Ce tour a regarde 13 pages sur 13 — environ 100 %.**
 
 Le nombre ci-dessous vaut pour CETTE TRANCHE, pas pour le site entier.
 Un releve a 4 puis un a 42 ne veut pas dire que 38 liens ont casse dans
@@ -15,168 +15,162 @@ arrive sur une erreur au moment precis ou il faisait confiance au guide.
 | | Combien | Qui repare |
 |---|---|---|
 | 🔴 liens **internes** morts | **0** | nous, c'est notre faute |
-| 🟠 liens externes morts | 78 | nous, en retirant le lien |
-| ⚪ bloques aux robots | 1 | personne — a ne PAS retirer |
+| 🟠 liens externes morts | 75 | nous, en retirant le lien |
+| ⚪ bloques aux robots | 0 | personne — a ne PAS retirer |
 
 ⚠️ **Un lien ⚪ n'est pas mort.** Beaucoup de sites repondent 403 a un
 robot tout en marchant parfaitement dans un navigateur. Les retirer
 serait pire que le probleme qu'on corrige.
 
-## 🟠 Liens externes morts — 78
+## 🟠 Liens externes morts — 75
 
-- `https://www.halalbooking.com/search?query=Hong%20Kong` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=H%C3%B4%20Chi%20Minh-Ville` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Guadalajara` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Hambourg` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Jaipur` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Hano%C3%AF` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Grenoble` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Katmandou` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Helsinki` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Johannesburg` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Kyoto` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=La%20Haye` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=La%20Havane` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Lille` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Las%20Vegas` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=La%20Nouvelle-Orl%C3%A9ans` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Mexico` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Luxembourg` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Lima` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Ljubljana` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Malaga` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Malm%C3%B6` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Miami` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Montpellier` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Moscou` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Monterrey` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Nantes` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Minneapolis` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Nice` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=P%C3%A9kin` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Naples` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Nashville` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Orlando` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Palma` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Oslo` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Pattaya` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Palerme` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Perth` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Philadelphie` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Phoenix` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Ottawa` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Portland` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Reykjavik` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=S%C3%A3o%20Paulo` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Rio%20de%20Janeiro` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Porto` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Prague` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Qu%C3%A9bec` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Rennes` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=San%20Diego` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=San%20Francisco` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Rotterdam` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Santorin` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Saint-P%C3%A9tersbourg` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=San%20Antonio` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Saragosse` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Salou` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Sapporo` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Shanghai` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Sofia` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Split` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Siem%20Reap` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Seattle` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Thessalonique` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Turin` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Stockholm` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Strasbourg` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Taipei` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Utrecht` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Valence` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Toulouse` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Zagreb` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Wroc%C5%82aw` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Vancouver` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Varsovie` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Zurich` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Venise` — code 404  
-  *(sur voyageshalal.fr)*
-- `https://www.halalbooking.com/search?query=Washington` — code 404  
-  *(sur voyageshalal.fr)*
+- `https://halalgpt.fr/e/E120?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E1000?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E322?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E325?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E153?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E270?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E120?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E1105?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E326?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E422?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E432?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E431?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E430?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E422?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E327?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E433?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E436?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E441?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E441?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E435?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E442?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E434?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E470b?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E470a?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E471?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E472a?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E471?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E472d?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E472e?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E472c?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E472b?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E472f?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E474?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E473?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E475?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E477?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E479b?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E478?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E481?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E476?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E482?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E484?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E483?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E485?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E495?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E491?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E493?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E494?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E492?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E542?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E542?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E572?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E570?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E904?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E627?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E640?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E635?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E631?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E904?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E920?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=rayon` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E920?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E921?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=mentions` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr/e/E966?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-accueil` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=verdict-douteux` — code 402  
+  *(sur halalcheck.fr)*
+- `https://halalgpt.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-scanner` — code 402  
+  *(sur halalcheck.fr)*
+- `https://www.gohalaltravel.com?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-accueil` — code 402  
+  *(sur halalcheck.fr)*
+- `https://www.gohalaltravel.com?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-mentions` — code 402  
+  *(sur halalcheck.fr)*
+- `https://www.gohalaltravel.com?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://www.voyageshalal.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=liste-additifs` — code 402  
+  *(sur halalcheck.fr)*
+- `https://www.voyageshalal.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-accueil` — code 402  
+  *(sur halalcheck.fr)*
+- `https://www.voyageshalal.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-mentions` — code 402  
+  *(sur halalcheck.fr)*
+- `https://www.voyageshalal.fr?utm_source=halalcheck&utm_medium=passerelle&utm_campaign=pied-scanner` — code 402  
+  *(sur halalcheck.fr)*
