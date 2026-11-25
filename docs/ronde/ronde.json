@@ -1,40 +1,61 @@
 {
-  "ronde_du": "2026-11-25 05:19 UTC",
-  "pages_vues": 182,
+  "ronde_du": "2026-11-25 15:56 UTC",
+  "pages_vues": 19,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
-      "pages": 41,
-      "defauts": 0
+      "pages": 0,
+      "defauts": 1
     },
     {
       "site": "voyageshalal.fr",
-      "pages": 41,
-      "defauts": 0
+      "pages": 0,
+      "defauts": 1
     },
     {
       "site": "gohalaltravel.com",
-      "pages": 41,
+      "pages": 0,
       "defauts": 1
     },
     {
       "site": "halalgpt.fr",
-      "pages": 41,
-      "defauts": 0
+      "pages": 0,
+      "defauts": 1
     },
     {
       "site": "halalcheck.fr",
-      "pages": 18,
+      "pages": 19,
       "defauts": 0
     }
   ],
   "defauts": [
     {
-      "niveau": "surveiller",
+      "niveau": "grave",
+      "site": "islampasapas.fr",
+      "url": "https://www.islampasapas.fr/",
+      "quoi": "le site entier ne repond pas",
+      "detail": "code 402 — confirme au second controle"
+    },
+    {
+      "niveau": "grave",
+      "site": "voyageshalal.fr",
+      "url": "https://voyageshalal.fr/",
+      "quoi": "le site entier ne repond pas",
+      "detail": "code 402 — confirme au second controle"
+    },
+    {
+      "niveau": "grave",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com",
-      "quoi": "page lente (3.4 s)",
-      "detail": "au-dela de 3 s, une part des visiteurs repart"
+      "url": "https://gohalaltravel.com/",
+      "quoi": "le site entier ne repond pas",
+      "detail": "code 402 — confirme au second controle"
+    },
+    {
+      "niveau": "grave",
+      "site": "halalgpt.fr",
+      "url": "https://halalgpt.fr/",
+      "quoi": "le site entier ne repond pas",
+      "detail": "code 402 — confirme au second controle"
     }
   ]
 }
