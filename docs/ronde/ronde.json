@@ -1,6 +1,6 @@
 {
-  "ronde_du": "2026-11-24 22:41 UTC",
-  "pages_vues": 177,
+  "ronde_du": "2026-11-25 05:19 UTC",
+  "pages_vues": 182,
   "pages_par_site": [
     {
       "site": "islampasapas.fr",
@@ -15,7 +15,7 @@
     {
       "site": "gohalaltravel.com",
       "pages": 41,
-      "defauts": 4
+      "defauts": 1
     },
     {
       "site": "halalgpt.fr",
@@ -24,7 +24,7 @@
     },
     {
       "site": "halalcheck.fr",
-      "pages": 13,
+      "pages": 18,
       "defauts": 0
     }
   ],
@@ -32,30 +32,9 @@
     {
       "niveau": "surveiller",
       "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms2d7i1y_gtzpt",
-      "quoi": "description trop courte (17 car.)",
-      "detail": ""
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_ms3ag9sm_uv5ug",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : fruit, petit, resto, special, traditionnel — « Resto traditionnel spécial jus de fruit et pétit dej… »"
-    },
-    {
-      "niveau": "defaut",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
-      "quoi": "titre en francais sur le domaine anglais",
-      "detail": "mots francais : avec, piscine, resto — « Resto avec piscine — Halal resto in Tafoughalt… »"
-    },
-    {
-      "niveau": "surveiller",
-      "site": "gohalaltravel.com",
-      "url": "https://www.gohalaltravel.com/spot/sp_msnbwgey_0st3g",
-      "quoi": "description trop courte (21 car.)",
-      "detail": ""
+      "url": "https://www.gohalaltravel.com",
+      "quoi": "page lente (3.4 s)",
+      "detail": "au-dela de 3 s, une part des visiteurs repart"
     }
   ]
 }
