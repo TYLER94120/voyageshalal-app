@@ -298,6 +298,15 @@ Ce qui a été mis en place, et qui doit le rester :
 - **Aucune fiche ne rend un avis.** Elles décrivent les positions répandues et
   **nomment les divergences quand elles existent**. « La majorité tolère », « les
   deux avis existent chez des gens sérieux », jamais « c'est halal ».
+- **Un verdict attribué doit être celui que l'autorité a réellement rendu.**
+  Corollaire ajouté le 25 novembre, après avoir trouvé dans `voile-ecole-france`
+  une décision prêtée au Conseil d'État qu'il n'avait pas rendue : la fiche
+  présentait le rejet d'un **référé** comme un jugement de légalité au fond.
+  Attribuer ne protège Mohamed que si l'attribution est exacte — sinon elle fait
+  **pire** qu'affirmer, parce qu'elle emprunte une autorité. Cela vaut pour un
+  savant, un conseil de fiqh, un tribunal et un organisme certificateur.
+  Concrètement : nommer la décision (numéro, formation, date), et dire **sur quel
+  critère** elle a statué.
 - **Chaque fiche porte une note de bas de page** renvoyant vers un savant ou un
   organisme de certification pour toute situation personnelle, et rappelant que
   les compositions évoluent.
@@ -346,6 +355,124 @@ répond pas à cette question-là.
 ---
 
 ## 10. Journal des rondes
+
+### 25 novembre — la fiche prenait un référé pour un jugement au fond
+
+Pas de fiche neuve. Quatrième nuit de l'inventaire, et les deux fiches sur le
+voile sont **les mieux bâties du lot** : elles nomment déjà les leviers, elles
+marquent déjà ce qu'elles ne vérifient pas, elles renvoient déjà au Défenseur
+des droits et aux prud'hommes. Le défaut était donc ailleurs — et il touche la
+règle du §8, celle qui protège Mohamed.
+
+#### 1. L'abaya — le défaut le plus grave des quatre nuits
+
+Et il va **dans le sens inverse** des précédents : ici la fiche **surestimait la
+solidité du droit**.
+
+Elle écrivait : *« Le Conseil d'État a jugé que cette interdiction […] ne
+dépassait pas la compétence du ministre et ne méconnaissait pas l'article
+L. 141-5-1. »* **Rien de vérifiable ne soutient cela.** Aucune source trouvée
+ne traite la compétence du ministre comme un moyen examiné.
+
+Ce que j'ai pu établir :
+
+| | |
+|---|---|
+| La note de service | **31 août 2023** (la fiche disait « août 2023 ») |
+| La décision | Conseil d'État, **référé-liberté**, ordonnance du **7 septembre 2023**, n° 487891, juge des référés en formation collégiale |
+| Le motif | l'interdiction ne porte pas une **atteinte grave et manifestement illégale** à une liberté fondamentale |
+| Et une seconde | ordonnance n° 487896 du **25 septembre 2023**, même sens |
+
+**Un référé n'est pas un jugement au fond.** C'est une appréciation provisoire,
+rendue sur ce critère-là et pas sur un autre. La fiche faisait dire au Conseil
+d'État une décision qu'il n'a pas rendue.
+
+La règle du site est qu'un verdict **s'attribue**, il ne s'affirme pas. Cette
+nuit en donne le corollaire, qui n'était écrit nulle part : **un verdict
+attribué doit être celui que l'autorité a réellement rendu.** Attribuer
+protège Mohamed seulement si l'attribution est exacte ; sinon elle fait pire
+qu'affirmer, parce qu'elle emprunte une autorité.
+
+La conclusion pratique de la fiche ne change pas, et c'est important : la note
+est applicable, ça ne se discute pas au portail. Ce qui change, c'est ce qu'on
+peut dire que le Conseil d'État a décidé.
+
+#### 2. Une mauvaise attribution d'article
+
+*« Les personnels, enseignants-chercheurs compris, restent tenus à la neutralité
+(article L. 141-6 du code de l'éducation). »*
+
+**L. 141-6 ne dit pas cela.** Il pose la laïcité et l'**indépendance du
+service** d'enseignement supérieur — le Conseil d'État lui-même l'a mobilisé en
+2024 (n° 494003) sur le terrain de l'indépendance, pas de la neutralité des
+agents. L'obligation vient du statut général des fonctionnaires, que la fiche
+**voisine** cite correctement (loi du 20 avril 2016). Deux fiches sœurs, le bon
+fondement dans l'une et le mauvais dans l'autre : encore une fois, c'est la
+lecture par voisinage qui le montre.
+
+Et *« enseignants-chercheurs compris »* était trop absolu : leur indépendance
+est protégée au plus haut niveau, ce qui complique la portée de l'obligation. Je
+n'ai pas pu lire les décisions qui en fixent la limite — la fiche marque
+désormais ce vide au lieu de le combler.
+
+#### 3. `voile-travail-france` — une jurisprudence affirmée sans être citable
+
+La fiche disait *« la Cour de cassation en fait une lecture plus étroite »*
+**sans nommer une seule décision.** Nommées : **ch. soc. 22 novembre 2017**
+(n° 13-19.855), qui pose la règle, et **ch. soc. 14 avril 2021** (n° 19-24.079,
+publié au bulletin), qui la réaffirme.
+
+Et trois choses de l'arrêt de 2021 — une vendeuse licenciée pour avoir refusé
+de retirer son foulard — qui servent directement le lecteur :
+
+- **En l'absence de clause, l'interdiction est une discrimination directe et le
+  licenciement est NUL.** La fiche disait seulement « pas de base légale » : très
+  en dessous de ce que la salariée a besoin de savoir.
+- **Le support compte** : règlement intérieur, ou note de service de même
+  valeur. **Pas une charte, pas un accord collectif, pas une consigne orale.** Or
+  les entreprises produisent des chartes.
+- **L'atteinte à l'image commerciale a été écartée** : ce n'est pas une exigence
+  professionnelle essentielle et déterminante. La fiche ne couvrait que le
+  souhait du **client** (Bougnaoui) ; l'image de l'entreprise est un argument
+  distinct, et il tombe aussi.
+
+#### 4. Quatre nuits d'inventaire — ce que ça a donné
+
+Sept fiches de droit examinées depuis le 22 novembre : **six corrigées, une
+intacte.** Et le défaut n'est plus d'une seule famille :
+
+| Forme du défaut | Fiches |
+|---|---|
+| La règle donnée sans ce que le lecteur peut en faire | `autopsie-islam-france`, `dettes-defunt-islam`, `heritage-succession-france`, `voile-travail-france` |
+| Une limite tue, qui laisse croire à une protection plus large | `nikah-pacs-france`, `heritage-succession-france` |
+| **Une autorité à qui l'on fait dire plus qu'elle n'a dit** | `voile-ecole-france` |
+
+**Toujours zéro invention, et zéro erreur sur un texte cité.** Les articles sont
+les bons, les dates sont bonnes. Ce qui manque ou déborde, c'est l'usage qu'on
+en fait — et aucun des 23 gardes ne peut le voir, puisqu'ils contrôlent des
+formes et non des raisonnements.
+
+#### 5. Mesures de la nuit
+
+| | |
+|---|---|
+| Étape 0 (DNS) | **code 2, quarante-troisième nuit aveugle** |
+| Étape 0 bis | `main` toujours à `94b078f`, **207 fiches contre 258**. **102 jours**, 113 commits |
+| Fiches | 258, inchangé |
+| Liens internes | 1434, médiane 4 entrants, aucune impasse |
+| Suite | 23 gardes — **21 verts, 1 rouge** (`test-nourriture`), 1 code 2 |
+| Redatage | deux fiches touchées, deux dates qui bougent — quatrième nuit de suite |
+| Part alimentaire | 49,6 % — 9 fiches non alimentaires encore à écrire pour 48 % |
+
+Commits `cb545ce` et `786b5a1` sur `claude/reconciliation`.
+
+**Reste de l'inventaire** : `assurance-auto-obligatoire-halal` (L. 211-1,
+L. 324-2), `mariage-religieux-civil-france` (433-21 c. pén.),
+`garde-enfants-divorce-france` (373-2, 373-2-1), `contrat-obseques-halal`
+(L. 2223-33-1 et -34-1), `enterrement-musulman-france` (L. 2223-2 et la
+directive de 2008), `divorce-religieux-civil-france` (protocole n° 7, art. 5),
+`autopsie-islam-france` pour l'article 74 CPP qui n'a pas été revérifié le
+22 novembre.
 
 ### 24 novembre — un droit qui peut être vide, et un défaut que mon outil avait fabriqué
 
