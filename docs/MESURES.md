@@ -356,6 +356,138 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 26 novembre — une peine périmée depuis 2021, et un mot pris pour la règle
+
+Pas de fiche neuve. Cinquième nuit de l'inventaire, les deux fiches sœurs
+mariage / divorce. **Et pour la première fois en cinq nuits : une erreur de
+fond, pas un défaut d'usage.**
+
+#### 1. La peine était fausse
+
+`mariage-religieux-civil-france` annonçait *« six mois d'emprisonnement et
+7 500 euros d'amende »* pour l'officiant qui célèbre habituellement sans acte
+civil. C'était le texte d'avant : la **loi n° 2021-1109 du 24 août 2021** a porté
+la peine à **un an d'emprisonnement** et 7 500 euros.
+
+La fiche publiait, au nom de Mohamed, **un chiffre périmé depuis cinq ans sur
+une peine pénale.**
+
+Et elle omettait la conséquence la plus lourde pour beaucoup d'officiants : la
+même loi a ajouté la possibilité d'une **interdiction du territoire français**
+contre un ministre du culte étranger condamné pour ce délit. Pour qui n'a pas la
+nationalité française, c'est sans comparaison avec l'amende.
+
+**Le point qui me concerne directement :** c'est la *même* loi du 24 août 2021
+que celle vérifiée le 24 novembre pour l'article 913 du code civil. Deux fiches
+touchées par le même texte, à deux nuits d'intervalle, et je n'ai pas fait le
+lien — ni le 24 en lisant la loi, ni le 26 en ouvrant la fiche. Une loi qui
+traverse plusieurs fiches ne se vérifie pas fiche par fiche sans qu'on tienne la
+liste de ce qu'elle a touché.
+
+Ajouté, et cela va dans le sens de l'officiant : le délit suppose une
+**intention**, et le commentaire juridique relève qu'elle fait défaut quand il
+s'est fié à sa connaissance personnelle du couple au lieu de demander l'acte, ou
+quand on lui a remis de fausses attestations. **Ce qui protège, c'est de demander
+l'acte et de le garder, pas de connaître les mariés.**
+
+Confirmé et conservé : le délit d'habitude caractérisé à partir de la seconde
+fois, et les époux ne commettent aucune infraction. Corrigé aussi une
+contradiction interne que la nouvelle peine créait : la fiche disait « rien de
+récent ni de ciblé » — vrai de la **règle**, qui date de 1810 et vaut pour tous
+les cultes ; c'est sa **sanction** qui a été durcie, et la fiche le dit
+maintenant aux deux endroits.
+
+#### 2. Un mot pris pour la règle
+
+`divorce-religieux-civil-france` affirmait platement : *« une répudiation
+prononcée à l'étranger n'est pas reconnue en France »*, puis *« une femme
+répudiée au pays **reste mariée en France** : elle conserve ses droits
+d'épouse »*.
+
+Exact sur la répudiation **unilatérale** — les **cinq arrêts du 17 février 2004**
+(1re civ.) sont confirmés, et la formation est désormais nommée. Mais **ce n'est
+pas le nom de l'acte qui décide.** Un **divorce judiciaire** étranger,
+contradictoire, où l'épouse a pu être entendue, peut être reconnu en France. Pour
+le Maroc, la **convention franco-marocaine du 10 août 1981** l'organise, et la
+reconnaissance n'est pas automatique dès qu'il faut exécuter en France : le juge
+vérifie la régularité internationale du jugement, à commencer par la compétence
+du juge étranger.
+
+**Le risque allait dans les deux sens, et c'est ce qui rendait la phrase
+dangereuse** — une femme qui se croit encore mariée peut être divorcée et perdre
+des droits qu'elle pensait conserver ; un homme qui se croit marié peut être
+libre. La fiche dit maintenant qu'elle n'a pas pu lire ces décisions et renvoie à
+un avocat, actes en main.
+
+**Non établi, donc non écrit** : l'effet de la Moudawana de 2004 sur ces
+solutions. La recherche ne l'a pas établi ; la fiche n'en parle pas.
+
+#### 3. L'inventaire des chiffres périssables — essayé, non gardé
+
+Motivé par la peine périmée : quelles fiches avancent un chiffre qui peut se
+périmer ? **35 fiches sur 258** — mais **29 des 35 hits sont « 100 % »**, qui est
+une affirmation de composition (« 100 % végétal »), pas une donnée légale. Le
+signal est noyé.
+
+Donc **pas de garde-fou** : un instrument dont les quatre cinquièmes des
+signalements sont du bruit envoie réparer ce qui n'existe pas. Troisième
+instrument écarté ce mois, et pour une troisième raison différente — le
+validateur `git log -S` était aveugle à la chose mesurée, la sonde « droit sans
+délai » ne trouvait pas le défaut qui l'avait motivée, celle-ci trouve surtout
+autre chose.
+
+**Mais elle laisse une piste réelle, notée pour une nuit prochaine** : les
+**seuils d'alcool** dans `biere-sans-alcool-halal` (0,5 % / 0,0 %),
+`kombucha-halal` (2 % / 1,2 % / 0,5 %), `e1510-ethanol-halal` (0,1 %),
+`cuisine-alcool-halal` (5 %), `sauce-soja-halal` (3 %),
+`chocolat-liqueur-halal` (95 %). Certains de ces seuils sont **légaux** — le
+0,5 % de l'étiquetage « sans alcool », le 1,2 % du droit européen — donc ils
+peuvent bouger, et ce sont ceux sur lesquels un lecteur décide en rayon. Les
+auditer n'est pas écrire une fiche nourriture : la décision du 12 août n'y fait
+pas obstacle.
+
+Noté aussi : `assurance-auto-obligatoire-halal` écrit « amende » **sans chiffre**.
+C'est la manière robuste d'écrire une sanction dont le montant bouge.
+
+#### 4. Cinq nuits d'inventaire
+
+Neuf fiches de droit examinées depuis le 22 novembre : **huit corrigées, une
+intacte.** Et le tableau des formes s'allonge d'une ligne qui n'y était pas :
+
+| Forme du défaut | Fiches |
+|---|---|
+| La règle donnée sans ce que le lecteur peut en faire | `autopsie-islam-france`, `dettes-defunt-islam`, `heritage-succession-france`, `voile-travail-france`, `mariage-religieux-civil-france` |
+| Une limite tue, qui laisse croire à une protection plus large | `nikah-pacs-france`, `heritage-succession-france`, `divorce-religieux-civil-france` |
+| Une autorité à qui l'on fait dire plus qu'elle n'a dit | `voile-ecole-france` |
+| **Un chiffre exact, mais périmé** | `mariage-religieux-civil-france` |
+
+La dernière ligne change le bilan des quatre nuits précédentes : je concluais
+« zéro erreur sur un texte cité ». **Ce n'est plus vrai.** Le texte était le bon,
+l'article le bon, mais la peine était celle d'avant 2021 — et une peine fausse
+n'est pas un défaut d'usage, c'est une information fausse.
+
+#### 5. Mesures de la nuit
+
+| | |
+|---|---|
+| Étape 0 (DNS) | **code 2, quarante-quatrième nuit aveugle** |
+| Étape 0 bis | `main` toujours à `94b078f`, **207 fiches contre 258**. **103 jours**, 115 commits |
+| Fiches | 258, inchangé |
+| Liens internes | 1434, médiane 4 entrants, aucune impasse |
+| Suite | 23 gardes — **21 verts, 1 rouge** (`test-nourriture`), 1 code 2 |
+| Redatage | deux fiches touchées, deux dates — cinquième nuit de suite |
+| Part alimentaire | 49,6 % — 9 fiches non alimentaires encore à écrire pour 48 % |
+
+Commits `50dc9eb` et `27f5733` sur `claude/reconciliation`.
+
+**Reste de l'inventaire** : `assurance-auto-obligatoire-halal` (L. 211-1,
+L. 324-2), `garde-enfants-divorce-france` (373-2, 373-2-1),
+`contrat-obseques-halal` (L. 2223-33-1 et -34-1), `enterrement-musulman-france`
+(L. 2223-2 et la directive de 2008), et l'article 74 CPP d'
+`autopsie-islam-france`. **Plus, désormais, les seuils d'alcool du §3** et — leçon
+du jour — **la liste de ce que la loi du 24 août 2021 a touché ailleurs dans le
+catalogue.**
+
 ### 25 novembre — la fiche prenait un référé pour un jugement au fond
 
 Pas de fiche neuve. Quatrième nuit de l'inventaire, et les deux fiches sur le
