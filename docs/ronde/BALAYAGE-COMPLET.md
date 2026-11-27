@@ -1,11 +1,11 @@
 # Balayage complet
 
-**Dernier changement constate le 2026-11-26 11:30 UTC.**
+**Dernier changement constate le 2026-11-27 11:26 UTC.**
 
 **10 pages regardees — le site entier.** Les chiffres ci-dessous
 valent donc pour tout ce que Google peut voir.
 
-Balayage commence le 2026-11-26 11:30 UTC, termine en 0 minutes. Un balayage
+Balayage commence le 2026-11-27 11:26 UTC, termine en 0 minutes. Un balayage
 complet qui rendrait la main en quelques secondes n'aurait pas eu lieu :
 c'est a cette duree qu'on le reconnait.
 
