@@ -356,6 +356,128 @@ répond pas à cette question-là.
 
 ## 10. Journal des rondes
 
+### 27 novembre — la loi de 2021 touchait un troisième endroit, et un quatrième où il n'y avait rien
+
+**Une fiche neuve** — la première depuis le 19 novembre — et une correction. La
+leçon d'hier était : *une loi qui traverse le catalogue ne se vérifie pas fiche
+par fiche sans tenir la liste de ce qu'elle a touché.* Liste faite dès l'ouverture
+de la ronde, et elle a produit les deux travaux de la nuit.
+
+#### 1. Ce que la loi du 24 août 2021 touche, et ce que le catalogue en couvrait
+
+| Sujet de la loi | Dans le catalogue |
+|---|---|
+| Art. 913 c. civ. — réserve héréditaire | trouvé le **24 nov.** |
+| Art. 433-21 c. pén. — mariage religieux | trouvé le **26 nov.** |
+| **Art. 63 c. civ. — audition des futurs époux** | **trouvé cette nuit** |
+| **Certificats de virginité** | **rien — fiche écrite cette nuit** |
+| Instruction en famille | rien (0 fiche) |
+| Polygamie, titres de séjour, réversion | rien (0 fiche) |
+
+**Et une fausse lecture, attrapée avant de conclure.** Mon premier balayage
+rendait 0 partout — *« réversion » comprise*. Le fichier l'écrit avec l'accent et
+mon motif ne l'avait pas ; quatre fiches en parlent. **Troisième fois ce mois
+qu'un motif me donne une lecture fausse** (après « article 5 du » tronqué le 24,
+et les « 100 % » le 26). Aucune n'a touché une fiche, parce qu'on relit avant de
+conclure — mais la régularité, elle, est le fait notable : *un motif qui rend 0
+partout est plus suspect qu'un motif qui rend beaucoup.*
+
+#### 2. `mariage-religieux-civil-france` — la protection que la fiche taisait
+
+Toute sa thèse est **« la mairie d'abord »**. Elle ne disait pas que la mairie est
+aussi **le seul endroit où quelqu'un qu'on marie sous pression peut être entendu
+seul.**
+
+L'**article 63 du code civil**, modifié par cette même loi du 24 août 2021,
+permet à l'officier d'état civil de demander un **entretien individuel** avec
+chaque futur époux quand il craint — au vu des pièces, de l'audition commune, ou
+d'un **signalement circonstancié et non anonyme** — que le mariage soit annulable
+pour absence de consentement (art. 146) ou consentement vicié (art. 180). Avant
+2021 cet entretien séparé était à sa discrétion. L'**article 175-2** l'oblige
+alors à saisir **sans délai le procureur**, qui peut former **opposition** par
+huissier : la célébration est interdite.
+
+Ajouté aussi : un proche peut signaler mais **pas anonymement** ; le consulat
+peut auditionner un futur époux résidant à l'étranger ; et le futur époux, **même
+mineur**, peut contester un sursis.
+
+#### 3. Fiche neuve : `certificat-virginite-france`
+
+Rien dans le catalogue, et il y a **quelque chose à comprendre** — le critère,
+pas « il manque une fiche ». Ce n'était pas une zone grise que les textes
+laissaient de côté : **c'en est une qui a été fermée des deux côtés en 2021.**
+
+- **Côté soignant** : art. **L. 1110-2-1 du code de la santé publique**, créé par
+  la loi de 2021 — interdiction d'établir le certificat *et* de pratiquer
+  l'examen ; **un an et 15 000 euros**. Donc **demander ce certificat à un
+  soignant, c'est lui demander de commettre une infraction.** Et ce n'est pas
+  théorique : une **sage-femme a été sanctionnée** (trois mois d'interdiction
+  d'exercer avec sursis), l'ignorance de la loi n'ayant pas été retenue.
+- **Côté personne** : le code pénal punit **l'incitation et la contrainte**, avec
+  des peines **aggravées pour une mineure** (un an, 30 000 euros). Celle qu'on
+  presse ne demande pas une faveur : elle est protégée, et **ce sont ceux qui la
+  pressent qui s'exposent.**
+
+**Discipline de citation, et la fiche l'écrit en son nom.** Les sources lues
+donnent **trois numéros différents** pour le code pénal — 225-4-10, 225-4-11,
+225-4-12 — et je n'ai pas pu lire le texte consolidé. La fiche nomme donc
+**l'infraction et les peines**, qui concordent, et **pas un numéro deviné.**
+
+**Le volet religieux, et c'est le §8 appliqué à la lettre.** La fiche n'a trouvé
+**aucune source citable qui exige** un tel certificat, et elle présente cela pour
+ce que c'est : **une mesure de notre recherche, pas un avis.** Elle ne dit pas que
+c'est interdit en religion. Les exigences de preuve en matière d'accusation sur la
+chasteté sont **mentionnées sans que l'argument soit construit** — ce raisonnement
+appartient à un savant. C'est aussi le corollaire du 25 novembre respecté par
+avance : on n'emprunte l'autorité de personne.
+
+Mesures : titre servi **55 car.**, short **154 points de code** (servie en entier,
+non tronquée), **4 liens entrants** (le plancher exact), 6 sortants, aucune cible
+inconnue, FAQPage et BreadcrumbList présents.
+
+**Classée en même temps qu'écrite** — la leçon des 18 et 19 novembre, enfin
+appliquée du premier coup. `virginite` ajouté à **`famille / mariage`** et non à
+`sante / corps` : l'examen est médical, le sujet est la pression familiale avant
+un mariage. Le premier motif qui correspond l'emporte, donc le choix de la ligne
+**est** la classification, et le commentaire le dit sur place. Hors grille : 0
+sur 131.
+
+#### 4. Une précision sur le redatage, plutôt que de la lisser
+
+**Cinq dates ont bougé alors que je n'ai réécrit le texte que de deux fiches.**
+C'est correct : le bloc suivi s'arrête à la ligne `related:`, elle y est donc
+incluse, et trois fiches ont reçu un lien vers la fiche neuve. Un lien de plus
+change bien la page rendue — une carte apparaît — donc la date est honnête.
+
+Mais la série « fiches touchées = dates qui bougent » des cinq nuits précédentes
+supposait tacitement que *touchée* voulait dire *réécrite*. Ici **touchée veut
+dire que le bloc a changé.** La série n'est pas rompue, sa définition est
+précisée.
+
+#### 5. Mesures de la nuit
+
+| | |
+|---|---|
+| Étape 0 (DNS) | **code 2, quarante-cinquième nuit aveugle** |
+| Étape 0 bis | `main` toujours à `94b078f`, **207 fiches contre 259**. **104 jours**, 117 commits |
+| Fiches | **259** (+1) |
+| Liens internes | **1444** (+10), médiane 4 entrants, aucune impasse |
+| Suite | 23 gardes — **21 verts, 1 rouge** (`test-nourriture`), 1 code 2 |
+| Redatage | 5 fiches, voir §4 |
+| Part alimentaire | **49,4 %** (était 49,6) — **8** fiches non alimentaires encore à écrire pour 48 % |
+| Hors grille | 0 sur 131 |
+
+Commits `661f9c8` et `bdbf828` sur `claude/reconciliation`.
+
+**Reste de l'inventaire de droit** : `assurance-auto-obligatoire-halal` (L. 211-1,
+L. 324-2), `garde-enfants-divorce-france` (373-2, 373-2-1),
+`contrat-obseques-halal` (L. 2223-33-1 et -34-1), `enterrement-musulman-france`
+(L. 2223-2 et la directive de 2008), l'article 74 CPP d'`autopsie-islam-france`,
+et les **seuils d'alcool** notés le 26. **Gisement ouvert, non alimentaire et
+jamais traité** : l'**instruction en famille**, devenue soumise à autorisation en
+2021 avec quatre motifs limitatifs — une famille musulmane qui envisageait l'école
+à la maison est directement concernée et le catalogue n'en dit rien.
+
 ### 26 novembre — une peine périmée depuis 2021, et un mot pris pour la règle
 
 Pas de fiche neuve. Cinquième nuit de l'inventaire, les deux fiches sœurs
